@@ -1,0 +1,357 @@
+;*******************************************************************************
+; Copyright 1998 ADMtek.
+;
+; INF for Windows 98 and Windows NT 5.0
+
+
+[Version]
+Signature  = "$CHICAGO$"
+Compatible = 1
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %ADMtek%
+;LayoutFile = layout.inf
+;CatalogFile = NET8511.cat
+DriverVer   = 08/30/2000, 2.00.830.2000
+
+[Manufacturer]
+%ADMtek%   = ADMtek
+
+[ControlFlags]
+ExcludeFromSelect = USB\VID_07A6&PID_8511
+
+[ADMtek]
+%ADM8511.DeviceDesc% = ADM8511.Ndi,USB\VID_07A6&PID_8511
+%AN986.DeviceDesc% = AN986.Ndi,USB\VID_07A6&PID_0986
+
+
+;*******************************************************************************
+; Win98 main sections
+
+[ADM8511.Ndi]
+AddReg   = ADM8511.Reg, ADM8511.Params, ADM8511.Con.Reg
+;DeviceID = USB\VID_07A6&PID_8511
+CopyFiles = ADM8511.ndis.copyfiles
+
+[AN986.Ndi]
+AddReg   = AN986.Reg, ADM8511.Params, AN986.Con.Reg
+CopyFiles = ADM8511.ndis.copyfiles
+;*******************************************************************************
+; NT main sections
+
+[ADM8511.Ndi.NT]
+AddReg          = ADM8511.NT.Reg, ADM8511.Params, ADM8511.Con.Reg
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 1 ; ISA for pass InfCheck.exe
+CopyFiles       = ADM8511.ndis.copyfiles.NT
+
+[AN986.Ndi.NT]
+AddReg          = AN986.NT.Reg, ADM8511.Params, AN986.Con.Reg
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 1 ; ISA for pass InfCheck.exe
+CopyFiles       = ADM8511.ndis.copyfiles.NT
+
+[ADM8511.Ndi.NT.Services]
+AddService = ADM8511, 2, ADM8511.Service, Common.EventLog
+
+[AN986.Ndi.NT.Services]
+AddService = AN986, 2, AN986.Service, Common.EventLog
+
+[ADM8511.ndis.copyfiles]
+NET8511.SYS,,,2
+
+[ADM8511.ndis.copyfiles.NT]
+NET8511.SYS,,,2
+
+
+;*******************************************************************************
+; Windows 98 section
+;*******************************************************************************
+
+[ADM8511.Reg]
+HKR,Ndi,DeviceID,,USB\VID_07A6&PID_8511
+HKR,,AdapterName,,ADM8511
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,AdapterName,,ADM8511
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,NET8511.SYS
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,ADM8511
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,,,"ADM8511.Install"
+
+HKR,Ndi,HelpText,,"ADMtek ADM8511 10/100 USB To Ethernet Converter"
+
+[AN986.Reg]
+HKR,Ndi,DeviceID,,USB\VID_07A6&PID_0986
+HKR,,AdapterName,,AN986
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,AdapterName,,AN986
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,NET8511.SYS
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,ADM8511
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,,,"ADM8511.Install"
+
+HKR,Ndi,HelpText,,"ADMtek AN986 10/100 USB To Ethernet Converter"
+
+;*******************************************************************************
+; Driver parameters
+;*******************************************************************************
+
+[ADM8511.Params]
+HKR, ,TxPacketDesc,    0, "40"   ; 0x28
+HKR, ,RxPacketDesc,    0, "20"   ; 0x14
+
+[ADM8511.Con.Reg]
+HKR,Ndi\Params\MediaType,ParamDesc,,"Media Type"
+HKR,Ndi\Params\MediaType,default,,"0"
+HKR,Ndi\Params\MediaType,type,,"enum"
+HKR,Ndi\Params\MediaType\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaType\enum,1,,"10BaseT"
+HKR,Ndi\Params\MediaType\enum,2,,"10BaseT Full_Duplex"
+HKR,Ndi\Params\MediaType\enum,3,,"100BaseTX"
+HKR,Ndi\Params\MediaType\enum,4,,"100BaseTX Full_Duplex"
+HKR,Ndi\Params\MediaType,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\MediaSel,ParamDesc,,"Select Media"
+HKR,Ndi\Params\MediaSel,default,,"1"
+HKR,Ndi\Params\MediaSel,type,,"enum"
+HKR,Ndi\Params\MediaSel\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaSel\enum,1,,"Ethernet"
+HKR,Ndi\Params\MediaSel\enum,2,,"Fiber"
+HKR,Ndi\Params\MediaSel,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\MagicPkt,ParamDesc,,"Magic Packet"
+HKR,Ndi\Params\MagicPkt,default,,"0"
+HKR,Ndi\Params\MagicPkt,type,,"enum"
+HKR,Ndi\Params\MagicPkt\enum,0,,"Enable"
+HKR,Ndi\Params\MagicPkt\enum,1,,"Disable"
+HKR,Ndi\Params\MagicPkt,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\LinkWakeup,ParamDesc,,"Link Status Wakeup"
+HKR,Ndi\Params\LinkWakeup,default,,"0"
+HKR,Ndi\Params\LinkWakeup,type,,"enum"
+HKR,Ndi\Params\LinkWakeup\enum,0,,"Enable"
+HKR,Ndi\Params\LinkWakeup\enum,1,,"Disable"
+HKR,Ndi\Params\LinkWakeup,flag,1,"20","00","00","00"
+
+
+HKR,Ndi\Params\FlowControl,ParamDesc,,"Flow Control"
+HKR,Ndi\Params\FlowControl,default,,"1"
+HKR,Ndi\Params\FlowControl,type,,"enum"
+HKR,Ndi\Params\FlowControl\enum,0,,"Enable"
+HKR,Ndi\Params\FlowControl\enum,1,,"Disable"
+HKR,Ndi\Params\FlowControl,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl_Tx,ParamDesc,,"Flow Control Base Tx Packets"
+HKR,Ndi\Params\FlowControl_Tx,default,,"0"
+HKR,Ndi\Params\FlowControl_Tx,type,,"enum"
+HKR,Ndi\Params\FlowControl_Tx\enum,0,,"Disable"
+HKR,Ndi\Params\FlowControl_Tx\enum,1,," 1 Packet"
+HKR,Ndi\Params\FlowControl_Tx\enum,2,," 2 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,3,," 4 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,4,," 8 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,5,,"16 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,6,,"32 Packets"
+HKR,Ndi\Params\FlowControl_Tx,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl_Rx,ParamDesc,,"Flow Control Base Rx Size"
+HKR,Ndi\Params\FlowControl_Rx,default,,"0"
+HKR,Ndi\Params\FlowControl_Rx,type,,"enum"
+HKR,Ndi\Params\FlowControl_Rx\enum,0,,"Disable"
+HKR,Ndi\Params\FlowControl_Rx\enum,1,," 1K"
+HKR,Ndi\Params\FlowControl_Rx\enum,2,," 2K"
+HKR,Ndi\Params\FlowControl_Rx\enum,3,," 4K"
+HKR,Ndi\Params\FlowControl_Rx\enum,4,," 8K"
+HKR,Ndi\Params\FlowControl_Rx\enum,5,,"16K"
+HKR,Ndi\Params\FlowControl_Rx\enum,6,,"32K"
+HKR,Ndi\Params\FlowControl_Rx,flag,1,"20","00","00","00"
+
+
+HKR,Ndi\Params\AlivePara,ParamDesc,,"Test Mode"
+HKR,Ndi\Params\AlivePara,default,,"3"
+HKR,Ndi\Params\AlivePara,type,,"enum"
+HKR,Ndi\Params\AlivePara\enum,0,,"Mode 0"
+HKR,Ndi\Params\AlivePara\enum,1,,"Mode 1"
+HKR,Ndi\Params\AlivePara\enum,2,,"Mode 2"
+HKR,Ndi\Params\AlivePara\enum,3,,"Mode 3"
+HKR,Ndi\Params\AlivePara\enum,4,,"Mode 4"
+HKR,Ndi\Params\AlivePara,flag,1,"20","00","00","00"
+
+[AN986.Con.Reg]
+HKR,Ndi\Params\MediaType,ParamDesc,,"Media Type"
+HKR,Ndi\Params\MediaType,default,,"0"
+HKR,Ndi\Params\MediaType,type,,"enum"
+HKR,Ndi\Params\MediaType\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaType\enum,1,,"10BaseT"
+HKR,Ndi\Params\MediaType\enum,2,,"10BaseT Full_Duplex"
+HKR,Ndi\Params\MediaType\enum,3,,"100BaseTX"
+HKR,Ndi\Params\MediaType\enum,4,,"100BaseTX Full_Duplex"
+HKR,Ndi\Params\MediaType,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\MediaSel,ParamDesc,,"Select Media"
+HKR,Ndi\Params\MediaSel,default,,"0"
+HKR,Ndi\Params\MediaSel,type,,"enum"
+HKR,Ndi\Params\MediaSel\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaSel\enum,1,,"Ethernet"
+HKR,Ndi\Params\MediaSel\enum,2,,"Home Lan"
+HKR,Ndi\Params\MediaSel,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\MagicPkt,ParamDesc,,"Magic Packet"
+HKR,Ndi\Params\MagicPkt,default,,"0"
+HKR,Ndi\Params\MagicPkt,type,,"enum"
+HKR,Ndi\Params\MagicPkt\enum,0,,"Enable"
+HKR,Ndi\Params\MagicPkt\enum,1,,"Disable"
+HKR,Ndi\Params\MagicPkt,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\LinkWakeup,ParamDesc,,"Link Status Wakeup"
+HKR,Ndi\Params\LinkWakeup,default,,"0"
+HKR,Ndi\Params\LinkWakeup,type,,"enum"
+HKR,Ndi\Params\LinkWakeup\enum,0,,"Enable"
+HKR,Ndi\Params\LinkWakeup\enum,1,,"Disable"
+HKR,Ndi\Params\LinkWakeup,flag,1,"20","00","00","00"
+
+
+HKR,Ndi\Params\FlowControl,ParamDesc,,"Flow Control"
+HKR,Ndi\Params\FlowControl,default,,"1"
+HKR,Ndi\Params\FlowControl,type,,"enum"
+HKR,Ndi\Params\FlowControl\enum,0,,"Enable"
+HKR,Ndi\Params\FlowControl\enum,1,,"Disable"
+HKR,Ndi\Params\FlowControl,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl_Tx,ParamDesc,,"Flow Control Base Tx Packets"
+HKR,Ndi\Params\FlowControl_Tx,default,,"0"
+HKR,Ndi\Params\FlowControl_Tx,type,,"enum"
+HKR,Ndi\Params\FlowControl_Tx\enum,0,,"Disable"
+HKR,Ndi\Params\FlowControl_Tx\enum,1,," 1 Packet"
+HKR,Ndi\Params\FlowControl_Tx\enum,2,," 2 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,3,," 4 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,4,," 8 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,5,,"16 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,6,,"32 Packets"
+HKR,Ndi\Params\FlowControl_Tx,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl_Rx,ParamDesc,,"Flow Control Base Rx Size"
+HKR,Ndi\Params\FlowControl_Rx,default,,"0"
+HKR,Ndi\Params\FlowControl_Rx,type,,"enum"
+HKR,Ndi\Params\FlowControl_Rx\enum,0,,"Disable"
+HKR,Ndi\Params\FlowControl_Rx\enum,1,," 1K"
+HKR,Ndi\Params\FlowControl_Rx\enum,2,," 2K"
+HKR,Ndi\Params\FlowControl_Rx\enum,3,," 4K"
+HKR,Ndi\Params\FlowControl_Rx\enum,4,," 8K"
+HKR,Ndi\Params\FlowControl_Rx\enum,5,,"16K"
+HKR,Ndi\Params\FlowControl_Rx\enum,6,,"32K"
+HKR,Ndi\Params\FlowControl_Rx,flag,1,"20","00","00","00"
+
+
+;*******************************************************************************
+; Install section for Windows NT 5
+;*******************************************************************************
+
+[ADM8511.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "ADM8511"
+HKR,,                Platform,   0, "1"
+
+[AN986.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "AN986"
+HKR,,                Platform,   0, "1"
+
+[ADM8511.Service]
+DisplayName    = %ADM8511.Service.DispName%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\NET8511.SYS
+LoadOrderGroup = NDIS,NTKERN,NDIS
+AddReg         = TextModeFlags.Reg
+
+[AN986.Service]
+DisplayName    = %AN986.Service.DispName%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\NET8511.SYS
+LoadOrderGroup = NDIS,NTKERN,NDIS
+AddReg         = TextModeFlags.Reg
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR, , TypesSupported  , 0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+
+;*******************************************************************************
+; Destination directories
+;*******************************************************************************
+
+[DestinationDirs]
+ADM8511.ndis.copyfiles    = 11
+ADM8511.ndis.copyfiles.NT = 12
+DefaultDestDir           = 11
+
+
+[SourceDisksNames]
+; Cabinet file names and associated disks
+; <cab#> = <disk#>,<cabinet filename>, ID (Unused, must be 0)
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+;<file> = <cabinet number>,<subdir>,<filename>,<size>
+;Note: File is not in a cabinet if cab# is 0
+NET8511.SYS = 1
+NET8511.INF = 1
+;NET8511.CAT = 1
+
+
+;*******************************************************************************
+; Localizable strings
+;*******************************************************************************
+
+[Strings]
+ADMtek = "ADMtek Incorp."
+
+;Source Disk Name
+DISKNAME = "ADMtek ADM8511 USB To Fast Ethernet Converter Driver Disk"
+
+ADM8511.DeviceDesc       = "ADMtek ADM8511 USB To Fast Ethernet Converter"
+AN986.DeviceDesc       = "ADMtek AN986 USB To Fast Ethernet Converter"
+ADM8511.Service.DispName = "ADMtek ADM8511 USB To Fast Ethernet Converter"
+AN986.Service.DispName = "ADMtek AN986 USB To Fast Ethernet Converter"
+

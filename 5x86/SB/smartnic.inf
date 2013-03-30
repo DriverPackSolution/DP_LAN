@@ -1,0 +1,157 @@
+; /****************************************************************************
+; ** COPYRIGHT (C) 1997-2000 smartBridges Pte. Ltd.
+; ** 
+; ** http://www.smartbridges.com
+; **
+; ****************************************************************************/
+
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %PROVIDER%
+LayoutFile  = layout.inf
+;CatalogFile = smartnic.cat
+
+[Manufacturer]
+%PROVIDER%  = smartBridges
+
+[ControlFlags]
+ExcludeFromSelect  = USB\VID_08D1&PID_0001
+
+[smartBridges]
+; DisplayName            Section       DeviceID
+; -----------            -------       --------
+%smartNIC.DeviceDesc%  = smartNIC.ndi, USB\VID_08D1&PID_0001 
+
+; Windows 9X specific entry
+[smartNIC.ndi]
+AddReg    = smartNIC.id.reg, params.reg, smartNIC.Flags.reg, smartNIC.win.reg
+CopyFiles = smartNIC.installer.CopyFiles
+DeviceID  = "USB\VID_08D1&PID_0001"
+LogConfig = DefaultConfig
+
+; Windows NT specific entry
+[smartNIC.ndi.NT]
+AddReg          = smartNIC.reg, params.reg
+BusType         = 5
+Characteristics = 0x84
+CopyFiles       = smartNIC.CopyFiles
+
+[smartNIC.ndi.NT.Services]
+AddService      = smartNIC, 2, smartNIC.Service, common.EventLog
+
+;----------------------------------------------------------------------------
+; Win9x id registry sections
+; These are not needed by NT
+[smartNIC.id.reg]
+HKR,Ndi,DeviceID,,"USB\VID_08D1&PID_0001"
+
+;----------------------------------------------------------------------------
+; Win9x flags section
+; Flags are not needed by NT
+[smartNIC.Flags.reg]
+HKR,NDI\params\OpMode,flag,1,30,00,00,00
+
+;-----------------------------------------------------------------------------
+; common base for 10/100Mb Adapters
+;
+[params.reg]
+; OpMode
+HKR,NDI\params\OpMode,ParamDesc,,"%OpMode%"
+HKR,NDI\params\OpMode,default,,"Optimal"
+HKR,NDI\params\OpMode,type,,enum
+HKR,NDI\params\OpMode\enum,"Optimal",,"Optimal"
+HKR,NDI\params\OpMode\enum,"Turbo",,"Turbo"
+
+;-----------------------------------------------------------------------------
+; NT specific
+;
+[smartNIC.reg]
+; Interfaces
+HKR, Ndi,                            Service,     0, "SMARTNIC"
+HKR, Ndi\Interfaces,                 UpperRange,  0, "ndis5"
+HKR, Ndi\Interfaces,                 LowerRange,  0, "ethernet"
+
+[smartNIC.Service]
+DisplayName     = %smartNIC.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\smartnic.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;----------------------------------------------------------------------------
+; Win9x specific
+;
+[smartNIC.win.reg]
+HKR,,DevLoader,,"*ndis,*ntkern,*ndis"
+HKR,,NTMPDriver,,smartnic.sys
+HKR,,DeviceVxDs,,smartnic.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"SMARTNIC"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+; Install sections
+HKR,Ndi\Install,ndis3,,"smartNIC.install"
+
+HKR,NDI,CardType,,"PNP"
+;HKR,NDI,NdiInstaller,,"MyNdi.dll,MyNdiProc"
+
+[smartNIC.install]
+AddReg=smartNIC.uninstall.reg, mobiliti.reg
+CopyFiles = smartNIC.win.CopyFiles, smartNIC.uninstall.CopyFiles, mobiliti.CopyFiles
+
+[smartNIC.uninstall.reg]
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\smartNIC,DisplayName,,"smartNIC HOT-SYNC(tm) Network Adapter"
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\smartNIC,UninstallString,,"remsn.exe /removekey /noreboot"
+
+[smartNIC.uninstall.CopyFiles]
+remsn.exe
+
+[smartNIC.installer.CopyFiles]
+;myndi.dll
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[smartNIC.CopyFiles]
+smartnic.sys,,,2
+
+[smartNIC.win.CopyFiles]
+smartnic.sys,,,2
+
+[DestinationDirs]
+smartNIC.CopyFiles     = 12
+smartNIC.win.CopyFiles = 11
+smartNIC.unininstall.CopyFiles = 10
+
+[SourceDisksName]
+1="smartNIC Installation Disk"
+
+[SourceDisksFiles]
+remsn.exe=1
+
+[Strings]
+Provider                  = "smartBridges"
+OpMode                    = "Operation Mode"
+smartNIC.DeviceDesc       = "smartNIC HOT-SYNC(tm) Network Adapter"
+smartNIC.Service.DispName = "smartNIC HOT-SYNC(tm) Network Adapter device driver" 

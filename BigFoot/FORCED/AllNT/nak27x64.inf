@@ -1,0 +1,1293 @@
+; /****************************************************************************
+; * Copyright 2009 Qualcomm Atheros, Inc., all rights reserved.               *
+; * INF file for Atheros reference designs                                    *
+; *   Added support for ar946x chip  11/11/2011                               *
+; ****************************************************************************/
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %ATHEROS%
+LoutFiles   = layout.inf
+CatalogFile = ak27x64.cat
+DriverVer   = 07/09/2012,10.0.1.71
+
+[Manufacturer]
+%ATHEROS%     = Atheros, Ntamd64.6.1, Ntamd64.6.0
+
+[ControlFlags]
+ExcludeFromSelect = *
+;
+; OS 6.1 Manufacturer section
+;
+[Atheros.Ntamd64.6.1]
+; DisplayName               Section                 DeviceID
+; -----------               -------                 --------
+;legacy HW Entries
+
+%ATHR.DeviceDesc.946x%     = ATHR_DEV_OS61_946x.ndi,     PCI\VEN_168C&DEV_0034&SUBSYS_20031A56  ;Killer 2x2 1202
+%ATHR.DeviceDesc.osprey%   = ATHR_DEV_OS61_OSPREY.ndi,   PCI\VEN_168C&DEV_0030&SUBSYS_20011A56  ;killer 3x3 1103
+%BFOOT.DeviceDesc.3096%    = ATHR_DEV_OS61_OSPREY.ndi,   PCI\VEN_168C&DEV_0030&SUBSYS_20001A56  ;Killer 2x2 1102
+%BFOOT.DeviceDesc.3096%    = BFOOT_DEV_OS61_002A.ndi,    PCI\VEN_168C&DEV_002A&SUBSYS_0200168C  ;5416 legacy
+;
+; Vista Manufacturer section
+;
+[Atheros.Ntamd64.6.0]
+; DisplayName               Section                 DeviceID
+; -----------               -------                 --------
+;legacy HW Entries
+%ATHR.DeviceDesc.946x%     = ATHR_DEV_946x.ndi,     PCI\VEN_168C&DEV_0034&SUBSYS_20031A56      ;Killer 2x2 1202
+%ATHR.DeviceDesc.osprey%   = ATHR_DEV_OSPREY.ndi,   PCI\VEN_168C&DEV_0030&SUBSYS_20011A56
+%BFOOT.DeviceDesc.3096%    = ATHR_DEV_OSPREY.ndi,   PCI\VEN_168C&DEV_0030&SUBSYS_20001A56
+;
+; OS 6.1 Manufacturer section
+;
+[BFOOT_DEV_OS61_002A.ndi.Ntamd64]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = killer_os61.reg, atheros11n.reg, ledcontrol2.reg, btcoex.reg, l2devices.reg 
+DelReg          = atheros.DelReg
+CopyFiles       = killer.CopyFiles
+*IfType         = 71        ; IF_TYPE_IEEE80211
+*MediaType      = 16        ; NdisMediumNative802_11
+*PhysicalMediaType = 9      ; NdisPhysicalMediumNative802_11
+Include         = netvwifibus.inf
+Needs           = VWiFiBus.CopyFiles
+
+[BFOOT_DEV_OS61_002A.ndi.Ntamd64.Services]
+AddService = Ak27x64, 2, killer.Service, atheros.EventLog
+Include    = netvwifibus.inf
+Needs      = VWiFiBus.Services
+
+[BFOOT_DEV_OS61_002A.ndi.Ntamd64.HW]
+Include = netvwifibus.inf
+Needs   = VWiFiBus.PnPFilterRegistration
+
+[ATHR_DEV_OS61_OSPREY.ndi.Ntamd64]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = killer_os61.reg, atheros11n.reg, smpsDynamic.reg, htAdhoc.reg, l2devices.reg
+DelReg          = atheros.DelReg
+CopyFiles       = killer.CopyFiles
+*IfType         = 71        ; IF_TYPE_IEEE80211
+*MediaType      = 16        ; NdisMediumNative802_11
+*PhysicalMediaType = 9      ; NdisPhysicalMediumNative802_11
+Include         = netvwifibus.inf
+Needs           = VWiFiBus.CopyFiles
+
+[ATHR_DEV_OS61_OSPREY.ndi.Ntamd64.Services]
+AddService = Ak27x64, 2, killer.Service, atheros.EventLog
+Include    = netvwifibus.inf
+Needs      = VWiFiBus.Services
+
+[ATHR_DEV_OS61_OSPREY.ndi.Ntamd64.HW]
+AddReg  = MSI.reg
+Include = netvwifibus.inf
+Needs   = VWiFiBus.PnPFilterRegistration
+
+;
+;    Jupiter addition for the ar9462
+;    
+[ATHR_DEV_OS61_946x.ndi.NTamd64]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = killer_os61.reg, atheros11n.reg, smpsDynamic.reg, ledcontrol2.reg, htAdhoc.reg, l2devices.reg, jupiter2ant.reg, halShortRetry.reg, IdleConfiguration.reg
+DelReg          = atheros.DelReg
+CopyFiles       = killer.CopyFiles
+*IfType         = 71        ; IF_TYPE_IEEE80211
+*MediaType      = 16        ; NdisMediumNative802_11
+*PhysicalMediaType = 9      ; NdisPhysicalMediumNative802_11
+Include         = machine.inf, netvwifibus.inf
+Needs           = VWiFiBus.CopyFiles
+
+[ATHR_DEV_OS61_946x.ndi.NTamd64.Services]
+AddService = Ak27x64, 2, killer.Service, atheros.EventLog
+Include    = netvwifibus.inf
+Needs      = VWiFiBus.Services
+
+[ATHR_DEV_OS61_946x.ndi.NTamd64.HW]
+Include = netvwifibus.inf
+Needs   = PciASPMOptIn, VWiFiBus.PnPFilterRegistration
+
+;
+;
+; Vista Model section
+;
+[BFOOT_DEV_002A.ndi.Ntamd64]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = killer_os60.reg, atheros11n.reg, ledcontrol2.reg, btcoex.reg, l2devices.reg 
+DelReg          = atheros.DelReg
+CopyFiles       = killer.CopyFiles
+*IfType         = 71        ; IF_TYPE_IEEE80211
+*MediaType      = 16        ; NdisMediumNative802_11
+*PhysicalMediaType = 9      ; NdisPhysicalMediumNative802_11
+
+[BFOOT_DEV_002A.ndi.Ntamd64.Services]
+AddService = Ak27x64, 2, killer.Service, atheros.EventLog
+
+
+[ATHR_DEV_OSPREY.ndi.Ntamd64]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = killer_os60.reg, atheros11n.reg, smpsDynamic.reg, htAdhoc.reg, l2devices.reg
+DelReg          = atheros.DelReg
+CopyFiles       = killer.CopyFiles
+*IfType         = 71        ; IF_TYPE_IEEE80211
+*MediaType      = 16        ; NdisMediumNative802_11
+*PhysicalMediaType = 9      ; NdisPhysicalMediumNative802_11
+
+[ATHR_DEV_OSPREY.ndi.Ntamd64.Services]
+AddService = Ak27x64, 2, killer.Service, atheros.EventLog
+
+[ATHR_DEV_OSPREY.ndi.Ntamd64.HW]
+AddReg  = MSI.reg
+;
+;  Jupiter addition for Vista
+;
+[ATHR_DEV_946x.ndi.NTamd64]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = killer_os61.reg, atheros11n.reg, smpsDynamic.reg, ledcontrol2.reg, htAdhoc.reg, l2devices.reg, jupiter2ant.reg, halShortRetry.reg, IdleConfiguration.reg 
+DelReg          = atheros.DelReg
+CopyFiles       = killer.CopyFiles
+*IfType         = 71        ; IF_TYPE_IEEE80211
+*MediaType      = 16        ; NdisMediumNative802_11
+*PhysicalMediaType = 9      ; NdisPhysicalMediumNative802_11
+Include         = machine.inf
+Needs           = PciASPMOptIn
+
+[ATHR_DEV_946x.ndi.NTamd64.Services]
+AddService = Ak27x64, 2, killer.Service, atheros.EventLog
+
+;;End of Others Section
+
+[killer_os61.reg]
+HKR, Ndi,                           Service,    0, "Ak27x64"
+HKR, Ndi\Interfaces,                UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,                LowerRange, 0, "wlan,ethernet,vwifi"
+
+[killer_os60.reg]
+HKR, Ndi,                           Service,    0, "Ak27x64"
+HKR, Ndi\Interfaces,                UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,                LowerRange, 0, "wlan,ethernet"
+
+[atheros11n.reg]
+HKR, Ndi\params\*ReceiveBuffers,    ParamDesc,  0, "%ReceiveBuffers%"
+HKR, Ndi\params\*ReceiveBuffers,    default,    0, "256"
+HKR, Ndi\params\*ReceiveBuffers,    min,        0, "1"
+HKR, Ndi\params\*ReceiveBuffers,    max,        0, "00000512"
+HKR, Ndi\params\*ReceiveBuffers,    step,       0, "1"
+HKR, Ndi\params\*ReceiveBuffers,    Base,       0, "10"
+HKR, Ndi\params\*ReceiveBuffers,    type,       0, "int"
+HKR, Ndi\params\*TransmitBuffers,   ParamDesc,  0, "%TransmitBuffers%"
+HKR, Ndi\params\*TransmitBuffers,   default,    0, "512"
+HKR, Ndi\params\*TransmitBuffers,   min,        0, "1"
+HKR, Ndi\params\*TransmitBuffers,   max,        0, "00000512"
+HKR, Ndi\params\*TransmitBuffers,   step,       0, "1"
+HKR, Ndi\params\*TransmitBuffers,   Base,       0, "10"
+HKR, Ndi\params\*TransmitBuffers,   type,       0, "int"
+HKR, Ndi\params\NetworkAddress,     ParamDesc,  0,  %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,     default,    0,  ""
+HKR, Ndi\params\NetworkAddress,     LimitText,  0,  "12"
+HKR, Ndi\params\NetworkAddress,     UpperCase,  0,  "1"
+HKR, Ndi\params\NetworkAddress,     optional,   0,  "1"
+HKR, Ndi\params\NetworkAddress,     type,       0,  "edit"
+HKR, Ndi\params\shortPreamble,      ParamDesc,  0,  %shortPreamble%
+HKR, Ndi\params\shortPreamble,      Base,       0,  "10"
+HKR, Ndi\params\shortPreamble,      default,    0,  "1"
+HKR, Ndi\params\shortPreamble,      type,       0,  "enum"
+HKR, Ndi\params\shortPreamble\enum, "1",        0,  %shortPreambleEnable%
+HKR, Ndi\params\shortPreamble\enum, "0",        0,  %shortPreambleDisable%
+HKR, Ndi\params\scanTimeValid,      ParamDesc,  0,  %scanTimeValid%
+HKR, Ndi\params\scanTimeValid,      default,    0,  "60"
+HKR, Ndi\params\scanTimeValid,      min,        0,  "20"
+HKR, Ndi\params\scanTimeValid,      max,        0,  "120"
+HKR, Ndi\params\scanTimeValid,      step,       0,  "5"
+HKR, Ndi\params\scanTimeValid,      base,       0,  "10"
+HKR, Ndi\params\scanTimeValid,      type,       0,  "int"
+
+;/* Enable these if VLAN or 802.1p is to be enabled */
+;HKR, Ndi\Params\*PriorityVLANTag,  ParamDesc,  , %PriorityVLAN%
+;HKR, Ndi\Params\*PriorityVLANTag,  default,    , "3"
+;HKR, Ndi\Params\*PriorityVLANTag,  type,       , "enum"
+;HKR, Ndi\Params\*PriorityVLANTag\enum, 0,      , %PriorityVLANDisabled%
+;HKR, Ndi\Params\*PriorityVLANTag\enum, 1,      , %PriorityEnabled%
+;HKR, Ndi\Params\*PriorityVLANTag\enum, 2,      , %VLANEnabled%
+;HKR, Ndi\Params\*PriorityVLANTag\enum, 3,      , %PriorityVLANEnabled%
+
+[atheros.DelReg]
+HKR,,NetBand
+HKR,,ssid
+HKR,,ssid2
+HKR,,ssid3
+HKR,,prefBssid1
+HKR,,prefBssid2
+HKR,,prefBssid3
+HKR,,prefBssid4
+HKR,Ndi\Params\tpc
+HKR,,tpc
+HKR,Ndi\Params\authTypeUseOnly
+HKR,,authTypeUseOnly
+HKR,,AdHocBand
+HKR,,AwakeTimePerf
+HKR,,beaconInterval
+HKR,,bkScanEnable
+HKR,,bssType
+HKR,,ccode
+HKR,,clist
+HKR,,defaultKey
+HKR,,EncryptionAlg
+HKR,,FragThreshold
+HKR,,HwTxRetries
+HKR,,privacyInvoked
+HKR,,QoS
+HKR,,rateCtrlEnable
+HKR,,RTSThreshold
+HKR,,scanType
+HKR,,SwTxRetryScale
+HKR,,SmeEnable
+HKR,,aifs
+HKR,,cwmin
+HKR,,halPcieClockReq
+HKR,Ndi\params,MapRegisters,0x2000
+HKR,,MapRegisters
+HKR,Ndi\params,radioEnable,0x2000
+HKR,Ndi\params,sleepMode,0x2000
+HKR,,sleepMode
+HKR,,gpioFunc0ActHi
+HKR,,gpioFunc1ActHi
+HKR,,gpioLedCustom
+HKR,,gpioPinFunc0
+HKR,,gpioPinFunc1
+HKR,,transmitRateMax
+HKR, Ndi\params\*TransmitBuffers
+HKR,,*TransmitBuffers
+HKR,,rxChainMask
+HKR,,txChainMaskLegacy
+HKR,,rxChainMaskLegacy
+HKR,,rxChainDetect
+HKR,,rxChainDetectRef
+HKR,,rxChainDetectThreshA
+HKR,,rxChainDetectThreshG
+HKR,,rxChainDetectDeltaA
+HKR,,rxChainDetectDeltaG
+HKR, Ndi\params\smpsDynamic
+HKR,,d3forcel1disable.reg
+HKR,,d3forcel1disablekite.reg
+HKR,,d3forcel1disablekite1.reg
+HKR,,wmeEnabled
+HKR,,halPcieWaen
+HKR,,halPcieDetach
+HKR,,ampEnable
+HKR,Ndi\IHVExtensions
+
+[expresscardaspmoff.reg]
+HKR, ,                                  pciDetectEnable,                0x00002,  "2"
+HKR, ,                                  halPciePowerSaveEnable,         0x00002,  "1"
+HKR, ,                                  pcieAspm,                       0x00002,  "0"
+
+[rfKillDelayDetect.reg]
+HKR, ,                                  rfKillDelayDetect,              0x00002,  "1"
+
+[d3hot.reg] 
+HKR, ,                                  halPciePowerReset,              0x00002,  "0"
+HKR, ,                                  halPcieRestore,                 0x00002,  "1"
+
+[enableswretry] 
+HKR, ,                                  numSwRetries,                   0x00002,  "4"
+
+[interruptpolling.reg]
+HKR, ,                                  isrPollInterval,                0x00002,  "100"
+
+[pcibusconfig.reg]
+HKR, ,                                  BusConfig,                      0x00002,  "0"
+HKR, ,                                  serializeRegMode,               0x00002,  "2"
+
+[serializing.reg]
+HKR, ,                                  serializeRegMode,               0x00002,  "1"
+
+[bandselect.reg]
+HKR, Ndi\params\NetBand,                ParamDesc,                      0,        %WirelessMode%
+HKR, Ndi\params\NetBand,                Base,                           0,        "10"
+HKR, Ndi\params\NetBand,                default,                        0,        "1647"
+HKR, Ndi\params\NetBand,                type,                           0,        "enum"
+HKR, Ndi\params\NetBand\enum,           "1647",                         0,        %Auto%
+HKR, Ndi\params\NetBand\enum,           "1603",                         0,        %5GOnly%
+HKR, Ndi\params\NetBand\enum,           "44",                           0,        %2GOnly%
+
+[roamthreshA.reg]
+HKR, Ndi\params\roamRssiA,              ParamDesc,                      0,        %roamRssiA%
+HKR, Ndi\params\roamRssiA,              default,                        0,        "15"
+HKR, Ndi\params\roamRssiA,              min,                            0,        "1"
+HKR, Ndi\params\roamRssiA,              max,                            0,        "95"
+HKR, Ndi\params\roamRssiA,              step,                           0,        "1"
+HKR, Ndi\params\roamRssiA,              base,                           0,        "10"
+HKR, Ndi\params\roamRssiA,              type,                           0,        "int"
+
+[ignore11d.reg]
+HKR,NDI\params\ignore11dBeacon,         ParamDesc,,                               %11DModeSwitch%
+HKR,NDI\params\ignore11dBeacon,         type,,                                    "enum"
+HKR,NDI\params\ignore11dBeacon,         Default,,                                 "1"
+HKR,NDI\params\ignore11dBeacon\enum,    0,,                                       %Enable%
+HKR,NDI\params\ignore11dBeacon\enum,    1,,                                       %Disable%
+
+;[radioswitch.reg]
+;HKR, Ndi\params\radioEnable,            ParamDesc,                      0,        %radioEnable%
+;HKR, Ndi\params\radioEnable,            Base,                           0,        "10"
+;HKR, Ndi\params\radioEnable,            default,                        0,        "1"
+;HKR, Ndi\params\radioEnable,            type,                           0,        "enum"
+;HKR, Ndi\params\radioEnable\enum,       "1",                            0,        %radioEnableOn%
+;HKR, Ndi\params\radioEnable\enum,       "0",                            0,        %radioEnableOff%
+
+[overridetxok.reg]
+HKR, ,                                  OverrideTxOk,                   0x00002,  "1"
+
+[adhocchannelselect.reg]
+HKR, Ndi\params\defaultIbssChannel,     ParamDesc,                      0,        %adhocchannel%
+HKR, Ndi\params\defaultIbssChannel,     default,                        0,        "10"
+HKR, Ndi\params\defaultIbssChannel,     min,                            0,        "1"
+HKR, Ndi\params\defaultIbssChannel,     max,                            0,        "11"
+HKR, Ndi\params\defaultIbssChannel,     step,                           0,        "1"
+HKR, Ndi\params\defaultIbssChannel,     base,                           0,        "10"
+HKR, Ndi\params\defaultIbssChannel,     type,                           0,        "int"
+
+[5416.bgnxb.reg]
+HKR, ,                                  NetBand,                        0x00002,  "26636"
+HKR, ,                                  wmodeselect,                    0x00002,  "26636"
+
+[5416.bandselect.reg]
+HKR, Ndi\params\NetBand,                ParamDesc,                      0,  %WirelessMode%
+HKR, Ndi\params\NetBand,                Base,                           0,  "10"
+HKR, Ndi\params\NetBand,                default,                        0,  "130671"
+HKR, Ndi\params\NetBand,                type,                           0,  "enum"
+HKR, Ndi\params\NetBand\enum,           "130671",                       0,  %Auto%
+HKR, Ndi\params\NetBand\enum,           "104003",                       0,  %5GOnly%
+HKR, Ndi\params\NetBand\enum,           "26668",                        0,  %2GOnly%
+
+[wirelessmodeselectkite.reg]
+HKR, Ndi\params\NetBand,                ParamDesc,                      0,  %WirelessMode%
+HKR, Ndi\params\NetBand,                Base,                           0,  "10"
+HKR, Ndi\params\NetBand,                default,                        0,  "26636"
+HKR, Ndi\params\NetBand,                type,                           0,  "enum"
+HKR, Ndi\params\NetBand\enum,           "26636",                        0,  %WirelessModeAuto%
+HKR, Ndi\params\NetBand\enum,           "12",                           0,  %WirelessMode11bgOnly%
+
+[5416.antennacontrols.reg] 
+HKR, ,                                  rxChainMask,                    0x00002,  "7"
+;HKR, ,                                  txChainMaskLegacy,              0x00002,  "5"
+HKR, ,                                  rxChainMaskLegacy,              0x00002,  "7"
+HKR, ,                                  rxChainDetect,                  0x00002,  "1"
+HKR, ,                                  rxChainDetectRef,               0x00002,  "0"
+HKR, ,                                  rxChainDetectThreshA,           0x00002,  "0"
+HKR, ,                                  rxChainDetectThreshG,           0x00002,  "0"
+HKR, ,                                  rxChainDetectDeltaA,            0x00002,  "20"
+HKR, ,                                  rxChainDetectDeltaG,            0x00002,  "20"
+
+[pushbutton.reg]
+HKR, ,                                  wpsButtonGpio,                  0x00002,  "9"
+
+[jupiter2ant.reg]
+HKR, ,                                  btCoexEnable,                   0x00002,  "5"
+HKR, ,                                  btCoexAgent,                    0x00002,  "1"
+HKR, ,                                  halPllPwrSave,                  0x00002,  "7"
+HKR, ,                                  txChainMaskLegacy,              0x00002,  "3"
+HKR, ,                                  rxChainMaskLegacy,              0x00002,  "3"
+
+[smpsDynamic.reg]
+HKR, Ndi\params\smpsDynamic,            ParamDesc,  0,  %smpsDynamic%
+HKR, Ndi\params\smpsDynamic,            Base,       0,  "10"
+HKR, Ndi\params\smpsDynamic,            default,    0,  "0"
+HKR, Ndi\params\smpsDynamic,            type,       0,  "enum"
+HKR, Ndi\params\smpsDynamic\enum,       "1",        0,  %Enable%
+HKR, Ndi\params\smpsDynamic\enum,       "0",        0,  %Disable%
+
+[amp.reg]
+HKR, ,                                  ampEnable,                      0x00002,  "1"
+HKR, Ndi\params\ampEnable,              ParamDesc,                      0,        %bt30%
+HKR, Ndi\params\ampEnable,              default,                        0,        "1"
+HKR, Ndi\params\ampEnable,              type,                           0,        "enum"
+HKR, Ndi\params\ampEnable\enum,         "1",                            0,        %bt30enable%
+HKR, Ndi\params\ampEnable\enum,         "0",                            0,        %bt30disable%
+
+[ampBFilter.reg]
+HKR, ,                                  ampFilterName,                  0x00002,  "BTWAMPFL"
+
+[ampFilter.reg]
+HKR, ,                                  ampFilterName,                  0x00002,  "ATHAMPFL"
+
+[customer0.reg]
+HKR, ,                                  ssid,                           0x00002,  "randomssidtoshutoffautoconnectib"
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60" 
+HKR, ,                                  capLinkSp,                      0x00002,  "1" 
+HKR, ,                                  pcieAspm,                       0x00002,  "2" 
+HKR, ,                                  halPciePowerSaveEnable,         0x00002,  "1" 
+HKR, Ndi\params\scanTimeValid,          ParamDesc,                      0,        %scanTime%
+HKR, Ndi\params\scanTimeValid,          default,                        0,        "60"
+HKR, Ndi\params\scanTimeValid,          min,                            0,        "20"
+HKR, Ndi\params\scanTimeValid,          max,                            0,        "120"
+HKR, Ndi\params\scanTimeValid,          step,                           0,        "5"
+HKR, Ndi\params\scanTimeValid,          base,                           0,        "10"
+HKR, Ndi\params\scanTimeValid,          type,                           0,        "int"
+
+[customer0_HB95.reg]
+HKR, ,                                  ssid,                           0x00002,  "randomssidtoshutoffautoconnectib"
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60" 
+HKR, Ndi\params\scanTimeValid,          ParamDesc,                      0,        %scanTime%
+HKR, Ndi\params\scanTimeValid,          default,                        0,        "60"
+HKR, Ndi\params\scanTimeValid,          min,                            0,        "20"
+HKR, Ndi\params\scanTimeValid,          max,                            0,        "120"
+HKR, Ndi\params\scanTimeValid,          step,                           0,        "5"
+HKR, Ndi\params\scanTimeValid,          base,                           0,        "10"
+HKR, Ndi\params\scanTimeValid,          type,                           0,        "int"
+
+[customer0_HB93.reg]
+HKR, ,                                  ssid,                           0x00002,  "randomssidtoshutoffautoconnectib"
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60" 
+HKR, ,                                  pcieAspm,                       0x00002,  "2" 
+HKR, ,                                  halPciePowerSaveEnable,         0x00002,  "1" 
+HKR, Ndi\params\scanTimeValid,          ParamDesc,                      0,        %scanTime%
+HKR, Ndi\params\scanTimeValid,          default,                        0,        "60"
+HKR, Ndi\params\scanTimeValid,          min,                            0,        "20"
+HKR, Ndi\params\scanTimeValid,          max,                            0,        "120"
+HKR, Ndi\params\scanTimeValid,          step,                           0,        "5"
+HKR, Ndi\params\scanTimeValid,          base,                           0,        "10"
+HKR, Ndi\params\scanTimeValid,          type,                           0,        "int"
+
+[customer0LED.reg]
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "0"
+
+[customer0LED1.reg]
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "1"
+HKR, ,                                  overrideACstatus,               0x00002,  "1"
+HKR, ,                                  halPcieClockReq,                0x00002,  "0"
+
+[customer0LED2.reg]
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "3"
+HKR, ,                                  overrideACstatus,               0x00002,  "1"
+HKR, ,                                  halPcieClockReq,                0x00002,  "0"
+
+[customer0_11n.reg]
+;PCIe Related
+HKR, ,                                  radioEnableInterval,            0x00002,  "5"
+HKR, ,                                  pcieAspm,                       0x00002,  "2"
+HKR, ,                                  halPciePowerSaveEnable,         0x00002,  "1"
+HKR, ,                                  overrideACstatus,               0x00002,  "1"
+HKR, ,                                  forceWake,                      0x00002,  "0"
+HKR, ,                                  antennaSwitchSwap,              0x00002,  "1"
+;LED Related
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "1"
+;General Customer0
+HKR, ,                                  ssid,                           0x00002,  "randomssidtoshutoffautoconnectib"
+HKR,NDI\params\ignore11dBeacon,ParamDesc,,      %11DModeSwitch%
+HKR,NDI\params\ignore11dBeacon,type,,           "enum"
+HKR,NDI\params\ignore11dBeacon,Default,,        "1"
+HKR,NDI\params\ignore11dBeacon\enum,0,,         %Enable%
+HKR,NDI\params\ignore11dBeacon\enum,1,,         %Disable%
+
+HKR, Ndi\params\roamRssiA,              ParamDesc,                      0,  %roamRssiA%
+HKR, Ndi\params\roamRssiA,              default,                        0,  "15"
+HKR, Ndi\params\roamRssiA,              min,                            0,  "1"
+HKR, Ndi\params\roamRssiA,              max,                            0,  "95"
+HKR, Ndi\params\roamRssiA,              step,                           0,  "1"
+HKR, Ndi\params\roamRssiA,              base,                           0,  "10"
+HKR, Ndi\params\roamRssiA,              type,                           0,  "int"
+
+HKR, Ndi\params\scanTimeValid,          ParamDesc,                      0,  %scanTime%
+HKR, Ndi\params\scanTimeValid,          default,                        0,  "60"
+HKR, Ndi\params\scanTimeValid,          min,                            0,  "20"
+HKR, Ndi\params\scanTimeValid,          max,                            0,  "120"
+HKR, Ndi\params\scanTimeValid,          step,                           0,  "5"
+HKR, Ndi\params\scanTimeValid,          base,                           0,  "10"
+HKR, Ndi\params\scanTimeValid,          type,                           0,  "int"
+
+[customer1ani.reg]
+HKR, Ndi\params\rssiThrHigh,            ParamDesc,                      0,        %rssiThrHigh%
+HKR, Ndi\params\rssiThrHigh,            Base,                           0,        "10"
+HKR, Ndi\params\rssiThrHigh,            default,                        0,        "40"
+HKR, Ndi\params\rssiThrHigh,            type,                           0,        "enum"
+HKR, Ndi\params\rssiThrHigh\enum,       "40",                           0,        %rssiThrHighNormal%
+HKR, Ndi\params\rssiThrHigh\enum,       "32",                           0,        %rssiThrHighMin%
+
+[customer1roamPolicy.reg]
+HKR, Ndi\params\roamPolicy,             ParamDesc,                      0,        %roamPolicy%
+HKR, Ndi\params\roamPolicy,             Base,                           0,        "10"
+HKR, Ndi\params\roamPolicy,             default,                        0,        "3"
+HKR, Ndi\params\roamPolicy,             type,                           0,        "enum"
+HKR, Ndi\params\roamPolicy\enum,        "1",                            0,        %roamPolicyVeryLow%
+HKR, Ndi\params\roamPolicy\enum,        "2",                            0,        %roamPolicyLow%
+HKR, Ndi\params\roamPolicy\enum,        "3",                            0,        %roamPolicyNormal%
+HKR, Ndi\params\roamPolicy\enum,        "4",                            0,        %roamPolicyHigh%
+HKR, Ndi\params\roamPolicy\enum,        "5",                            0,        %roamPolicyVeryHigh%
+
+[customer1GreenTx.reg]
+HKR, Ndi\params\roamPolicy,             ParamDesc,                      0,        %GreenTx%
+HKR, Ndi\params\roamPolicy,             Base,                           0,        "10"
+HKR, Ndi\params\roamPolicy,             default,                        0,        "0"
+HKR, Ndi\params\roamPolicy,             type,                           0,        "enum"
+HKR, Ndi\params\roamPolicy\enum,        "0",                            0,        %GreenTxEnableOff%
+HKR, Ndi\params\roamPolicy\enum,        "1",                            0,        %GreenTxEnableOn%
+
+[customer2.reg]
+HKR,,                                   linkLEDFunc,                    0,        "53"
+HKR,,                                   activityLEDFunc,                0,        "51"
+HKR,,                                   connectionLEDFunc,              0,        "55"
+
+[customer2.11n.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+
+[customer2merlin.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioFunc0ActHi,                 0x00002,  "1"
+
+[customer3.reg]
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60"
+HKR, ,                                  SleepTimePerf,                  0x00002,  "500"
+HKR, ,                                  LinkLEDFunc,                    0x00002,  "19"
+HKR, ,                                  ActivityLEDFunc,                0x00002,  "21"
+
+[customer3a.reg]
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60"
+HKR, ,                                  SleepTimePerf,                  0x00002,  "500"
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "3"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "4"
+HKR, ,                                  gpioFunc1ActHi,                 0x00002,  "0"
+
+;[customer3b.reg]
+;HKR, ,                                  gpioPinFunc1,                  0x00002,  "3"
+;HKR, ,                                  overrideACstatus,              0x00002,  "1"
+;HKR, ,                                  halPcieClockReq,               0x00002,  "0"
+;HKR, ,                                  gpioLedCustom,                 0x00002,  "4"
+;HKR, ,                                  gpioFunc1ActHi,                0x00002,  "0"
+
+[customer3c.reg]
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60"
+HKR, ,                                  SleepTimePerf,                  0x00002,  "500"
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "3"
+
+[customer3d.reg]
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60"
+HKR, ,                                  SleepTimePerf,                  0x00002,  "500"
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "3"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "0"
+HKR, ,                                  gpioFunc1ActHi,                 0x00002,  "0"
+
+[customer3e.reg]
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60"
+HKR, ,                                  SleepTimePerf,                  0x00002,  "500"
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "3"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "3"
+
+[customer3f.reg]
+HKR, ,                                  scanTimePreSleep,               0x00002,  "60"
+HKR, ,                                  SleepTimePerf,                  0x00002,  "500"
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "8"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "3"
+
+[customer3_legacybgwmode.reg]
+HKR, Ndi\params\wModeSelect,            ParamDesc,                      0,        %wModeSelect%
+HKR, Ndi\params\wModeSelect,            Base,                           0,        "10"
+HKR, Ndi\params\wModeSelect,            default,                        0,        "12"
+HKR, Ndi\params\wModeSelect,            type,                           0,        "enum"
+HKR, Ndi\params\wModeSelect\enum,       "4",                            0,        %wModeLegacy11bonly%
+HKR, Ndi\params\wModeSelect\enum,       "12",                           0,        %wModeLegacy11bg%
+
+[customer4.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  translateNullSsid,              0x00002,  "1"
+HKR, ,                                  AwakeTimePerf,                  0x00002,  "200"
+
+[customer4a.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioFunc0ActHi,                 0x00002,  "0"
+HKR, ,                                  halPcieClockReq,                0x00002,  "0"
+HKR, ,                                  translateNullSsid,              0x00002,  "1"
+HKR, ,                                  AwakeTimePerf,                  0x00002,  "200"
+
+[customer4as.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "8"
+HKR, ,                                  gpioFunc0ActHi,                 0x00002,  "0"
+HKR, ,                                  halPcieClockReq,                0x00002,  "0"
+HKR, ,                                  translateNullSsid,              0x00002,  "1"
+HKR, ,                                  AwakeTimePerf,                  0x00002,  "200"
+
+[customer4adhoc.reg]
+HKR, ,                                  defaultIbssChannel,             0x00002,  "11"
+
+[customer4b.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "3"
+HKR, ,                                  gpioFunc0ActHi,                 0x00002,  "0"
+HKR, ,                                  halPcieClockReq,                0x00002,  "0"
+HKR, ,                                  translateNullSsid,              0x00002,  "1"
+HKR, ,                                  AwakeTimePerf,                  0x00002,  "200"
+
+[customer4a_ASPM.reg]
+HKR, ,                                  pcieAspm,                       0x00002,  "0"
+
+[customer5Led.reg]
+HKR, ,                                  softLEDEnable,                  0x00002,  "1"
+HKR, ,                                  swapDefaultLED,                 0x00002,  "1"
+
+[customer5.11nLED.reg]
+HKR, ,                                  gpioLedCustom,                  0x00002,  "1"
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "2"
+HKR, ,                                  gpioFunc0ActHi,                 0x00002,  "1"
+HKR, ,                                  gpioFunc1ActHi,                 0x00002,  "0"
+
+[customer5.PCIe11nLed.reg]
+HKR, ,                                  gpioLedCustom,                  0x00002,  "1"
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "1"
+
+[customer5.3x3.reg]
+HKR, ,                                  txChainMask,                    0x00002,  "7"
+HKR, ,                                  rxChainMask,                    0x00002,  "7"
+
+[customer7Led.reg]
+HKR, ,                                  gpioLedCustom,                  0x00002,  "2"
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "2"
+HKR, ,                                  gpioFunc0ActHi,                 0x00002,  "1"
+HKR, ,                                  gpioFunc1ActHi,                 0x00002,  "1"
+
+[customer9Led.reg]
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "1"
+
+[Customer15a.led.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "3"
+
+[Customer15b.led.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "3"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "3"
+
+[gpioled.reg]
+HKR,,                                   linkLEDFunc,                    0,        "49"
+HKR,,                                   activityLEDFunc,                0,        "51"
+HKR,,                                   connectionLEDFunc,              0,        "55"
+
+[ratecap.reg]
+HKR, ,                                  txCoalescingEnable,             0x00002,  "1"
+
+[customer11n.reg]
+HKR, Ndi\params\*ReceiveBuffers,        ParamDesc,                      0,        "%ReceiveBuffers%"
+HKR, Ndi\params\*ReceiveBuffers,        default,                        0,        "256"
+HKR, Ndi\params\*ReceiveBuffers,        min,                            0,        "1"
+HKR, Ndi\params\*ReceiveBuffers,        max,                            0,        "00000512"
+HKR, Ndi\params\*ReceiveBuffers,        step,                           0,        "1"
+HKR, Ndi\params\*ReceiveBuffers,        Base,                           0,        "10"
+HKR, Ndi\params\*ReceiveBuffers,        type,                           0,        "int"
+HKR, Ndi\params\*TransmitBuffers,       ParamDesc,                      0,        "%TransmitBuffers%"
+HKR, Ndi\params\*TransmitBuffers,       default,                        0,        "512"
+HKR, Ndi\params\*TransmitBuffers,       min,                            0,        "1"
+HKR, Ndi\params\*TransmitBuffers,       max,                            0,        "00000512"
+HKR, Ndi\params\*TransmitBuffers,       step,                           0,        "1"
+HKR, Ndi\params\*TransmitBuffers,       Base,                           0,        "10"
+HKR, Ndi\params\*TransmitBuffers,       type,                           0,        "int"
+HKR, Ndi\params\shortPreamble,          ParamDesc,                      0,        %shortPreamble%
+HKR, Ndi\params\shortPreamble,          Base,                           0,        "10"
+HKR, Ndi\params\shortPreamble,          default,                        0,        "1"
+HKR, Ndi\params\shortPreamble,          type,                           0,        "enum"
+HKR, Ndi\params\shortPreamble\enum,     "1",                            0,        %shortPreambleEnable%
+HKR, Ndi\params\shortPreamble\enum,     "0",                            0,        %shortPreambleDisable%
+HKR, Ndi\params\scanTimeValid,          ParamDesc,                      0,        %scanTimeValid%
+HKR, Ndi\params\scanTimeValid,          default,                        0,        "60"
+HKR, Ndi\params\scanTimeValid,          min,                            0,        "20"
+HKR, Ndi\params\scanTimeValid,          max,                            0,        "120"
+HKR, Ndi\params\scanTimeValid,          step,                           0,        "5"
+HKR, Ndi\params\scanTimeValid,          base,                           0,        "10"
+HKR, Ndi\params\scanTimeValid,          type,                           0,        "int"
+
+[customer11.reg]
+HKR, Ndi\params\*ReceiveBuffers,    ParamDesc,  0, "%ReceiveBuffers%"
+HKR, Ndi\params\*ReceiveBuffers,    default,    0, "256"
+HKR, Ndi\params\*ReceiveBuffers,    min,        0, "1"
+HKR, Ndi\params\*ReceiveBuffers,    max,        0, "00000512"
+HKR, Ndi\params\*ReceiveBuffers,    step,       0, "1"
+HKR, Ndi\params\*ReceiveBuffers,    Base,       0, "10"
+HKR, Ndi\params\*ReceiveBuffers,    type,       0, "int"
+HKR, Ndi\params\*TransmitBuffers,   ParamDesc,  0, "%TransmitBuffers%"
+HKR, Ndi\params\*TransmitBuffers,   default,    0, "256"
+HKR, Ndi\params\*TransmitBuffers,   min,        0, "1"
+HKR, Ndi\params\*TransmitBuffers,   max,        0, "00000512"
+HKR, Ndi\params\*TransmitBuffers,   step,       0, "1"
+HKR, Ndi\params\*TransmitBuffers,   Base,       0, "10"
+HKR, Ndi\params\*TransmitBuffers,   type,       0, "int"
+HKR, Ndi\params\shortPreamble,      ParamDesc,  0,  %shortPreamble%
+HKR, Ndi\params\shortPreamble,      Base,       0,  "10"
+HKR, Ndi\params\shortPreamble,      default,    0,  "1"
+HKR, Ndi\params\shortPreamble,      type,       0,  "enum"
+HKR, Ndi\params\shortPreamble\enum, "1",        0,  %shortPreambleEnable%
+HKR, Ndi\params\shortPreamble\enum, "0",        0,  %shortPreambleDisable%
+HKR, Ndi\params\scanTimeValid,      ParamDesc,  0,  %scanTimeValid%
+HKR, Ndi\params\scanTimeValid,      default,    0,  "60"
+HKR, Ndi\params\scanTimeValid,      min,        0,  "20"
+HKR, Ndi\params\scanTimeValid,      max,        0,  "120"
+HKR, Ndi\params\scanTimeValid,      step,       0,  "5"
+HKR, Ndi\params\scanTimeValid,      base,       0,  "10"
+HKR, Ndi\params\scanTimeValid,      type,       0,  "int"
+
+[customer11custom.reg]
+HKR, Ndi\params\bkScanEnable,           ParamDesc,                      0,        %bkScanEnable%
+HKR, Ndi\params\bkScanEnable,           Base,                           0,        "10"
+HKR, Ndi\params\bkScanEnable,           default,                        0,        "1"
+HKR, Ndi\params\bkScanEnable,           type,                           0,        "enum"
+HKR, Ndi\params\bkScanEnable\enum,      "1",                            0,        %bkScanEnableOn%
+HKR, Ndi\params\bkScanEnable\enum,      "0",                            0,        %bkScanEnableOff%
+
+HKR, Ndi\params\radioEnable,            ParamDesc,                      0,        %radioEnable%
+HKR, Ndi\params\radioEnable,            Base,                           0,        "10"
+HKR, Ndi\params\radioEnable,            default,                        0,        "1"
+HKR, Ndi\params\radioEnable,            type,                           0,        "enum"
+HKR, Ndi\params\radioEnable\enum,       "1",                            0,        %radioEnableOn%
+HKR, Ndi\params\radioEnable\enum,       "0",                            0,        %radioEnableOff%
+
+HKR, Ndi\params\roamRssiA,              ParamDesc,                      0,        %roamRssi11A%
+HKR, Ndi\params\roamRssiA,              default,                        0,        "15"
+HKR, Ndi\params\roamRssiA,              min,                            0,        "1"
+HKR, Ndi\params\roamRssiA,              max,                            0,        "95"
+HKR, Ndi\params\roamRssiA,              step,                           0,        "1"
+HKR, Ndi\params\roamRssiA,              base,                           0,        "10"
+HKR, Ndi\params\roamRssiA,              type,                           0,        "int"
+
+HKR, Ndi\params\roamRssiBOnly,          ParamDesc,                      0,        %roamRssi11BOnly%
+HKR, Ndi\params\roamRssiBOnly,          default,                        0,        "8"
+HKR, Ndi\params\roamRssiBOnly,          min,                            0,        "0"
+HKR, Ndi\params\roamRssiBOnly,          max,                            0,        "95"
+HKR, Ndi\params\roamRssiBOnly,          step,                           0,        "1"
+HKR, Ndi\params\roamRssiBOnly,          base,                           0,        "10"
+HKR, Ndi\params\roamRssiBOnly,          type,                           0,        "int"
+
+HKR, Ndi\params\roamRssiB,              ParamDesc,                      0,        %roamRssi11B%
+HKR, Ndi\params\roamRssiB,              default,                        0,        "24"
+HKR, Ndi\params\roamRssiB,              min,                            0,        "0"
+HKR, Ndi\params\roamRssiB,              max,                            0,        "95"
+HKR, Ndi\params\roamRssiB,              step,                           0,        "1"
+HKR, Ndi\params\roamRssiB,              base,                           0,        "10"
+HKR, Ndi\params\roamRssiB,              type,                           0,        "int"
+
+HKR, Ndi\params\roamRateA,              ParamDesc,                      0,        %roamRateA%
+HKR, Ndi\params\roamRateA,              Base,                           0,        "10"
+HKR, Ndi\params\roamRateA,              default,                        0,        "24000"
+HKR, Ndi\params\roamRateA,              type,                           0,        "enum"
+HKR, Ndi\params\roamRateA\enum,         "6000",                         0,        %roamRateA6M%
+HKR, Ndi\params\roamRateA\enum,         "9000",                         0,        %roamRateA9M%
+HKR, Ndi\params\roamRateA\enum,         "12000",                        0,        %roamRateA12M%
+HKR, Ndi\params\roamRateA\enum,         "18000",                        0,        %roamRateA18M%
+HKR, Ndi\params\roamRateA\enum,         "24000",                        0,        %roamRateA24M%
+HKR, Ndi\params\roamRateA\enum,         "36000",                        0,        %roamRateA36M%
+HKR, Ndi\params\roamRateA\enum,         "48000",                        0,        %roamRateA48M%
+HKR, Ndi\params\roamRateA\enum,         "54000",                        0,        %roamRateA54M%
+
+HKR, Ndi\params\roamRateBOnly,          ParamDesc,                      0,        %roamRateBOnly%
+HKR, Ndi\params\roamRateBOnly,          Base,                           0,        "10"
+HKR, Ndi\params\roamRateBOnly,          default,                        0,        "5000"
+HKR, Ndi\params\roamRateBOnly,          type,                           0,        "enum"
+HKR, Ndi\params\roamRateBOnly\enum,     "1000",                         0,        %roamRateBOnly1M%
+HKR, Ndi\params\roamRateBOnly\enum,     "2000",                         0,        %roamRateBOnly2M%
+HKR, Ndi\params\roamRateBOnly\enum,     "5000",                         0,        %roamRateBOnly5M%
+HKR, Ndi\params\roamRateBOnly\enum,     "11000",                        0,        %roamRateBOnly11M%
+
+HKR, Ndi\params\roamRateB,              ParamDesc,                      0,        %roamRateB%
+HKR, Ndi\params\roamRateB,              Base,                           0,        "10"
+HKR, Ndi\params\roamRateB,              default,                        0,        "9000"
+HKR, Ndi\params\roamRateB,              type,                           0,        "enum"
+HKR, Ndi\params\roamRateB\enum,         "1000",                         0,        %roamRateB1M%
+HKR, Ndi\params\roamRateB\enum,         "2000",                         0,        %roamRateB2M%
+HKR, Ndi\params\roamRateB\enum,         "5000",                         0,        %roamRateB5M%
+HKR, Ndi\params\roamRateB\enum,         "6000",                         0,        %roamRateB6M%
+HKR, Ndi\params\roamRateB\enum,         "9000",                         0,        %roamRateB9M%
+HKR, Ndi\params\roamRateB\enum,         "11000",                        0,        %roamRateB11M%
+
+HKR, Ndi\params\pcieAspm,               ParamDesc,                      0,        %pcieAspm%
+HKR, Ndi\params\pcieAspm,               Base,                           0,        "10"
+HKR, Ndi\params\pcieAspm,               default,                        0,        "0"
+HKR, Ndi\params\pcieAspm,               type,                           0,        "enum"
+HKR, Ndi\params\pcieAspm\enum,          "0",                            0,        %pcieAspmOff%
+HKR, Ndi\params\pcieAspm\enum,          "1",                            0,        %pcieAspmL0sOn%
+HKR, Ndi\params\pcieAspm\enum,          "2",                            0,        %pcieAspmL1On%
+HKR, Ndi\params\pcieAspm\enum,          "3",                            0,        %pcieAspmL0sandL1On%
+
+[customer11_11n40wmode.reg]
+HKR, Ndi\params\wModeSelect,            ParamDesc,                      0,        %wModeSelect%
+HKR, Ndi\params\wModeSelect,            Base,                           0,        "10"
+HKR, Ndi\params\wModeSelect,            default,                        0,        "129055"
+HKR, Ndi\params\wModeSelect,            type,                           0,        "enum"
+HKR, Ndi\params\wModeSelect\enum,       "26628",                        0,        %wModeSelect11bonly%
+HKR, Ndi\params\wModeSelect\enum,       "102403",                       0,        %wModeSelect11na%
+HKR, Ndi\params\wModeSelect\enum,       "26652",                        0,        %wModeSelect11nbg%
+HKR, Ndi\params\wModeSelect\enum,       "129055",                       0,        %wModeSelect11abgn%
+
+[customer11_11nwmode.reg]
+HKR, Ndi\params\wModeSelect,            ParamDesc,                      0,        %wModeSelect%
+HKR, Ndi\params\wModeSelect,            Base,                           0,        "10"
+HKR, Ndi\params\wModeSelect,            default,                        0,        "6175"
+HKR, Ndi\params\wModeSelect,            type,                           0,        "enum"
+HKR, Ndi\params\wModeSelect\enum,       "2052",                         0,        %wModeSelect11bonly%
+HKR, Ndi\params\wModeSelect\enum,       "4099",                         0,        %wModeSelect11na%
+HKR, Ndi\params\wModeSelect\enum,       "2076",                         0,        %wModeSelect11nbg%
+HKR, Ndi\params\wModeSelect\enum,       "6175",                         0,        %wModeSelect11abgn%
+
+[customer11_legacywmode.reg]
+HKR, Ndi\params\wModeSelect,            ParamDesc,                      0,        %wModeSelect%
+HKR, Ndi\params\wModeSelect,            Base,                           0,        "10"
+HKR, Ndi\params\wModeSelect,            default,                        0,        "31"
+HKR, Ndi\params\wModeSelect,            type,                           0,        "enum"
+HKR, Ndi\params\wModeSelect\enum,       "4",                            0,        %wModeLegacy11bonly%
+HKR, Ndi\params\wModeSelect\enum,       "3",                            0,        %wModeLegacy11a%
+HKR, Ndi\params\wModeSelect\enum,       "28",                           0,        %wModeLegacy11bg%
+HKR, Ndi\params\wModeSelect\enum,       "31",                           0,        %wModeLegacy11abg%
+
+[customer11Ant.reg]
+HKR, Ndi\params\antennaSwitch,          ParamDesc,                      0,        %antennaSwitch%
+HKR, Ndi\params\antennaSwitch,          Base,                           0,        "10"
+HKR, Ndi\params\antennaSwitch,          default,                        0,        "2"
+HKR, Ndi\params\antennaSwitch,          type,                           0,        "enum"
+HKR, Ndi\params\antennaSwitch\enum,     "0",                            0,        %antennaSwitchA%
+HKR, Ndi\params\antennaSwitch\enum,     "1",                            0,        %antennaSwitchB%
+HKR, Ndi\params\antennaSwitch\enum,     "2",                            0,        %antennaSwitchAuto%
+
+[customer_Samsung.reg]
+HKR, Ndi\params\sleepMode,                ParamDesc,                      0,  %PowerSaveMode%
+HKR, Ndi\params\sleepMode,                Base,                           0,  "10"
+HKR, Ndi\params\sleepMode,                default,                        0,  "2"
+HKR, Ndi\params\sleepMode,                type,                           0,  "enum"
+HKR, Ndi\params\sleepMode\enum,           "0",                            0,  %Off%
+HKR, Ndi\params\sleepMode\enum,           "1",                            0,  %Maximum%
+HKR, Ndi\params\sleepMode\enum,           "2",                            0,  %Normal%
+HKR, NDI\params\ignore11dBeacon,ParamDesc,,     %802_11d%
+HKR, NDI\params\ignore11dBeacon,type,,          "enum"
+HKR, NDI\params\ignore11dBeacon,Default,,       "1"
+HKR, NDI\params\ignore11dBeacon\enum,0,,        %Enable%
+HKR, NDI\params\ignore11dBeacon\enum,1,,        %Disable%
+HKR, ,                                  pcieAspm,                       0x00002,  "2" 
+HKR, ,                                  halPciePowerSaveEnable,         0x00002,  "1" 
+
+[xb72.via.reg]
+HKLM, SYSTEM\CurrentControlSet\Services\pci\Parameters,168c0024,0x00000001, 00,00,00,20,00,00,00,00
+
+[rssiAdjust.reg]
+HKR, ,                                  rssiAdjust,                     0x00002,  "7"
+
+[cmdRegister.reg]
+HKR, ,                                  cmdRegister,                    0x00002,  "838"
+
+[htAdhocdisable.reg]
+HKR, ,                                  htAdhocEnable,                  0x00002,  "0"
+
+[htAdhoc.reg]
+HKR, NDI\params\htAdhocEnable,ParamDesc,,       %AdHoc11n%
+HKR, NDI\params\htAdhocEnable,type,,            "enum"
+HKR, NDI\params\htAdhocEnable,Default,,         "0"
+HKR, NDI\params\htAdhocEnable\enum,0,,          %Disable%
+HKR, NDI\params\htAdhocEnable\enum,1,,          %Enable%
+
+[htWepTkipOpt.reg]
+HKR, Ndi\params\htEnableWepTkip,ParamDesc,  0,  %WepTkip11n%
+HKR, NDI\params\htEnableWepTkip,type,,          "enum"
+HKR, NDI\params\htEnableWepTkip,Default,,       "1"
+HKR, NDI\params\htEnableWepTkip\enum,0,,        %Disable%
+HKR, NDI\params\htEnableWepTkip\enum,1,,        %Enable%
+
+[htEnableWepTkip.reg]
+HKR, ,                                  htEnableWepTkip,                  0x00002,  "1"
+
+[cemspecled_func1_1.reg]
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "1"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "4"
+
+[cemspecled_func1_3.reg]
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "3"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "4"
+
+[cemspecled_func1_8.reg]
+HKR, ,                                  gpioPinFunc1,                   0x00002,  "8"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "4"
+
+[cemspecled_func2_1.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "3"
+
+[cemspecled_func2_8.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "8"
+HKR, ,                                  gpioLedCustom,                  0x00002,  "3"
+
+[cemspecled_func0_1.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioFunc0ActHi,                 0x00002,  "0"
+HKR, ,                                  sharedGpioFunc0,                0x00002,  "1"
+
+[d3forcel1disable.reg]
+HKR, ,                                  halPcieWaen,                    0x00002,  "4212539"
+
+[d3forcel1disable1.reg]
+HKR, ,                                  halPcieWaen,                         0x00002,  "4212539"
+HKR, ,                                  halPcieDetach,                    0x00002,  "1"
+
+[maxpowersave.reg]
+HKR, ,                                  sleepTimePwrSave,               0x00002,  "1000"
+HKR, ,                                  SleepTimePerf,                  0x00002,  "1000"
+
+[customer_IODATA.reg]
+HKR, ,                                  LinkLedFunc,                    0, "49"
+HKR, ,                                  ActivityLedFunc,                0, "51"
+
+[ledcontrol2.reg]
+HKR, ,                                  gpioPinFunc0,                   0x00002,  "1"
+HKR, ,                                  gpioFunc0ActHi,                 0x00002,  "0"
+
+[btcoex.reg]
+HKR, ,                                  btCoexEnable,                   0x00002,  "1"
+
+[janusda.reg]
+HKR, ,                                  btCoexEnable,                   0x00002,  "4"
+HKR, ,                                  btCoexAgent,                    0x00002,  "1"
+HKR, ,                                  btCoexDisablePTA,               0x00002,  "2621441"
+HKR, ,                                  btWlanIsolation,                0x00002,  "25"
+HKR, ,                                  btCoexAntDivEnable,             0x00002,  "1"
+
+[janusda_coexPTA_40_21.reg]
+HKR, ,                                  btCoexEnable,                   0x00002,  "4"
+HKR, ,                                  btCoexAgent,                    0x00002,  "1"
+HKR, ,                                  btCoexDisablePTA,               0x00002,  "2621441"
+HKR, ,                                  btWlanIsolation,                0x00002,  "21"
+
+[heliusda.reg]
+HKR, ,                                  btCoexEnable,                   0x00002,  "4"
+HKR, ,                                  btCoexAgent,                    0x00002,  "1"
+HKR, ,                                  btModule,                       0x00002,  "2"
+HKR, ,                                  txCoalescingEnable,             0x00002,  "1"
+HKR, ,                                  txChainMaskLegacy,              0x00002,  "2"
+HKR, ,                                  rxChainMaskLegacy,              0x00002,  "2"
+
+[ampDisablePolicy.reg]
+HKR, ,                                  ampEnable,                      0x00002,  "0"
+
+[merlinshiftdelay.reg]
+HKR, ,                                  analogShiftRegDelay,            0x00002,  "10"
+
+[minpower.reg]
+HKR, ,                                  legacyMinTxPowerLimit,            0x00002,  "10"
+
+[wowenable.reg]
+HKR, ,                                  wowEnable,                      0x00002,  "1"
+
+[triggerlevelkiteonly.reg]
+HKR, ,                                  txTrigLevelMax ,                0x00002,  "32"
+
+[c3war.reg]
+HKR, ,                                  c3WarTimerPeriod,               0x00002,  "130"
+
+[indicaterxlinkspeed.reg]
+HKR, ,                                  indicateRxLinkSpeed ,           0x00002,  "1"
+
+[fullhwresethb93.reg]
+HKR, ,                                  halFullResetWarEnable ,         0x00002,  "0"
+
+[sharegpio.reg]
+HKR, ,                                  sharedGpioFunc0 ,               0x00002,  "1"
+
+[rxLatencyWar.reg]
+HKR, ,                                  rxLatencyWar ,                  0x00002,  "1"
+
+[MSI.reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 4
+
+[l2devices.reg]
+; Background scan enable
+HKR, Ndi\params\bkScanEnable,           ParamDesc,          0,        %bkScanEnable%
+HKR, Ndi\params\bkScanEnable,           Base,               0,        "10"
+HKR, Ndi\params\bkScanEnable,           default,            0,        "1"
+HKR, Ndi\params\bkScanEnable,           type,               0,        "enum"
+HKR, Ndi\params\bkScanEnable\enum,      "1",                0,        %bkScanEnableOn%
+HKR, Ndi\params\bkScanEnable\enum,      "0",                0,        %bkScanEnableOff%
+; Rate control enable
+;HKR, Ndi\params\rateCtrlEnable,         ParamDesc,          0,        %rateCtrlEnable%
+;HKR, Ndi\params\rateCtrlEnable,         Base,               0,        "10"
+;HKR, Ndi\params\rateCtrlEnable,         default,            0,        "1"
+;HKR, Ndi\params\rateCtrlEnable,         type,               0,        "enum"
+;HKR, Ndi\params\rateCtrlEnable\enum,    "1",                0,        %rateCtrlEnableOn%
+;HKR, Ndi\params\rateCtrlEnable\enum,    "0",                0,        %rateCtrlEnableOff%
+; Transmit rate set
+HKR, Ndi\params\TransmitRateSet,        ParamDesc,          0,        %TransmitRateSet%
+HKR, Ndi\params\TransmitRateSet,        Base,               0,        "10"
+HKR, Ndi\params\TransmitRateSet,        default,            0,        "0"
+HKR, Ndi\params\TransmitRateSet,        type,               0,        "enum"
+HKR, Ndi\params\TransmitRateSet\enum,   "0",                0,        %TransmitRateSetRC%
+HKR, Ndi\params\TransmitRateSet\enum,   "25",               0,        %TransmitRateSet5M%
+HKR, Ndi\params\TransmitRateSet\enum,   "11",               0,        %TransmitRateSet6M%
+HKR, Ndi\params\TransmitRateSet\enum,   "15",               0,        %TransmitRateSet9M%
+HKR, Ndi\params\TransmitRateSet\enum,   "24",               0,        %TransmitRateSet11M%
+HKR, Ndi\params\TransmitRateSet\enum,   "10",               0,        %TransmitRateSet12M%
+HKR, Ndi\params\TransmitRateSet\enum,   "14",               0,        %TransmitRateSet18M%
+HKR, Ndi\params\TransmitRateSet\enum,   "09",               0,        %TransmitRateSet24M%
+HKR, Ndi\params\TransmitRateSet\enum,   "13",               0,        %TransmitRateSet36M%
+HKR, Ndi\params\TransmitRateSet\enum,   "08",               0,        %TransmitRateSet48M%
+HKR, Ndi\params\TransmitRateSet\enum,   "12",               0,        %TransmitRateSet54M%
+; Backoff Threshold setting
+HKR, Ndi\params\BackoffTheshold,        ParamDesc,          0,        %BackoffTheshold%
+HKR, Ndi\params\BackoffTheshold,        Base,               0,        "10"
+HKR, Ndi\params\BackoffTheshold,        default,            0,        "2"
+HKR, Ndi\params\BackoffTheshold,        type,               0,        "enum"
+HKR, Ndi\params\BackoffTheshold\enum,   "2",                0,        %BackoffTheshold2%
+HKR, Ndi\params\BackoffTheshold\enum,   "4",                0,        %BackoffTheshold4%
+HKR, Ndi\params\BackoffTheshold\enum,   "8",                0,        %BackoffTheshold8%
+HKR, Ndi\params\BackoffTheshold\enum,   "16",               0,        %BackoffTheshold16%
+HKR, Ndi\params\BackoffTheshold\enum,   "32",               0,        %BackoffTheshold32%
+HKR, Ndi\params\BackoffTheshold\enum,   "64",               0,        %BackoffTheshold64%
+HKR, Ndi\params\BackoffTheshold\enum,   "128",              0,        %BackoffTheshold128%
+HKR, Ndi\params\BackoffTheshold\enum,   "256",              0,        %BackoffTheshold256%
+HKR, Ndi\params\BackoffTheshold\enum,   "512",              0,        %BackoffTheshold512%
+HKR, Ndi\params\BackoffTheshold\enum,   "1024",             0,        %BackoffTheshold1024%
+; Virtual Collision handling policy
+HKR, Ndi\params\VirtualCollisionPolicy,           ParamDesc,          0,        %VirtualCollisionPolicy%
+HKR, Ndi\params\VirtualCollisionPolicy,           Base,               0,        "10"
+HKR, Ndi\params\VirtualCollisionPolicy,           default,            0,        "0"
+HKR, Ndi\params\VirtualCollisionPolicy,           type,               0,        "enum"
+HKR, Ndi\params\VirtualCollisionPolicy\enum,      "0",                0,        %VirtualCollisionPolicyDefault%
+HKR, Ndi\params\VirtualCollisionPolicy\enum,      "1",                0,        %VirtualCollisionPolicyIgnore%
+; Force high priority Tx queue for QoS data frames
+HKR, Ndi\params\ForceHighTxQ,           ParamDesc,          0,        %ForceHighTxQ%
+HKR, Ndi\params\ForceHighTxQ,           Base,               0,        "10"
+HKR, Ndi\params\ForceHighTxQ,           default,            0,        "0"
+HKR, Ndi\params\ForceHighTxQ,           type,               0,        "enum"
+HKR, Ndi\params\ForceHighTxQ\enum,      "0",                0,        %ForceHighTxQOff%
+HKR, Ndi\params\ForceHighTxQ\enum,      "1",                0,        %ForceHighTxQOn%
+; Tx queue params
+HKR, Ndi\params\CWmin,    ParamDesc,  0, "%CWmin%"
+HKR, Ndi\params\CWmin,    default,    0, "3"
+HKR, Ndi\params\CWmin,    min,        0, "1"
+HKR, Ndi\params\CWmin,    max,        0, "7"
+HKR, Ndi\params\CWmin,    step,       0, "1"
+HKR, Ndi\params\CWmin,    Base,       0, "10"
+HKR, Ndi\params\CWmin,    type,       0, "int"
+;
+HKR, Ndi\params\CWmax,    ParamDesc,  0, "%CWmax%"
+HKR, Ndi\params\CWmax,    default,    0, "7"
+HKR, Ndi\params\CWmax,    min,        0, "2"
+HKR, Ndi\params\CWmax,    max,        0, "255"
+HKR, Ndi\params\CWmax,    step,       0, "1"
+HKR, Ndi\params\CWmax,    Base,       0, "10"
+HKR, Ndi\params\CWmax,    type,       0, "int"
+;
+HKR, Ndi\params\AIFS,    ParamDesc,   0, "%AIFS%"
+HKR, Ndi\params\AIFS,    default,     0, "2"
+HKR, Ndi\params\AIFS,    min,         0, "1"
+HKR, Ndi\params\AIFS,    max,         0, "7"
+HKR, Ndi\params\AIFS,    step,        0, "1"
+HKR, Ndi\params\AIFS,    Base,        0, "10"
+HKR, Ndi\params\AIFS,    type,        0, "int"
+; no ACK policy for QoS data frames
+HKR, Ndi\params\noackPolicy,           ParamDesc,          0,        %noackPolicy%
+HKR, Ndi\params\noackPolicy,           Base,               0,        "10"
+HKR, Ndi\params\noackPolicy,           default,            0,        "0"
+HKR, Ndi\params\noackPolicy,           type,               0,        "enum"
+HKR, Ndi\params\noackPolicy\enum,      "1",                0,        %noackPolicyOn%
+HKR, Ndi\params\noackPolicy\enum,      "0",                0,        %noackPolicyOff%
+; Enable BSS HT Aggregation
+HKR, Ndi\params\htBssAggrEnable,       ParamDesc,          0,        %htBssAggrEnable%
+HKR, Ndi\params\htBssAggrEnable,       Base,               0,        "10"
+HKR, Ndi\params\htBssAggrEnable,       default,            0,        "1"
+HKR, Ndi\params\htBssAggrEnable,       type,               0,        "enum"
+HKR, Ndi\params\htBssAggrEnable\enum,  "1",                0,        %Enable%
+HKR, Ndi\params\htBssAggrEnable\enum,  "0",                0,        %Disable%
+; Use binary exponential CW backoff
+HKR, Ndi\params\CWbackoff,             ParamDesc,          0,        %CWbackoff%
+HKR, Ndi\params\CWbackoff,             Base,               0,        "10"
+HKR, Ndi\params\CWbackoff,             default,            0,        "1"
+HKR, Ndi\params\CWbackoff,             type,               0,        "enum"
+HKR, Ndi\params\CWbackoff\enum,        "1",                0,        %Enable%
+HKR, Ndi\params\CWbackoff\enum,        "0",                0,        %Disable%
+
+;;  Added for Jupiter
+;;
+[halShortRetry.reg]
+HKR, ,                                  halShortRetry,                  0x00002,  "11"
+
+[IdleConfiguration.reg]
+HKR, ,                                  IdleConfiguration,              0x00002,  "0"
+
+;;End of Customized Section
+
+[killer.Service]
+DisplayName     = %BFOOT.Service.DispName%
+ServiceType     = 1         ;SERVICE_KERNEL_DRIVER
+StartType       = 3         ;SERVICE_DEMAND_START
+ErrorControl    = 1         ;SERVICE_ERROR_NORMAL
+ServiceBinary   = %12%\Ak27x64.sys
+LoadOrderGroup  = NDIS
+
+
+[atheros.EventLog]
+AddReg = atheros.AddEventLog.reg
+
+[atheros.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[killer.CopyFiles]
+Ak27x64.sys,,,2
+
+[SourceDisksNames]
+1 = %DiskDescription%,Ak27x64.sys,,
+
+[SourceDisksFiles]
+Ak27x64.sys = 1,,
+
+[DestinationDirs]
+killer.CopyFiles            = 12
+DefaultDestDir               = 11
+
+
+[Strings]
+Msft                         = "Microsoft"
+Atheros                      = "Qualcomm Atheros Inc."
+ATHR.Service.DispName        = "Killer Wireless-N 1103 device driver"
+BFOOT.Service.DispName       = "Killer Wireless-N 1102 device driver"
+DiskDescription              = "Atheros Sample Driver Disk 1"
+TransmitBuffers              = "Transmit Buffers"
+ReceiveBuffers               = "Receive Buffers"
+NetworkAddress               = "Network Address"
+scanTimeValid                = "Scan Valid Interval"
+shortPreamble                = "802.11b Preamble"
+shortPreambleEnable          = "Long and Short"
+shortPreambleDisable         = "Long only"
+rssiThrHigh                  = "RSSI Threshold"
+rssiThrHighNormal            = "Normal"
+rssiThrHighMin               = "Min"
+;radioEnable                 = "Radio On/Off"
+;radioEnableOn               = "On"
+;radioEnableOff              = "Off"
+scanTime                     = "Roam Time (sec)"
+roamRssiA                    = "Roam Time Threshold (db)"
+WirelessMode                 = "Wireless Mode Selection"
+WirelessMode11bgOnly         = "802.11b/g"
+WirelessModeAuto             = "Auto"
+adhocchannel                 = "Adhoc channel Selection"
+bkScanEnable                 = "BackgroundScan On/Off"
+bkScanEnableOn               = "On"
+bkScanEnableOff              = "Off"
+TransmitRateSet              = "Transmit Rate Set"
+TransmitRateSetRC            = "Rate Control"
+TransmitRateSet2M            = " 2Mbps"
+TransmitRateSet5M            = " 5Mbps"
+TransmitRateSet6M            = " 6Mbps"
+TransmitRateSet9M            = " 9Mbps"
+TransmitRateSet11M           = "11Mbps"
+TransmitRateSet12M           = "12Mbps"
+TransmitRateSet18M           = "18Mbps"
+TransmitRateSet24M           = "24Mbps"
+TransmitRateSet36M           = "36Mbps"
+TransmitRateSet48M           = "48Mbps"
+TransmitRateSet54M           = "54Mbps"
+AIFS                         = "AFIS Value"
+CWmin                        = "CW Minimum AIFS value"
+CWmax                        = "CW Maximum AIFS value"
+BackoffTheshold              = "Backoff Threshold setting"
+BackoffTheshold2             = "   2 (default)"
+BackoffTheshold4             = "   4"
+BackoffTheshold8             = "   8"
+BackoffTheshold16            = "  16"
+BackoffTheshold32            = "  32"
+BackoffTheshold64            = "  64"
+BackoffTheshold128           = " 128"
+BackoffTheshold256           = " 256"
+BackoffTheshold512           = " 512"
+BackoffTheshold1024          = "1024"
+VirtualCollisionPolicy       = "Virtual Collision handling policy"
+VirtualCollisionPolicyDefault= "Default"
+VirtualCollisionPolicyIgnore = "Ignore"
+ForceHighTxQ                 = "Force Tx with high priority"
+ForceHighTxQOn               = "High Priority"
+ForceHighTxQOff              = "Default Priority"
+noackPolicy                  = "no-ACK Tx policy"
+noackPolicyOn                = "Force no-ACK policy"
+noackPolicyOff               = "Default ACK policy"
+htBssAggrEnable              = "BSS HT frame aggregation enable"
+CWbackoff                    = "Binary exponential CW backoff"
+radioEnable                  = "Radio On/Off"
+radioEnableOn                = "On"
+radioEnableOff               = "Off"
+bt30                         = "802.11 Bluetooth High Speed"
+bt30enable                   = "Enable"
+bt30disable                  = "Disable"
+roamRssi11A                  = "roamRssiA"
+roamRssi11B                  = "roamRssiB"
+roamRssi11BOnly              = "roamRssiBOnly"
+roamRateA                    = "roamRateA"
+roamRateA6M                  = " 6Mbps"
+roamRateA9M                  = " 9Mbps"
+roamRateA12M                 = "12Mbps"
+roamRateA18M                 = "18Mbps"
+roamRateA24M                 = "24Mbps"
+roamRateA36M                 = "36Mbps"
+roamRateA48M                 = "48Mbps"
+roamRateA54M                 = "54Mbps"
+roamRateBOnly                = "roamRateBOnly"
+roamRateBOnly1M              = " 1Mbps"
+roamRateBOnly2M              = " 2Mbps"
+roamRateBOnly5M              = " 5Mbps"
+roamRateBOnly11M             = "11Mbps"
+roamRateB                    = "roamRateB"
+roamRateB1M                  = " 1Mbps"
+roamRateB2M                  = " 2Mbps"
+roamRateB5M                  = " 5Mbps"
+roamRateB6M                  = " 6Mbps"
+roamRateB9M                  = " 9Mbps"
+roamRateB11M                 = "11Mbps"
+pcieAspm                     = "pcieAspm"
+pcieAspmOff                  = "L0s Off, L1 Off"
+pcieAspmL0sOn                = "L0s On,  L1 Off"
+pcieAspmL1On                 = "L0s Off, L1 On"
+pcieAspmL0sandL1On           = "L0s On,  L1 On"
+wModeSelect                  = "Wireless Mode"
+wModeSelect11bonly           = "11b only"
+wModeSelect11nbg             = "11n(2.4GHz) and g and b"
+wModeSelect11na              = "11n(5GHz) and a"
+wModeSelect11abgn            = "11abgn"
+wModeLegacy11a               = "11a only"
+wModeLegacy11bonly           = "11b only"
+wModeLegacy11bg              = "11g and 11b"
+wModeLegacy11abg             = "11abg"
+antennaSwitch                = "AntennaSwitch"
+antennaSwitchAuto            = "Auto"
+antennaSwitchA               = "Antenna A"
+antennaSwitchB               = "Antenna B"
+Auto                         = "Auto"
+5GOnly                       = "5Ghz Only"
+2GOnly                       = "2Ghz Only"
+11DModeSwitch                = "11d Mode Switch"
+Enable                       = "Enable"
+Disable                      = "Disable"
+WepTkip11n                   = "WepTKIP 11n"
+PowerSaveMode                = "Power Save Mode"
+Off                          = "Off"
+Maximum                      = "Maximum"
+Normal                       = "Normal"
+802_11d                      = "802.11d"
+smpsDynamic                  = "Dynamic MIMO Power Save"
+AdHoc11n                     = "AdHoc 11n"
+roamPolicy                   = "Roaming Policy"
+roamPolicyVeryHigh           = "Very High"
+roamPolicyHigh               = "High"
+roamPolicyNormal             = "Normal"
+roamPolicyLow                = "Low"
+roamPolicyVeryLow            = "Very Low"
+GreenTx                      = "Green Tx"
+GreenTxEnableOn              = "On"
+GreenTxEnableOff             = "Off"
+BFOOT.DeviceDesc.3096        = "Killer Wireless-N 1102 Network Adapter"
+ATHR.DeviceDesc.osprey       = "Killer Wireless-N 1103 Network Adapter"
+ATHR.DeviceDesc.946x         = "Killer Wireless-N 1202 (2.4GHz and 5GHz)"
+
+;/* Enable these if VLAN or 802.1p is to be enabled */
+;PriorityVLAN                = "Priority & VLAN"
+;PriorityVLANDisabled        = "Priority & VLAN Disabled"
+;PriorityEnabled             = "Priority Enabled"
+;VLANEnabled                 = "VLAN Enabled"
+;PriorityVLANEnabled         = "Priority & VLAN Enabled"

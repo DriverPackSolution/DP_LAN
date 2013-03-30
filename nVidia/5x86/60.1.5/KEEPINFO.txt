@@ -1,0 +1,9 @@
+
+9.34_nforce_winxp_international.exe
+
+Version: 9.34 Release Date: May 15th, 2006
+WHQL Certified English
+File Size: 69.3 MB 
+Installation Notes: 
+Windows XP/2000 Driver Versions 
+Ethernet Driver (v60.15) WHQL 

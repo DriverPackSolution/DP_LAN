@@ -1,0 +1,80 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 2002 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO        **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+;*******************************************************************************
+; ixgb325.Din
+; $Revision: 8 $
+;
+; INF for Intel(R) PRO/10GbE Adapters
+;
+;   Version 1.0.00.000
+;
+[version]
+Signature   = "$Windows NT$"
+SetupClass  = BASE
+Provider    = %Intel%
+
+[Manufacturer]
+%Intel%     = Intel
+
+[ControlFlags]
+
+[Intel]
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir          = 11
+ixgb.DelFiles           = 12
+CoInstaller.DelFiles    = 11
+UnInstall.DelFiles      = 11
+
+;----------------------------------------------------------------------------
+; Uninstall
+[8259x.Uninstall]
+DelFiles        = ixgb.DelFiles, CoInstaller.DelFiles, UnInstall.DelFiles
+DelReg          = 8259x.DelReg
+
+[ixgb.DelFiles]
+ixgb325.sys,,,1
+
+[CoInstaller.DelFiles]
+IntelNic.dll,,,1
+NicCo32.dll,,,1
+NicIn32.dll,,,1
+NicCo.dll,,,1
+NicCo2.dll,,,1
+NicInst.dll,,,1
+
+[UnInstall.DelFiles]
+Prounstl.exe,,,1
+ixgb325.din,,,1
+
+[8259x.DelReg]
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\PROSet
+HKLM,Software\INTEL\Prounstl
+HKLM,Software\INTEL\NIC
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Intel                    = "Intel"
+				 

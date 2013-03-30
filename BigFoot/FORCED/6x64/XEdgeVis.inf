@@ -1,0 +1,178 @@
+;-------------------------------------------------------------------------------
+; XEdgeVis.INF
+;
+; Killer Xeno NDIS_EDGE Upper Filter Driver Install for Vista
+;
+; Copyright (c) 2006 - 2011 Bigfoot Networks, Inc.  All rights reserved.
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Msft%
+DriverVer   = 05/18/2011,6.0.0.23
+CatalogFile.NTx86   = VEdgeX86.cat
+CatalogFile.NTAMD64 = VEdgeA64.cat
+
+[ControlFlags]
+ExcludeFromSelect={E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\XenoVx86
+ExcludeFromSelect={E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\XenoVa64
+
+[Manufacturer]
+%Msft% = Msft,NTx86.6.0,NTamd64.6.0
+
+[Msft.NTx86.6.0]
+; DisplayName                   Section    DeviceId
+; -----------                   -------    --------
+%XenoEdge.DeviceDesc%    = VEdgeX86.ndi, root\XenoEdge ; Root enumerated 
+%XenoEdge.DeviceDesc%    = VEdgeX86.ndi, {E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\Xeno831x ; Xeno Bus enumerated
+
+[Msft.NTamd64.6.0]
+; DisplayName                   Section    DeviceId
+; -----------                   -------    --------
+%XenoEdge.DeviceDesc%    = VEdgeA64.ndi, root\XenoEdge ; Root enumerated 
+%XenoEdge.DeviceDesc%    = VEdgeA64.ndi, {E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\Xeno831x ; Xeno Bus enumerated
+
+;-------------------------------------------------------------------------------
+; Microsoft Vista Ethernet Adapter 32-bit
+;
+[VEdgeX86.ndi]
+Characteristics = 0x4 ; NCF_PHYSICAL
+BusType         = 15 ; if you specify NCF_PHYSICAL, you must specify bustype, 15 = PNPBus see wdm.h
+AddReg          = VEdgeX86.Reg, ParamsPromiscuous
+CopyFiles       = VEdgeX86.CopyFiles
+
+[VEdgeX86.ndi.Services]
+AddService      = BfEdgeVx86, 2, VEdgeX86.Service, VEdgeX86.EventLog
+
+;-----------------------------------------------------------------------------
+; Microsoft Virtual Miniport Common
+;
+[VEdgeX86.Reg]
+HKR,    ,                         BusNumber,           0, "0" 
+HKR, Ndi,                         Service,             0, "BfEdgeVx86"
+HKR, Ndi\Interfaces,              UpperRange,          0, "ndis5"
+HKR, Ndi\Interfaces,              LowerRange,          0, "ethernet"
+
+[ParamsPromiscuous]
+;
+;    Should the physical NIC be set to Promiscuous mode 
+;
+HKR, Ndi\Params\Promiscuous,     ParamDesc, , %Promiscuous%
+HKR, Ndi\Params\Promiscuous,     Default,  ,"0"
+HKR, Ndi\Params\Promiscuous,     type, ,      enum
+HKR, Ndi\Params\Promiscuous\enum,"1",  ,     %Promiscuous_Enable%
+HKR, Ndi\Params\Promiscuous\enum,"0",  ,     %Promiscuous_Disable%
+
+;-----------------------------------------------------------------------------
+; Driver and Service Section Vista 32
+;
+[VEdgeX86.CopyFiles]
+VEdgeX86.sys,,,2
+
+[VEdgeX86.Service]
+DisplayName     = %XenoEdge.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\VEdgeX86.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.Reg
+
+[VEdgeX86.EventLog]
+AddReg = VEdgeX86.AddEventLog.Reg
+
+[VEdgeX86.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+VEdgeX86.sys  = 1,,
+
+;-------------------------------------------------------------------------------
+; Microsoft Virtual Ethernet Adapter XP 64 bit
+;
+[VEdgeA64.ndi]
+Characteristics = 0x4 ; NCF_PHYSICAL
+BusType         = 15 ; if you specify NCF_PHYSICAL, you must specify bustype, 15 = PNPBus see wdm.h
+AddReg          = VEdgeA64.Reg, ParamsPromiscuous
+CopyFiles       = VEdgeA64.CopyFiles
+
+[VEdgeA64.ndi.Services]
+AddService      = BfEdgeVx64, 2, VEdgeA64.Service, VEdgeA64.EventLog
+
+;-----------------------------------------------------------------------------
+; Microsoft Virtual Miniport Common
+;
+[VEdgeA64.Reg]
+HKR,    ,                         BusNumber,           0, "0" 
+HKR, Ndi,                         Service,             0, "BfEdgeVx64"
+HKR, Ndi\Interfaces,              UpperRange,          0, "ndis5"
+HKR, Ndi\Interfaces,              LowerRange,          0, "ethernet"
+
+[ParamsPromiscuous]
+;
+;    Should the physical NIC be set to Promiscuous mode 
+;
+HKR, Ndi\Params\Promiscuous,     ParamDesc, , %Promiscuous%
+HKR, Ndi\Params\Promiscuous,     Default,  ,"0"
+HKR, Ndi\Params\Promiscuous,     type, ,      enum
+HKR, Ndi\Params\Promiscuous\enum,"1",  ,     %Promiscuous_Enable%
+HKR, Ndi\Params\Promiscuous\enum,"0",  ,     %Promiscuous_Disable%
+
+;-----------------------------------------------------------------------------
+; Driver and Service Section
+;
+[VEdgeA64.CopyFiles]
+VEdgeA64.sys,,,2
+
+[VEdgeA64.Service]
+DisplayName     = %XenoEdge.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\VEdgeA64.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.Reg
+
+[VEdgeA64.EventLog]
+AddReg = VEdgeA64.AddEventLog.Reg
+
+[VEdgeA64.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+VEdgeA64.sys  = 1,,
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+VEdgeX86.CopyFiles = 12
+VEdgeA64.CopyFiles = 12
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Msft                       = "Bigfoot Networks, Inc."                      
+XenoEdge.DeviceDesc        = "Bigfoot Networks Killer Ethernet Controller"
+XenoEdge.Service.DispName  = "Bigfoot Networks Killer Ethernet Service"
+DiskId1 = "Killer Xeno NDIS EDGE gaming installation Vista"
+Promiscuous        = "Set the physical NIC to promiscuous mode"
+Promiscuous_Disable = "Disable"
+Promiscuous_Enable  = "Enable"

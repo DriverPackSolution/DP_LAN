@@ -1,0 +1,367 @@
+;; (Combined inf for NDIS3/4/5 driver)
+;;
+;; This INF file is for Accton EN5251 Series Chip Based Fast Ethernet Adapter.
+;; Accton CheetahPower Enhanced 10/100 Adapter AC-EN3207
+;; are supported.
+;;
+;; Copyright 2001, Accton Technology Corporation
+
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Accton%                                ;; for WHQL certified
+CatalogFile = NETAN983.CAT                            ;; for WHQL certified
+DriverVer   = 10/16/2001, 1.12.1016.2001
+
+[Manufacturer]
+%Accton%    = Accton
+
+[ControlFlags]
+ExcludeFromSelect     = PCI\VEN_1113&DEV_1216&SUBSYS_12161113, \
+                        PCI\VEN_1113&DEV_1216&SUBSYS_22201113, \
+                        PCI\VEN_1113&DEV_1216&SUBSYS_23201113, \
+                        PCI\VEN_1113&DEV_1216&SUBSYS_22421113, \
+                        PCI\VEN_1113&DEV_1216&SUBSYS_12471113, \
+                        PCI\VEN_1113&DEV_1216&SUBSYS_22471113, \
+                        PCI\VEN_1113&DEV_1216&SUBSYS_B2471113, \
+                        PCI\VEN_1113&DEV_1216&SUBSYS_A2161113
+
+[Accton]
+%EN1207F.DeviceDesc%  = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_12161113
+%LM1247.DeviceDesc%   = LM1247.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_12471113
+%LM2247.DeviceDesc%   = LM2247.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_22471113
+%LM2247A.DeviceDesc%  = LM2247A.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_B2471113
+%EN2220A.DeviceDesc%  = EN2220A.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_22201113
+%EN2242.DeviceDesc%   = EN2242.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_22421113
+%EN2320.DeviceDesc%   = EN2320.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_23201113
+%EN3207.DeviceDesc%   = EN3207.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_A2161113
+;;****************************************************************************
+;; Windows 9x
+;;****************************************************************************
+[EN1207F.ndi]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN1207F.id.reg, EN5251.common.reg, EN5251.win.reg, EN5251.pci.reg
+CopyFiles       = EN5251.CopyFiles9x
+
+[EN2220A.ndi]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN2220A.id.reg, EN5251.common.reg, EN5251.win.reg, EN5251.pci.reg
+CopyFiles       = EN5251.CopyFiles9x
+
+[EN2320.ndi]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN2320.id.reg, EN5251.common.reg, EN5251.win.reg, EN5251.pci.reg
+CopyFiles       = EN5251.CopyFiles9x
+
+[EN2242.ndi]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN2242.id.reg, EN5251.common.reg, EN5251.win.reg, EN5251.pci.reg
+CopyFiles       = EN5251.CopyFiles9x
+
+[LM1247.ndi]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = LM1247.id.reg, EN5251.common.reg, EN5251.win.reg, EN5251.pci.reg
+CopyFiles       = EN5251.CopyFiles9x
+
+[LM2247.ndi]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = LM2247.id.reg, EN5251.common.reg, EN5251.win.reg, EN5251.pci.reg
+CopyFiles       = EN5251.CopyFiles9x
+
+[LM2247A.ndi]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = LM2247A.id.reg, EN5251.common.reg, EN5251.win.reg, EN5251.pci.reg
+CopyFiles       = EN5251.CopyFiles9x
+
+[EN3207.ndi]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN3207.id.reg, EN5251.common.reg, EN5251.win.reg, EN5251.pci.reg
+CopyFiles       = EN5251.CopyFiles9x
+
+;;****************************************************************************
+;; NT 5.0
+;;****************************************************************************
+[EN1207F.ndi.NT]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN5251.common.reg, EN5251.reg, EN5251.pci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN5251.CopyFiles
+
+[EN1207F.ndi.NT.Services]
+AddService      = EN5251, 2, EN5251.Service, EN5251.EventLog
+
+[EN2220A.ndi.NT]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN5251.common.reg, EN5251.reg, EN5251.pci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN5251.CopyFiles
+
+[EN2220A.ndi.NT.Services]
+AddService      = EN5251, 2, EN5251.Service, EN5251.EventLog
+
+[EN2320.ndi.NT]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN5251.common.reg, EN5251.reg, EN5251.pci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN5251.CopyFiles
+
+[EN2320.ndi.NT.Services]
+AddService      = EN5251, 2, EN5251.Service, EN5251.EventLog
+
+[EN2242.ndi.NT]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN5251.common.reg, EN5251.reg, EN5251.pci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN5251.CopyFiles
+
+[EN2242.ndi.NT.Services]
+AddService      = EN5251, 2, EN5251.Service, EN5251.EventLog
+
+[LM1247.ndi.NT]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN5251.common.reg, EN5251.reg, EN5251.pci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN5251.CopyFiles
+
+[LM1247.ndi.NT.Services]
+AddService      = EN5251, 2, EN5251.Service, EN5251.EventLog
+
+[LM2247.ndi.NT]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN5251.common.reg, EN5251.reg, EN5251.pci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN5251.CopyFiles
+
+[LM2247.ndi.NT.Services]
+AddService      = EN5251, 2, EN5251.Service, EN5251.EventLog
+
+[LM2247A.ndi.NT]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN5251.common.reg, EN5251.reg, EN5251.pci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN5251.CopyFiles
+
+[LM2247A.ndi.NT.Services]
+AddService      = EN5251, 2, EN5251.Service, EN5251.EventLog
+
+[EN3207.ndi.NT]
+DriverVer       = 10/16/2001, 1.12.1016.2001
+AddReg          = EN5251.common.reg, EN5251.reg, EN5251.pci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN5251.CopyFiles
+
+[EN3207.ndi.NT.Services]
+AddService      = EN5251, 2, EN5251.Service, EN5251.EventLog
+
+[EN5251.CopyFiles9x]
+an983.sys,,,2
+
+[EN5251.CopyFiles]
+an983.sys,,,2
+
+;;----------------------------------------------------------------------------
+;; EN5251 Parameters
+;;----------------------------------------------------------------------------
+;;****************************************************************************
+;; Windows 9x parameters
+;;****************************************************************************
+[EN1207F.id.reg]
+HKR, Ndi,       DeviceID,       0,      "PCI\VEN_1113&DEV_1216&SUBSYS_12161113"
+
+[EN2220A.id.reg]
+HKR, Ndi,       DeviceID,       0,      "PCI\VEN_1113&DEV_1216&SUBSYS_22201113"
+
+[EN2320.id.reg]
+HKR, Ndi,       DeviceID,       0,      "PCI\VEN_1113&DEV_1216&SUBSYS_23201113"
+
+[EN2242.id.reg]
+HKR, Ndi,       DeviceID,       0,      "PCI\VEN_1113&DEV_1216&SUBSYS_22421113"
+
+[LM1247.id.reg]
+HKR, Ndi,       DeviceID,       0,      "PCI\VEN_1113&DEV_1216&SUBSYS_12471113"
+
+[LM2247.id.reg]
+HKR, Ndi,       DeviceID,       0,      "PCI\VEN_1113&DEV_1216&SUBSYS_22471113"
+
+[LM2247A.id.reg]
+HKR, Ndi,       DeviceID,       0,      "PCI\VEN_1113&DEV_1216&SUBSYS_B2471113"
+
+[EN3207.id.reg]
+HKR, Ndi,       DeviceID,       0,      "PCI\VEN_1113&DEV_1216&SUBSYS_A2161113"
+
+[EN5251.pci.reg]
+HKR, ,                                      AdapterType,    0, "5"
+HKR,,TxPacketDesc,,"160"      ; 0xa0
+HKR,,RxPacketDesc,,"120"      ; 0x78
+HKR,,TxDmaDesc,,"320"         ; 0x140
+HKR,,RxDmaDesc,,"40"          ; 0x28
+HKR,,PacketsPerTxInt,,"10"    ; 0x0a
+HKR,,PacketsPerRxInd,,"10"    ; 0x0a
+HKR,,BurstLength,,"0"         ; 0 (Unlimited), 1 DW, 2 DW, 3 DW, ...
+
+[EN5251.win.reg]
+;; key,subkey,valuname,type,value
+HKR, ,  AdapterCFID,     ,      12161113
+HKR, ,  DriverDesc,     0,      "Accton EN5251 Series Chip Based Fast Ethernet Adapter"
+HKR, ,  DevLoader,      0,      *ndis
+HKR, ,  DeviceVxDs,     0,      an983.sys
+HKR, ,  EnumPropPages,  0,      netdi.dll,      EnumPropPages
+
+;;params
+HKR, ,  MediaType,      0,      1
+HKR, ,  AdapterType,    0,      5
+HKR, ,  BusType,        0,      5
+
+;; NDIS Info
+HKR, NDIS,              MajorNdisVersion,       1,      03
+HKR, NDIS,              MinorNdisVersion,       1,      0a
+HKR, NDIS,              LogDriverName,          0,      "EN5251N5"
+
+;; Interfaces
+HKR, Ndi\Interfaces,    DefLower,               ,       "ethernet"
+HKR, Ndi\Interfaces,    LowerRange,             ,       "ethernet"
+HKR, Ndi\Interfaces,    DefUpper,               ,       "ndis3"
+HKR, Ndi\Interfaces,    UpperRange,             ,       "ndis3"
+
+;; Install sections
+HKR, Ndi\Install,       ndis3,                 0,       "EN5251.ndis5"
+
+;;****************************************************************************
+;; EN5251 common parameters
+;;****************************************************************************
+[EN5251.common.reg]
+HKR, Ndi\Params\MediaType,            ParamDesc, , "Media Type"
+HKR, Ndi\Params\MediaType,            default,   , "0"
+HKR, Ndi\Params\MediaType,            type,      , "enum"
+HKR, Ndi\Params\MediaType\enum,       0,         , "AutoSense"
+HKR, Ndi\Params\MediaType\enum,       1,         , "10BaseT"
+HKR, Ndi\Params\MediaType\enum,       2,         , "10BaseT Full_Duplex"
+HKR, Ndi\Params\MediaType\enum,       3,         , "100BaseTX"
+HKR, Ndi\Params\MediaType\enum,       4,         , "100BaseTX Full_Duplex"
+HKR, Ndi\Params\MediaType,            flag,     1, "20","00","00","00"
+
+HKR, Ndi\Params\PowerManagement,      ParamDesc, , "PME Enable"
+HKR, Ndi\Params\PowerManagement,      default,   , "1"
+HKR, Ndi\Params\PowerManagement,      type,      , "enum"
+HKR, Ndi\Params\PowerManagement\enum, 0,         , "Disabled"
+HKR, Ndi\Params\PowerManagement\enum, 1,         , "Enabled"
+HKR, Ndi\Params\PowerManagement,      flag,     1, "20","00","00","00"
+
+HKR, Ndi\Params\WakeupFrame,          ParamDesc, , "Pattern Match Wakeup"
+HKR, Ndi\Params\WakeupFrame,          default,   , "1"
+HKR, Ndi\Params\WakeupFrame,          type,      , "enum"
+HKR, Ndi\Params\WakeupFrame\enum,     0,         , "Disabled"
+HKR, Ndi\Params\WakeupFrame\enum,     1,         , "Enabled"
+HKR, Ndi\Params\WakeupFrame,          flag,     1, "20","00","00","00"
+
+HKR, Ndi\Params\LinkOnChange,         ParamDesc, , "Link Wakeup(Off->On)"
+HKR, Ndi\Params\LinkOnChange,         default,   , "1"
+HKR, Ndi\Params\LinkOnChange,         type,      , "enum"
+HKR, Ndi\Params\LinkOnChange\enum,    0,         , "Disabled"
+HKR, Ndi\Params\LinkOnChange\enum,    1,         , "Enabled"
+HKR, Ndi\Params\LinkOnChange,         flag,     1, "20","00","00","00"
+
+HKR, Ndi\Params\LinkOffChange,        ParamDesc, , "Link Wakeup(On->Off)"
+HKR, Ndi\Params\LinkOffChange,        default,   , "0"
+HKR, Ndi\Params\LinkOffChange,        type,      , "enum"
+HKR, Ndi\Params\LinkOffChange\enum,   0,         , "Disabled"
+HKR, Ndi\Params\LinkOffChange\enum,   1,         , "Enabled"
+HKR, Ndi\Params\LinkOffChange,        flag,     1, "20","00","00","00"
+
+HKR, Ndi\Params\MagicPacket,          ParamDesc, , "Magic Packet Wakeup"
+HKR, Ndi\Params\MagicPacket,          default,   , "1"
+HKR, Ndi\Params\MagicPacket,          type,      , "enum"
+HKR, Ndi\Params\MagicPacket\enum,     0,         , "Disabled"
+HKR, Ndi\Params\MagicPacket\enum,     1,         , "Enabled"
+HKR, Ndi\Params\MagicPacket,          flag,     1, "20","00","00","00"
+
+HKR, Ndi\Params\FlowControl,          ParamDesc, , "Flow Control"
+HKR, Ndi\Params\FlowControl,          default,   , "1"
+HKR, Ndi\Params\FlowControl,          type,      , "enum"
+HKR, Ndi\Params\FlowControl\enum,     0,         , "Disabled"
+HKR, Ndi\Params\FlowControl\enum,     1,         , "Enabled"
+HKR, Ndi\Params\FlowControl,          flag,     1, "20","00","00","00"
+
+HKR, Ndi\Params\PriorityPacket,       ParamDesc, , "Priority Packet"
+HKR, Ndi\Params\PriorityPacket,       default,   , "0"
+HKR, Ndi\Params\PriorityPacket,       type,      , "enum"
+HKR, Ndi\Params\PriorityPacket\enum,  0,         , "Disabled"
+HKR, Ndi\Params\PriorityPacket\enum,  1,         , "Enabled"
+HKR, Ndi\Params\PriorityPacket,       flag,     1, "20","00","00","00"
+
+HKR,Ndi\params\VlanId,                ParamDesc,0, "VLAN ID"
+HKR,Ndi\params\VlanId,                type,     0, "edit"
+HKR,Ndi\params\VlanId,                default,  0, "0"
+HKR,Ndi\params\VlanId,                LimitText,0, "4"
+HKR,Ndi\params\VlanId,                UpperCase,0, "1"
+HKR,Ndi\params\VlanId,                Optional, 0, "1"
+
+;;****************************************************************************
+;; NT 5.0 parameters
+;;****************************************************************************
+[EN5251.reg]
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+HKR, Ndi,                       Service,    0, "EN5251"
+
+[EN5251.Service]
+DisplayName     = %EN5251.Service.DispName%
+ServiceType     = 1                             ; %SERVICE_KERNEL_DRIVER%
+StartType       = 3                             ; %SERVICE_DEMAND_START%
+ErrorControl    = 1                             ; %SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\an983.sys
+LoadOrderGroup  = NDIS
+
+
+[EN5251.EventLog]
+Addreg = EN5251.AddEventLog.reg
+
+[EN5251.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+;;****************************************************************************
+;; Destination Directory
+;;****************************************************************************
+[DestinationDirs]
+EN5251.CopyFiles9x          = 11
+EN5251.CopyFiles            = 12
+DefaultDestDir              = 11        ; LDID_SYS
+
+;;****************************************************************************
+;; Source Files
+;;****************************************************************************
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+an983.sys=1
+NETACC51.INF=1
+
+;;****************************************************************************
+;; Strings
+;;****************************************************************************
+[Strings]
+Accton                    = "Accton"
+
+DISKNAME = "Accton CheetahPower Enhanced 10/100 Adapter AC-EN3207 Driver Diskette"
+
+EN1207F.DeviceDesc      = "Accton EN1207F Series PCI Fast Ethernet Adapter"
+EN2220A.DeviceDesc      = "Accton EN2220A Fast Ethernet Cardbus PC Card"
+EN2320.DeviceDesc       = "Accton EN2320 Fast Ethernet Cardbus PC Card"
+EN2242.DeviceDesc       = "Accton EN2242 Series MiniPCI Fast Ethernet Adapter"
+LM1247.DeviceDesc       = "Accton LM1247 Series PCI Fast Ethernet Adapter"
+LM2247.DeviceDesc       = "Accton LM2247 Series Mini-PCI Fast Ethernet Adapter"
+LM2247A.DeviceDesc      = "Accton LM2247(A) Series Mini-PCI Fast Ethernet Adapter"
+EN3207.DeviceDesc       = "Accton CheetahPower Enhanced 10/100 Adapter AC-EN3207"
+EN5251.Service.DispName = "Accton EN5251 Series Chip Based Fast Ethernet Adapter Windows Driver"

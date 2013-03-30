@@ -1,0 +1,356 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 1999-2005 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;* iresole.INF                                                                 **
+;*                                                                            **
+;*   Based on: MSPORTS.INF                                                    **
+;*             Copyright (c) 1994-1998 Microsoft Corporation                  **
+;*                                                                            **
+;******************************************************************************* 
+
+[version]
+signature="$Windows NT$"
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%Intel%
+CatalogFile = iresole.cat
+DriverVer=10/08/2008,5.1.2600.2181
+
+[DestinationDirs]
+DefaultDestDir  = 11        ;LDID_SYS
+
+
+; Drivers
+;----------------------------------------------------------
+[Manufacturer]
+%Intel%=Intel, NTamd64.5.2, NTamd64.6.0.1, NTamd64.6.0
+
+[Intel.NTamd64.6.0]
+; Windows 2008 and above not supported by this INF
+%E1085_serial.DeviceDesc% =  NO_DRV,  "PCI\VEN_8086&DEV_1085&CC_0700"
+%E108f_serial.DeviceDesc% =  NO_DRV,  "PCI\VEN_8086&DEV_108f&CC_0700"
+
+[Intel.NTamd64.6.0.1]
+%E1085_serial.DeviceDesc% =  ComPort,  "PCI\VEN_8086&DEV_1085&CC_0700"
+%E108f_serial.DeviceDesc% =  ComPort,  "PCI\VEN_8086&DEV_108f&CC_0700"
+
+[Intel.NTamd64.5.2]
+%E1085_serial.DeviceDesc% =  ComPort,  "PCI\VEN_8086&DEV_1085&CC_0700"
+%E108f_serial.DeviceDesc% =  ComPort,  "PCI\VEN_8086&DEV_108f&CC_0700"
+
+[Intel]
+; Empty section, so this INF does not support Windows 2000 and Win9x.
+
+;--------- SourceDiskNames and SourceDiskFiles Section -----------------------
+; These sections identify source disks and files for installation.
+[SourceDisksFiles]
+prounstl.exe = 1
+
+; NO_DRV installation
+;---------------------------------------------------------------;
+[NO_DRV]
+AddReg=NoDrv.reg
+Include=machine.inf
+Needs=NO_DRV
+
+[NO_DRV.Services]
+Include=machine.inf
+Needs=NO_DRV.Services
+
+[NoDrv.reg]
+HKR,,Version,,"%DriverVer%"
+
+; COM sections
+;----------------------------------------------------------
+[ComPort.AddReg]
+HKR,,PortSubClass,1,01
+
+[ComPort.NT]
+AddReg=ComPort.AddReg, ComPort.NT.AddReg, IRESOL.Uninstall.AddReg
+LogConfig=c14,c1a,c23,c2a,c34,c3a,c43,c4a,caa
+SyssetupPnPFlags = 1
+
+[ComPort.NT.HW]
+AddReg=ComPort.NT.HW.AddReg
+
+[ComPort.NT.AddReg]
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+; Uncomment the following line if you want to override the advanced dialog for
+; your device.  See msports.h for protoype of OverrideAdvancedFunction
+; HKR,,EnumAdvancedDialog,,"yourdll.dll,OverrideAdvancedFunction"
+
+[ComPort.NT.HW.AddReg]
+HKR,,"UpperFilters",0x00010000,"serenum"
+
+[IRESOL.Uninstall.AddReg]
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1085, 0, "ESB2 SOL"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 108F, 0, "82573E SOL"
+
+;-------------- Service installation
+; Port Driver (function driver for this device)
+[ComPort.NT.Services]
+AddService = Serial, 0x00000002, Serial_Service_Inst, Serial_EventLog_Inst
+AddService = Serenum,,Serenum_Service_Inst
+
+; -------------- Serial Port Driver install sections
+[Serial_Service_Inst]
+DisplayName    = %Serial.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 1               ; SERVICE_SYSTEM_START (this driver may do detection)
+ErrorControl   = 0               ; SERVICE_ERROR_IGNORE
+ServiceBinary  = %12%\serial.sys
+LoadOrderGroup = Extended base
+
+; -------------- Serenum Driver install section
+[Serenum_Service_Inst]
+DisplayName    = %Serenum.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\serenum.sys
+LoadOrderGroup = PNP Filter
+
+[Serial_EventLog_Inst]
+AddReg = Serial_EventLog_AddReg
+
+[Serial_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\serial.sys"
+HKR,,TypesSupported,0x00010001,7
+
+; The following sections are COM port resource configs.
+; Section name format means:
+; Char 1 = c (COM port)
+; Char 2 = I/O config: 1 (3f8), 2 (2f8), 3 (3e8), 4 (2e8), a (any)
+; Char 3 = IRQ config: #, a (any)
+
+[c14]                   ; COM1,IRQ4
+ConfigPriority=HARDRECONFIG
+IOConfig=3f8-3ff(3ff::)
+IRQConfig=LS:4
+
+[c1a]                   ; COM1, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=3f8-3ff(3ff::)
+IRQConfig=LS:3,4,5,7,9,10,11,12,14,15
+
+[c23]                   ; COM2, IRQ3
+ConfigPriority=HARDRECONFIG
+IOConfig=2f8-2ff(3ff::)
+IRQConfig=LS:3
+
+[c2a]                   ; COM2, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=2f8-2ff(3ff::)
+IRQConfig=LS:3,4,5,7,9,10,11,12,14,15
+
+[c34]                   ; COM3, IRQ4
+ConfigPriority=HARDRECONFIG
+IOConfig=3e8-3ef(3ff::)
+IRQConfig=LS:4
+
+[c3a]                   ; COM3, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=3e8-3ef(3ff::)
+IRQConfig=LS:3,4,5,7,9,10,11,12,14,15
+
+[c43]                   ; COM4, IRQ3
+ConfigPriority=HARDRECONFIG
+IOConfig=2e8-2ef(3ff::)
+IRQConfig=LS:3,5
+
+[c4a]                   ; COM4, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=2e8-2ef(3ff::)
+IRQConfig=LS:3,4,5,7,9,10,11,12,14,15
+
+[caa]                   ; Any base, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=8@100-ffff%fff8(3ff::)
+IRQConfig=LS:3,4,5,7,9,10,11,12,14,15
+
+; End COM port LogConfig sections
+
+
+[ComPort.NT.PosDup]
+*PNP0500,*PNP0501,*PNP0502,*PNP0510,*PNP0511,*SMCF010,*NSC6001
+
+; User readable strings
+;----------------------------------------------------------
+[Strings]
+
+Intel="Intel"
+
+Serial.SVCDESC  = "Serial port driver"
+Serenum.SVCDESC = "Serenum Filter Driver"
+
+E1085_serial.DeviceDesc = "Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc = "Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0804] ; Chinese (Simplified)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="´®ÐÐ¶Ë¿ÚÇý¶¯³ÌÐò"
+Serenum.SVCDESC ="Serenum ¹ýÂËÆ÷Çý¶¯³ÌÐò"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0404] ; Chinese (Traditional)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="§Ç¦C³s±µ°ðÅX°Êµ{¦¡"
+Serenum.SVCDESC ="Serenum ¿z¿ï¾¹ÅX°Êµ{¦¡"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0406] ; Danish (Denmark)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Seriel portdriver"
+Serenum.SVCDESC ="Serenum filterdriver"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0407] ; German (Germany)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Serieller Anschlusstreiber"
+Serenum.SVCDESC ="Serenum-Filtertreiber"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0C0A] ; Spanish (Spain)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Controlador de puerto serie"
+Serenum.SVCDESC ="Controlador de filtro Serenum"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.040B] ; Finnish (Finland)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Sarjaporttiohjain"
+Serenum.SVCDESC ="Serenum-suodatinohjain"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.040C] ; French (France)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Pilote de port série"
+Serenum.SVCDESC ="Pilote de filtre Serenum"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0410] ; Italian (Italy)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Driver della porta seriale"
+Serenum.SVCDESC ="Driver filtro Serenum"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0411] ; Japanese (Japan)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="ƒVƒŠƒAƒ‹ ƒNƒ‰ƒX ƒhƒ‰ƒCƒo"
+Serenum.SVCDESC ="Serenum ƒtƒBƒ‹ƒ^ ƒhƒ‰ƒCƒo"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0412] ; Korean (Korea)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Á÷·Ä Æ÷Æ® µå¶óÀÌ¹ö"
+Serenum.SVCDESC ="Serenum ÇÊÅÍ µå¶óÀÌ¹ö"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0413] ; Dutch (Netherlands)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Stuurprogramma voor seriële poort"
+Serenum.SVCDESC ="Serenum Filter-stuurprogramma"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0414] ; Norwegian (Bokmål) (Norway)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Seriellportdriver"
+Serenum.SVCDESC ="Sereneumfilterdriver"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.0416] ; Portuguese (Brazil)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Driver de porta serial"
+Serenum.SVCDESC ="Driver de filtro Serenum"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"
+; User readable strings
+;----------------------------------------------------------
+[Strings.041D] ; Swedish (Sweden)
+
+Intel="Intel"
+
+Serial.SVCDESC  ="Drivrutin för seriell port"
+Serenum.SVCDESC ="Drivrutin för Serenum-filter"
+
+E1085_serial.DeviceDesc ="Intel(R) PRO/1000 Serial over LAN"
+E108f_serial.DeviceDesc ="Intel(R) Active Management Technology - SOL"

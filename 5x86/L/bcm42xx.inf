@@ -1,0 +1,274 @@
+;;
+;; PCM200HA.INF
+;;
+;; Linksys HomeLink 10M Integrated PC Card
+;;
+;; 11 APR 2001
+;;
+
+[version]
+	Signature	= "$Chicago$"		; Combined Win9x/Win2k inf
+	Class=Net
+	ClassGUID	= {4d36e972-e325-11ce-bfc1-08002be10318}
+	Provider	= %V_NAME%
+	Compatible	= 1
+DriverVer=03/06/2001, 2.31.0.2
+	CatalogFile=BCM42XX.CAT
+
+[Manufacturer]
+	%V_NAME% = CARDBUS
+
+[ControlFlags] 
+	ExcludeFromSelect = *
+
+[CARDBUS]
+	;;; CardBus 
+	%BCM42CB.DeviceDesc% = BCM42CB, PCI\VEN_FEDA&DEV_A10E&SUBSYS_AB051737
+	;;; PCI 
+	%BCM42XX.DeviceDesc% = BCM42XX, PCI\VEN_FEDA&DEV_A0FA&SUBSYS_04801737
+	%BCM42XX.DeviceDesc% = BCM42XX, PCI\VEN_FEDA&DEV_A0FA&SUBSYS_0101FEDA
+
+;-----------------------------------------------------------------
+; Win9x specific
+;
+;;; CardBus
+[BCM42CB]
+	AddReg		= BCM42CB.win.reg, common.addreg.cb
+	CopyFiles	= BCM42.sys.files
+DriverVer=03/06/2001, 2.31.0.2
+
+[BCM42CB.win.reg]
+        HKR,    Ndi,    DeviceID,               ,       %VID_DID_CB%
+	HKR,	Ndi,	NdiInstaller,		,	%NDI_ENTRYPOINT%
+	; Ndis Info
+	HKR,	,		EnumPropPages,		0,	"netdi.dll,EnumPropPages"
+	HKR,	NDIS,	MajorNdisVersion,	1,	03
+	HKR,	NDIS,	MinorNdisVersion,	1,	0A
+	HKR,	NDIS,	LogDriverName,		,	"BCM42XX"
+	HKR,	NDIS,	MajorDriverVersion,	1,	1
+	HKR,	NDIS,	MinorDriverVersion,	1,	0
+	;Install sections
+	HKR,	Ndi\Install,	,		,	"BCM42CB.install"
+	; Interfaces
+	HKR,	Ndi\Interfaces,	DefUpper,	0,	"ndis3"
+	HKR,	Ndi\Interfaces,	DefLower,	0,	"ethernet"
+	HKR,	Ndi\Interfaces,	UpperRange,	0,	"ndis3"
+	HKR,	Ndi\Interfaces,	LowerRange,	0,	"ethernet"
+	; HKR,,MediaType,,1
+	HKR,	Ndi,	HelpText,		,	%BCM42CB_HELP%
+
+[BCM42CB.install]
+	AddReg		= BCM42CB.addreg
+
+[BCM42CB.addreg]
+	HKR,	,	DevLoader,		0,	"*ndis"
+	HKR,	,	DeviceVxDs,		0,	%DEFAULT_WIN9X_SYS%
+
+;;; PCI
+[BCM42XX]
+	AddReg		= BCM42XX.win.reg, common.addreg.xx
+	CopyFiles	= BCM42.sys.files
+DriverVer=03/06/2001, 2.31.0.2
+
+[BCM42XX.win.reg]
+        HKR,    Ndi,    DeviceID,               ,       %VID_DID_XX%
+	HKR,	Ndi,	NdiInstaller,		,	%NDI_ENTRYPOINT%
+	; Ndis Info
+	HKR,	,		EnumPropPages,		0,	"netdi.dll,EnumPropPages"
+	HKR,	NDIS,	MajorNdisVersion,	1,	03
+	HKR,	NDIS,	MinorNdisVersion,	1,	0A
+	HKR,	NDIS,	LogDriverName,		,	"BCM42XX"
+	HKR,	NDIS,	MajorDriverVersion,	1,	1
+	HKR,	NDIS,	MinorDriverVersion,	1,	0
+	;Install sections
+	HKR,	Ndi\Install,	,		,	"BCM42XX.install"
+	; Interfaces
+	HKR,	Ndi\Interfaces,	DefUpper,	0,	"ndis3"
+	HKR,	Ndi\Interfaces,	DefLower,	0,	"ethernet"
+	HKR,	Ndi\Interfaces,	UpperRange,	0,	"ndis3"
+	HKR,	Ndi\Interfaces,	LowerRange,	0,	"ethernet"
+	; HKR,,MediaType,,1
+	HKR,	Ndi,	HelpText,		,	%BCM42XX_HELP%
+
+[BCM42XX.install]
+	AddReg		= BCM42XX.addreg
+
+[BCM42XX.addreg]
+	HKR,	,	DevLoader,		0,	"*ndis"
+	HKR,	,	DeviceVxDs,		0,	%DEFAULT_WIN9X_SYS%
+
+; Flag = 2 is COPYFLG_NOSKIP (2)
+; Flag = 33 is COPYFLG_WARN_IF_SKIP (1) | COPYFLG_NO_VERSION_DIALOG (32)
+;;; Both CardBus & PCI
+[BCM42.sys.files]
+	BCM42NDI.DLL,,,2
+	BCM42XX5.SYS,,,2
+	BCM42CTL.DLL,,,2
+	;BCM42RLY.VXD,,,2
+	BCM42DB0.DLL,,,2
+	BCM42DIA.CPL,,,2
+	BCM42IOA.DLL,,,2
+	;BCM42XHW.VXD,,,2
+	;MFC42.DLL,,,33
+	;MSVCRT.DLL,,,33
+
+;-----------------------------------------------------------------
+; Win2k specific
+;
+;;; CardBus
+
+[BCM42CB.NT]
+	Characteristics	= 0x4			; NCF_PHYSICAL
+	BusType		= 5			; PCI bus
+	AddReg		= BCM42CB.reg, common.addreg.cb
+	CopyFiles	= BCM42.files.NT, BCM42.sys.files.NT
+DriverVer=03/06/2001, 2.31.0.2
+
+[BCM42CB.NT.Services]
+	AddService = BCM42CB, 2, BCM42CB.Service, common.EventLog
+
+[BCM42CB.reg]
+	HKR,	Ndi,	Service,		0,	"BCM42CB"
+	; Ndis Info
+	; Interfaces
+	HKR,	Ndi\Interfaces,	UpperRange,	,	"ndis5"
+	HKR,	Ndi\Interfaces,	LowerRange,	,	"ethernet"
+	HKR,	Ndi,	HelpText,		,	%BCM42CB_HELP%
+
+[BCM42CB.Service]
+	DisplayName	= %BCM42CB.Service.DispName%
+	ServiceType	= 1			; %SERVICE_KERNEL_DRIVER%
+	StartType	= 2			; %SERVICE_AUTO_START%
+	ErrorControl	= 1			; %SERVICE_ERROR_NORMAL%
+	ServiceBinary	= %12%\bcm42xx5.sys
+	LoadOrderGroup	= NDIS
+
+;;; PCI
+[BCM42XX.NT]
+	Characteristics	= 0x4			; NCF_PHYSICAL
+	BusType		= 5			; PCI bus
+	AddReg		= BCM42XX.reg, common.addreg.xx
+	CopyFiles	= BCM42.files.NT, BCM42.sys.files.NT
+DriverVer=03/06/2001, 2.31.0.2
+
+[BCM42XX.NT.Services]
+	AddService = BCM42XX, 2, BCM42XX.Service, common.EventLog
+
+[BCM42XX.reg]
+	HKR,	Ndi,	Service,		0,	"BCM42XX"
+	; Ndis Info
+	; Interfaces
+	HKR,	Ndi\Interfaces,	UpperRange,	,	"ndis5"
+	HKR,	Ndi\Interfaces,	LowerRange,	,	"ethernet"
+	HKR,	Ndi,	HelpText,		,	%BCM42XX_HELP%
+
+[BCM42XX.Service]
+	DisplayName	= %BCM42XX.Service.DispName%
+	ServiceType	= 1			; %SERVICE_KERNEL_DRIVER%
+	StartType	= 2			; %SERVICE_AUTO_START%
+	ErrorControl	= 1			; %SERVICE_ERROR_NORMAL%
+	ServiceBinary	= %12%\bcm42xx5.sys
+	LoadOrderGroup	= NDIS
+
+;;; Both CardBus & PCI
+[common.EventLog]
+	AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+	HKR,	,	EventMessageFile,	0x00020000,	"%%SystemRoot%%\System32\netevent.dll"
+	HKR,	,	TypesSupported,		0x00010001,	7
+
+[BCM42.files.NT]
+	BCM42XX5.SYS,,,2
+
+[BCM42.sys.files.NT]
+	BCM42CTL.DLL,,,2
+	BCM42RLY.SYS,,,2
+	BCM42XHW.SYS,,,2
+	BCM42DB0.DLL,,,2
+	BCM42DIA.CPL,,,2
+	BCM42IOA.DLL,,,2
+
+;-----------------------------------------------------------------
+; Both Win9x & Win2k
+;
+;;; CardBus
+[common.addreg.cb]
+	HKR,			, "DiagBaseName",	0,	%DIAGS%
+; Next two override what diags gets from the driver file resource
+	HKR,			, "DiagCopyright",	0,	%DIAG_COPYRIGHT%
+	HKR,			, "DiagDescription",	0, %DIAG_DESC_CB%
+	HKLM,Software\%DIAGS%, "Logo Text",		0, %LOGO_TEXT%
+	HKLM,Software\%DIAGS%, "Icon Name",		0, %ICON_NAME_CB%
+	HKLM,Software\%DIAGS%, "Company URL",		0, %COMPANY_URL%
+	HKLM,Software\%DIAGS%, "Title",			0, %DIAG_TITLE_CB%
+	HKLM,Software\%DIAGS%, "LegalCopyright",	0, %LEGAL_COPYRIGHT%
+	HKLM,Software\%DIAGS%, "ShowStatistics",	0x00010001,	00,00,00,00
+	HKLM,Software\%DIAGS%, "StartInSysTray",	0x00010001,	01,00,00,00
+
+;;; PCI
+[common.addreg.xx]
+	HKR,			, "DiagBaseName",	0,	%DIAGS%
+; Next two override what diags gets from the driver file resource
+	HKR,			, "DiagCopyright",	0,	%DIAG_COPYRIGHT%
+	HKR,			, "DiagDescription",	0, %DIAG_DESC_XX%
+	HKLM,Software\%DIAGS%, "Logo Text",		0, %LOGO_TEXT%
+	HKLM,Software\%DIAGS%, "Icon Name",		0, %ICON_NAME_XX%
+	HKLM,Software\%DIAGS%, "Company URL",		0, %COMPANY_URL%
+	HKLM,Software\%DIAGS%, "Title",			0, %DIAG_TITLE_XX%
+	HKLM,Software\%DIAGS%, "LegalCopyright",	0, %LEGAL_COPYRIGHT%
+	HKLM,Software\%DIAGS%, "ShowStatistics",	0x00010001,	00,00,00,00
+	HKLM,Software\%DIAGS%, "StartInSysTray",	0x00010001,	01,00,00,00
+
+
+[DestinationDirs]
+	DefaultDestDir=11
+	BCM42.sys.files=11
+	BCM42.files.NT = 12
+	BCM42.sys.files.NT=11
+
+[SourceDisksNames]
+	1=%BCM42.DiskName%,,
+	
+[SourceDisksFiles]
+	BCM42CTL.DLL=1
+	;BCM42RLY.VXD=1
+	BCM42RLY.SYS=1
+	BCM42DB0.DLL=1
+	BCM42DIA.CPL=1
+	BCM42IOA.DLL=1
+	BCM42XHW.SYS=1
+	;BCM42XHW.VXD=1
+	BCM42XX5.SYS=1
+	BCM42NDI.DLL=1
+	;MFC42.DLL=1
+	;MSVCRT.DLL=1
+	
+[strings]
+        ; Provider
+        V_NAME = "Linksys"
+        ; PNP Devices
+        BCM42XX.DeviceDesc = "Linksys Phoneline 10M Network Card"
+        BCM42CB.DeviceDesc = "Linksys HomeLink 10M Integrated PC Card"
+	; General Strings
+	BCM42XX_HELP = "Linksys Phoneline 10M Network Card provides local area networking over existing phone wiring."
+	BCM42CB_HELP = "Linksys HomeLink 10M Integrated PC Card provides local area networking over existing phone wiring."
+	BCM42XX.Service.DispName = "Linksys Phoneline 10M Network Card Driver"
+	BCM42CB.Service.DispName = "Linksys HomeLink 10M Integrated PC Card Driver"
+	ICON_NAME_XX = "HPN200"
+	ICON_NAME_CB = "PCM200HA"
+	DIAG_TITLE_XX = "HPN200 Information and Diagnostics"
+	DIAG_TITLE_CB = "PCM200HA Information and Diagnostics"
+	DIAG_DESC_XX = "Linksys Phoneline 10M Network Card"
+	DIAG_DESC_CB = "Linksys HomeLink 10M Integrated PC Card"
+	VID_DID_XX = "PCI\VEN_FEDA&DEV_A0FA&SUBSYS_04801737"
+	VID_DID_CB = "PCI\VEN_FEDA&DEV_A10E&SUBSYS_AB051737"
+	BCM42.DiskName = "Linksys Phoneline 10M Network Card & HomeLink 10M Integrated PC Card Install Disk"
+	DIAGS = "BCM42DIA"
+	LOGO_TEXT = "Linksys"
+	COMPANY_URL = "http://www.linksys.com/"
+	LEGAL_COPYRIGHT = "1998-2001, All Rights Reserved."
+	DIAG_COPYRIGHT = "1998-2001, All Rights Reserved"
+	NDI_ENTRYPOINT = "BCM42NDI.dll,NdiProc"
+	DEFAULT_WIN9X_SYS = "BCM42XX5.SYS"
+

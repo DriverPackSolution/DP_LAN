@@ -1,0 +1,166 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 2003-2009 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+; INF for the Intel(R) 5400 Series Chipsets Integrated Device - 402F
+; (Intel 64 bit extension Platform Only, Windows 7 64 bit extension) 
+
+[Version]
+Signature="$Windows NT$"
+Class=System
+ClassGUID={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%INTC%
+CatalogFile=qd262x64.cat
+DriverVer=11/16/2009,1.3.22.0
+
+
+[SourceDisksNames]
+1=%Disk_Description%,,,
+
+[SourceDisksFiles]
+qd262x64.sys = 1
+ioatco.dll = 1
+
+[Manufacturer]
+%MfgName% = Intel,  NTamd64.6.1, NTamd64.6.1.1 
+
+[Intel]
+
+[Intel.NTamd64.6.1]
+%PCI\VEN_8086&DEV_402F.DeviceDesc%=ioatdma.Dev, PCI\VEN_8086&DEV_402F
+
+; Windows 7 Client not supported
+[Intel.NTamd64.6.1.1]
+%PCI\VEN_8086&DEV_402F.DeviceDesc%=NO_DRV, PCI\VEN_8086&DEV_402F
+
+
+[DestinationDirs]
+ioatdma.Files.Ext = 10,System32\Drivers
+CoInstaller_CopyFiles = 11
+
+[ioatdma.Dev.NT]
+CopyFiles=ioatdma.Files.Ext
+AddReg=ioatdma.Driver.AddReg
+
+[ioatdma.Dev.NT.Services]
+Addservice = ioatdma2, 0x00000002, ioatdma.AddService, ioatdma.EventLog
+
+[ioatdma.Dev.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[ioatdma.Dev.NT.HW]
+AddReg = MSI.reg
+
+;---------------------------------------------------------------;
+;-------------- Driver installation
+;---------------------------------------------------------------;
+
+[ioatdma.AddService]
+DisplayName    = %ioatdma.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\qd262x64.sys
+AddReg         = ioatdma.Service.AddReg
+LoadOrderGroup = NDIS 
+
+[ioatdma.Service.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,qd262x64.sys
+
+[ioatdma.Files.Ext]
+qd262x64.sys
+
+[ioatdma.Driver.AddReg]
+HKR,,Version,,"%DriverVer%"
+HKR,,EnableIOAT,0x00010001, 0x00000001
+HKR,,FailDisableDevice,0x00010001, 0x00000000
+
+;---------------------------------------------------------------;
+;-------------- Event Log
+;---------------------------------------------------------------;
+
+[ioatdma.EventLog]
+AddReg = ioatdma.AddEventLog.reg
+
+[ioatdma.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%SystemRoot%\System32\ntdll.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+;---------------------------------------------------------------;
+;-------------- MSI Registry Settings 
+;---------------------------------------------------------------;
+[MSI.reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 4
+
+
+;---------------------------------------------------------------;
+;-------------- Coinstaller installation
+;---------------------------------------------------------------;
+
+[CoInstaller_CopyFiles]
+ioatco.dll
+
+[CoInstaller_AddReg]
+HKR,, CoInstallers32,   0x00010000, "ioatco.dll,IOATCoInstallerEntry"
+HKR,, CoInstallFlag,    0x00010001, 0x80000001
+HKR,, CoInstallTitle,   0x00010000, "%ioatco.Title%"
+HKR,, CoInstallEnableString,    0x00010000, "%ioatco.EnableString%"
+HKR,, CoInstallEnableHelpTitle, 0x00010000, "%ioatco.HelpTitle%"
+HKR,, CoInstallEnableHelpText,  0x00010000, "%ioatco.HelpText%"
+HKR,, CoInstallState0,  0x00010000, "%ioatco.State0%"
+HKR,, CoInstallState1,  0x00010000, "%ioatco.State1%"
+HKR,, CoInstallState2,  0x00010000, "%ioatco.State2%"
+HKR,, CoInstallState3,  0x00010000, "%ioatco.State3%"
+HKR,, CoInstallCfgWarn, 0x00010000, "%ioatco.CfgWarn%"
+
+;---------------------------------------------------------------;
+;-------------- NO_DRV installation
+;---------------------------------------------------------------;
+
+[NO_DRV]
+AddReg=NoDrv.reg
+Include=machine.inf
+Needs=NO_DRV
+
+[NO_DRV.Services]
+Include=machine.inf
+Needs=NO_DRV.Services
+
+[NoDrv.reg]
+HKR,,Version,,"%DriverVer%"
+
+;---------------------------------------------------------------;
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+
+[Strings]
+INTC="Intel"
+Disk_Description="Intel(R) QuickData Technology Device"
+MfgName="Intel"
+PCI\VEN_8086&DEV_402F.DeviceDesc="Intel(R) 5400 Chipset QuickData Technology device - 402F"
+ioatdma.SvcDesc="Intel(R) QuickData Technology device ver.2"
+
+;---------------------------------------------------------------------------------------------------
+
+

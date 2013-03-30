@@ -1,0 +1,50 @@
+**
+**
+**  VIA Rhine Family Fast Ethernet Adapter
+**
+**  NDIS Driver for WindowsXP/Server2003/Vista x64 Edition
+**
+**  v3.87   Mar, 2011
+**
+**
+
+Introduction:
+=============
+
+  This document shows you how to setup the driver in Windows operating system.
+
+Contents of the Subdirectory:
+=============================
+
+    
+    FET5A64B.SYS        The NDIS5 driver for WinXP/Server2003/Vista x64 Edition.
+    FETNDA64.INF        The installation information file.
+    VUINS64.DLL         The Un-installer for WinXP/Server2003/Vista x64 Edition.
+    DIFXAPI.DLL         The DIFx API for Windows Vista x64 Edition.
+    WINX64.TXT          This file.
+
+Installation:
+=============
+
+  Before starting with the installation process, make sure that the adapter
+  is properly installed and configured.
+
+    1. Turn on the power of your PC on to boot from Windows operating system.
+       Windows will auto-detect your new adapter, and the "New Hardware Found"
+       dialogue box will appear. Select "Driver from disk provided by hardware
+       manufacturer" to install driver from the diskette that comes with your
+       LAN adapter.
+
+    2. Insert the driver diskette into your floppy drive, and specify the
+       path of the driver in the diskette(i.e. A:\) to copy the driver
+       files to your system.
+
+
+  Note:
+
+    1. In Setup Option "Flow Control":
+       When setting to Hardware Default(Auto), the flow control setting is 
+       according to the auto-negotiation result based on PHY hardware default
+       values. However, when setting to other values(Disable, Enable), driver 
+       will just disable or enable flow control ability according to your setting.
+

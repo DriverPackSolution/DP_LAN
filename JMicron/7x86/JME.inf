@@ -1,0 +1,545 @@
+; /****************************************************************************
+; ** COPYRIGHT (C) JMICRON 2007-2010                                         **
+; **                                                                         **
+; ** JMC25x/JMC26x NDIS 6.20 MINIPORT DRIVER INF FILE                        **
+; ** INF file for Windows Win7                                               **
+; ****************************************************************************/
+
+[Version]
+Signature         = "$Windows NT$"                          ; NT-based operating systems
+Class             = Net
+ClassGUID         = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider          = %JMICRON%
+CatalogFile       = JME.cat                                 ; WHQL certified
+Compatible        = 1
+DriverVer         = 11/17/2011, 6.0.33.3
+
+[Manufacturer]
+%JMICRON%         = JMICRON, NTx86.6.1
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[JMICRON.NTx86.6.1]
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250                    ; JMicron PCI Express Gigabit Ethernet Adapter
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_19051043    ; ASUS
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_839C1043    ; ASUS_China
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_842D1043    ; COMPAL_for_ASUS
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_847C1043    ; COMPAL_for_ASUS
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_847D1043    ; COMPAL_for_ASUS
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_84841043    ; COMPAL_for_ASUS
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_84AE1043    ; COMPAL_for_ASUS
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_07701558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_07711558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_11501558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_15001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_15501558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_17001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_24801558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_25001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_25111558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_25501558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_27001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_27011558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_31001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_35031558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_41011558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_41111558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_41201558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_41401558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_51001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_51051558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_51021558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_51201558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_51251558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_51301558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_51311558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_51401558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_55051558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_71001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_71021558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_71031558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_71101558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_71301558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_71401558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_72001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_80001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_84301558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_91001558    ; CLEVO
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_02381071    ; MITAC
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_92251071    ; MITAC
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_92341071    ; MITAC
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_95251071    ; MITAC
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_95261071    ; MITAC
+%PCI\VEN_197B&DEV_0250.DeviceDesc% = JMC25x,   PCI\VEN_197B&DEV_0250&SUBSYS_95271071    ; MITAC
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260                    ; JMicron PCI Express Fast Ethernet Adapter
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_839C1043    ; ASUS
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_08091558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_08151558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_11001558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_11101558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_21001558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_24311558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_24321558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_24501558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_35001558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_35041558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_41001558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_51011558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_71211558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_71221558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_74651558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_74661558    ; CLEVO
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_360B103C    ; WISTRON_for_HP
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_400C1B0A    ; PEGATRON
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_500F17FF    ; INVENTEC_for_BENQ
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_501017FF    ; INVENTEC_for_BENQ
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_059D17FF    ; QUANTA_for_BENQ
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_0818152D    ; QUANTA
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_0819152D    ; QUANTA
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_08261854    ; QUANTA_for_LG
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_08291854    ; QUANTA_for_LG
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_08511854    ; QUANTA_for_LG
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_02381071    ; MITAC
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_92251071    ; MITAC
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_92341071    ; MITAC
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_95251071    ; MITAC
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_95261071    ; MITAC
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_95271071    ; MITAC
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_9075104D    ; FOXCONN_for_SONY
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_20121297    ; SHUTTLE
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_20131297    ; SHUTTLE
+%PCI\VEN_197B&DEV_0260.DeviceDesc% = JMC26x,   PCI\VEN_197B&DEV_0260&SUBSYS_02601019    ; ECS
+
+
+;-----------------------------------------------------------------------------
+; Windows Win7 (NDIS6.20) specific section for JMC25x
+;-----------------------------------------------------------------------------
+[JMC25x]
+Characteristics     = 0x84                          ; NCF_HAS_UI | NCF_PHYSICAL
+BusType             = 5                             ; PCI
+DelReg              = CS_DelReg
+AddReg              = JME_Common_Reg
+AddReg              = Speed_1000_Reg, FlowCtrl_Reg, Wakeup_Reg
+AddReg              = OffloadIPv4_Reg, OffloadIPv6_Reg
+AddReg              = JME_Reg, ProtocolOffload_Reg
+AddReg              = PriorityVlanTag_Reg
+AddReg              = RSS_Reg
+CopyFiles           = CopyFiles
+*IfType             = 6                             ; IF_TYPE_ETHERNET_CSMACD
+*MediaType          = 0                             ; NdisMedium802_3
+*PhysicalMediaType  = 14                            ; NdisPhysicalMedium802_3
+
+[JMC25x.HW]
+AddReg              = MSI_Reg
+
+[JMC25x.Services]
+AddService          = JME, 2, JME_Service_Sec, JME_EventLog_Sec
+
+
+;-----------------------------------------------------------------------------
+; Windows Win7 (NDIS6.20) specific section for JMC26x
+;-----------------------------------------------------------------------------
+[JMC26x]
+Characteristics     = 0x84                          ; NCF_HAS_UI | NCF_PHYSICAL
+BusType             = 5                             ; PCI
+DelReg              = CS_DelReg
+AddReg              = JME_Common_Reg
+AddReg              = Speed_Reg, FlowCtrl_Reg, Wakeup_Reg
+AddReg              = OffloadIPv4_Reg, OffloadIPv6_Reg
+AddReg              = JME_Reg, ProtocolOffload_Reg
+AddReg              = PriorityVlanTag_Reg
+AddReg              = RSS_Reg
+CopyFiles           = CopyFiles
+*IfType             = 6                             ; IF_TYPE_ETHERNET_CSMACD
+*MediaType          = 0                             ; NdisMedium802_3
+*PhysicalMediaType  = 14                            ; NdisPhysicalMedium802_3
+
+[JMC26x.HW]
+;Include             = machine.inf
+;Needs               = PciASPMOptOut
+AddReg              = MSI_Reg
+
+[JMC26x.Services]
+AddService          = JME, 2, JME_Service_Sec, JME_EventLog_Sec
+
+;-----------------------------------------------------------------------------
+; Delete customized setting
+;-----------------------------------------------------------------------------
+[CS_DelReg]
+HKR,,CustomizedSetting
+
+;-----------------------------------------------------------------------------
+; JME common
+;-----------------------------------------------------------------------------
+[JME_Common_Reg]
+;
+; *ReceiveBuffers
+;
+HKR, Ndi\params\*ReceiveBuffers,                ParamDesc,  0, %ReceiveFrameDescriptors%
+HKR, Ndi\params\*ReceiveBuffers,                default,    0, "256"
+HKR, Ndi\params\*ReceiveBuffers,                min,        0, "64"
+HKR, Ndi\params\*ReceiveBuffers,                max,        0, "00001024"
+HKR, Ndi\params\*ReceiveBuffers,                step,       0, "1"
+HKR, Ndi\params\*ReceiveBuffers,                Base,       0, "10"
+HKR, Ndi\params\*ReceiveBuffers,                type,       0, "int"
+
+;
+; *TransmitBuffers
+;
+HKR, Ndi\params\*TransmitBuffers,               ParamDesc,  0, %TransmitPacketDescriptors%
+HKR, Ndi\params\*TransmitBuffers,               default,    0, "384"
+HKR, Ndi\params\*TransmitBuffers,               min,        0, "288"
+HKR, Ndi\params\*TransmitBuffers,               max,        0, "00001024"
+HKR, Ndi\params\*TransmitBuffers,               step,       0, "1"
+HKR, Ndi\params\*TransmitBuffers,               Base,       0, "10"
+HKR, Ndi\params\*TransmitBuffers,               type,       0, "int"
+
+;
+; Interrupt moderation
+;
+HKR, Ndi\params\*InterruptModeration,           ParamDesc,  0, %InterruptModeration%
+HKR, Ndi\params\*InterruptModeration,           default,    0, "1"
+HKR, Ndi\params\*InterruptModeration,           type,       0, "enum"
+HKR, Ndi\params\*InterruptModeration\enum,      "0",        0, %Disable%
+HKR, Ndi\params\*InterruptModeration\enum,      "1",        0, %Enable%
+
+;
+; NetworkAddress
+;
+HKR,Ndi\params\NetworkAddress,                  ParamDesc,  0, %NetworkAddress%
+HKR,Ndi\params\NetworkAddress,                  type,       0, "edit"
+HKR,Ndi\params\NetworkAddress,                  default,    0, "000000000000"
+HKR,Ndi\params\NetworkAddress,                  LimitText,  0, "12"
+HKR,Ndi\params\NetworkAddress,                  UpperCase,  0, "1"
+HKR,Ndi\params\NetworkAddress,                  Optional,   0, "1"
+
+;
+; Energy Efficient Ethernet
+;
+HKR, Ndi\params\EnergyEfficientEthernet,        ParamDesc,  0, %EnergyEfficientEthernet%
+HKR, Ndi\params\EnergyEfficientEthernet,        default,    0, "0"
+HKR, Ndi\params\EnergyEfficientEthernet,        type,       0, "enum"
+HKR, Ndi\params\EnergyEfficientEthernet\enum,   "0",        0, %Disable%
+HKR, Ndi\params\EnergyEfficientEthernet\enum,   "1",        0, %Enable%
+
+;-----------------------------------------------------------------------------
+; Speed and duplex
+;-----------------------------------------------------------------------------
+[Speed_Reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,  0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,    0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,       0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",        0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,              "1",        0, %10Mb-Half-Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "2",        0, %10Mb-Full-Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "3",        0, %100Mb-Half-Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "4",        0, %100Mb-Full-Duplex%
+
+[Speed_1000_Reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,  0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,    0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,       0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",        0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,              "1",        0, %10Mb-Half-Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "2",        0, %10Mb-Full-Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "3",        0, %100Mb-Half-Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "4",        0, %100Mb-Full-Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "5",        0, %1Gb-Full-Duplex%
+
+;
+; JumboFrame
+;
+HKR, Ndi\params\JumboFrame,                     ParamDesc,  0, %JumboFrame%
+HKR, Ndi\params\JumboFrame,                     default,    0, "1500"
+HKR, Ndi\params\JumboFrame,                     type,       0, "enum"
+HKR, Ndi\params\JumboFrame\enum,                "1500",     0, %Disable%
+HKR, Ndi\params\JumboFrame\enum,                "4000",     0, %Bytes4000%
+HKR, Ndi\params\JumboFrame\enum,                "9000",     0, %Bytes9000%
+
+
+;-----------------------------------------------------------------------------
+; Flow control
+;-----------------------------------------------------------------------------
+[FlowCtrl_Reg]
+HKR, Ndi\params\*FlowControl,                   ParamDesc,  0, %FlowCtrl%
+HKR, Ndi\params\*FlowControl,                   default,    0, "3"
+HKR, Ndi\params\*FlowControl,                   type,       0, "enum"
+HKR, Ndi\params\*FlowControl\enum,              "0",        0, %Disable%
+HKR, Ndi\params\*FlowControl\enum,              "1",        0, %Tx Enable%
+HKR, Ndi\params\*FlowControl\enum,              "2",        0, %Rx Enable%
+HKR, Ndi\params\*FlowControl\enum,              "3",        0, %Rx Tx Enable%
+
+;-----------------------------------------------------------------------------
+; Wake on Lan capability control
+;-----------------------------------------------------------------------------
+[Wakeup_Reg]
+HKR, Ndi\params\*WakeOnMagicPacket,             ParamDesc,  0, %WakeOnMagicPacket%
+HKR, Ndi\params\*WakeOnMagicPacket,             default,    0, "1"
+HKR, Ndi\params\*WakeOnMagicPacket,             type,       0, "enum"
+HKR, Ndi\params\*WakeOnMagicPacket\enum,        "0",        0, %Disable%
+HKR, Ndi\params\*WakeOnMagicPacket\enum,        "1",        0, %Enable%
+
+HKR, Ndi\params\*WakeOnPattern,                 ParamDesc,  0, %WakeOnPattern%
+HKR, Ndi\params\*WakeOnPattern,                 default,    0, "1"
+HKR, Ndi\params\*WakeOnPattern,                 type,       0, "enum"
+HKR, Ndi\params\*WakeOnPattern\enum,            "0",        0, %Disable%
+HKR, Ndi\params\*WakeOnPattern\enum,            "1",        0, %Enable%
+
+HKR, Ndi\params\*DeviceSleepOnDisconnect,       ParamDesc,  0, %DeviceSleepOnDisconnect%
+HKR, Ndi\params\*DeviceSleepOnDisconnect,       default,    0, "1"
+HKR, Ndi\params\*DeviceSleepOnDisconnect,       type,       0, "enum"
+HKR, Ndi\params\*DeviceSleepOnDisconnect\enum,  "0",        0, %Disable%
+HKR, Ndi\params\*DeviceSleepOnDisconnect\enum,  "1",        0, %Enable%
+
+HKR, Ndi\params\WakeOnLink,                     ParamDesc,  0, %WakeOnLink%
+HKR, Ndi\params\WakeOnLink,                     default,    0, "1"
+HKR, Ndi\params\WakeOnLink,                     type,       0, "enum"
+HKR, Ndi\params\WakeOnLink\enum,                "0",        0, %Disable%
+HKR, Ndi\params\WakeOnLink\enum,                "1",        0, %Enable%
+
+HKR, Ndi\params\WakeFromS5,                     ParamDesc,  0, %WakeFromS5%
+HKR, Ndi\params\WakeFromS5,                     default,    0, "1"
+HKR, Ndi\params\WakeFromS5,                     type,       0, "enum"
+HKR, Ndi\params\WakeFromS5\enum,                "0",        0, %Disable%
+HKR, Ndi\params\WakeFromS5\enum,                "1",        0, %Enable%
+
+;-----------------------------------------------------------------------------
+; Protocol offload capability control
+;-----------------------------------------------------------------------------
+[ProtocolOffload_Reg]
+HKR, Ndi\params\*PMARPOffload,                  ParamDesc,  0, %PMARPOffload%
+HKR, Ndi\params\*PMARPOffload,                  default,    0, "1"
+HKR, Ndi\params\*PMARPOffload,                  type,       0, "enum"
+HKR, Ndi\params\*PMARPOffload\enum,             "0",        0, %Disable%
+HKR, Ndi\params\*PMARPOffload\enum,             "1",        0, %Enable%
+
+HKR, Ndi\params\*PMNSOffload,                   ParamDesc,  0, %PMNSOffload%
+HKR, Ndi\params\*PMNSOffload,                   default,    0, "1"
+HKR, Ndi\params\*PMNSOffload,                   type,       0, "enum"
+HKR, Ndi\params\*PMNSOffload\enum,              "0",        0, %Disable%
+HKR, Ndi\params\*PMNSOffload\enum,              "1",        0, %Enable%
+
+;-----------------------------------------------------------------------------
+; IPv4 task offload
+;-----------------------------------------------------------------------------
+[OffloadIPv4_Reg]
+;
+; Large send offload
+;
+HKR, Ndi\params\*LsoV2IPv4,                     ParamDesc,  0, %LsoV2IPv4%
+HKR, Ndi\params\*LsoV2IPv4,                     default,    0, "1"
+HKR, Ndi\params\*LsoV2IPv4,                     type,       0, "enum"
+HKR, Ndi\params\*LsoV2IPv4\enum,                "0",        0, %Disable%
+HKR, Ndi\params\*LsoV2IPv4\enum,                "1",        0, %Enable%
+
+;
+; Checksum offload
+;
+HKR, Ndi\params\*IPChecksumOffloadIPv4,         ParamDesc,  0, %IpChecksumOffloadIPv4%
+HKR, Ndi\params\*IPChecksumOffloadIPv4,         default,    0, "3"
+HKR, Ndi\params\*IPChecksumOffloadIPv4,         type,       0, "enum"
+HKR, Ndi\params\*IPChecksumOffloadIPv4\enum,    "0",        0, %Disable%
+HKR, Ndi\params\*IPChecksumOffloadIPv4\enum,    "1",        0, %Tx Enable%
+HKR, Ndi\params\*IPChecksumOffloadIPv4\enum,    "2",        0, %Rx Enable%
+HKR, Ndi\params\*IPChecksumOffloadIPv4\enum,    "3",        0, %Rx Tx Enable%
+
+HKR, Ndi\params\*TCPChecksumOffloadIPv4,        ParamDesc,  0, %TcpChecksumOffloadIPv4%
+HKR, Ndi\params\*TCPChecksumOffloadIPv4,        default,    0, "3"
+HKR, Ndi\params\*TCPChecksumOffloadIPv4,        type,       0, "enum"
+HKR, Ndi\params\*TCPChecksumOffloadIPv4\enum,   "0",        0, %Disable%
+HKR, Ndi\params\*TCPChecksumOffloadIPv4\enum,   "1",        0, %Tx Enable%
+HKR, Ndi\params\*TCPChecksumOffloadIPv4\enum,   "2",        0, %Rx Enable%
+HKR, Ndi\params\*TCPChecksumOffloadIPv4\enum,   "3",        0, %Rx Tx Enable%
+
+HKR, Ndi\params\*UDPChecksumOffloadIPv4,        ParamDesc,  0, %UdpChecksumOffloadIPv4%
+HKR, Ndi\params\*UDPChecksumOffloadIPv4,        default,    0, "3"
+HKR, Ndi\params\*UDPChecksumOffloadIPv4,        type,       0, "enum"
+HKR, Ndi\params\*UDPChecksumOffloadIPv4\enum,   "0",        0, %Disable%
+HKR, Ndi\params\*UDPChecksumOffloadIPv4\enum,   "1",        0, %Tx Enable%
+HKR, Ndi\params\*UDPChecksumOffloadIPv4\enum,   "2",        0, %Rx Enable%
+HKR, Ndi\params\*UDPChecksumOffloadIPv4\enum,   "3",        0, %Rx Tx Enable%
+
+
+;-----------------------------------------------------------------------------
+; Priority(802.1p)/VLAN(802.1q)
+;-----------------------------------------------------------------------------
+[PriorityVlanTag_Reg]
+HKR, Ndi\params\*PriorityVLANTag,               ParamDesc,  0, %PriorityVLANTag%
+HKR, Ndi\params\*PriorityVLANTag,               default,    0, "3"
+HKR, Ndi\params\*PriorityVLANTag,               type,       0, "enum"
+HKR, Ndi\params\*PriorityVLANTag\enum,          "0",        0, %Priority & VLAN Disable%
+HKR, Ndi\params\*PriorityVLANTag\enum,          "1",        0, %Priority Enable%
+HKR, Ndi\params\*PriorityVLANTag\enum,          "2",        0, %VLAN Enable%
+HKR, Ndi\params\*PriorityVLANTag\enum,          "3",        0, %Priority & VLAN Enable%
+
+
+;-----------------------------------------------------------------------------
+; IPv6 task offload
+;-----------------------------------------------------------------------------
+[OffloadIPv6_Reg]
+;
+; Large send offload
+;
+HKR, Ndi\params\*LsoV2IPv6,                     ParamDesc,  0, %LsoV2IPv6%
+HKR, Ndi\params\*LsoV2IPv6,                     default,    0, "1"
+HKR, Ndi\params\*LsoV2IPv6,                     type,       0, "enum"
+HKR, Ndi\params\*LsoV2IPv6\enum,                "0",        0, %Disable%
+HKR, Ndi\params\*LsoV2IPv6\enum,                "1",        0, %Enable%
+
+;
+; Checksum offload
+;
+HKR, Ndi\params\*TCPChecksumOffloadIPv6,        ParamDesc,  0, %TcpChecksumOffloadIPv6%
+HKR, Ndi\params\*TCPChecksumOffloadIPv6,        default,    0, "3"
+HKR, Ndi\params\*TCPChecksumOffloadIPv6,        type,       0, "enum"
+HKR, Ndi\params\*TCPChecksumOffloadIPv6\enum,   "0",        0, %Disable%
+HKR, Ndi\params\*TCPChecksumOffloadIPv6\enum,   "1",        0, %Tx Enable%
+HKR, Ndi\params\*TCPChecksumOffloadIPv6\enum,   "2",        0, %Rx Enable%
+HKR, Ndi\params\*TCPChecksumOffloadIPv6\enum,   "3",        0, %Rx Tx Enable%
+
+HKR, Ndi\params\*UDPChecksumOffloadIPv6,        ParamDesc,  0, %UdpChecksumOffloadIPv6%
+HKR, Ndi\params\*UDPChecksumOffloadIPv6,        default,    0, "3"
+HKR, Ndi\params\*UDPChecksumOffloadIPv6,        type,       0, "enum"
+HKR, Ndi\params\*UDPChecksumOffloadIPv6\enum,   "0",        0, %Disable%
+HKR, Ndi\params\*UDPChecksumOffloadIPv6\enum,   "1",        0, %Tx Enable%
+HKR, Ndi\params\*UDPChecksumOffloadIPv6\enum,   "2",        0, %Rx Enable%
+HKR, Ndi\params\*UDPChecksumOffloadIPv6\enum,   "3",        0, %Rx Tx Enable%
+
+
+;-----------------------------------------------------------------------------
+; RSS
+;-----------------------------------------------------------------------------
+[RSS_Reg]
+HKR, Ndi\params\*RSS,                           ParamDesc,  0, %RSS%
+HKR, Ndi\params\*RSS,                           default,    0, "1"
+HKR, Ndi\params\*RSS,                           type,       0, "enum"
+HKR, Ndi\params\*RSS\enum,                      "0",        0, %Disable%
+HKR, Ndi\params\*RSS\enum,                      "1",        0, %Enable%
+
+
+;-----------------------------------------------------------------------------
+; Message-based interrupt
+;-----------------------------------------------------------------------------
+[MSI_Reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 8
+
+
+;-----------------------------------------------------------------------------
+; Windows service for JMC25x/JMC26x
+;-----------------------------------------------------------------------------
+[JME_Reg]
+HKR, Ndi,                                       Service,    0, "JME"
+HKR, Ndi\Interfaces,                            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,                            LowerRange, 0, "ethernet"
+
+
+;-----------------------------------------------------------------------------
+; Windows Win7 Services for JMC25x/JMC26x
+;-----------------------------------------------------------------------------
+[JME_Service_Sec]
+DisplayName     = %JME_Service_DispName%
+ServiceType     = 1                             ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3                             ;%SERVICE_DEMAND_START%
+ErrorControl    = 1                             ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\JME.sys
+LoadOrderGroup  = NDIS
+
+
+;-----------------------------------------------------------------------------
+; Event log for JMC25x/JMC26x
+;-----------------------------------------------------------------------------
+[JME_EventLog_Sec]
+AddReg = AddEventLog_Reg
+
+[AddEventLog_Reg]
+HKR, , EventMessageFile, 0x00020000, "%SystemRoot%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+
+;-----------------------------------------------------------------------------
+; Source Files
+;-----------------------------------------------------------------------------
+[SourceDisksNames]
+1 = %DiskDescription%,,,
+
+[SourceDisksFiles]
+JME.sys = 1,,      ; on distribution disk 1
+
+
+;-----------------------------------------------------------------------------
+; Destination Directories for JMC25x/JMC26x
+;-----------------------------------------------------------------------------
+[CopyFiles]
+JME.sys,,,2
+
+[DestinationDirs]
+CopyFiles           = 12
+DefaultDestDir      = 11
+
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;-----------------------------------------------------------------------------
+[Strings]
+JMICRON                             = "JMicron Technology Corp."
+
+SpeedDuplex                         = "Speed & Duplex"
+AutoNegotiation                     = "Auto Negotiation"
+10Mb-Half-Duplex                    = "10Mbps/Half Duplex"
+10Mb-Full-Duplex                    = "10Mbps/Full Duplex"
+100Mb-Half-Duplex                   = "100Mbps/Half Duplex"
+100Mb-Full-Duplex                   = "100Mbps/Full Duplex"
+1Gb-Full-Duplex	                    = "1Gbps/Full Duplex"
+
+ReceiveFrameDescriptors             = "Receive Buffers"
+TransmitPacketDescriptors           = "Transmit Buffers"
+
+WakeOnLink                          = "Wake on Connect"
+WakeOnMagicPacket                   = "Wake on Magic Packet"
+WakeOnPattern                       = "Wake on Pattern Match"
+DeviceSleepOnDisconnect             = "Device Sleep on Disconnect"
+WakeFromS5                          = "Wakeup from Shutdown"
+PMARPOffload                        = "ARP Offload"
+PMNSOffload                         = "NS Offload"
+
+Enable                              = "Enabled"
+Disable                             = "Disabled"
+
+Tx Enable                           = "Tx Enabled"
+Rx Enable                           = "Rx Enabled"
+Rx Tx Enable                        = "Rx & Tx Enabled"
+
+PriorityVLANTag                     = "Priority & VLAN"
+Priority & VLAN Disable             = "Priority & VLAN Disabled"
+Priority Enable                     = "Priority Enabled"
+VLAN Enable                         = "VLAN Enabled"
+Priority & VLAN Enable              = "Priority & VLAN Enabled"
+
+FlowCtrl                            = "Flow Control"
+InterruptModeration                 = "Interrupt Moderation"
+NetworkAddress                      = "Network Address"
+EnergyEfficientEthernet             = "Energy Efficient Ethernet"
+
+JumboFrame                          = "Jumbo Frame"
+Bytes4000                           = "4000 Bytes"
+Bytes9000                           = "9000 Bytes"
+
+LsoV2IPv4                           = "Large Send Offload (IPv4)"
+LsoV2IPv6                           = "Large Send Offload (IPv6)"
+IpChecksumOffloadIPv4               = "IP Checksum Offload (IPv4)"
+TcpChecksumOffloadIPv4              = "TCP Checksum Offload (IPv4)"
+UdpChecksumOffloadIPv4              = "UDP Checksum Offload (IPv4)"
+TcpChecksumOffloadIPv6              = "TCP Checksum Offload (IPv6)"
+UdpChecksumOffloadIPv6              = "UDP Checksum Offload (IPv6)"
+
+RSS                                 = "Receive Side Scaling"
+
+PCI\VEN_197B&DEV_0250.DeviceDesc    = "JMicron PCI Express Gigabit Ethernet Adapter"
+PCI\VEN_197B&DEV_0260.DeviceDesc    = "JMicron PCI Express Fast Ethernet Adapter"
+JME_Service_DispName                = "JMicron Ethernet Adapter NDIS6.20 Driver"
+
+DiskDescription                     = "JMicron(R) Driver Disk 1"

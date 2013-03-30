@@ -1,0 +1,110 @@
+;-------------------------------------------------------------------------------
+; NetBNdis.INF
+;
+; Killer NIC NDIS_EDGE Upper Filter Driver Install for XP 32.
+;
+; Copyright (c) 2006 - 2010 Bigfoot Networks, Inc.  All rights reserved.
+;
+;       Module Name:
+;               NbXpNdis.inf
+;
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Msft%
+DriverVer   = 01/11/2010,4.1.0.15
+CatalogFile.NTx86   = EdgXpX86.cat
+
+[ControlFlags]
+ExcludeFromSelect={05ef8bb4-08e7-4783-ae5c-d5486448be0d}\NetB834x
+
+[Manufacturer]
+%Msft% = Msft
+
+[Msft]
+; DisplayName                   Section    DeviceId
+; -----------                   -------    --------
+%NetBEdge.DeviceDesc%    = NetbEdge.ndi, root\NetbEdge ; Root enumerated 
+%NetbEdge.DeviceDesc%    = NetbEdge.ndi, {05ef8bb4-08e7-4783-ae5c-d5486448be0d}\NetB834x ; NetB Bus enumerated
+
+;-------------------------------------------------------------------------------
+; Microsoft Virtual Ethernet Adapter 32 bit
+;
+[NetbEdge.ndi]
+Characteristics = 0x4 ; NCF_PHYSICAL
+BusType         = 15 ; if you specify NCF_PHYSICAL, you must specify bustype, 15 = PNPBus see wdm.h
+AddReg          = NetbEdge.Reg, ParamsPromiscuous
+CopyFiles       = NetbEdge.CopyFiles
+
+[NetbEdge.ndi.Services]
+AddService      = NetbEdge, 2, NetbEdge.Service, NetbEdge.EventLog
+
+;-----------------------------------------------------------------------------
+; Microsoft Virtual Miniport Common
+;
+[NetbEdge.Reg]
+HKR,    ,                         BusNumber,           0, "0" 
+HKR, Ndi,                         Service,             0, "NetbEdge"
+HKR, Ndi\Interfaces,              UpperRange,          0, "ndis5"
+HKR, Ndi\Interfaces,              LowerRange,          0, "ethernet"
+
+[ParamsPromiscuous]
+;
+;    Should the physical NIC be set to Promiscuous mode 
+;
+HKR, Ndi\Params\Promiscuous,     ParamDesc, , %Promiscuous%
+HKR, Ndi\Params\Promiscuous,     Default,  ,"0"
+HKR, Ndi\Params\Promiscuous,     type, ,      enum
+HKR, Ndi\Params\Promiscuous\enum,"1",  ,     %Promiscuous_Enable%
+HKR, Ndi\Params\Promiscuous\enum,"0",  ,     %Promiscuous_Disable%
+
+;-----------------------------------------------------------------------------
+; Driver and Service Section
+;
+[NetbEdge.CopyFiles]
+NetBEdge.sys,,,2
+
+[NetbEdge.Service]
+DisplayName     = %NetbEdge.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\NetbEdge.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.Reg
+
+[NetbEdge.EventLog]
+AddReg = NetbEdge.AddEventLog.Reg
+
+[NetbEdge.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+NetbEdge.sys  = 1,,
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+NetbEdge.CopyFiles = 12
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Msft                       = "Bigfoot"                      
+NetbEdge.DeviceDesc        = "Killer NIC NDIS EDGE Interface"
+NetbEdge.Service.DispName  = "Killer NIC NDIS-Edge Service"
+DiskId1 = "Killer NIC NDIS EDGE gaming installation"
+Promiscuous        = "Set the physical NIC to promiscuous mode"
+Promiscuous_Disable = "Disable"
+Promiscuous_Enable  = "Enable"

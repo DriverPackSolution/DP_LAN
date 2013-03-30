@@ -1,0 +1,102 @@
+; Let's uninstall everything in reverse sequence that we installed
+
+; Uninstall network management
+set NAM_GUID={8797FC40-AE6F-4AF3-9485-0A51668A46CE}
+Call UninstallNAM
+set NAM_GUID={1F6423DE-7959-4178-80E0-023C7EAA5347}
+Call UninstallNAM
+
+; Uninstall function driver
+call functiondriveruninst
+
+; Uninstall bus driver
+call busdriveruninst
+
+del {sysdir}\capabilitytable.exe
+DelRegE HKCU\Software\NVIDIA Corporation
+
+[busdriverUninst]
+Set Display Name=Nvidia Network Bus Enumerator 
+; Remove any NVIDIA device driver if present
+UninstallService nvnetbus
+RemoveDevice pci,VEN_10DE&DEV_008C, any
+RemoveDevice pci,VEN_10DE&DEV_00DF, any
+RemoveDevice pci,VEN_10DE&DEV_0038, any
+RemoveDevice pci,VEN_10DE&DEV_0057, any
+RemoveDevice pci,VEN_10DE&DEV_0269, any
+RemoveDevice pci,VEN_10DE&DEV_0373, any
+RemoveDevice pci,VEN_10DE&DEV_0389, any
+RemoveDevice pci,VEN_10DE&DEV_0278, any
+RemoveDevice pci,VEN_10DE&DEV_027A, any
+RemoveDevice pci,VEN_10DE&DEV_03EF, any
+RemoveDevice pci,VEN_10DE&DEV_03E6, any
+
+; Now try to delete files used by Bus driver
+DelOemInfs nv*,Version,CatalogFile,nvnetbus.cat,version,Provider,%NVDA%
+DelIniIfMatched {windir}\inf\internet\NVidiaNetbus.inf,Version,CatalogFile,nvnetbus.cat,version,Provider,%NVDA%
+
+DelBoot {sysdir}\nvnetbus.sys
+DelBoot {sysdir}\nvnrm.sys
+DelBoot {sysdir}\nvsnpu.sys
+
+; Also delete them from {sysdir}\drivers folder
+DelBoot {sysdir}\drivers\nvnetbus.sys
+DelBoot {sysdir}\drivers\nvnrm.sys 
+DelBoot {sysdir}\drivers\nvsnpu.sys
+DelBoot {sysdir}\drivers\nvtcp.sys
+
+DelBoot {sysdir}\bdco1.dll
+DelBoot {sysdir}\bdcoXins.dll
+DelBoot {sysdir}\NVCONRM.DLL
+
+; also delete its uninstaller binary
+Del {sysdir}\nvunrm.exe
+Del {sysdir}\nvcoe.dll
+
+Delreg HKLM\SYSTEM\{*ControlSet}\Class\{1a3e09be-1e45-494b-9174-d7385b45bbf5}
+Delreg HKLM\SYSTEM\{*ControlSet}\control\class\{1A3E09BE-1E45-494B-9174-D7385B45BBF5}
+
+DelReg HKLM\SYSTEM\{*ControlSet}\Services\nvnetbus
+DelReg HKLM\System\{*ControlSet}\Control\SafeBoot\Network\{1a3e09be-1e45-494b-9174-d7385b45bbf5}
+
+
+[functiondriveruninst]
+; Remove Ethernet Function driver if present
+UninstallService NVENETFD
+RemoveDevice NVNET,VEN_10DE&DEV_008C, any
+RemoveDevice NVNET,VEN_10DE&DEV_00DF, any
+RemoveDevice NVNET,VEN_10DE&DEV_0038, any
+RemoveDevice NVNET,VEN_10DE&DEV_0057, any
+RemoveDevice NVNET,VEN_10DE&DEV_0269, any
+RemoveDevice {1a3e09be-1e45-494b-9174-d7385b45bbf5},NVNET_, any
+; Removedevice is asynchronous and bad things happens if we don't wait long enough
+sleep 3000
+
+; Now try to delete files used by Ethernet Function driver
+DelOemInfs nv*,Version,Class,net,version,Provider,%Nvidia%,Version,CatalogFile,NVENETFD.CAT
+DelIniIfMatched {windir}\inf\internet\NVidianvenetfd.inf,Version,Class,net,version,Provider,%Nvidia%,Version,CatalogFile,NVENETFD.CAT
+
+DelBoot {sysdir}\nvenetfd.sys
+DelBoot {sysdir}\Drivers\nvenetfd.sys
+DelBoot {sysdir}\fdco1.dll
+DelBoot {sysdir}\fdcoXins.dll
+
+EnumRegCmd HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkCards\{*},call CheckProvider
+
+DelReg HKLM\SYSTEM\{*ControlSet}\Services\nvenetfd
+DelReg HKLM\SYSTEM\{*ControlSet}\Services\EventLog\System\nvenetfd
+
+[CheckProvider]
+GetReg Description={Current Root Key}\{Current Reg Key}\Description
+if {Description}=NVIDIA nForce MCP2S Networking Adapter then DelReg {Current Root Key}\{Current Reg Key}
+
+[UninstallNAM]
+; Uninstall network management
+getreg UninstallCommand={uninstregkey}\InstallShield_{NAM_GUID}\UninstallString
+if {UninstallCommand}%.exe then syscallandwait {UninstallCommand}  /z"/uninstall /noreboot"
+set UninstallCommand
+; Also check this regkey for Win64 systems
+getreg UninstallCommand=HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\InstallShield_{NAM_GUID}\UninstallString
+if {UninstallCommand}%.exe then syscallandwait {UninstallCommand} /z"/uninstall /noreboot"
+set UninstallCommand
+

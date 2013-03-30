@@ -1,0 +1,417 @@
+(C)Copyright 2002-2007 Marvell(R).
+All rights reserved.
+===========================================================================
+
+m4cxvista.txt created 10-Jan-2007
+
+Readme File for M4CXVISTA.sys v9.15.2.3
+D-Link Gigabit Ethernet Adapter
+
+NDIS6.0 Miniport Driver for Windows Vista x86
+
+This file contains
+ 1  Overview
+ 2  Required Files
+ 3  Installation
+    3.1  Installing the driver
+    3.2  Updating the driver
+ 4  Parameters
+
+===========================================================================
+
+
+1  Overview
+===========
+
+M4CXVISTA.sys is the NDIS6.0 32-bit Miniport driver.
+
+
+***
+
+
+2  Required Files
+=================
+
+To install the driver, the following files are required:
+M4CXVISTA.sys NDIS6.0 Miniport driver
+M4CXVISTA.inf installation setup script
+M4CXVISTA.CAT digital signature (only if the driver is certified)
+***
+
+3  Installation
+===============
+
+3.1  Installing the driver
+--------------------------
+
+Read the installation instructions in the adapter manual carefully.
+Follow these instructions to install the adapter in your computer.
+
+
+Due to the plug & play facility, the operating system is able to find,
+identify, and configure an adapter automatically.
+
+If the adapter is not detected during installation by the operating system the
+adapter is installed as "Ethernet Controller" under "Other Devices".
+To install the driver you have to perform a driver update as described 
+in the next section.
+
+***
+
+
+3.2  Updating the driver
+------------------------
+
+
+To update the driver, proceed as follows:
+
+1.  On the desktop right click on MY COMPUTER.
+2.  Select MANAGE.
+3.  In the "Device Manager" select the adapter you wish to update.
+4.  Double click. 
+5.  Select DRIVER.
+6.  Click UPDATE DRIVER ... .
+7. Follow the instructions given by the operating system to locate the driver.
+8.  If the driver which is found to be the latest is not the one you want 
+    to install, select the checkbox "Install one of the other drivers".
+9.  Click NEXT. 
+10. Select the driver to be installed in the next listbox.
+11. Click NEXT.
+    If a message is displayed saying that the driver is not digitally signed 
+    by Microsoft, click YES.
+12. The message "Windows has finished installing the software for this 
+    device" is displayed.
+13. Click FINISH to complete the installation.
+
+
+Please note that the latest version of the M4CXVISTA driver is
+available for download from our web site.
+
+
+4  Parameters
+=============
+
+The M4CXVISTA.sys driver allows you to modify several options in order to
+optimize the operation of your adapter.
+
+1.  In "Network Connections" right click on the adapter you 
+    want to configure.
+2.  Select "Properties". 
+3.  Click "Configure".
+4.  Click "Advanced".
+5.  In the "Property" box, select the option that you want to change.
+6.  Enter the desired value in the "Value" box.
+7.  When finished, click OK .
+The operating system will reload the driver with the changed settings.
+
+The parameters supported by the driver are described below.
+
+
+
+Network Address
+------------------------
+Default value:  burned-in adapter address
+Valid range:    02-00-00-00-00-01 to FE-FF-FF-FF-FF-FF (hexadecimal), 
+                where at least the "multicast" bit(Bit 0) must not be set 
+                (it indicates that the address field contains an 
+                individual address)and the "locally administered" bit (Bit 1) 
+                is set (the address has been assigned by a local
+                administrator). These two bits are first and second 
+                bits transmitted on the LAN medium.
+
+CAUTION: Each individual network MAC address can only be used once in a
+         network. Assigning the same address to more than one adapter in 
+         the same network is not allowed and can cause serious network 
+         problems.
+
+To use a network MAC address other than the one burned into the adapter,
+enter the network address in the following hexadecimal format:
+
+	e.g.: 02-00-5A-98-12-34
+
+If the network address field blank is left blank (or a different number of
+digits is specified), the network address burned into the adapter will 
+be used.
+
+
+Jumbo Frame Support
+------------------------
+Default value: "Disabled"
+Valid values:   
+	-"Disabled"
+	-"4088"
+	-"9014"
+
+This parameter specifies the frame size that the driver will support. 
+The performance of your network usually increases If "Jumbo" frames are 
+used. Do not enable this option if you are not sure that your network 
+supports jumbo frames.
+
+Note: For Fast Ethernet adapters the valid range is limited to 1514.
+
+Hardware Checksuming
+------------------------
+Default value: "On"
+Valid values:
+	-"On"
+ 	-"Off"
+
+This parameter is used to disable the hardware checksum offload for 
+TCP/IP. There should be no need to disable checksum offload.
+
+
+Wake Up Capabilities
+------------------------
+Default value: "Magic Packet and Pattern Magic"
+Valid values:
+	-"None"
+		wake on LAN capabilities are disabled
+	-"Magic Packet"
+		wake up with MagicPacket from ShutDown state,
+		OS Controlled from Hibernate or Standby state
+	-"Pattern Match"
+		wake up with a packet containing a special pattern
+		from ShutDown state, OS Controlled from Hibernate 
+		or Standby state
+	-"Magic Packet and Pattern Match"
+		wake up with both from ShutDown state, OS Controlled
+		from Hibernate or Standby state
+	-"Link Change"
+		wake up with link change from ShutDown state,
+		OS Controlled from Hibernate or Standby state
+
+                        
+Wake From Shutdown
+------------------------
+Default value: "Off"
+Valid values:
+	-"Off"
+		disable the capabilities of the NIC to wake the computer 
+		from shutdown.
+	-"On"
+		enable the NIC to be capable to wake the computer from shutdown.
+
+
+Number of Receive Buffers
+------------------------
+For Yukon family based ethernet controllers the following values are used:
+Default value:  50 (decimal)
+Valid range:    3..500 (decimal)
+
+For Yukon2 family based ethernet controllers the following values are used:
+Default value:  256 (decimal)
+Valid range:    256..512 (decimal)
+
+This parameters defines the number of receive buffers allocated by the
+driver. If the system does not have enough resources the driver will fail 
+to load. Increasing this value may improve performance.
+
+
+Number of Transmit Buffers
+------------------------
+For Yukon family based ethernet controllers the following values are used:
+Default value:  50 (decimal)
+Valid range:    4..200 (decimal)
+
+For Yukon2 family based ethernet controllers the following values are used:
+Default value:  256 (decimal)
+Valid range:    256..512 (decimal)
+
+This parameters defines the number of transmit buffers allocated by the
+driver. If the system does not have enough resources the driver will 
+fail to load. Increasing this value may improve performance.
+
+
+Interrupt Moderation
+------------------------
+Default value: "On"
+Valid values:
+	-"On"
+	-"Off"
+
+If more than the specified rate of interrupts occur, the function 
+Interrupt Moderation groups these interrupts so that several data packets 
+can be handled per interrupt. This will lead to lower CPU utilization 
+but may increase the latency.
+
+
+Max IRQ per Sec
+------------------------
+Default value:  5000 (decimal)
+Valid range:    1000..30000 (decimal)
+
+This parameter specifies the interrupt rate for Interrupt Moderation. If
+Interrupt Moderation is set to "Off" it will be ignored.
+
+Log Status Messages
+------------------------
+Default value: "Status Messages"
+Valid values:
+	-"All Messages":
+		This option should only be used for test purposes.
+	-"Status Messages":
+		In this mode the driver will generate an event log 
+		entry every time the link status changes.
+	-"Warnings":
+		In this mode you will only receive warning or error 
+		messages.
+	-"Errors":
+		In this mode you will only receive error messages.
+	-"None":
+		All driver messages will be suppressed. It is not 
+		recommended to use this value.
+
+This parameter specifies the messages, which are to be logged in the 
+Event Log.
+
+Speed & Duplex
+------------------------
+Default value: "Auto-Sense"
+Valid range:
+	-"Auto-Sense"
+	-"10Mbps Half Duplex"
+	-"10Mbps Full Duplex"
+	-"100Mbps Half Duplex"
+	-"100Mbps Full Duplex"
+
+This parameter contain information regarding autonegotiation, 
+duplex capabilities and link speed. Only if the setting is "Auto" the 
+Autonegotiation is set to "On", in every other settings it is turned "Off".
+
+NOTE: This parameter is not valid for fiber adapter.
+
+
+Preferred Port
+------------------------
+Default value: "A"
+Valid range:
+	-"A"
+	-"B"
+
+NOTE: This parameter is only available for dual link adapters.
+
+Use this parameter to set the preferred port the RLMT (Redundant
+Link Management Technology) will use for all network traffic, if more than
+one port has an active link to the network.
+
+
+RLMT Mode
+------------------------
+Default value: "CLS"
+Valid range:
+	-"CLS" (Check Link State): 
+		RLMT uses the link state reported by the
+ 		adapter hardware for each individual port to determine whether a 
+ 		port can be used for all network traffic or not.
+
+	-"CLP" (Check Local Port):
+		In this mode, RLMT monitors the network path
+ 		between the two ports of an adapter by regularly exchanging packets 
+		between them. This mode requires a network configuration in which 
+		the two ports "see" each other (i.e. there must not be any router 
+		between the ports).
+
+	-"CLPSS" (Check Local Ports and Segmentation Status):
+		This mode supports 
+		the same functions as the CLP mode and additionally checks network 
+		segmentation by sending BPDU hello packets. Thus, this mode is only 
+		to be used if Gigabit Ethernet switches are installed on the network
+		that have been configured to use the Spanning Tree protocol.
+
+NOTE: RLMT modes "CLP" and "CLPSS" are designed to operate in 
+      configurations where a network path between the ports on one adapter
+      exists. Moreover, they are not designed to work where adapters are
+      connected back-to-back.
+      This parameter is only available for dual link adapters.
+
+
+802.1p Support
+------------------------
+Default Value:	"Off"
+Valid Values:
+	-"Off"
+	-"On"
+
+This parameter will enable/disable the quality of service for specified
+port. By default this option is not enabled at the first install of 
+the driver.
+
+
+
+
+BatteryModeLinkDetection
+------------------------
+Default Value: "EnergyDetect+(TM)"
+Valid Values:
+	-"NoEnergySaving":
+		No Energy saving functions are switched on in the NIC. 
+
+	-"MaximumEnergySaving":
+		The NIC is switched off if there is no link in battery mode. 
+		The driver wakes up the NIC every 20 seconds to check 
+		if there is a new link.
+
+	-"EnergyDetect+(TM)":
+		If battery-powered the NIC is set to "EnergyDetect+"(TM) mode. 
+		The link is activated faster than in "MaximumEnergySaving" mode, 
+		but the NIC requires more power.
+
+This parameter will set the mode in which the NIC is working if there 
+is no link and the PC is battery-powered.
+
+
+
+
+BatterySpeedSettings
+------------------------
+Default Value: "FullSpeed"
+Valid Values:	
+	-"SmartSpeedDown":
+		If the computer is battery-powered, the NIC speed is 
+		switched to 10/100Mbit/s to reduce the power consumption.
+
+	- "FullSpeed":
+		If the computer is battery-powered the NIC is working with 
+		maximum speed and maximum power consumption.
+		If the computer is supplied by AC power all power saving features 
+		are switched off, and the NIC is working with maximum speed.
+
+This parameter will sets the Line speed for the NIC if PC is 
+battery-powered.
+
+
+
+FlowControl
+------------------------
+Default value: "On"
+Valid range:
+	-"Off":
+		No link partner is allowed to send PAUSE frames.
+
+	-"On":
+		Both link partners are allowed to send PAUSE frames.
+		
+This parameter can be used to set the flow control capabilities the port
+reports during auto-negotiation. This parameter can be set for each port
+individually, which is helpful if the port at the other end of the cable cannot
+handle all possible combinations. Using the default setting, the adapter should
+automatically detect the capabilities of the peer port.
+
+   
+TCP Segmentation
+------------------------
+Default value: "Enabled"
+Valid range:
+	-"Enabled":
+		The big packets are segmented on the NIC before to be sent to the 
+ 		network. Using this method the processor will be not loaded to do 
+		this job.
+
+	-"Disabled":
+		The packets are not segmented by the NIC.
+
+NOTE: 	This parameter is only available starting with the NICs based on 
+		Yukon2 chip.
+
+*** End of Readme File ***
+

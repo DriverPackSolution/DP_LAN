@@ -1,0 +1,198 @@
+;****************************************************************
+; NETCOKK.INF for Windows 98/ME/2000 and XP			*
+;								*
+; corega FEther USB2-TX				                *
+;								*
+; Copyright 2000-2001    corega K.K.              		*
+;****************************************************************
+
+[Version]
+Signature  = "$Windows NT$"
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %USB%
+;LayoutFile = layout.inf
+;CatalogFile = NETCOKK.cat     ;; for WHQL certified
+DriverVer   = 09/28/2002, 1.0.0.2
+
+[Manufacturer]
+%USB%   = USB
+
+[ControlFlags]
+ExcludeFromSelect = USB\VID_07AA&PID_0017
+
+[USB]
+%COUSB2T5.DeviceDesc% = COUSB2T5.Ndi,USB\VID_07AA&PID_0017
+
+;****************************************************************
+; Win98 main sections						*
+;****************************************************************
+[COUSB2T5.Ndi]
+AddReg   = COUSB2T5.Reg, COUSB2T5.Params, COUSB2T5.Con.Reg
+DeviceID = USB\VID_07AA&PID_0017
+
+
+;****************************************************************
+; NT main sections						*
+;****************************************************************
+[COUSB2T5.Ndi.NT]
+AddReg          = COUSB2T5.NT.Reg, COUSB2T5.Params, COUSB2T5.Con.Reg
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 0 ; USB
+CopyFiles       = CopyFile.NT.Sys
+
+[COUSB2T5.Ndi.NT.Services]
+AddService = COUSB2T5, 2, COUSB2T5.Service, Common.EventLog
+
+
+;****************************************************************
+; Windows 98 section						*
+;****************************************************************
+[COUSB2T5.Reg]
+HKR,Ndi,DeviceID,,USB\VID_07AA&PID_0017
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,AdapterName,,COUSB2T5
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,COUSB2T5.SYS
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,COUSB2T5
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,ndis3,,"COUSB2T5.Install"
+
+HKR,Ndi,HelpText,,"corega FEther USB2-TX"
+
+
+;****************************************************************
+; Driver parameters						*
+;****************************************************************
+
+[COUSB2T5.Params]
+HKR, ,TxPacketDesc,    0, "20"   ; 0x32
+HKR, ,RxPacketDesc,    0, "20"   ; 0x78
+
+[COUSB2T5.Con.Reg]
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"Auto-Negotiation"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT Half_Duplex"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx Half_Duplex"
+HKR,Ndi\params\ConnectionType\enum,9,,"100BaseTx Full_Duplex"
+;HKR,Ndi\params\ConnectionType\enum,102,,"1Mbps HomePNA"
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+;HKR,Ndi\params\RemoteWakeup,ParamDesc,,"Remote Wakeup"
+;HKR,Ndi\params\RemoteWakeup,default,,2
+;HKR,Ndi\params\RemoteWakeup,type,,enum
+;HKR,Ndi\params\RemoteWakeup\enum,0,,"Disable"
+;HKR,Ndi\params\RemoteWakeup\enum,2,,"Link up"
+;HKR,Ndi\params\RemoteWakeup\enum,6,,"Magic Packet"
+;HKR,NDI\params\RemoteWakeup,flag,1,20,00,00,00
+
+;HKR,Ndi\params\FlowControl,ParamDesc,,"Flow Control"
+;HKR,Ndi\params\FlowControl,default,,1
+;HKR,Ndi\params\FlowControl,type,,enum
+;HKR,Ndi\params\FlowControl\enum,0,,"Disable"
+;HKR,Ndi\params\FlowControl\enum,1,,"Enable"
+;HKR,NDI\params\FlowControl,flag,1,20,00,00,00
+
+;HKR,Ndi\params\PhoneLine,ParamDesc,,"Phone Line"
+;HKR,Ndi\params\PhoneLine,default,,4
+;HKR,Ndi\params\PhoneLine,type,,enum
+;HKR,Ndi\params\PhoneLine\enum,0,,"Low Speed, Low Power"
+;HKR,Ndi\params\PhoneLine\enum,2,,"Low Speed, High Power"
+;HKR,Ndi\params\PhoneLine\enum,4,,"High Speed, Low Power"
+;HKR,Ndi\params\PhoneLine\enum,6,,"High Speed, High Power"
+;HKR,NDI\params\PhoneLine,flag,1,20,00,00,00
+
+;****************************************************************
+; Install section for OSR2 and Windows 98			*
+;****************************************************************
+
+[COUSB2T5.Install]
+CopyFiles=CopyFile.Inf,CopyFile.Sys
+
+[CopyFile.Inf]
+cousb2t5.inf
+
+[CopyFile.Sys]
+COUSB2T5.SYS
+
+
+;****************************************************************
+; Install section for Windows NT 5				*
+;****************************************************************
+
+[COUSB2T5.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "COUSB2T5"
+
+[COUSB2T5.Service]
+DisplayName    = %COUSB2T5.DeviceDesc%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\COUSB2T5.SYS
+LoadOrderGroup = NDIS
+AddReg         = TextModeFlags.Reg
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported  , 0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[CopyFile.NT.Sys]
+COUSB2T5.SYS,,,2
+
+
+;**********************************************************************
+; Destination directories                                             *
+;**********************************************************************
+
+[DestinationDirs]
+CopyFile.Sys    = 11
+CopyFile.Inf    = 17
+CopyFile.NT.Sys = 12
+
+[SourceDisksNames]
+; Cabinet file names and associated disks
+; <cab#> = <disk#>,<cabinet filename>, ID (Unused, must be 0)
+50="corega FEther USB2-TX Driver Diskette",,
+
+[SourceDisksFiles]
+;<file> = <cabinet number>,<subdir>,<filename>,<size>
+;Note: File is not in a cabinet if cab# is 0
+COUSB2T5.SYS=50,.,COUSB2T5.SYS,10000
+cousb2t5.inf=50,.,cousb2t5.inf,10000
+
+
+;**********************************************************************
+; Localizable strings                                                 *
+;**********************************************************************
+
+[Strings]
+USB = "corega K.K."
+COUSB2T5.DeviceDesc = "corega FEther USB2-TX"
+
+
+

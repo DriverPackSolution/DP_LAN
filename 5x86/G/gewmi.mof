@@ -1,0 +1,5821 @@
+/******************************************************************************
+ *
+ * Name:	gewmi.mof
+ * Project:	Marvell, PCI Gigabit Ethernet Adapter
+ * Version:	1.01
+ * Date:	2003/01/15
+ * Purpose:	Support the WMI for Marvel chip based network driver.
+ *
+ ******************************************************************************/
+
+/******************************************************************************
+ *
+ *	(C)Copyright 2003- Marvell.
+ *
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
+ *
+ *	The information in this file is provided "AS IS" without warranty.
+ *
+ ******************************************************************************/
+
+/******************************************************************************
+ *
+ * History:
+ *
+ *	15-January-2003 ideaconeasa	Created.
+ *
+ ******************************************************************************/
+
+
+/******************************************************************************
+ *
+ * Description:
+ *
+ * Describe the supported CIM schema.
+ *
+ *
+ *
+ ******************************************************************************/
+
+
+
+/******************************************************************************
+ *
+ * To compile this MOF on another machine you should edit this pragma.
+ *
+ ******************************************************************************/
+
+#pragma namespace("\\\\.\\ROOT\\WMI")
+
+/******************************************************************************
+ *
+ * Class: GENdis
+ *
+ * Derived from: Not derived.
+ *
+ * Description: Abstract base class for all WMI supported classes
+ *
+ * Notes: This is an empty class. No method or property are defined for it.
+ *
+ * Context: 
+ *
+ * Returns: None.
+ *
+ ******************************************************************************/
+
+[abstract]
+class GENdis{
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_MDBVersion
+ *
+ * Derived from: GENdis
+ *
+ * Description: Return the version of the driver management database.
+ *
+ * Notes: 
+ *
+ * Context: 
+ *
+ * Returns: GENdisMDBVersion - 4 bytes integer value.
+ *
+//*****************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E958F144-C674-4baa-A014-9420AACB890B}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Management Data Base")]
+
+class GENdis_MDBVersion : GENdis{
+        [read] boolean Active;
+	[key, read] string InstanceName;
+	[read, 
+	 Description("Version of the driver management database."), 
+	 WmiDataId(1)] uint32 GENdisMDBVersion;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SupportedList
+ *
+ * Derived from: GENdis
+ *
+ * Description: List the supported OIDs
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisSupportedList - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E7354EA0-7CBF-4aff-B5C2-A2809CFF53F3}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Supported OIDs")]
+
+class GENdis_SupportedList : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Returns the list of supported OIDs."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint32 GENdisSupportedList[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_VPDFreeBytes
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of free bytes in the R/W area of the VPD RAM. 
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisVPDFreeBytes - 4 bytes integer value.
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{A76DA22B-EFEE-4ab8-96E9-4A2DB7775C42}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS VPD RAM")]
+
+class GENdis_VPDFreeBytes : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of free bytes in a read-write "       \
+                     "area of the VPD RAM"),
+	 WmiDataId(1)] uint32 GENdisVPDFreeBytes;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_VPDEntriesList
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores a list of VPD keywords in a single string.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisVPDEntriesList - string. 
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{8CC4F9B4-5267-445f-9F5F-F00BB108D41C}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS VPD RAM")]
+
+class GENdis_VPDEntriesList : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read, 
+	 Description("Stores a list of VPD keywords in a single string"),
+	 WmiDataId(1)] string GENdisVPDEntriesList;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_VPDEntriesNumber
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of entries stored in OID_SKGE_VPD_KEY, 
+ *              OID_SKGE_VPD_VALUE and OID_SKGE_VPD_ACCESS
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisVPDEntriesNumber - 4 bytes integer value
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{B164CDB9-9738-4d01-A423-47388BE677E4}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS VPD RAM")]
+
+class GENdis_VPDEntriesNumber : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read, 
+	 Description("Stores the number of entries stored in "	              \
+		     "OID_SKGE_VPD_KEY, OID_SKGE_VPD_VALUE and "	      \
+		     "OID_SKGE_VPD_ACCESS"),
+	 WmiDataId(1)] uint32 GENdisVPDEntriesNumber;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_VPDKey
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the VPD keys as an array of displayable strings. The 
+ *              first octet of each element stores the length of the string in
+ *              the element. The number of elements is determined by the 
+ *              OID_SKGE_VPD_ENTRIES_NUMBER or the number of elements in 
+ *              OID_SKGE_VPD_ENTRIES_LIST.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisVPDKey - string.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{3CF7C17E-D266-4e11-91DB-515EA96800B6}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS VPD RAM")]
+
+class GENdis_VPDKey : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the VPD keys as an array of displayable strings."\
+		     "The first octet of each element stores the length of "  \
+                     "the string in the element. The number of elements is "  \
+                     "determined by the OID_SKGE_VPD_ENTRIES_NUMBER or the "  \
+		     "number of elements in OID_SKGE_VPD_ENTRIES_LIST."),
+	 WmiDataId(1)] string GENdisVPDKey;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_VPDValue
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the VPD values as an array of strings of variable 
+ *              length. The first octet of each array element stores the 
+ *              length of the string in element. The number of array elements 
+ *              is determnied by the OID_SKGE_VPD_ENTRIES_NUMBER or the number
+ *              of elements in OID_SKGE_VPD_ENTRIES_LIST.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisVPDValue - string.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{DF01CCDC-5206-47bf-9BC1-7DE15950F344}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS VPD RAM")]
+
+class GENdis_VPDValue : GENdis{
+	[read] boolean Active;
+	[read, key] string InstanceName;
+	[read, 
+	 Description("Stores the VPD values as an array of strings of "       \
+                     "variable length. The first octet of each array element "\
+                     "stores the length of the string in element. The number "\
+                     "of array elements is determnied by the "                \
+                     "OID_SKGE_VPD_ENTRIES_NUMBER or the number of elements " \
+                     "in OID_SKGE_VPD_ENTRIES_LIST."),
+	 WmiDataId(1)] string GENdisVPDValue;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_VPDAccess
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of single octets which indicates the access 
+ *              modes to the entry. A stored 01h signals read-write and 02h 
+ *              signals read-only. The number of array elements is determined 
+ *              by the OID_SKGE_VPD_ENTRIES_NUMBER or the number of elements 
+ *              in OID_SKGE_VPD_ENTRIES_LIST.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisVPDAccess - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{56FB5A0C-C0CC-4286-BE61-DE74116A3CBE}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS VPD RAM")]
+
+class GENdis_VPDAccess : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read, 
+	 Description("Stores an array of single octets which indicates the "  \
+                     "access modes to the entry. A stored 01h signals "       \
+                     "read-write and 02h signals read-only. The number of "   \
+                     "array elements is determined by the "                   \
+                     "OID_SKGE_VPD_ENTRIES_NUMBER or the number of elements " \
+                     "in OID_SKGE_VPD_ENTRIES_LIST."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisVPDAccess[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_VPDAction
+ *
+ * Derived from: GENdis
+ *
+ * Description: A read returns a dummy array of single octets storing 00h 
+ *              corresponding to the number of VPD keys. With a write various
+ *              commands may be passed in the following format:
+ *              Offset        Value        Description
+ *              00:           00           Do Nothing.
+ *                            01           Create new key/value entry.
+ *                            02           Delete entry.
+ *              01:           XXYY         2 octet VPD Key to delete or create
+ *              03:           XXYY…        First octet stores length of VPD 
+ *                                         value. Second to n-th octet stores
+ *                                         the VPD value. This entry is only 
+ *                                         provided with a create (01) command.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisVPDAction - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+                             
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{FB22787F-C009-4dd1-906D-8507BA89369D}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS VPD RAM")]
+
+class GENdis_VPDAction : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+        [read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read, 
+	 write, 
+	 Description("A read returns a dummy array of single octets storing " \
+                     "00h coresponding to the number of VPD keys. With a "    \
+                     "write various commands may be passed format specified " \
+                     "in the documentation."),
+	 WmiDataId(2),
+         WmiSizeIs("NumberElements")] uint8 GENdisVPDAction[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_PortNumber
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of ports of the NIC.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisPortNumber - 4 bytes integer value
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{B4CBFF49-01F1-46ee-82A6-B4BCEC735032}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Port number")]
+
+class GENdis_PortNumber : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of ports of the NIC."),
+	 WmiDataId(1)] uint32 GENdisPortNumber;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_DeviceType
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the NIC type, which consists of the two SNMP 
+ *              sub-identifiers below NICs. The value is a two word field. 
+ *              E.g. for a Gigabit-Ethernet SX Single-Link a '00020003h' is 
+ *              returned according to GeNICs.GeSxSingleLink.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisDeviceType - 4 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{3F10D8BC-9CEF-4366-875D-3A8BAB011CA7}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Device type")]
+
+class GENdis_DeviceType : GENdis{
+	[key, read] string InstanceName;
+	[read] boolean Active;
+	[read, 
+	 Description("Stores the NIC type, which consist in two SNMP "        \
+                     "sub-identifiers below NICs. The value is a two word " \
+                     "field."),
+	 WmiDataId(1)] uint32 GENdisDeviceType;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_DriverDescr
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores a description of the driver (e.g. GEWIN - Miniport 
+ *              GigaEthernet driver). The first octet of the value stores the
+ *              length of the following string.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisDriverDescr - string.
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{DF0D24DD-A26C-41f7-B1EA-D11102ABBE55}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Driver description")]
+
+class GENdis_DriverDescr : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores a description of the driver. The first octet of "\
+                     "the value stores the length of the following string."),
+	 WmiDataId(1)] string GENdisDriverDescr;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_DriverVersion
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the version of the driver as a displayable string 
+ *              (e.g. v1.05 beta). The first octet of the value stores the 
+ *              length of the following string.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisDriverVersion - string.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{422E989E-0B20-418a-ACE6-B4F31A13391A}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Driver version")]
+
+class GENdis_DriverVersion : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the version of the driver as a displayable "     \
+                     "string. The first octet of the value stores the length "\
+                     "of the following string."),
+	 WmiDataId(1)] string GENdisDriverVersion;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_HWDescr
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores a description of the NIC hardware (e.g. GE-NET Genesis 
+ *              SX Single Port). The first octet of the value stores the 
+ *              length of the following string.
+ *
+ * Notes:
+ *
+ * Context: 
+ *
+ * Returns: GENdisHWDescr - string.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{D95CC787-34DD-40a9-85F6-BBBF3570E807}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Hardware description")]
+
+class GENdis_HWDescr : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores a description of a NIC hardware."),
+	 WmiDataId(1)] string GENdisHWDescr;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_HWVersion
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the hardware version of the NIC as a displayable 
+ *              string (e.g. "V1.4"). The first octet of the value stores the
+ *              length of the following string.
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisHWVersion - string.
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{183D0729-66B5-49d9-890F-4BCF26E3BB9A}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Hardware version")]
+
+class GENdis_HWVersion : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the hardware version of the NIC as a "           \
+                     "displayable string."),
+	 WmiDataId(1)] string GENdisHWVersion;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_Chipset
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the used Ethernet-Chipset corresponding to 
+ *              sub-identifiers of SNMP ChipSets. The value is a two-octet
+ *              field. E.g. for the XMAC11800FP a 0x0001 is returned according
+ *              to skGeXMAC11800FP (ChipSets 1).
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisChipset - 2 bytes integer value.
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{CAE19E31-5E62-4caa-9578-4BDE11B7FE1E}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Ethernet Chipset")]
+
+class GENdis_Chipset : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read, 
+	 Description("Stores the used Ethernet chipset coresponding to "      \
+                     "sub-identifiers od SNMP ChipSet."),
+	 WmiDataId(1)] uint16 GENdisChipset;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_Action
+ *
+ * Derived from: GENdis
+ *
+ * Description: A read to this OID always returns 0x01 (idle). A write 
+ *              initiates an action according to the following codes:
+ *                      Value        Description
+ *                      01           Do Nothing
+ *                      02           Reset the adapter
+ *                      03           Perform a global self test
+ *                      04           Set all counters to 0
+
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisAction 4 bytes integer value
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{EF148178-9CB0-4f01-9188-409513F26A2B}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Action for the adapter")]
+
+class GENdis_Action : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 write,
+	 Description("A read to this OID always return 0x01 (idle). A write " \
+                     "initiates an action according with the codes described "\
+                     "into documentation."),
+	 WmiDataId(1)] uint32 GENdisAction;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_Result
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the result of the self test initiated by 
+ *              OID_SKGE_ACTION.
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisResult - 4 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{5CD3F4E7-DD86-4613-A6FB-B420B9BE53BD}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Result for Action")]
+
+class GENdis_Result : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read, 
+	 Description("Stores the result of the self test initiated by "       \
+                     "OID_SKGE_ACTION"),
+	 WmiDataId(1)] uint32 GENdisResult;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_BusType
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the PC bus type to which the NIC is attached. Currently
+ *              only PCI (0x01) is defined.
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisBusType - 1 byte integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{886F5726-7406-4c89-88CC-9326CD3393C5}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Bus type")]
+
+class GENdis_BusType : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the PC bus type to which  the NIC is attached. " \
+                     "Currently only PCI is defined."),
+	 WmiDataId(1)] uint8 GENdisBusType;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_BusSpeed
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the PC bus speed in MHz.
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisBusSpeed - 1 byte integer value
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{BB9A3BCE-8337-4794-BB3E-4F7C25773296}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Bus speed")]
+
+class GENdis_BusSpeed : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the PC bus speed in MHz."),
+	 WmiDataId(1)] uint8 GENdisBusSpeed;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_BusWidth
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the PC bus width in bits.
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisBusWidth - 1 byte integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{1E3F28B5-BB54-48e1-B0B6-F02C8C5758EB}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Bus width")]
+
+class GENdis_BusWidth : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the PC bus width in bits."),
+	 WmiDataId(1)] uint8 GENdisBusWidth;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_MTU
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of entries in the following 
+ *              OID_SKGE_SENSOR_XXX.
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisMTU - 4 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{09F5A7F4-02D6-4069-908C-03C850B76C0E}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS MTU")]
+
+class GENdis_MTU : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 write,
+	 Description("Specifies the maximum transfer unit size."),
+	 WmiDataId(1)] uint32 GENdisMTU;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorNumber
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of entries in the following 
+ *              OID_SKGE_SENSOR_XXX.
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisSensorNumber - 1 byte integer value
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{F578AA29-4012-4f1a-A103-FFA97FDE379E}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorNumber : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of entries in the following "         \
+				 "OID_SKGE_SENSOR_XXX."),
+	 WmiDataId(1)] uint8 GENdisSensorNumber;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorIndex
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of index numbers. Each index is bound to a 
+ *              particular sensor according to the following list.
+ *                       Value        Description
+ *                       00	Temperature sensor
+ *                       01	Voltage sensor of the PCI power supply
+ *                       02	Voltage sensor of the PCI IO lines
+ *                       03	Voltage sensor of the ASIC power supply
+ *                       04     Voltage sensor of the PMA (Transceiver) power 
+ *                              supply (LX, SX) or voltage sensor of the PHY 
+ *                              A PLL power supply (T)
+ *                       05     Voltage sensor of the PHY 2V5 power supply
+ *                       06     Voltage sensor of the PHY B PLL power supply
+ *                       07     Speed sensor of  fan
+ *
+ * Notes: 
+ *
+ * Context:
+ *
+ * Returns: GENdisSensorIndex - array of 1 byte integers values
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{D579D3F4-1DEB-4898-9E25-0459EDE68716}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorIndex : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of index numbers. Each index is bound " \
+                     "to a particular sensor according with the documnetation"\
+                     "."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisSensorIndex[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorDescr
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of textual descriptions of the sensor as a 
+ *              string of variable length. The first octet of each array 
+ *              element stores the length of the string in the element.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorDescr - string.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{301791E5-0A69-4962-81FF-5C2028D9909C}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorDescr : GENdis
+{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores an array of the sensor as a string of variable " \
+                     "length."),
+	 WmiDataId(1)] string GENdisSensorDescr;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorType
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of integers describing the sensor type. 0x01
+ *              means a temperature, 0x02 a voltage sensor and 0x03 a fan 
+ *              sensor.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensortype - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{2162D8E2-5618-4bc7-80F6-7860DF14CAE4}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorType : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of integers describing the sensor type."\
+                     " 0x01 means a temperature sensor, 0x02 a voltage sensor"\
+                     " and 0x03 a fan sensor."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisSensortype[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorValue
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores in an array of integers the value of the sensors.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorValue - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+ 
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{82B2297C-BDCD-4e68-8894-F16DD5107D39}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorValue : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores in an array of integers the value of the "       \
+                     "sensors."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint32 GENdisSensorValue[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorWarThresLow
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores in an array of integers the lower warning threshold.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorWarThresLow - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{47991AA9-A235-4682-AF80-E023B3E9D937}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorWarThresLow : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores in an array of integers the lower warning "      \
+                     "threshold"),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint32 GENdisSensorWarThresLow[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorWarThresUpp
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores in an array of integers the upper warning threshold.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorWarThresUpp - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{C7D782BD-9DB3-4011-81FA-B20DD34A759C}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorWarThresUpp : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores in an array of integers the upper warning "      \
+                     "threshold"),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint32 GENdisSensorWarThresUpp[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorErrThresLow
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores in an array of integers the lower error threshold.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorErrThresLow - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{977136D4-EBC9-4c2d-896E-F8AA137E81DF}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorErrThresLow : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores in an array of integers the lower error "        \
+                     "threshold."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint32 GENdisSensorErrThresLow[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorErrThresUpp
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores in an array of integers the upper error threshold.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorErrThresUpp - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{AD2E6B67-050F-40d5-8653-6F24348CB965}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorErrThresUpp : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores in an array of integers the upper erro "         \
+                     "threshold."),
+	 WmiDataId(2),
+	 WmiSizeis("NumberElements")] uint32 GENdisSensorErrThresUpp[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorStatus
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of integers indicating the exceed of a sensor. 
+ *              0x01 means sensor value is ok, 0x02 means sensor has exceeded 
+ *              a warning threshold, and 0x03 means an exceed of an error 
+ *              threshold.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorStatus - array of 1 byte integers value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{00DCE092-35CF-4a57-95DC-C6F7F0ACF124}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorStatus : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of integers indicating the exces of a " \
+                     "sensor. 0x01 means sensor value is ok, 0x02 means "     \
+                     "sensor has exceeded a warning threshold and 0x03 means "\
+                     "an exceed of an error threshold."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisSensorStatus[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorWarCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters. If a warning threshold is exceeded
+ *              the corresponding counter array element is incremented and a 
+ *              trap is stored to OID_SKGE_TRAP. If the threshold is exceeded 
+ *              permanently the counter array element will be incremented 
+ *              every two seconds.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorWarCTS - array of 8bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{C7AA243E-0817-4335-810A-099283B4B0DF}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorWarCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters. If a warning threshold is "\
+                     "exceeded the corresponding counter array element is "   \
+                     "incremented and a trap is stored to OID_SKGE_TRAP. If " \
+                     "the threshold is exceeded permanently the counter array"\
+                     " element will be incremented every two seconds."),
+	 WmiDataId(2),
+	 WmiSizeIs("Numberelements")] uint64 GENdisSensorWarCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorErrCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters. If a error threshold is exceeded 
+ *              the corresponding counter array element is incremented and a 
+ *              trap is stored to OID_SKGE_TRAP. If the threshold is exceeded
+ *              permanently the counter array element will be incremented 
+ *              secondly.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorErrCTS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{C04A38BE-65F7-4b4a-AB87-963BC6F6F875}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+                                    
+class GENdis_SensorErrCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters. If a error threshold is "  \
+                     "exceeded the coresponding counter array element is "    \
+                     "incremented and a trap is stored to OID_SKGE_TRAP. If " \
+                     "the threshold is exceeded permanently  the counter "    \
+                     "array element will be incremented secondly."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisSensorErrCTS[];
+};
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorWarTime
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of timestamps. The time base is the time since
+ *              the last initialization time (boot time). The granularity of 
+ *              the counters is 10 milliseconds. The timestamp is updated when
+ *              the OID_SKGE_SENSOR_WAR_CTS is incremented.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorWarTime - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{CB8EE74B-E6A6-401b-9175-6CD6EF4CE165}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorWarTime : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of timestamps. The time base is the "   \
+                     "time since the last initialization time(boot time). "   \
+                     "The granularity of the counters is 10 ms."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisSensorWarTime[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SensorErrTime
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of timestamps. The time base is the time since
+ *              the last initialization time (boot time). The granularity of 
+ *              the counters is 10 milliseconds. The timestamp is updated 
+ *              when the OID_SKGE_SENSOR_ERR_CTS is incremented.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSensorErrTime -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{20B8E03B-1F4D-4418-912A-0CD3556C3048}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Sensor")]
+
+class GENdis_SensorErrTime : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of timestamps. The time base is the "   \
+                     "time since the last initialization time (boot time). "  \
+                     "The granularity of the counters is 10 ms."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisSensorErrTime[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_ChksmNumber
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of entries in the OID_SKGE_CHKSM_XXX OIDs. 
+ *              Currently three entries are defined.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisChksmNumber - 1 byte value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{8B47AF58-90B5-4412-AC71-EA6EFBE85085}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Checksum")]
+
+class GENdis_ChksmNumber : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of entries in the OID_SKGE_CHKSM_XXX "    \
+				 "OIDs."),
+	 WmiDataId(1)] uint8 GENdisChksmNumber;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_ChksmRXOkCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of 
+ *              received frames for which the protocol checksum verification
+ *              was successfully performed in hardware. The 1st entry 
+ *              identifies IP protocol checksum verification, the 2nd entry 
+ *              the UDP protocol checksum verification, and the 3rd entry the
+ *              TCP protocol checksum verification.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisChksmRXOkCTS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{B53827CF-AA10-4229-9E3D-89D229B7C009}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Checksum")]
+
+class GENdis_ChksmRXOkCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "received frames for which the protocol checksum "       \
+                     "verification was succesfully performed in hardware."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisChksmRXOkCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_ChksmRXUnableCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of 
+ *              received frames for which the protocol checksum verification 
+ *              was left to the upper protocol layer. The 1st entry identifies
+ *              IP protocol checksum verification, the 2nd entry the UDP
+ *              protocol checksum verification, and the 3rd entry the TCP
+ *              protocol checksum verification.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisChksmRXUnableCTS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{3D88888A-0343-41c8-A8E8-6532450D5FA1}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Checksum")]
+
+class GENdis_ChksmRXUnableCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "received frames for which the protocol checksum "       \
+                     "verification was left to the upper protocol layer."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisChksmRXUnableCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_ChksmRXErrCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of 
+ *              received frames for which the protocol checksum verification
+ *              in hardware found an error. The 1st entry identifies IP 
+ *              protocol checksum verification, the 2nd entry the UDP protocol
+ *              checksum verification, and the 3rd entry the TCP protocol
+ *              checksum verification.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisChksmRXErrCTS -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{D8A5CBEE-B5CC-4c06-9A16-66073698C805}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Checksum")]
+
+class GENdis_ChksmRXErrCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "received frames for which the protocol checksum "       \
+                     "verification in hardware found an error."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisChksmRXErrCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_ChksmTXOkCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of 
+ *              transmitted frames for which the protocol checksum was 
+ *              generated in hardware. The 1st entry identifies IP protocol 
+ *              checksum generation, the 2nd entry the UDP protocol checksum
+ *              generation, and the 3rd entry the TCP protocol checksum 
+ *              generation.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisChksmTXOkCTS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{4463ACAF-FCAB-4f10-B005-FE62BDBCBCDE}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Checksum")]
+
+class GENdis_ChksmTXOkCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "transmitted frames for which the protocol checksum was "\
+                     "generated in hardware."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisChksmTXOkCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_ChksmTXUnableCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of packets,
+ *              which could not be sent because the requested generation of
+ *              the checksum was not possible. The 1st entry identifies IP
+ *              protocol checksum generation, the 2nd entry the UDP protocol
+ *              checksum generation, and the 3rd entry the TCP protocol
+ *              checksum generation.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisChksmTXUnableCTS -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{02EAEAAE-E272-4350-BD0F-791E9918F25D}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Checksum")]
+
+class GENdis_ChksmTXUnableCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count the number of " \
+		     "packets which could not be sent because the requested " \
+		     "generation of the checksum was not possible."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisChksmTXUnableCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTX
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames (including
+ *              short frames, broadcasts frames, and multicast frames) that 
+ *              are successfully transmitted.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTX - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{7B957BE6-D594-4373-AF28-F21F9670B218}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTX : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count the frames that "   \
+				 "are successfully transmitted."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTX[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXOctets
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the data and
+ *              padding octets of the frames that are successfully transmitted.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXOctets - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{A2A5486D-D13F-446e-BA8A-B74EA2425727}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXOctets : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count the data and "  \
+                     "padding octets of the frames that are successfully "    \
+                     "transmitted."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXOctets[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXBroadcast
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames that were 
+ *              successfully transmitted to the broadcast address.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXBroadcast - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{BB9B00FE-2B57-489a-82E3-2E0432C309F9}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXBroadcast : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count the frames "    \
+                     "that were successfully transmitted to the broadcast "   \
+                     "address."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXBroadcast[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXMulticast
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames that were 
+ *              successfully transmitted to a group destination address other
+ *              than broadcast.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXMulticast -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{8F988061-64A8-4261-922E-9EB5633D574F}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXMulticast : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count the frames "    \
+                     "that were successfully transmitted to a group "         \
+                     "destination address other than broadcast."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXMulticast[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXUnicast
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames transmitted
+ *              that were directed to an unicast address.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXUnicast - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{7A3B61F5-B362-4700-8C43-631D18E453EC}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXUnicast : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count the frames "    \
+                     "transmitted that were directed to a unicast address."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXUnicast[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXLongframes
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count frames transmitted
+ *              that are more than the IEEE 802.3 maximum frame size.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXLongframes -  array of 8 bytes integers values
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{842A7086-9E4E-48a3-AA99-519B7CA2AB50}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXLongframes : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Styores an array of counters which count frames "       \
+                     "transmitted that are more than IEEE802.3 maximum frame "\
+                     "size."),
+	 WmiDataId(2),
+	 WmiSizeIs("numberElements")] uint64 GENdisStatTXLongframes[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXBurst
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of burst 
+ *              events.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXBurst - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E091BB92-A40E-4c10-9532-73A65F5CA6DF}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXBurst : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count the number of "  \
+                     "burst event."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXBurst[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXPFLOWC
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count transmitted Pause 
+ *              Flow-Control frames.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXPFLOWC - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{43AB45E2-DAF7-490a-A49F-F32DA9658D44}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXPFLOWC : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of countes which count transmitted "    \
+                     "pause flow control frames."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXPFLOWC[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXFlowC
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the transmitted 
+ *              Flow-Control frames.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXFlowC - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{69D44378-EE3C-4ef0-A21D-010631B1C85D}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXFlowC : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count the transmitted"\
+                     " Flow-Control."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXFlowC[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXSingleCol
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count successfully 
+ *              transmitted frames for which transmission is inhibited by
+ *              exactly one collision.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXSingleCol - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{9DEC8FC8-7C42-4fd0-9FF5-8D6BC41B7374}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXSingleCol : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count successfully "  \
+                     "transmitted frames for which transmission is inhibited "\
+                     "by exactly one collision."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXSingleCol[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXMultiCol
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count successfully 
+ *              transmitted frames for which transmission is inhibited by more
+ *              than one collision.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXMultiCol - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E4C191E8-D944-4975-9A5B-46F7CFBCF716}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXMultiCol : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count successfully "  \
+                     "transmitted frames for which transmission is inhibited "\
+                     "by more than one collision."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXMultiCol[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXExcessCol
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count frames that due to 
+ *              excessive collisions are not transmitted successfully.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXExcessCol -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{8451873D-C38C-432e-8C0C-E717EDD844AC}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXExcessCol : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters which count frames that due"\
+                     " the excessive collisions are not transmitted."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXExcessCol[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXLateCol
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the times that a 
+ *              collision has been detected later than one slot time, from the
+ *              start of the packet transmission.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXLateCol - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{51A7B49C-5C0F-4677-80B4-7732DDE0E937}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXLateCol : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the times that"\
+                     " a collision has been detected later than one slot "    \
+                     "time, from the start of the packet transmission."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXLateCol[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXExcessDef
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames that 
+ *              deferred for an excessive period of time.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXExcessDef - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{550DFBA3-3210-4659-A856-8FE735507CC0}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS  TX")]
+
+class GENdis_StatTXExcessDef : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the frames "   \
+                     "that deferred for an excessive period of time."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXExcessDef[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXUnderrun
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of 
+ *              transmit FIFO underflow events.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXUnderrun - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{8AC36F85-1363-4880-81E2-45B0602786CE}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXUnderrun : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "transmit FIFO underflow events."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXUnderrun[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXCarrier
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the times that the
+ *              carrier sense condition was not asserted or was disserted
+ *              during the transmission of a frame without collision.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXCarrier - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{EF2C1312-777B-41c8-8DCD-6E981A1478D2}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXCarrier : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the times that"\
+                     " the carrier sense condition was not asserted or was "  \
+                     "disserted during the transmission of a frame without "  \
+                     "collision."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXCarrier[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTX64
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count transmitted frames 
+ *              that were 64 octets in length including FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTX64 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{ADE11F98-E432-4ffb-8F67-2C30FE293276}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTX64 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count transmitted "  \
+                     "frames that were 64 octets in length including FCS "    \
+                     "octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTX64[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTX127
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the transmitted 
+ *              frames that were between 65 and 127 octets in length including
+ *              FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTX127 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{AAFDCE57-8AD9-4824-BB5A-B8FCCE8CBD45}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTX127 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the "          \
+                     "transmitted frames that were between 65 and 127 octets" \
+                     " in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTX127[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTX255
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the transmitted 
+ *              frames that were between 128 and 255 octets in length including
+ *              FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTX255 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{ABDCB8F0-2C0C-4d3d-A4B5-D1AABC93678B}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTX255 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the "          \
+                     "transmitted frames that were between 128 and 255 octets"\
+                     " in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTX255[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTX511
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the transmitted
+ *              frames that were between 256 and 511 octets in length including
+ *              FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTX511 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{A0AEAA0B-66F4-4082-814B-30B90D42C5BA}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTX511 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the "          \
+                     "transmitted frames that were between 256 and 511 octets"\
+                     " in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTX511[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTX1023
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the transmitted 
+ *              frames that were between 512 and 1023 octets in length 
+ *              including FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTX1023 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{4288C54F-C9C2-4e9e-80D7-4B2E23425852}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTX1023 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the "          \
+                     "transmitted frames that were between 512 and 1023 "     \
+                     "octets in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTX1023[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXMax
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the transmitted
+ *              frames that were between 1024 and the maximum octets in length
+ *              including FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXMax array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{82A7B943-B800-40a2-81F5-B82E207F091E}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXMax : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the "          \
+                     "transmitted frames that were between 1024 and the "     \
+                     "maximum octets in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXMax[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXSync
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the synchronously 
+ *              transmitted frames.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXSync - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{400B84CD-867D-48f4-8869-EB8B622F52A9}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXSync : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the "          \
+                     "synchronously transmitted frames."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatTXSync[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatTXSyncOctets
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the octets of the 
+ *              synchronously transmitted frames.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatTXSyncOctets - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{6B84691B-8262-42d1-8E48-906F953233A9}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_StatTXSyncOctets : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the octets of "\
+                     "the synchronously transmitted frames."),
+	 WmiDataId(2),
+	 WmiSizeIS("NumberElements")] uint64 GENdisStatTXSyncOctets[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRX
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames that were 
+ *              successfully received.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRX -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E71CB1EA-24B6-42ea-AD19-2FAF7DC3DF54}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRX : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the frames "   \
+                     "that were successfully received."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRX[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXOctets
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the octets of the 
+ *              successfully received frames.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXOctets -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{09FA2908-42D6-486c-99EF-7E42D79DEB1C}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXOctets : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the octets of "\
+                     "the successfully received frames."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXOctets[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXBroadcast
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames 
+ *              successfully received and are directed to the broadcast group
+ *              address.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXBroadcast -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{04624F1E-64BE-47b9-89DE-6B8A9A79A590}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXBroadcast : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the frames "   \
+                     "successfully received and are directed to the broadcast"\
+                     " group address."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXBroadcast[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXMulticast
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames
+ *              successfully received and are directed to an active 
+ *              non-broadcast group address.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXMulticast -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{DEA334BB-55C9-4442-83A3-192BD3AB4D57}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXMulticast : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the frames "   \
+                     "successfully received and are directed to an active "   \
+                     "non-broadcast group address."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXMulticast[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXUnicast
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames 
+ *              successfully received that were directed to a unicast address.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXUnicast -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{B8CE44D7-D8CC-41c1-A441-60049472770A}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXUnicast : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the frames "   \
+                     "successfully received that were directed to a unicast " \
+                     "address."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXUnicast[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXPFlowC
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received Pause 
+ *              Flow-Control frames.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXPFlowC -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E5A26847-B4E4-4d30-88E1-971310D79F73}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXPFlowC : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "Pause Flow-Control frames."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXPFlowC[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXFlowC
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received 
+ *              Flow-Control frames.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXFlowC - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{0174DCBD-F6A6-456f-875E-AC526BDFCE71}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXFlowC : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received "  \
+                     "Flow-Control frames."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXFlowC[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXPFlowCErr
+ *
+ * Derived from: GENdis
+ *
+ * Description: 
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXPFlowCErr - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E07A5D97-7E0F-4e74-AC0E-4A5C40D2F9F3}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXPFlowCErr : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "Pause Flow-Control frames with address/type mismatch."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXPFlowCErr[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXFlowCUnkwn
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received Pause 
+ *              Flow-Control frames with address/type mismatch.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXFlowCUnkwn -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{4720E040-533E-4401-86C4-9FED0F9B0E63}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXFlowCUnkwn : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "Flow-Control frames of unknown type."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXFlowCUnkwn[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXBurst
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of receive
+ *              burst events.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXBurst - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{9DC39DDA-0D40-4538-9947-B054627B407D}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXBurst : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "receive burst events."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXBurst[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXMissed
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of events
+ *              in which frames were missed by the controller due to buffer
+ *              overflow.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXMissed -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{941C2E58-D22D-407a-83EB-F80E28DFF7F6}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXMissed : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "events in which frames were missed by the controller "  \
+                     "due to buffer overflow."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXMissed[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXFraming
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames with 
+ *              improper end-of-frame delimiter.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXFraming -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{7832C2D4-36C3-412d-AA65-3865BA66309A}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXFraming : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the frames "   \
+                     "with improper end-of-frame delimiter."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXFraming[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXOverflow
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of receive
+ *              FIFO overflow events
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXOverflow -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{375B86CA-42F3-48c3-90F0-55F9F57218E8}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXOverflow : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "receive FIFO overflow events."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXOverflow[];
+};
+
+
+/******************************************************************************
+ *
+ * Class:  GENdis_StatRXJabber
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the total number of
+ *              frames received that were longer than the maximum frame size
+ *              (excluding framing bits but including FCS octets), and had a
+ *              bad FCS with an integral number of octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXJabber -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{1C6488D2-E7AB-44ed-B99B-3CEE30F7441C}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXJabber : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the total "    \
+                     "number of frames received that were longer than the "   \
+                     "maximum frame size (excluding framing bits but "        \
+                     "including FCS octets), and had a bad FCS with an "      \
+                     "integral number of octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXJabber[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXCarrier
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of times 
+ *              the carrier event is longer than the permissible duration.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXCarrier - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{63839099-30E8-477c-8CAD-49C062895966}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXCarrier : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "times the carrier event is longer than the permissible "\
+                     "duration."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXCarrier[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXIRLength
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the frames with a
+ *              length-or-type field value between the minimum unpadded LLC MAC
+ *              client data size and the maximum allowed LLC MAC client data
+ *              size inclusive, that does not match the number of LLC MAC
+ *              client data octets received.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXIRLength - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{C71AAFE6-4036-4edb-B8E0-5D0E98AB2F68}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXIRLength : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the frames "   \
+                     "with a length-or-type field value between the minimum " \
+                     "unpadded LLC MAC client data size and the maximum "     \
+                     "allowed LLC MAC client data size inclusive, that does " \
+                     "not match the number of LLC MAC client data octets "    \
+                     "received."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXIRLength[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXSymbol
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the number of times 
+ *              the receiving media is non-idle (a carrier event) for a period
+ *              of time greater than or equal to slot-time for half-duplex
+ *              operation, or greater than or equal to min-frame-size for
+ *              full-duplex operation, and during which there was at least
+ *              one occurrence of an event that causes the PHY to indicate
+ *              'Data reception error' on the GMII.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXSymbol - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{A4FBB09E-A76F-42df-87CA-2DCF2530714C}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXSymbol : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the number of "\
+                     "times the receiving media is non-idle (a carrier event)"\
+                     " for a period of time greater than or equal to "        \
+                     "slot-time for half-duplex operation, or greater than or"\
+                     " equal to min-frame-size for full-duplex operation, "   \
+                     "and during which there was at least one occurrence of " \
+                     "an event that causes the PHY to indicate 'Data "        \
+                     "reception error' on the GMII."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXSymbol[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXShorts
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the events for each 
+ *              carrier event with activity-duration less than short-event-max-time.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXShorts -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{2FE4C74B-D775-4d20-A318-22911175FEBE}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXShorts : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the events "   \
+                     "for each carrier event with activity-duration less "    \
+                     "than short-event-max-time."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXShorts[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXRunt
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the carrier events for
+ *              which the octet count is less than 64.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXRunt - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{DC9FBA6E-96D5-42cb-8790-8198B4B9EFDF}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXRunt : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the carrier "  \
+                     "events for which the octet count is less than 64."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXRunt[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXCExt
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames
+ *              with no collision, short, or framing error in which the
+ *              carrier extension was inadequate.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXCExt - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{47A6F928-AB92-4404-8CD9-F33A5BD5F622}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXCExt : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames with no collision, short, or framing error in "  \
+                     "which the carrier extension was inadequate."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXCExt[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXTooLong
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames
+ *              that exceed the maximum permitted frame size.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXTooLong - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{6FA77F6F-A1F7-4a2d-9815-E2B382E37D47}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXTooLong : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames that exceed the maximum permitted frame size."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXTooLong[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXFCS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames
+ *              that are an integral number of octets in length and do not 
+ *              pass the FCS check.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXFCS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{25D0653C-2CCD-414a-BF85-9CD34AEEE4F5}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXFCS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames that are an integral number of octets in length" \
+                     " and do not pass the FCS check."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXFCS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRX64
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames 
+ *              (including bad frames) that were 64 octets in length including
+ *              FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRX64 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{89034C71-2C48-4ae6-B0BC-7B112719D6F7}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRX64 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames (including bad frames) that were 64 octets in "  \
+                     "length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRX64[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRX127
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames 
+ *              (including bad frames) that were between 65 and 127 octets in
+ *              length including FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRX127 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{0F7B93FD-5A39-497b-AEF5-F8A6A8DC6815}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRX127 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames (including bad frames) that were between 65 and "\
+                     "127 octets in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRX127[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRX255
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames 
+ *              (including bad frames) that were between 128 and 255 octets in
+ *              length including FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRX255 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{EFF5AE4B-9DA7-4243-A212-BD92C6F97F75}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRX255 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames (including bad frames) that were between 128 and"\
+                     " 255 octets in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRX255[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRX511
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames 
+ *              (including bad frames) that were between 256 and 511 octets in
+ *              length including FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRX511 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{4A3340E4-33DC-49c6-A33C-9B399982AA73}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRX511 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames (including bad frames) that were between 256 and"\
+                     " 511 octets in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRX511[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRX1023
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames 
+ *              (including bad frames) that were between 512 and 1023 octets
+ *              in length including FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRX1023 - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{1819EFAF-CAF5-42ff-950F-566A69AB302B}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRX1023 : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames (including bad frames) that were between 512 and"\
+                     " 1023 octets in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRX1023[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXMax
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count the received frames
+ *              (including bad frames) that were between 1024 and maximum
+ *              octets in length including FCS octets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXMax - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{A3DC96CD-FF97-4557-BE80-3724F0AC8845}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXMax : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count the received " \
+                     "frames (including bad frames) that were between 1024 "  \
+                     "and maximum octets in length including FCS octets."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXMax[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_StatRXLongframes
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of counters, which count frames received 
+ *              successfully that are greater than the IEEE 802.3 maximum
+ *              frame size.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisStatRXLongframes -  array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{FEF60894-FC74-439a-85B0-3732A465CBB6}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_StatRXLongframes : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of counters, which count frames "       \
+                     "received successfully that are greater than the "       \
+                     "IEEE 802.3 maximum frame size."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisStatRXLongframes[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_PhysCurAddr
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of MAC addresses. The first entry stores the
+ *              physical address reported to the operation system. The other
+ *              entries store the physical addresses of RLMT. The entries are
+ *              read-writeable except the first entry, which is read-only.
+ *              Setting a 'ffffffffffff' (broadcast address) will have no
+ *              effect and leaves the current address unchanged. When setting
+ *              all instances the first entry, which is read-only, must be set
+ *              to ffffffffffff. Otherwise an error will be generated.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisPhysCurAddr - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{3CC751F6-9BE4-4866-A8AE-80BCF29955B4}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Address")]
+
+class GENdis_PhysCurAddr : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 write,
+	 Description("Stores an array of MAC addresses. The first entry "     \
+                     "stores the physical address reported to the operation " \
+                     "system. The other entries store the physical addresses "\
+                     "of RLMT. The entries are read-writeable except the "    \
+                     "first entry, which is read-only. Setting a "            \
+                     "'ffffffffffff' (broadcast address) will have no effect" \
+                     " and leaves the current address unchanged. When setting"\
+                     " all instances the first entry, which is read-only, "   \
+                     "must be set to ffffffffffff. Otherwise an error will be"\
+                     " generated."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisPhysCurAddr[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_PhysFacAddr
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores an array of burned in MAC addresses. The first entry
+ *              stores the burned in physical address reported to the operation
+ *              system. The other entries store the physical addresses of RLMT.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisPhysFacAddr - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{04DC248D-4D00-4dbc-9CB1-AB2F5C8CEB47}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Address")]
+
+class GENdis_PhysFacAddr : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores an array of burned in MAC addresses. The first " \
+                     "entry stores the burned in physical address reported "  \
+                     "to the operation system. The other entries store the "  \
+                     "physical addresses of RLMT."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisPhysFacAddr[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_PMD
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores in an array the media type attached to a port.
+ *              0x01 means 'unknown', 0x02 means 'long wavelength laser' (LX),
+ *              0x03 means 'short wavelength laser' (SX), 0x04 means 'short 
+ *              copper jumpers' (CX), and 0x05 means 'four pair UTP Cat. 5'(T).
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisPMD - 1 byte integer
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{A95022BF-004D-471e-9356-914C94C1F480}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS PMD")]
+
+class GENdis_PMD : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores in an array the media type attached to a port."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisPMD[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_Connector
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores in an array the port connector type.  The meaning of
+ *              the values is according to the following table:
+ *                  Value    Description
+ *                  01       unknown
+ *                  02       duplex-sc
+ *                  03       d-sub
+ *                  04       fc-s2
+ *                  05       utp
+ *                  06       violition
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisConnector - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{032C2ED6-A1F9-46dd-9020-7F5F9E8DEC97}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Connector")]
+
+class GENdis_Connector : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores in an array the port connector type."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisConnector[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_LinkCap
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores in an array bit strings describing the link capability
+ *              of the port. A set bit 0 means 'half-duplex', 
+ *              bit 1 'full-duplex', bit 2 'auto-half-duplex',
+ *              and bit 3 'auto-full-duplex' capability.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisLinkCap - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{FA4F1508-7517-439d-AD5C-6435CA90248B}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Link capability")]
+
+class GENdis_LinkCap : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores in an array bit strings describing the link "    \
+				 "capability of the port."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisLinkCap[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_LinkMode
+ *
+ * Derived from: GENdis
+ *
+ * Description: Defines in which mode the port should work. The modes 
+ *              half-duplex and full-duplex are proprietary, because the
+ *              standard defines autonegotiation as mandatory. 
+ *              A '1' means half-duplex, '2' full-duplex, '3' auto-negotiate
+ *              half-duplex, '4' auto-negotiate full-duplex, '5' auto-negotiate
+ *              half- or full-duplex, and '6' sense mode. Setting a '0' will
+ *              have no effect and leaves the mode unchanged.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisLinkMode - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E0485FAE-5385-4b9c-8AE1-C63D42DBE15E}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Link mode")]
+
+class GENdis_LinkMode : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 write,
+	 Description("Defines in which mode the port should work."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisLinkMode[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_LinkModeStatus
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the mode in which the port is currently working.
+ *              '1' mode unknown, '2' half-duplex, '3' full-duplex,
+ *              '4' auto-half-duplex, and '5' auto-full-duplex. The keyword
+ *              auto indicates that the connection mode was established by
+ *              autonegotiation, otherwise the port was forced to the
+ *              connection mode.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisLinkModeStatus - array of 1 byte integers values
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{63DEAB86-EC65-4f7f-9DB5-8C5498F3A9E4}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Link mode status")]
+
+class GENdis_LinkModeStatus : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores the mode in which the port is currently working."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisLinkModeStatus[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_LinkStatus
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the link status of the unit. If a link becomes up or 
+ *              down a trap is generated. A '1' means link-physically-down,
+ *              '2' link-auto-failure, '3' link-logically-down, and
+ *              '4' link-logically-up.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisLinkStatus - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{C1FD76E6-B381-46bd-B24B-6D70C8DD9599}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Link status")]
+
+class GENdis_LinkStatus : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores the link status of the unit."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisLinkStatus[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_FlowCtrlCap
+ *
+ * Derived from: GENdis
+ *
+ * Description: Indicates which flow control types the port supports.
+ *              A '1' means no flow control, '2' local port can send flow 
+ *              control packets, '3' local and remote port can send flow
+ *              control packets, '4' local port may not be allowed to send 
+ *              flow control packets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisFlowCtrlCap - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{A586A0A8-974C-4bac-B2B0-50C38ACD3D60}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Flow Ctrl")]
+
+class GENdis_FlowCtrlCap : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Indicates which flow control types the port supports"),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisFlowCtrlCap[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_FlowCtrlMode
+ *
+ * Derived from: GENdis
+ *
+ * Description: Defines the flow control types the port should announce during
+ *              auto-negotiation. If auto-negotiation is disabled flow-control
+ *              is disabled and settings to this OID have no effect.
+ *              A '1' means no flow control, '2' local port can send flow 
+ *              control packets, '3' local and remote port can send flow
+ *              control packets, '4' local port may not be allowed to send
+ *              flow control packets. Setting a '0' will have no effect and
+ *              leaves the mode unchanged.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisFlowCtrlMode - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{EE7EE962-919E-4e41-8736-7974C5D746C7}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Flow Control")]
+
+class GENdis_FlowCtrlMode : GENdis{
+	[read] boolean Active;
+	[key, read] string instanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 write,
+	 Description("Defines the flow control types the port should announce"\
+                     " during auto-negotiation."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisFlowCtrlMode[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_FlowCtrlStatus
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the flow control type in which the port is currently
+ *              working. A '1' means no flow control, a '2' means that only
+ *              the remote station can send flow control packets, a '3' means
+ *              that only the local station can send flow control packets,
+ *              and '4' means that local and remote station can send flow
+ *              control packets.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisFlowCtrlStatus - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E1A9D937-BAF5-402f-B067-50CAEF2BF436}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Flow Control")]
+
+class GENdis_FlowCtrlStatus : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores the flow control type in which the port is "     \
+                     "currently working."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisFlowCtrlStatus[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_PhyOperationCap
+ *
+ * Derived from: GENdis
+ *
+ * Description: Indicates which MASTER-SLAVE relationships the port supports.
+ *              A set bit 0 means 'auto-master-slave', bit 1 means 'master',
+ *              and bit 2 'slave'.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisPhyOperationCap - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{43B9A538-AF7B-48a4-93F5-2C422F5D8C09}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS")]
+
+class GENdis_PhyOperationCap : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Indicates which MASTER-SLAVE relationships the port "   \
+                     "supports."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisPhyOperationCap[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_PhyOperationMode
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the relationship types the port should announce during
+ *              link set-up. A '1' means auto-negotiation, '2' means that the
+ *              port should operate as MASTER, and '3' means that the port
+ *              should operate as SLAVE. '0' will have no effect and leaves
+ *              the mode unchanged.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisPhyOperationMode - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{839E775E-49A7-4998-ADDB-35132B6A7AE7}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("")]
+
+class GENdis_PhyOperationMode : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 write,
+	 Description("Stores the relationship types the port should announce "\
+                     "during link set-up."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisPhyOperationMode[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_PhyOperationStatus
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the operating type in which the port is currently
+ *              working. A '1' means unset, '2' means that the port operates
+ *              as MASTER, '3' means that the port operates as SLAVE, 
+ *              and '4' means configuration fault.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisPhyOperationStatus - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{598DD0CB-DFBD-4d78-8962-72BD730657DE}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("Operating type for status")]
+
+class GENdis_PhyOperationStatus : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores the operating type in which the port is "        \
+                     "currently working."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisPhyOperationStatus[];
+};                                                                              
+                         
+
+/******************************************************************************
+ *
+ * Class: GENdis_Trap
+ *
+ * Derived from: GENdis
+ *
+ * Description: The variable stores all queued traps, which arose since the
+ *              last restart. If the internal queue has an overflow the
+ *              oldest traps are omitted. The new traps are added to the
+ *              beginning of the buffer. Each trap contains a unique number,
+ *              which allows a querying application to differentiate old from
+ *              new traps. The timestamp may be used by applications to
+ *              determine the trap generation time. The OID values are always
+ *              stored as single instance. Therefore each trap containing
+ *              multiple instance OIDs has also stored an index OID to
+ *              identify the instance.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisTrap - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{8D3C92FE-B8EB-46f1-A8B6-35D1229DE6FE}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Trap")]
+
+class GENdis_Trap : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("The variable stores all queued traps, which arose since"\
+                     " the last restart."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisTrap[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_TrapNumber
+ *
+ * Derived from: GENdis
+ *
+ * Description: Number of stored traps in OID_SKGE_TRAP.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisTrapNumber - 4 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{CD2ECFB8-C63D-48e0-9C6B-847E4700E488}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Trap number")]
+
+class GENdis_TrapNumber : GENdis
+{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of stored traps in OID_SkGE_TRAP."),
+	 WmiDataId(1)] uint32 GENdisTrapNumber;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTMode
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the working mode of RLMT as a power of 2.
+ *                    Power    Mode
+ *                    0        link-check, always active
+ *                    1        send-check, sends hello packets
+ *                    2        spanning-tree, monitors spanning-tree packets
+ *                    3        monitor, monitors other GE-NICs
+
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTMode - 1 byte integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{776C532C-27F7-486e-A889-32BF353D7672}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTMode : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 write,
+	 Description("Stores the working mode of RLMT as a power of 2."),
+	 WmiDataId(1)] uint8 GENdisRLMTMode;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTPortNumber
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of physically available ports on the adapter.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTPortNumber - 4 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{FFF085C6-C926-4e51-90E8-27B891156CE4}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Port number")]
+
+class GENdis_RLMTPortNumber : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of physically available ports on the "\
+                     "adapter."),
+	 WmiDataId(1)] uint32 GENdisRLMTPortNumber;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTPortActive
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the index of the currently active port (1..n).
+ *              The value '0' means that no port is currently active.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTPortActive - 1 byte integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{98A0FC2A-00CB-4b4a-97C8-10ABBADE2BD1}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Active port")]
+
+class GENdis_RLMTPortActive : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the index of the currently active port (1..n)."  \
+                     " The value '0' means that no port is currently active."),
+	 WmiDataId(1)] uint8 GENdisRLMTPortActive;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTPortPreferred
+ *
+ * Derived from: GENdis
+ *
+ * Description: If RLMT (Redundant Link ManagemenT) evaluates that all links
+ *              are well working this value is used to decide, which port
+ *              should be used. The value '0' indicates automatic mode and let
+ *              RLMT made the decision.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTPortPreferred - 1 byte integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{71AED9F1-E46A-411e-88C3-4E08FCBD1CF2}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Preferred port")]
+
+class GENdis_RLMTPortPreferred : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 write,
+	 Description("If RLMT (Redundant Link ManagemenT) evaluates that all "\
+                     "links are well working this value is used to decide,"   \
+                     " which port should be used. The value '0' indicates "   \
+                     "automatic mode and let RLMT made the decision."),
+	 WmiDataId(1)] uint8 GENdisRLMTPortPreferred;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTChangeCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Counts the number of times RLMT switched from one port to
+ *              another, which may indicate an error.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTChangeCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{490860DE-19B6-44c1-AD1E-C7692061AB11}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTChangeCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Counts the number of times RLMT switched from one port "\
+                     "to another, which may indicate an error."),
+	 WmiDataId(1)] uint64 GENdisRLMTChangeCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTChangeTime
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the time in hundreds of seconds since the last reboot
+ *              when the connection was switched to another port.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTChenageTime- 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{9E8CBB59-B190-4b3d-B29D-CC7F99E042F4}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTChangeTime : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the time in hundreds of seconds since the last " \
+                     "reboot when the connection was switched to another "    \
+                     "port."),
+	 WmiDataId(1)] uint64 GENdisRLMTChenageTime;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTChangeEstim
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of port switches per hour.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTChangeEstim - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{92456884-DEBA-4655-BE74-5320DC65531B}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTChangeEstim : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of port switches per hour."),
+	 WmiDataId(1)] uint64 GENdisRLMTChangeEstim;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTChangeThres
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the threshold in number of port switches per hour. 
+ *              If the threshold is exceeded, a trap is generated.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTChangeThres - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{C69EB5E7-EE4B-43ee-B346-C69D925B96C6}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTChangeThres : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 write,
+	 Description("Stores the threshold in number of port switches per "   \
+                     "hour. If the threshold is exceeded, a trap is "         \
+                     "generated."),
+	 WmiDataId(1)] uint64 GENdisRLMTChangeThres;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTPortIndex
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the physical indexes of the adapter ports (0..n).
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTPortIndex - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{E12EEE12-B7C7-4845-BFCA-3DC73D1471CF}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTPortIndex : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores the physical indexes of the adapter ports "      \
+                     "(0..n)."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint32 GENdisRLMTPortIndex[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTStatus
+ *
+ * Derived from: GENdis
+ *
+ * Description: The working state of the port. A '1' means standby, 
+ *              '2' active, '3' error.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTStatus - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{526C2157-14E1-47ba-94F7-21DA96F7C976}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("")]
+
+class GENdis_RLMTStatus : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("The working state of the port. A '1' means standby, "   \
+                     "'2' active, '3' error."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint32 GENdisRLMTStatus[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTTXHelloCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Number of hello packets sent in the send-check mode.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTTXHelloCTS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{CE008224-A75B-4a9c-BD7F-0AC339B2AE83}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTTXHelloCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Number of hello packets sent in the send-check mode."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisRLMTTXHelloCTS[];
+};
+                                                   
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTRXHelloCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Number of hello packets received in the send-check mode.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTRXHelloCTS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{6CEA767D-DBA3-429d-B8D5-4D71A2DD8CCE}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTRXHelloCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Number of hello packets received in the send-check "    \
+                     "mode."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisRLMTRXHelloCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTTXSPReqCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Number of transmitted packets in spanning-tree mode to force 
+ *              a spanning-tree hello packet.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTTXSPReqCTS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{BCA4130F-53E2-48f2-9286-8F9A679F7295}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTTXSPReqCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Number of transmitted packets in spanning-tree mode to "\
+                     "force a spanning-tree hello packet."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisRLMTTXSPReqCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTRXSPCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Number of the received spanning-tree hello packets in the
+ *              spanning-tree mode.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTRXSPCTS - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{620611BF-C4FF-4b6f-BBD4-AFFD76DD2CA5}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTRXSPCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Number of the received spanning-tree hello packets in " \
+                     "the spanning-tree mode."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisRLMTRXSPCTS[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTMonitorNumber
+ *
+ * Derived from: GENdis
+ *
+ * Description: Number of remote stations monitored, which corresponds with
+ *              the number of entries in the OID_SKGE_RLMT_MONITOR_XXX.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTMonitorNumber - 4 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{FC1428E7-CE4D-4c05-ACDF-57E2200E6F9C}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTMonitorNumber : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of remote stations monitored, which corresponds "\
+                     "with the number of entries in the"                      \
+                     "OID_SKGE_RLMT_MONITOR_XXX."),
+	 WmiDataId(1)] uint32 GENdisRLMTMonitorNumber;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTMonitorIndex
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the a list of indexes (0..n).
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTMonitorIndex - array of 4 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{EDB5E663-FD31-420b-A5EA-F9AB4C334372}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTMonitorIndex : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores a list of indexes (0..n)."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint32 GENdisRLMTMonitorIndex[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTMonitorAddr
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the physical addresses of the monitored stations.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTMonitorAddr - array of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{51585066-764C-430c-9364-0F5FEF4D2066}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTMonitorAddr : GENdis
+{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 write,
+	 Description("Stores the physical addresses of the monitored "        \
+                     "stations."),
+	 WmiDataID(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisRLMTMonitorAddr[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTMonitorErrs
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of times the redundant link of the monitored
+ *              stations got lost.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTMonitorErrs - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{F95FBB8E-913E-4f43-BB2D-E61508E95C61}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTMonitorErrs : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores the number of times the redundant link of the "  \
+                     "monitored stations got lost."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisRLMTMonitorErrs[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTMonitorTimestamp
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the timestamp of the last time the link got lost.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTMonitorTimestamp - array of 8 bytes integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{03AC9E31-025A-45da-9E61-0833B1C5ADA6}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTMonitorTimestamp : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 Description("Stores the timestamp of the last time the link got "    \
+                     "lost."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint64 GENdisRLMTMonitorTimestamp[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RLMTMonitorAdmin
+ *
+ * Derived from: GENdis
+ *
+ * Description: Allows to enable or disable the monitoring of the remote
+ *              station. Disable is encoded with '1' and enable with '2'.
+ *              Setting a '0' will have no effect and leaves the admin status
+ *              unchanged.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRLMTMonitorAdmin - arrai of 1 byte integers values.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{781CE89F-C26E-4c04-BA09-D037B352335C}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RLMT")]
+
+class GENdis_RLMTMonitorAdmin : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Number of array elements."),
+	 WmiDataId(1)] uint32 NumberElements;
+	[read,
+	 write,
+	 Description("Allows to enable or disable the monitoring of the "     \
+                     "remote station."),
+	 WmiDataId(2),
+	 WmiSizeIs("NumberElements")] uint8 GENdisRLMTMonitorAdmin[];
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_IntermediateSupport
+ *
+ * Derived from: GENdis
+ *
+ * Description: An intermediate driver query this OID. By returning a specific
+ *              number (tbd) the support for binding by an intermediate driver
+ *              is acknowledged.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisIntermediateSupport- 4 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{8B23B66F-4088-4801-BFC6-E3A1057CA679}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Intermediate driver query")]
+
+class GENdis_IntermediateSupport : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("An intermediate driver query this OID. By returning "   \
+                     "a specific number (tbd) the support for binding by an " \
+                     "intermediate driver is acknowledged."),
+	 WmiDataId(1)] uint32 GENdisIntermediateSupport;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_TXSWQueueLen
+ *
+ * Derived from: GENdis
+ *
+ * Description: If the driver internally queues packets it should set the
+ *              queue length, when a new packet is queued to or freed off the
+ *              transmit queue.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisTXSWQueueLen - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{BDF98DEC-3314-4ec8-BE13-B38BB62618C3}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_TXSWQueueLen : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("If the driver internally queues packets it should set " \
+                     "the queue length, when a new packet is queued to or "   \
+                     "freed off the transmit queue."),
+	 WmiDataId(1)] uint64 GENdisTXSWQueueLen;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_TXSWQueueMax
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the maximal queue length the transmit queue has reached
+ *              since the last driver initialization.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisTXSWQueueMax - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{16680057-3593-4c76-BB34-03C0B7D828DD}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_TXSWQueueMax : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the maximal queue length the transmit queue has "\
+                     "reached since the last driver initialization."),
+	 WmiDataId(1)] uint64 GENdisTXSWQueueMax;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_TXRetry
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of packet transmit restarts when it could
+ *              not be sent.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisTXRetry - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{C8138A7B-8DAD-4279-99C7-C49E90F5298F}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_TXRetry : GENdis{
+	[key, read] string InstanceName;
+	[read] boolean Active;
+	[read,
+	 Description("Stores the number of packet transmit restarts when it " \
+                     "could not be sent."),
+	 WmiDataId(1)] uint64 GENdisTXRetry;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RXIntrCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of receive interrupts.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRXIntrCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{5D5CB096-9DC4-43b5-A09F-DA2D83931EEA}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_RXIntrCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of receive interrupts."),
+	 WmiDataId(1)] uint64 GENdisRXIntrCTS;
+};
+
+/******************************************************************************
+ *
+ * Class: GENdis_TXIntrCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of transmit interrupts
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisTxIntrCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{6B39B183-A3B5-4c22-86D4-D7724AF414BA}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_TXIntrCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of transmit interrupts."),
+	 WmiDataId(1)] uint64 GENdisTxIntrCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_TXUsedDescrNo
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of currently used descriptors.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisTXUsedDescrNo - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{91E7E9AB-32EE-47a0-A947-AACE4B09E163}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_TXUsedDescrNo : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of currently used descriptors."),
+	 WmiDataId(1)] uint64 GENdisTXUsedDescrNo;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RXDeliveredCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of packets delivered to an upper protocol module.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRXDeliveredCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{06634D9D-63B5-45bb-BCE9-F479B65CEDC6}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_RXDeliveredCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of packets delivered to an upper "    \
+                     "protocol module."),
+	 WmiDataId(1)] uint64 GENdisRXDeliveredCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RXOctetsDelivCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of octets delivered to an upper protocol
+ *              module.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRXOctetsDelivCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{842AC688-4514-411f-9447-45C97CD17309}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_RXOctetsDelivCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of octets delivered to an upper "     \
+                     "protocol module."),
+	 WmiDataid(1)] uint64 GENdisRXOctetsDelivCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_RXHWErrorCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the low level receive errors. It is the sum of 
+ *              OID_SKGE_STAT_RX_MISSED, OID_SKGE_STAT_RX_FRAMING,
+ *              OID_SKGE_STAT_RX_OVERFLOW, OID_SKGE_STAT_RX_JABBER,
+ *              OID_SKGE_STAT_RX_CARRIER, OID_SKGE_STAT_RX_IR_LENGTH,
+ *              OID_SKGE_STAT_RX_SYMBOL, OID_SKGE_STAT_RX_SHORTS,
+ *              OID_SKGE_STAT_RX_RUNT, OID_SKGE_STAT_RX_CEXT ,
+ *              OID_SKGE_STAT_RX_TOO_LONG, and OID_SKGE_STAT_RX_FCS.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisRXHWErrorsCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{DBC152A5-08FF-47ae-B6F0-6032682F1725}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS RX")]
+
+class GENdis_RXHWErrorCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the low level receive errors."),
+	 WmiDataId(1)] uint64 GENdisRXHWErrorsCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_TXHWErrorCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the low level transmit errors. It is a sum of
+ *              OID_SKGE_STAT_TX_LATE_COL, OID_SKGE_STAT_TX_UNDERRUN,
+ *              OID_SKGE_STAT_TX_CARRIER, OID_SKGE_STAT_TX_EXCESS_COL. 
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisTXHWErrorCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{4EFBF699-75AE-4e3b-A108-8AF5D5D80FDE}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS TX")]
+
+class GENdis_TXHWErrorCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the low level transmit errors."),
+	 WmiDataId(1)] uint64 GENdisTXHWErrorCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_InErrorsCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the total number of receive errors. It is the sum of
+ *              OID_SKGE_RX_HW_ERROR_CTS and the number of errors caused by
+ *              lack of driver buffer space.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisInErrorsCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{8FB1A86C-F222-4ea8-BB9B-8A5164D0F554}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS In errors")]
+
+class GENdis_InErrorsCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the total number of receive errors."),
+	 WmiDataId(1)] uint64 GENdisInErrorsCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_OutErrorCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the total number of receive errors. It is the sum of
+ *              OID_SKGE_TX_HW_ERROR_CTS and the number of errors caused by
+ *              lack of driver buffer space.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisOutErrorCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{3FB70F76-7BBD-47ce-A043-52E12AF8C662}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Out errors")]
+
+class GENdis_OutErrorCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the total number of sent errors."),
+	 WmiDataId(1)] uint64 GENdisOutErrorCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_ErrRecoveryCTS
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the number of times the driver recovered from a big
+ *              internal error condition.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisErrRecoveryCTS - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{21AACB29-D000-4e7e-968D-6FC37A00D711}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS Error recovery")]
+
+class GENdis_ErrRecoveryCTS : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the number of times the driver recovered from a "\
+                     "big internal error condition."),
+	 WmiDataId(1)] uint64 GENdisErrRecoveryCTS;
+};
+
+
+/******************************************************************************
+ *
+ * Class: GENdis_SysUpTime
+ *
+ * Derived from: GENdis
+ *
+ * Description: Stores the time in hundreds of seconds since the last driver
+ *              initialization.
+ *
+ * Notes
+ *
+ * Context: 
+ *
+ * Returns: GENdisSysUpTime - 8 bytes integer value.
+ *
+ ******************************************************************************/
+
+[WMI,
+ dynamic: ToInstance,
+ provider("WMIProv"),
+ guid("{5D12B417-1483-4f9f-9EF3-7E2719A5DCC7}"),
+ locale("MS\\0x409"),
+ WmiExpense(1),
+ Description("NDIS SysUpTime")]
+
+class GENdis_SysUpTime : GENdis{
+	[read] boolean Active;
+	[key, read] string InstanceName;
+	[read,
+	 Description("Stores the time in hundreds of seconds since the last " \
+                     "driver initialization."),
+	 WmiDataId(1)] uint64 GENdisSysUpTime;
+};
+
+//* EOF GEndis.mof

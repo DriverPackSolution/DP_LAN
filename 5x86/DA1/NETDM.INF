@@ -1,0 +1,351 @@
+; /****************************************************************************
+; ** Copyright 1999, DAVICOM Semiconductor, Inc., All Rights Reserved.       **
+; ** THIS FILE IS Installation file for the DM9 Based Fast                   **
+; ** Ethernet PCI Adapter.                                                   **
+; ** Add ACPIEnable parameter to registry.                                   **
+; ** V1.04                                                                   **
+; ** .Add NDIS2 driver                                                       **
+; ** .CNet PRO200WL PCI Fast Ethernet Adapter - Don't check Sub System/      **
+; **  Vendor ID                                                              **
+; ** V1.05 - (1) Don't check SubVendor ID                                    **
+; **         (2) Change Signature for Windows 2000                           **
+; **                                                                         **
+; ** V1.06 -  11/17/99  Simoncc                                              **
+; **         Combine all inf files, except of oemsetup.inf for NT 3.51/4.0   **
+; **         Add a network installer (DM9NDI.DLL)                            **
+; ** V1.07 -  11/24/99  Simoncc                                              **
+; **         Add a CoInstaller for Windows 2000 (DM9INST.DLL)                **
+; **									     **	
+; ** V1.08 -  12/23/99	Spenser						     **
+; **		Add "PME" parameter for WOL function, the default is         **
+; **		"Disable".                                                   **
+; ** V1.09 - 12/29/99	Spenser												**
+; **		Modified to meet WIN2000 INF Spec.								**
+; ** V1.10 - 01/20/2000	Spenser
+; **		Modified [SourceDisksFiles] to meet InfCatReady.exe
+; ** V1,11 - 05/03/2000 Spenser
+; ** V1.12 - 11/30/2000 Spesner
+; ****************************************************************************/
+
+[version]
+Signature   = "$Chicago$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_DSI%
+DriverVer   = 07/25/2001, 1.25.01.0725
+CatalogFile = pro200wl.cat
+
+[Manufacturer]
+%V_CNET% = CNET
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_1282&DEV_9102&SUBSYS_434E4554, \
+                    PCI\VEN_1282&DEV_9102&SUBSYS_50323030
+
+[CNET]
+; DisplayName           Section       DeviceID
+; -----------           -------       --------
+%DM9102.DeviceDesc%  = DM9102.ndi,    PCI\VEN_1282&DEV_9102&SUBSYS_434E4554
+%PRO200.DeviceDesc%  = PRO200.ndi,    PCI\VEN_1282&DEV_9102&SUBSYS_50323030
+
+;=============================================================================
+;
+; WIN9x
+;
+;=============================================================================
+[DM9102.ndi]
+AddReg    = DM9102.id.reg, 9102.pci.reg, DM9102.con.reg, DM9.win.reg, DriverInfoReg
+CopyFiles = dm9pci.win.CopyFiles, dm9ndi.dll.CopyFiles, 9102.ndis2.CopyFiles
+
+
+;=============================================================================
+;
+; WINNT specific entry
+;
+;=============================================================================
+[DM9102.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = DM9102.id.reg, DM9PCI.reg, 9102.pci.reg, DM9102.con.reg, DriverInfoReg
+CopyFIles       = DM9PCI.CopyFiles, DM9PCI.DLL.CopyFiles
+
+[DM9102.ndi.NT.Services]
+AddService = DM9102, 2, DM9102.Service, common.EventLog
+
+;=====================
+; PRO200
+;=====================
+[PRO200.ndi]
+AddReg    = DM9102.id.reg, P200.pci.reg, DM9102.con.reg, DM9.win.reg
+CopyFiles = dm9pci.win.CopyFiles, dm9ndi.dll.CopyFiles, 9102.ndis2.CopyFiles
+[PRO200.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = DM9102.id.reg, DM9PCI.reg, P200.pci.reg, DM9102.con.reg
+CopyFIles       = DM9PCI.CopyFiles, DM9PCI.DLL.CopyFiles
+[PRO200.ndi.NT.Services]
+AddService = DM9102, 2, PRO200.Service, common.EventLog
+
+
+[DM9PCI.CopyFiles]
+DM9PCI5.SYS,,,2
+
+[DM9PCI.DLL.CopyFiles]
+DM9Inst.DLL,,,2
+
+;=============================================================================
+;
+; Win9x id registry sections
+; These are not needed by NT
+;
+;=============================================================================
+
+[DM9102.id.reg]
+HKR, Ndi, DeviceID, 0, "PCI\VEN_1282&DEV_9102"
+HKR,,AdapterPCIID,0,"91021282"
+
+;=============================================================================
+;
+; Win9x flags section
+; Flags are not needed by NT
+;
+;=============================================================================
+;****************************************************************************
+; PCI common parameters
+;****************************************************************************
+
+[9102.pci.reg]
+;params
+HKR,                            , AdapterType, 0,"5"
+HKR,                            , BusType,     0,"5"            ;; PCI
+;HKR,				, PnPCapabilities,0x00010001, "0x20"
+
+;StoreAndForward
+HKR, Ndi\params\StoreAndForward,     ParamDesc, 0,"Store And Forward"
+HKR, Ndi\params\StoreAndForward,       default, 0,"1"
+HKR, Ndi\params\StoreAndForward,          type, 0,"enum"
+HKR, Ndi\params\StoreAndForward\enum,        0, 0,"Disabled"
+HKR, Ndi\params\StoreAndForward\enum,        1, 0,"Enabled"
+;Windows 2000 does not support Ndi\Params\param-key-name\flag values.
+;HKR,NDI\params\StoreAndForward,flag,1,20,00,00,00
+
+;Transmit Threshold
+HKR, Ndi\params\TransmitThreshold,   ParamDesc,,"Transmit Threshold"
+HKR, Ndi\params\TransmitThreshold,     default, 0,"200"
+HKR, Ndi\params\TransmitThreshold,        type, 0,"enum"
+HKR, Ndi\params\TransmitThreshold\enum,     48, 0,"  72 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     60, 0,"  96 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     80, 0," 128 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     A0, 0," 160 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    100, 0," 256 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    200, 0," 512 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    400, 0,"1024 bytes"
+;HKR,NDI\params\TransmitThreshold,flag, 1,20,00,00,00
+
+;ACPI Enable/Disable
+HKR,Ndi\params\ACPIEnable,ParamDesc,,"PME"
+HKR,Ndi\params\ACPIEnable,default,,"0"
+HKR,Ndi\params\ACPIEnable,type,,"enum"
+HKR,Ndi\params\ACPIEnable\enum,0,,"Disabled"
+HKR,Ndi\params\ACPIEnable\enum,1,,"Link Change" 
+HKR,Ndi\params\ACPIEnable\enum,2,,"Magic Packet"
+HKR,Ndi\params\ACPIEnable\enum,3,,"Pattern Match"
+HKR,Ndi\params\ACPIEnable\enum,4,,"ALL"
+;HKR,NDI\params\ACPIEnable,flag,1,20,00,00,00
+
+[DM9102.con.reg]
+;ConnectionType
+HKR, Ndi\params\ConnectionType,      ParamDesc,  0,"Connection Type"
+HKR, Ndi\params\ConnectionType,      default,    0,"0"
+HKR, Ndi\params\ConnectionType,      type,       0,"enum"
+HKR, Ndi\params\ConnectionType\enum, 0,          0,"AutoSense"
+HKR, Ndi\params\ConnectionType\enum, 2,          0,"100Mbps"
+HKR, Ndi\params\ConnectionType\enum, 4,          0,"100Mbps Full_Duplex"
+HKR, Ndi\params\ConnectionType\enum, 1,          0,"10Mbps"
+HKR, Ndi\params\ConnectionType\enum, 3,          0,"10Mbps Full_Duplex"
+;HKR, NDI\params\ConnectionType,      flag,      1,20,00,00,00
+
+;===================
+; PRO200
+;===================
+[P200.pci.reg]
+;params
+HKR,                            , AdapterType, 0,"5"
+HKR,                            , BusType,     0,"5"            ;; PCI
+
+;StoreAndForward
+HKR, Ndi\params\StoreAndForward,     ParamDesc, 0,"Store And Forward"
+HKR, Ndi\params\StoreAndForward,       default, 0,"1"
+HKR, Ndi\params\StoreAndForward,          type, 0,"enum"
+HKR, Ndi\params\StoreAndForward\enum,        0, 0,"Disabled"
+HKR, Ndi\params\StoreAndForward\enum,        1, 0,"Enabled"
+;Windows 2000 does not support Ndi\Params\param-key-name\flag values.
+;HKR,NDI\params\StoreAndForward,flag,1,20,00,00,00
+
+;Transmit Threshold
+HKR, Ndi\params\TransmitThreshold,   ParamDesc,,"Transmit Threshold"
+HKR, Ndi\params\TransmitThreshold,     default, 0,"200"
+HKR, Ndi\params\TransmitThreshold,        type, 0,"enum"
+HKR, Ndi\params\TransmitThreshold\enum,     48, 0,"  72 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     60, 0,"  96 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     80, 0," 128 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     A0, 0," 160 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    100, 0," 256 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    200, 0," 512 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    400, 0,"1024 bytes"
+;HKR,NDI\params\TransmitThreshold,flag, 1,20,00,00,00
+
+
+;=============================================================================
+;
+; DM9102 NT specific
+;
+;=============================================================================
+
+[DM9PCI.reg]
+;HKR, Ndi,                       Service,    0, "DM9PCI"
+HKR, Ndi,                       Service,    0, "DM9102"
+; use ndis5 as the upper bound because NT supports it
+HKR, Ndi\Interfaces,            DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,            DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+HKR, ,  CoInstallers32, 0x00010000, "DM9Inst.dll, DM9InstProc"
+
+[DM9102.Service]
+DisplayName     = %DM9PCI.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\DM9PCI5.SYS
+LoadOrderGroup  = NDIS
+
+;====================
+; PRO200
+;====================
+[PRO200.Service]
+DisplayName     = %PRO200.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\DM9PCI5.SYS
+LoadOrderGroup  = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+;=============================================================================
+;
+; DM9102 Win9x specific
+;
+;=============================================================================
+[DM9.win.reg]
+HKR, ,              DevLoader,          0, "*ndis"
+
+HKR, NDIS,          LogDriverName,      0, "DM9PCI"
+HKR, NDIS,          MajorNdisVersion,   1, 03
+HKR, NDIS,          MinorNdisVersion,   1, 0A
+HKR, NDIS\NDIS2,        DriverName,                      ,"DM9PCI$"
+HKR, NDIS\NDIS2,        FileName,                        ,"DM9PCI.dos"
+
+HKR, ,              EnumPropPages,      0, "netdi.dll,EnumPropPages"
+HKR,Ndi,NdiInstaller,                    , "DM9ndi.dll,DM9NdiProc"
+; memphis appears to not support the ndis5 upper range, so use ndis3
+HKR, Ndi\Interfaces,DefUpper,           0, "ndis3,ndis2"
+HKR, Ndi\Interfaces,DefLower,           0, "ethernet"
+HKR, Ndi\Interfaces,UpperRange,         0, "ndis3,ndis2"
+HKR, Ndi\Interfaces,LowerRange,         0, "ethernet"
+HKR,                            ,WIN98Timer,   0,"1"
+
+;=============================================================================
+;
+;Ndis driver selection
+;
+;=============================================================================
+HKR,Ndi\params\NdisVersion,ParamDesc,,"NDIS Version"
+HKR,Ndi\params\NdisVersion,default,,0
+HKR,Ndi\params\NdisVersion,type,,enum
+HKR,Ndi\params\NdisVersion\enum,0,,"Auto Selection"
+HKR,NDI\params\NdisVersion,flag,1,20,00,00,00
+
+;=============================================================================
+;
+;DriverInfoReg
+;
+;=============================================================================
+[DriverInfoReg]
+HKLM,Software\InstallOptions\%DriverOEM%\%DriverFamily%\%DriverMfgr%\%DriverProduct%,Description,,%DriverDescription%
+HKLM,Software\InstallOptions\%DriverOEM%\%DriverFamily%\%DriverMfgr%\%DriverProduct%,CurrentVer,,%DriverOEMVersion%
+HKLM,Software\InstallOptions\%DriverOEM%\%DriverFamily%\%DriverMfgr%\%DriverProduct%,Ver_%DriverOEMVersion%,,%DriverVersionID%
+HKLM,Software\InstallOptions\%DriverOEM%\%DriverFamily%\%DriverMfgr%\%DriverProduct%,BaseDriverFileName,,%BaseDriverFileName%
+HKLM,Software\InstallOptions\%DriverOEM%\%DriverFamily%\%DriverMfgr%\%DriverProduct%,BaseDriverFileVersion,,%BaseDriverFileVersion%
+
+;=============================================================================
+;
+; DestinationDirs
+;
+;=============================================================================
+[dm9pci.win.CopyFiles]
+DM9PCI5.SYS
+DM9PCI4.SYS
+DM9PCI3.SYS
+
+[dm9ndi.dll.CopyFiles]
+dm9ndi.dll
+
+;[dm9pci.inf.CopyFiles]
+;netdm.inf
+
+; Install NDIS2
+;[9102.ndis2]
+;CopyFiles=9102.ndis2.CopyFiles
+
+[9102.ndis2.CopyFiles]
+DM9PCI.dos
+
+[DestinationDirs]
+DefaultDestDir       =          12
+DM9PCI.CopyFiles     =          12
+DM9PCI.DLL.CopyFiles =          11
+dm9pci.win.CopyFiles =          11
+dm9ndi.dll.CopyFiles =          11
+9102.ndis2.CopyFiles =          10 ; LDID_WINBOOT;26
+;dm9pci.inf.CopyFiles =          17 ; LDID_INF
+
+[SourceDisksNames]
+50=%DISK_NAME%,,,
+
+[SourceDisksFiles]
+DM9PCI5.sys = 50
+DM9Inst.dll = 50
+DM9PCI4.sys = 50
+DM9PCI3.sys = 50
+DM9NDI.dll  = 50
+DM9PCI.DOS  = 50
+
+[Strings]
+V_DSI    = "DAVICOM"
+DM9102.DeviceDesc    = "CNet PRO200WL PCI Fast Ethernet Adapter           "
+PRO200.DeviceDesc    = "CNet PRO200 PCI Fast Ethernet Adapter           "
+
+DM9PCI.Service.DispName = "CNet PRO200WL PCI Fast Ethernet NT Driver    "
+PRO200.Service.DispName = "CNet PRO200 PCI Fast Ethernet NT Driver    "
+
+V_CNET = "CNet Technology, Inc."
+DISK_NAME = "CNet PCI Fast Ethernet Drivers Disk  "
+
+DriverOEM               = "Dell"
+DriverMfgr              = "CNet Technology, Inc."
+DriverVersionID         = "1.46"
+DriverFamily            = "NIC"
+DriverProduct           = "CNet PRO200WL PCI Fast Ethernet Adapter"
+DriverDescription       = "NDIS 3/4/5 drivers for CNet PRO200WL PCI Fast Ethernet Adapter"
+DriverOEMVersion        = "1.46"
+BaseDriverFileName      = "DM9PCIx.SYS"
+BaseDriverFileVersion   = "1.46"
+

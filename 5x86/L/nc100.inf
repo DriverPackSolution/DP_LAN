@@ -1,0 +1,486 @@
+;=============================================================================
+;
+;  Win98 & 2000 Setup INF for "Network Everywhere Fast Ethernet Adapter(NC100 v2)"
+;
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Msft%
+LayoutFile  = layout.inf
+CatalogFile = nc100.cat
+DriverVer       = 12/22/1999, 1.00.00.00
+
+[Manufacturer]
+%V_NC100%=NC100
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_10D9&DEV_0531
+ExcludeFromSelect = PCI\VEN_11AD&DEV_C115
+ExcludeFromSelect = PCI\VEN_1317&DEV_0985
+ExcludeFromSelect = PCI\VEN_1317&DEV_1985
+ExcludeFromSelect = PCI\VEN_1011&DEV_0009
+ExcludeFromSelect = PCI\VEN_1011&DEV_0019
+
+[NC100]
+%NC100.DeviceDesc% =    NC100.ndi,      PCI\VEN_10D9&DEV_0531  
+%MX98715.DeviceDesc% =  MX98715.ndi,    PCI\VEN_11AD&DEV_C115  
+%NC100A.DeviceDesc% =   NC100A.ndi,     PCI\VEN_1317&DEV_0985  
+%AN985.DeviceDesc% =    AN985.ndi,      PCI\VEN_1317&DEV_1985  
+%DEC21140.DeviceDesc% = DEC21140.ndi,   PCI\VEN_1011&DEV_0009  
+%DEC21143.DeviceDesc% = DEC21143.ndi,   PCI\VEN_1011&DEV_0019  
+
+
+;*******************************************************************************
+;  windows 98
+;[NC100.Ndi]
+;AddReg=NC100.Reg,common.pci.reg, NC100.con.reg
+
+;[MX98715.Ndi]
+;AddReg=MX98715.Reg,common.pci.reg, NC100.con.reg
+
+;[NC100A.Ndi]
+;AddReg=NC100A.Reg,common.pci.reg, NC100A.con.reg
+
+;[AN985.Ndi]
+;AddReg=AN985.Reg,common.pci.reg, NC100A.con.reg
+
+;[DEC21140.Ndi]
+;AddReg=DEC21140.Reg,common.pci.reg, DEC.con.reg
+
+;[DEC21143.Ndi]
+;AddReg=DEC21143.Reg,common.pci.reg, DEC.con.reg
+
+;********************************************************************
+; windows 2000
+[NC100.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = NC100.ndi.reg, common.ndi.reg, common.pci.reg, NC100.con.reg
+CopyFiles       = NC100.Install.CopyFiles
+Renfiles        = sys.Install.Rename, inf.Install.Rename
+
+[MX98715.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = MX98715.ndi.reg, common.ndi.reg, common.pci.reg, NC100.con.reg
+CopyFiles       = NC100.Install.CopyFiles
+Renfiles        = sys.Install.Rename, inf.Install.Rename
+
+;[NC100A.ndi.NT]
+;Characteristics = 0x84
+;BusType         = 5
+;AddReg          = NC100A.ndi.reg, common.ndi.reg, common.pci.reg, NC100A.con.reg
+;CopyFiles       = NC100A.Install.CopyFiles, Common.Install.CopyFiles
+
+;[AN985.ndi.NT]
+;Characteristics = 0x84
+;BusType         = 5
+;AddReg          = AN985.ndi.reg, common.ndi.reg, common.pci.reg, NC100A.con.reg
+;CopyFiles       = NC100A.Install.CopyFiles, Common.Install.CopyFiles
+;Renfiles        = sys.Install.Rename, inf.Install.Rename
+
+;[DEC21140.ndi.NT]
+;Characteristics = 0x84
+;BusType         = 5
+;AddReg          = DEC21140.ndi.reg, common.ndi.reg, common.pci.reg, DEC.con.reg
+;CopyFiles       = NC100A.Install.CopyFiles, Common.Install.CopyFiles
+;Renfiles        = sys.Install.Rename, inf.Install.Rename
+
+;[DEC21143.ndi.NT]
+;Characteristics = 0x84
+;BusType         = 5
+;AddReg          = DEC21143.ndi.reg, common.ndi.reg, common.pci.reg, DEC.con.reg
+;CopyFiles       = NC100A.Install.CopyFiles, Common.Install.CopyFiles
+;Renfiles        = sys.Install.Rename, inf.Install.Rename
+;***************************************************************************
+; windows 98
+;[NC100.Reg]
+;HKR,NDI,DeviceID,,"PCI\VEN_10D9&DEV_0531"
+
+;HKR,,AdapterCFID,,053110D9
+;HKR,,AdapterType,,5
+;HKR,,BusType,,5
+
+;HKR,,DevLoader,,*ndis
+;HKR,,DeviceVxDs,,NC100.sys
+
+; NDIS Info
+;HKR,NDIS,MajorNdisVersion,1,04
+;HKR,NDIS,MinorNdisVersion,1,00
+;HKR,NDIS,LogDriverName,,"NC100"
+
+; Interfaces
+;HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+;HKR,Ndi\Interfaces,DefLower,,"ethernet"
+;HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+;HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+;HKR,Ndi\Install,ndis3,,"NC100.Install"
+
+;[MX98715.Reg]
+;HKR,NDI,DeviceID,,"PCI\VEN_11AD&DEV_C115"
+;HKR,,AdapterCFID,,C11511AD
+;HKR,,AdapterType,,5
+;HKR,,BusType,,5
+
+;HKR,,DevLoader,,*ndis
+;HKR,,DeviceVxDs,,NC100.sys
+
+; NDIS Info
+;HKR,NDIS,MajorNdisVersion,1,04
+;HKR,NDIS,MinorNdisVersion,1,00
+;HKR,NDIS,LogDriverName,,"NC100"
+
+; Interfaces
+;HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+;HKR,Ndi\Interfaces,DefLower,,"ethernet"
+;HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+;HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+;HKR,Ndi\Install,ndis3,,"NC100.Install"
+
+;[NC100A.Reg]
+;HKR,NDI,DeviceID,,"PCI\VEN_1317&DEV_0985"
+
+;HKR,,AdapterCFID,,09851317
+;HKR,,AdapterType,,5
+;HKR,,BusType,,5
+
+;HKR,,DevLoader,,*ndis
+;HKR,,DeviceVxDs,,NC100A.sys
+
+; NDIS Info
+;HKR,NDIS,MajorNdisVersion,1,04
+;HKR,NDIS,MinorNdisVersion,1,00
+;HKR,NDIS,LogDriverName,,"NC100"
+
+; Interfaces
+;HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+;HKR,Ndi\Interfaces,DefLower,,"ethernet"
+;HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+;HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+;HKR,Ndi\Install,ndis3,,"NC100A.Install"
+
+;[AN985.Reg]
+;HKR,NDI,DeviceID,,"PCI\VEN_1317&DEV_1985"
+
+;HKR,,AdapterCFID,,19851317
+;HKR,,AdapterType,,5
+;HKR,,BusType,,5
+
+;HKR,,DevLoader,,*ndis
+;HKR,,DeviceVxDs,,NC100A.sys
+
+; NDIS Info
+;HKR,NDIS,MajorNdisVersion,1,04
+;HKR,NDIS,MinorNdisVersion,1,00
+;HKR,NDIS,LogDriverName,,"NC100"
+
+; Interfaces
+;HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+;HKR,Ndi\Interfaces,DefLower,,"ethernet"
+;HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+;HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+;HKR,Ndi\Install,ndis3,,"NC100A.Install"
+
+;[DEC21140.Reg]
+;HKR,NDI,DeviceID,,"PCI\VEN_1011&DEV_0009"
+
+;HKR,,AdapterCFID,,00091011
+;HKR,,AdapterType,,5
+;HKR,,BusType,,5
+
+;HKR,,DevLoader,,*ndis
+;HKR,,DeviceVxDs,,NC100A.sys
+
+; NDIS Info
+;HKR,NDIS,MajorNdisVersion,1,04
+;HKR,NDIS,MinorNdisVersion,1,00
+;HKR,NDIS,LogDriverName,,"NC100"
+
+; Interfaces
+;HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+;HKR,Ndi\Interfaces,DefLower,,"ethernet"
+;HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+;HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+;HKR,Ndi\Install,ndis3,,"NC100A.Install"
+
+
+;[DEC21143.Reg]
+;HKR,NDI,DeviceID,,"PCI\VEN_1011&DEV_0019"
+
+;HKR,,AdapterCFID,,00191011
+;HKR,,AdapterType,,5
+;HKR,,BusType,,5
+
+;HKR,,DevLoader,,*ndis
+;HKR,,DeviceVxDs,,NC100A.sys
+
+; NDIS Info
+;HKR,NDIS,MajorNdisVersion,1,04
+;HKR,NDIS,MinorNdisVersion,1,00
+;HKR,NDIS,LogDriverName,,"NC100"
+
+; Interfaces
+;HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+;HKR,Ndi\Interfaces,DefLower,,"ethernet"
+;HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+;HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+;HKR,Ndi\Install,ndis3,,"NC100A.Install"
+;-----------------------------------------------------------------------------
+; NC100 specific
+; windows 2000
+[NC100.ndi.reg]
+HKR, ,                                      AdapterCFID,    0, "053110D9"
+
+[MX98715.ndi.reg]
+HKR, ,                                      AdapterCFID,    0, "C11511AD"
+
+[NC100A.ndi.reg]
+HKR, ,                                      AdapterCFID,    0, "09851317"
+
+[AN985.ndi.reg]
+HKR, ,                                      AdapterCFID,    0, "19851317"
+
+[DEC21140.ndi.reg]
+HKR, ,                                      AdapterCFID,    0, "00091011"
+
+[DEC21143.ndi.reg]
+HKR, ,                                      AdapterCFID,    0, "00191011"
+;-----------------------------------------------------------------------------
+; common  driver parameters(WIN2000)
+;
+[common.ndi.reg]
+HKR, Ndi,                                   Service,        0, "NC100"
+HKR, Ndi\Interfaces,                        LowerRange,     0, "ethernet"
+HKR, Ndi\Interfaces,                        UpperRange,     0, "ndis5"
+HKR, ,                                      MediaType,      0, "0"
+
+
+;-----------------------------------------------------------------------------
+; PCI common parameters(WIN2000&WIN98)
+;
+[common.pci.reg]
+HKR, ,                                      AdapterType,    0, "5"
+
+HKR,,TxPacketDesc,,75       ; 0x32
+HKR,,RxPacketDesc,,120      ; 0x78
+HKR,,TxDmaDesc,,150         ; 0x1d
+HKR,,RxDmaDesc,,40          ; 0x28
+HKR,,PacketsPerTxInt,,10    ; 0x0a
+HKR,,PacketsPerRxInd,,10    ; 0x0a
+HKR,,BurstLength,,0         ; 0 (Unlimited), 1 DW, 2 DW, 3 DW, ...
+
+
+[NC100.con.reg]
+HKR, Ndi\params\ConnectionType,              ParamDesc,, "Connection Type"
+HKR, Ndi\params\ConnectionType,              default,  , "0"
+HKR, Ndi\params\ConnectionType,              type,     , enum
+HKR, Ndi\params\ConnectionType\enum,         0,        , "Auto Negotiate"
+HKR, Ndi\params\ConnectionType\enum,         1,        , "100 Mbps Full Duplex"
+HKR, Ndi\params\ConnectionType\enum,         2,        , "100 Mbps"
+HKR, Ndi\params\ConnectionType\enum,         3,        , "10 Mbps Full Duplex"
+HKR, Ndi\params\ConnectionType\enum,         4,        , "10 Mbps"
+
+[NC100A.con.reg]
+HKR,Ndi\Params\MediaType,ParamDesc,,"Media Type"
+HKR,Ndi\Params\MediaType,default,,0
+HKR,Ndi\Params\MediaType,type,,enum
+HKR,Ndi\Params\MediaType\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaType\enum,1,,"10BaseT"
+HKR,Ndi\Params\MediaType\enum,2,,"10BaseT Full_Duplex"
+HKR,Ndi\Params\MediaType\enum,3,,"100BaseTX"
+HKR,Ndi\Params\MediaType\enum,4,,"100BaseTX Full_Duplex"
+HKR,Ndi\Params\MediaType,flag,1,20,00,00,00
+
+HKR,Ndi\Params\LinkOnChange,ParamDesc,,"Link-On Change"
+HKR,Ndi\Params\LinkOnChange,default,,1
+HKR,Ndi\Params\LinkOnChange,type,,enum
+HKR,Ndi\Params\LinkOnChange\enum,0,,"Disabled"
+HKR,Ndi\Params\LinkOnChange\enum,1,,"Enabled"
+HKR,Ndi\Params\LinkOnChange,flag,1,20,00,00,00
+
+HKR,Ndi\Params\LinkOffChange,ParamDesc,,"Link-Off Change"
+HKR,Ndi\Params\LinkOffChange,default,,0
+HKR,Ndi\Params\LinkOffChange,type,,enum
+HKR,Ndi\Params\LinkOffChange\enum,0,,"Disabled"
+HKR,Ndi\Params\LinkOffChange\enum,1,,"Enabled"
+HKR,Ndi\Params\LinkOffChange,flag,1,20,00,00,00
+
+HKR,Ndi\Params\MagicPacket,ParamDesc,,"Magic Packet Wakeup"
+HKR,Ndi\Params\MagicPacket,default,,1
+HKR,Ndi\Params\MagicPacket,type,,enum
+HKR,Ndi\Params\MagicPacket\enum,0,,"Disabled"
+HKR,Ndi\Params\MagicPacket\enum,1,,"Enabled"
+HKR,Ndi\Params\MagicPacket,flag,1,20,00,00,00
+
+
+[DEC.con.reg]
+HKR,Ndi\Params\MediaType,ParamDesc,,"Media Type"
+HKR,Ndi\Params\MediaType,default,,0
+HKR,Ndi\Params\MediaType,type,,enum
+HKR,Ndi\Params\MediaType\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaType\enum,1,,"10BaseT"
+HKR,Ndi\Params\MediaType\enum,2,,"10BaseT Full_Duplex"
+HKR,Ndi\Params\MediaType\enum,3,,"100BaseTX"
+HKR,Ndi\Params\MediaType\enum,4,,"100BaseTX Full_Duplex"
+HKR,Ndi\Params\MediaType,flag,1,20,00,00,00
+
+
+[SourceDisksNames]
+50="NC100 10/100 Fast Ethernet Adapter Driver Diskette",,0
+
+
+[SourceDisksFiles]
+NC100.sys=50,,NC100.sys,10000
+;NC100A.sys=50,,NC100A.sys,10000
+NC100.inf=50,,NC100.inf,10000
+NC100.cat=50,,NC100.cat, 1000
+
+;; WINDOWS 98
+;[NC100.Install]     
+;CopyFiles=CopyFile.Inf,CopyFile.Sys
+
+;[NC100A.Install]    
+;CopyFiles=CopyFile.Inf,CopyFileA.Sys
+
+[CopyFile.Inf]
+NC100.inf
+
+[CopyFile.Sys]
+NC100.sys
+
+;[CopyFileA.Sys]
+;NC100A.sys
+
+
+;; WINDOWS 2000
+[NC100.Install.CopyFiles]
+NC100.sys,,,2
+
+;[NC100A.Install.CopyFiles]
+;NC100A.sys,,,2
+
+[Common.Install.CopyFiles]
+NC100.inf,,,2
+
+
+;;WINDOWS 2000
+[NC100.ndi.NT.Services]
+AddService = NC100, 2, NC100.Service, common.EventLog
+
+[MX98715.ndi.NT.Services]
+AddService = NC100, 2, MX98715.Service, common.EventLog
+
+[NC100A.ndi.NT.Services]
+AddService = NC100, 2, NC100A.Service, common.EventLog
+
+[AN985.ndi.NT.Services]
+AddService = NC100, 2, AN985.Service, common.EventLog
+
+[DEC21140.ndi.NT.Services]
+AddService = NC100, 2, DEC21140.Service, common.EventLog
+
+[DEC21143.ndi.NT.Services]
+AddService = NC100, 2, DEC21143.Service, common.EventLog
+
+[NC100.Service]
+DisplayName     = %NC100.DeviceDesc%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\NC100.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[MX98715.Service]
+DisplayName     = %MX98715.DeviceDesc%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\NC100.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+;[NC100A.Service]
+;DisplayName     = %NC100A.ServiceDeviceDesc%
+;ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+;StartType       = 3 ;%SERVICE_AUTO_START%
+;ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+;ServiceBinary   = %12%\NC100A.sys
+;LoadOrderGroup  = NDIS
+;AddReg          = TextModeFlags.reg
+
+;[AN985.Service]
+;DisplayName     = %AN985.DeviceDesc%
+;ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+;StartType       = 3 ;%SERVICE_AUTO_START%
+;ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+;ServiceBinary   = %12%\NC100A.sys
+;LoadOrderGroup  = NDIS
+;AddReg          = TextModeFlags.reg
+
+;[DEC21140.Service]
+;DisplayName     = %DEC21140.DeviceDesc%
+;ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+;StartType       = 3 ;%SERVICE_AUTO_START%
+;ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+;ServiceBinary   = %12%\NC100A.sys
+;LoadOrderGroup  = NDIS
+;AddReg          = TextModeFlags.reg
+
+;[DEC21143.Service]
+;DisplayName     = %DEC21143.DeviceDesc%
+;ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+;StartType       = 3 ;%SERVICE_AUTO_START%
+;ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+;ServiceBinary   = %12%\NC100A.sys
+;LoadOrderGroup  = NDIS
+;AddReg          = TextModeFlags.reg
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+;;WINDOWS 2000
+NC100.Install.CopyFiles = 12
+;NC100A.Install.CopyFiles = 12
+INF.Install.CopyFiles = 17
+;;WINDOWS 98
+;CopyFile.Sys=11
+;CopyFileA.Sys=11
+;CopyFile.Inf=17
+
+[Strings]
+Msft="Microsoft"
+V_NC100="Network Everywhere"
+
+NC100.DeviceDesc        = "Network Everywhere Fast Ethernet Adapter(NC100)"
+MX98715.DeviceDesc      = "Network Everywhere Fast Ethernet Adapter(NC100)"
+NC100A.DeviceDesc       = "Network Everywhere Fast Ethernet Adapter(NC100 v2)"
+NC100A.ServiceDeviceDesc= "Network Everywhere Fast Ethernet Adapter(NC100 v2)"
+DEC21140.DeviceDesc     = "PCI 10/100 Fast Ethernet Adapter(DEC21140)"
+DEC21143.DeviceDesc     = "PCI 10/100 Fast Ethernet Adapter(DEC21143)"

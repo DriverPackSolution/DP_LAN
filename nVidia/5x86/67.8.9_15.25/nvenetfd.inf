@@ -1,0 +1,595 @@
+;/***************************************************************************\
+;|*                                                                           *|
+;|*         Copyright 2001-2008 NVIDIA, Corporation.  All rights reserved.    *|
+;|*                                                                           *|
+;|*     THE INFORMATION CONTAINED HEREIN  IS PROPRIETARY AND CONFIDENTIAL     *|
+;|*     TO NVIDIA, CORPORATION.   USE,  REPRODUCTION OR DISCLOSURE TO ANY     *|
+;|*     THIRD PARTY IS SUBJECT TO WRITTEN PRE-APPROVAL BY NVIDIA, CORP.       *|
+;|*                                                                           *|
+;|*     THE INFORMATION CONTAINED HEREIN IS PROVIDED  "AS IS" WITHOUT         *|
+;|*     EXPRESS OR IMPLIED WARRANTY OF ANY KIND, INCLUDING ALL IMPLIED        *|
+;|*     WARRANTIES OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A     *|
+;|*     PARTICULAR PURPOSE.                                                   *|
+;|*                                                                           *|
+;\***************************************************************************/
+
+[version]
+Class       = Net
+ClassGUID   = {4D36E972-E325-11CE-BFC1-08002BE10318}
+Signature   = "$Chicago$"
+Compatible  = 1
+CatalogFile = NVENETFD.CAT
+Provider    = %Nvidia%
+DriverVer = 08/01/2008, 67.8.9
+
+
+[Manufacturer]
+%Nvidia%       = Nvidia,NTx86.5.1
+
+
+[ControlFlags]
+ExcludeFromSelect = {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0057,\
+                    {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0269,\
+                    {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0373,\
+                    {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV03EF,\
+                    {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0450,\
+                    {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV054C,\
+                    {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV07DC,\
+                    {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0760,\
+                    {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0AB0
+                    
+[Nvidia]
+%NVENET.DeviceDesc%  =  NVENET_2kNPR.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0057
+%NVENET.DeviceDesc%  =  NVENET_2k51.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0269
+%NVENET.DeviceDesc%  =  NVENET_2K55.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0373
+%NVENET.DeviceDesc%  =  NVENET_2k61.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV03EF
+%NVENET.DeviceDesc%  =  NVENET_2K65.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0450
+%NVENET.DeviceDesc%  =  NVENET_2K67.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV054C
+%NVENET.DeviceDesc%  =  NVENET_2k73.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV07DC
+%NVENET.DeviceDesc%  =  NVENET_2k77.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0760
+%NVENET.DeviceDesc%  =  NVENET_2k79.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0AB0
+
+[Nvidia.NTx86.5.1]
+%NVENET.DeviceDesc%  =  NVENET_XPNPR.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0057
+%NVENET.DeviceDesc%  =  NVENET_XP51.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0269
+%NVENET.DeviceDesc%  =  NVENET_XP55.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0373
+%NVENET.DeviceDesc%  =  NVENET_XP61.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV03EF
+%NVENET.DeviceDesc%  =  NVENET_XP65.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0450
+%NVENET.DeviceDesc%  =  NVENET_XP67.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV054C
+%NVENET.DeviceDesc%  =  NVENET_XP73.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV07DC
+%NVENET.DeviceDesc%  =  NVENET_XP77.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0760
+%NVENET.DeviceDesc%  =  NVENET_XP79.NDI,  {1a3e09be-1e45-494b-9174-d7385b45bbf5}\NVNET_DEV0AB0
+
+[NVENET_XPNPR.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,       JumboFrameSize.reg,           \
+                  ChecksumOffload.reg,  SegOffload.reg,         LowPowerStateLinkSpeed.reg,   \
+                  BasicFlowControl.reg, Support.reg
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2KNPR.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,        JumboFrameSize.reg,          \
+                  ChecksumOffload.reg,  SegOffload.reg,          LowPowerStateLinkSpeed.reg,  \
+                  BasicFlowControl.reg, Support.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+
+[NVENET_XP51.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,         LowPowerStateLinkSpeed.reg,  \
+                  BasicFlowControl.reg, Support.reg            
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2K51.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,         LowPowerStateLinkSpeed.reg,   \
+                  BasicFlowControl.reg, Support.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+
+[NVENET_XP55.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,       JumboFrameSize.reg,           \
+                  ChecksumOffload.reg,  SegOffload.reg,         LowPowerStateLinkSpeed.reg,   \
+                  FlowControl.reg,      Support1.reg
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2K55.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,        JumboFrameSize.reg,          \
+                  ChecksumOffload.reg,  SegOffload.reg,          LowPowerStateLinkSpeed.reg,  \
+                  FlowControl.reg,      Support1.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+[NVENET_XP61.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,         LowPowerStateLinkSpeed.reg,  \
+                  FlowControl.reg,      Support.reg,              PhyReset.reg
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2K61.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,         LowPowerStateLinkSpeed.reg,   \
+                  FlowControl.reg,      Support.reg,              PhyReset.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+
+
+[NVENET_XP65.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,          JumboFrameSize.reg,          \
+                  LowPowerStateLinkSpeed.reg,                                                   \
+                  FlowControl.reg,      Support.reg,               PhyReset.reg
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2K65.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,          JumboFrameSize.reg,          \
+                  LowPowerStateLinkSpeed.reg,                                                   \
+                  FlowControl.reg,      Support.reg,               PhyReset.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+[NVENET_XP67.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,       LowPowerStateLinkSpeed.reg,   \
+                  FlowControl.reg,      Support.reg
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2K67.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,        LowPowerStateLinkSpeed.reg,  \
+                  FlowControl.reg,      Support.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+[NVENET_XP73.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,         LowPowerStateLinkSpeed.reg,  \
+                  FlowControl.reg,      Support.reg,              PhyReset.reg
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2K73.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,         LowPowerStateLinkSpeed.reg,   \
+                  FlowControl.reg,      Support.reg,              PhyReset.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+[NVENET_XP77.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,         ChecksumOffload.reg,          \
+                  SegOffload.reg,       LowPowerStateLinkSpeed.reg, FlowControl.reg,            \
+                  Support.reg,          PhyReset.reg
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2K77.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,         ChecksumOffload.reg,          \
+                  SegOffload.reg,       LowPowerStateLinkSpeed.reg, FlowControl.reg,            \
+                  Support.reg,          PhyReset.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+[NVENET_XP79.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_XP.reg,        SpeedSetting.reg,         JumboFrameSize.reg,          \
+                  ChecksumOffload.reg,  SegOffload.reg,           LowPowerStateLinkSpeed.reg,  \
+                  FlowControl.reg,      Support.reg,              PhyReset.reg
+CopyFiles       = NVENET_XP.CopyFiles
+
+[NVENET_2K79.NDI.nt]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 1                     ; Pretend ISA
+AddReg          = NVENET_2K.reg,        SpeedSetting.reg,         JumboFrameSize.reg,           \
+                  ChecksumOffload.reg,  SegOffload.reg,           LowPowerStateLinkSpeed.reg,   \
+                  FlowControl.reg,      Support.reg,              PhyReset.reg
+CopyFiles       = NVENET_2K.CopyFiles
+
+
+[NVENET_XP.reg]
+HKR, Ndi,                       Service,        0, "NVENETFD"
+HKR, Ndi\Interfaces,            LowerRange,     0, "ethernet"
+HKR, Ndi\Interfaces,            UpperRange,     0, "ndis5"
+HKR, NDIS,          LogDriverName,              0, "NVENETFD"
+HKR, NDIS,          MajorNdisVersion,           1, 05
+HKR, NDIS,          MinorNdisVersion,           1, 01
+HKR, Ndi\Install,   ndis5,                      0, "NVENET.INSTALL"
+
+[NVENET_2K.reg]
+HKR, Ndi,                       Service,        0, "NVENETFD"
+HKR, Ndi\Interfaces,            LowerRange,     0, "ethernet"
+HKR, Ndi\Interfaces,            UpperRange,     0, "ndis5"
+HKR, NDIS,          LogDriverName,              0, "NVENETFD"
+HKR, NDIS,          MajorNdisVersion,           1, 05
+HKR, NDIS,          MinorNdisVersion,           1, 00
+HKR, Ndi\Install,   ndis5,                      0, "NVENET.INSTALL"
+
+    
+
+; DestinationDirs
+[NVENET_XP.CopyFiles]
+NVENETFD.sys,nvefdxp.sys,,2
+
+[NVENET_2K.CopyFiles]
+NVENETFD.sys,nvefd2k.sys,,2
+
+; DestinationDirs
+
+[NVENET_XPNPR.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2KNPR.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_XP51.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2K51.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_XP55.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2K55.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_XP61.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2K61.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_XP65.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2K65.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_XP67.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2K67.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_XP73.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2K73.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_XP77.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2K77.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_XP79.ndi.nt.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+[NVENET_2K79.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENET.Service, common.EventLog
+
+
+[NVENET.Service]
+DisplayName     = %NVENET.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\NVENETFD.sys
+LoadOrderGroup  = NDIS
+
+;-----------------------------------------------------------------------------------------
+; DestinationDirs
+;
+[SourceDisksNames]
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+1 = %DiskId1%, NVENETFD.tag,,
+
+[SourceDisksFiles]
+; filename_on_source = diskID[, [subdir][, size]]
+NVefd2k.sys = 1,,
+nvefdxp.sys = 1,,
+fdco1.dll = 1,,
+
+
+[DestinationDirs]
+NVENET_XP.CopyFiles     = 12
+NVENET_2K.CopyFiles     = 12
+NVENET_CoInstaller_CopyFiles = 11 ; System Dir( system32 on NT )
+
+;-------------- Coinstaller installation
+
+[NVENET_XPNPR.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2KNPR.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_XP51.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2K51.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_XP55.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2K55.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_XP61.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2K61.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_XP65.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2K65.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_XP67.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2K67.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_XP73.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2K73.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_XP77.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2K77.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_XP79.NDI.nt.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_2K79.NDI.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=NVENET_CoInstaller_CopyFiles
+
+[NVENET_CoInstaller_CopyFiles]
+fdco1.dll
+fdco1ins.dll,fdco1.dll
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000,"fdco1ins.dll,FDCoInstaller"
+
+;section used by coinstaller and generates INF checker warning
+[FDCoInfo]
+OriginalInfSourcePath = %1%
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[PhyReset.reg]
+;
+; Phy reset
+;
+HKR, Ndi\params\PhyLPResetEnable,      ParamDesc,  0, "%PhyResetEnable%"
+HKR, Ndi\params\PhyLPResetEnable,      default,    0, "0"
+HKR, Ndi\params\PhyLPResetEnable,       type,      0, "enum"
+HKR, Ndi\params\PhyLPResetEnable\enum,  "0",       0, "%Disable%"
+HKR, Ndi\params\PhyLPResetEnable\enum,  "1",       0, "%Enable%"
+
+[SpeedSetting.reg]
+;
+; Wake on Lan capability control
+;
+HKR, Ndi\params\WakeUpMagic,      ParamDesc,  0, "%WakeUpMagic%"
+HKR, Ndi\params\WakeUpMagic,      default,    0, "1"
+HKR, Ndi\params\WakeUpMagic,       type,      0, "enum"
+HKR, Ndi\params\WakeUpMagic\enum,  "0",       0, "%Disable%"
+HKR, Ndi\params\WakeUpMagic\enum,  "1",       0, "%Enable%"
+
+HKR, Ndi\params\WakeUpPattern,      ParamDesc,  0, "%WakeUpPattern%"
+HKR, Ndi\params\WakeUpPattern,      default,    0, "1"
+HKR, Ndi\params\WakeUpPattern,       type,      0, "enum"
+HKR, Ndi\params\WakeUpPattern\enum,  "0",       0, "%Disable%"
+HKR, Ndi\params\WakeUpPattern\enum,  "1",       0, "%Enable%"
+;
+; Wake on Lan from Power Off
+;
+HKR, Ndi\params\EthWOLFromPowerOff,      ParamDesc,  0, "%WakeOnLANFromPowerOff%"
+HKR, Ndi\params\EthWOLFromPowerOff,      default,    0, "1"
+HKR, Ndi\params\EthWOLFromPowerOff,       type,      0, "enum"
+HKR, Ndi\params\EthWOLFromPowerOff\enum,  "0",       0, "%Disable%"
+HKR, Ndi\params\EthWOLFromPowerOff\enum,  "1",       0, "%Enable%"
+
+HKR, Ndi\params\ForceSpeedDpx,       ParamDesc,  0, "%SpeedDuplexSettings%"
+HKR, Ndi\params\ForceSpeedDpx,       default,    0, "0"
+HKR, Ndi\params\ForceSpeedDpx,       type,       0, "enum"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "0",        0, "%Automatic%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "1",        0, "%HD10MB%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "2",        0, "%FD10MB%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "3",        0, "%HD100MB%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "4",        0, "%FD100MB%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "5",        0, "%HD10MBA%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "6",        0, "%FD10MBA%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "7",        0, "%HD100MBA%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "8",        0, "%FD100MBA%"
+
+HKR, Ndi\params\NetworkAddress,       ParamDesc,  0, "%NetworkAddress%"
+HKR, Ndi\params\NetworkAddress,       default,    0, " "
+HKR, Ndi\params\NetworkAddress,       type,       0, "edit"
+HKR, Ndi\params\NetworkAddress,       LimitText,  0, "12"
+HKR, Ndi\params\NetworkAddress,       UpperCase,  0, "1"
+HKR, Ndi\params\NetworkAddress,       optional,   0, "1"
+
+HKR, Ndi\params\PollIntervalInus,      ParamDesc,  0, "%OptimizeFor%"
+HKR, Ndi\params\PollIntervalInus,      default,    0, "0"
+HKR, Ndi\params\PollIntervalInus,      type,       0, "enum"
+HKR, Ndi\params\PollIntervalInus\enum, 2000,       0, "%Throughput%"
+HKR, Ndi\params\PollIntervalInus\enum, 0,          0, "%CPU%"
+
+HKR, Ndi\params\PriorityVLANTag,		ParamDesc,	0, "%PriorityVLANTag%" 
+HKR, Ndi\params\PriorityVLANTag,		default,	0, "0"
+HKR, Ndi\params\PriorityVLANTag,		type,		0, "enum"
+HKR, Ndi\params\PriorityVLANTag\enum,		"0",		0, "%PriorityAndVLANDisabled%"
+HKR, Ndi\params\PriorityVLANTag\enum,		"1",		0, "%PriorityEnabled%"
+HKR, Ndi\params\PriorityVLANTag\enum,		"2",		0, "%PriorityAndVLANEnabled%"
+
+HKR, Ndi\params\EthVLANId,				ParamDesc,  0, "%VLANId%"
+HKR, Ndi\params\EthVLANId,				default,    0, "1"
+HKR, Ndi\params\EthVLANId,				type,       0, "word"
+HKR, Ndi\params\EthVLANId,				min,        0, "1"
+HKR, Ndi\params\EthVLANId,				max,		0, "4095"
+
+
+
+[JumboFrameSize.reg]
+HKR, Ndi\Params\JumboFrameSize,         ParamDesc, 0, "%JumboFrameSize%"
+HKR, Ndi\Params\JumboFrameSize,         default,   0, "0"
+HKR, Ndi\Params\JumboFrameSize,         type,      0, "enum"
+HKR, Ndi\Params\JumboFrameSize\enum,    "0",       0, "%JumboFrameSize_1500%"
+HKR, Ndi\Params\JumboFrameSize\enum,    "1",       0, "%JumboFrameSize_2500%"
+HKR, Ndi\Params\JumboFrameSize\enum,    "2",       0, "%JumboFrameSize_4500%"
+HKR, Ndi\Params\JumboFrameSize\enum,    "3",       0, "%JumboFrameSize_9000%"
+
+[ChecksumOffload.reg]
+HKR, Ndi\params\ChecksumOffload,       ParamDesc,  0, "%ChecksumOffload%" 
+HKR, Ndi\params\ChecksumOffload,       default,    0, "1"
+HKR, Ndi\params\ChecksumOffload,       type,       0, "enum"
+HKR, Ndi\params\ChecksumOffload\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ChecksumOffload\enum,  "1",        0, "%Enable%"
+
+[SegOffload.reg]
+HKR, Ndi\params\SegOffload,       ParamDesc,  0, "%SegOffload%" 
+HKR, Ndi\params\SegOffload,       default,    0, "1"
+HKR, Ndi\params\SegOffload,       type,       0, "enum"
+HKR, Ndi\params\SegOffload\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\SegOffload\enum,  "1",        0, "%Enable%"
+
+
+[LowPowerStateLinkSpeed.reg]
+HKR, Ndi\params\LowPowerStateLinkSpeed,       ParamDesc,  0, "%LowPowerStateLinkSpeed%" 
+HKR, Ndi\params\LowPowerStateLinkSpeed,       default,    0, "1"
+HKR, Ndi\params\LowPowerStateLinkSpeed,       type,       0, "enum"
+HKR, Ndi\params\LowPowerStateLinkSpeed\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\LowPowerStateLinkSpeed\enum,  "1",        0, "%Enable%"
+
+; Basic Flow Control
+[BasicFlowControl.reg]
+HKR, Ndi\params\EthFlowControl,                   ParamDesc,      0, "%FlowControl%" 
+HKR, Ndi\params\EthFlowControl,                   default,        0, "0"
+HKR, Ndi\params\EthFlowControl,                   type,           0, "enum"
+HKR, Ndi\params\EthFlowControl\enum,              "0",            0, %FlowControlDisabled%
+HKR, Ndi\params\EthFlowControl\enum,              "2",            0, %FlowControlRxEnabled%
+
+; Flow Control
+[FlowControl.reg]
+HKR, Ndi\params\EthFlowControl,                   ParamDesc,      0, "%FlowControl%" 
+HKR, Ndi\params\EthFlowControl,                   default,        0, "0"
+HKR, Ndi\params\EthFlowControl,                   type,           0, "enum"
+HKR, Ndi\params\EthFlowControl\enum,              "0",            0, %FlowControlDisabled%
+HKR, Ndi\params\EthFlowControl\enum,              "1",            0, %FlowControlTxEnabled%
+HKR, Ndi\params\EthFlowControl\enum,              "2",            0, %FlowControlRxEnabled%
+HKR, Ndi\params\EthFlowControl\enum,              "3",            0, %FlowControlRxTxEnabled%
+
+[Support.reg]
+HKR, ,SupportFlag1,                     0x00010001, 0xf0040002
+
+[Support1.reg]
+HKR, ,SupportFlag1,                     0x00010001, 0xf0040000
+
+
+
+[Strings]
+Msft                     	= "Microsoft"
+Nvidia                   	= "NVIDIA"
+DiskId1                         = "NVIDIA nForce Networking Controller Driver Disk 1"
+NVENET.DeviceDesc        	= "NVIDIA nForce Networking Controller"
+NVENET.Service.DispName  	= "NVIDIA nForce Networking Controller Driver"
+Enable                       = "Enable"
+Disable                      = "Disable"
+WakeOnLANFromPowerOff        = "WakeOnLAN From PowerOff"
+Throughput                   = "Throughput"
+CPU                          = "CPU"
+NetworkAddress           	= "Network Address"
+OptimizeFor			= "Optimize For"
+SpeedDuplexSettings             = "Speed/duplex settings"
+SpeedDuplexSelectionMethod      = "Speed/duplex selection method"
+Automatic                	= "Auto Negotiation"
+HD10MB				= "10 Mb Half Duplex"
+FD10MB				= "10 Mb Full Duplex"
+HD100MB				= "100 Mb Half Duplex" 
+FD100MB				= "100 Mb Full Duplex"
+
+HD10MBA				= "Autoneg for 10HD"
+FD10MBA				= "Autoneg for 10FD"
+HD100MBA			= "Autoneg for 100HD"
+FD100MBA			= "Autoneg for 100FD"
+
+FD1000MBA			= "Autoneg for 1000FD"
+
+JumboFrameSize	     = "Jumbo Frame Payload Size"
+JumboFrameSize_1500  = "1500 (Std frame)"
+JumboFrameSize_2500  = "2500"
+JumboFrameSize_4500  = "4500"
+JumboFrameSize_9000  = "9000"
+
+ChecksumOffload                 = "Checksum Offload"
+ChecksumOffloadBM               = "7967"
+SegOffload						= "Segmentation Offload"
+MediaIF							= "Media Interface"
+LowPowerStateLinkSpeed          = "Low Power State Link Speed"
+FlowControl                     = "Flow Control"
+FlowControlDisabled             = "Disabled"
+FlowControlRxEnabled            = "Rx Enabled"
+FlowControlTxEnabled            = "Tx Enabled"
+FlowControlRxTxEnabled          = "Rx & Tx Enabled"
+VLANSupport						= "VLAN Support"
+IEEE802.1PSupport				= "IEEE802.1P Support"
+VLANId							= "VLAN Id"
+PriorityVLANTag                 = "VLAN & Priority"
+PriorityAndVLANDisabled         = "Disable VLAN&Priority"
+PriorityEnabled                 = "Enable Priority"
+PriorityAndVLANEnabled          = "Enable VLAN&Priority"
+
+WakeUpMagic                     = "Wake on Magic packet"
+WakeUpPattern                   = "Wake on pattern"
+PhyResetEnable                  = "Reset PHY If Not In Use"
+
+

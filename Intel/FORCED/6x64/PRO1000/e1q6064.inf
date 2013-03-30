@@ -1,0 +1,1868 @@
+;******************************************************************************
+;**                                                                          **
+;**  Copyright 2007-2012 Intel Corporation All Rights Reserved.              **
+;**                                                                          **
+;**  The material contained or described herein and all documents related    **
+;**  to such material ("Material") is owned by Intel Corporation or its      **
+;**  suppliers or licensors, and title to such Material remains with Intel   **
+;**  Corporation or its suppliers or licensors. The Material contains        **
+;**  proprietary information of Intel or its suppliers and licensors. The    **
+;**  Material is protected by worldwide copyright laws and treaty            **
+;**  provisions. No part of the Material may be used, copied, reproduced,    **
+;**  modified, published, uploaded, posted, transmitted, distributed or      **
+;**  disclosed in any way without Intel's prior express written permission.  **
+;**  No license under any patent, copyright or other intellectual property   **
+;**  rights in the Material is granted to or conferred upon you, either      **
+;**  expressly, by implication, inducement, estoppel or otherwise. Any       **
+;**  license under such intellectual property rights must be express and     **
+;**  approved by Intel in writing.                                           **
+;**                                                                          **
+;**  Unless otherwise agreed by Intel in writing, you may not remove or      **
+;**  alter this notice or any other notice embedded in Materials by Intel    **
+;**  or Intelís suppliers or licensors in any way.                           **
+;******************************************************************************
+
+;
+;******************************************************************************
+
+; e1q6064.INF (Intel IA64 platforms,
+; Windows Server 2008 Itanium)
+
+;
+; Intel(R) Gigabit Adapters
+;******************************************************************************
+;
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Intel%
+CatalogFile = e1q6064.cat
+DriverVer   = 11/29/2012,12.4.38.0
+
+[Manufacturer]
+%Intel%     = Intel, NTIA64.6.0, NTIA64.6.1
+
+[ControlFlags]
+ExcludeFromSelect = \ 
+    PCI\VEN_8086&DEV_10A7&SUBSYS_10A88086
+
+[Intel]
+
+[Intel.NTIA64.6.0]
+; DisplayName                   Section                DeviceID
+; -----------                   -------                --------
+%E10A7NC.DeviceDesc%            = E10A7,               PCI\VEN_8086&DEV_10A7
+%E10A9NC.DeviceDesc%            = E10A9,               PCI\VEN_8086&DEV_10A9
+%E10A7DD.DeviceDesc%            = NO_DRV,              PCI\VEN_8086&DEV_10A6
+%E10A7NC.DeviceDesc%            = E10A7,               PCI\VEN_8086&DEV_10A7&SUBSYS_10A88086
+%E10D3NC.DeviceDesc%            = E10D3,               PCI\VEN_8086&DEV_10D3
+%EA01FNC.DeviceDesc%            = E10D3,               PCI\VEN_8086&DEV_10D3&SUBSYS_A01F8086
+%EA01FHFNC.DeviceDesc%          = E10D3,               PCI\VEN_8086&DEV_10D3&SUBSYS_00018086
+%E10C9LNC.DeviceDesc%           = E10C9,               PCI\VEN_8086&DEV_10C9
+%E10E6LNC.DeviceDesc%           = E10E6,               PCI\VEN_8086&DEV_10E6
+%E10E7NC.DeviceDesc%            = E10E6,               PCI\VEN_8086&DEV_10E7
+%E10C9NC.DeviceDesc%            = E10C9PM,             PCI\VEN_8086&DEV_10C9&SUBSYS_A01C8086
+%E10C9NC.DeviceDesc%            = E10C9PM,             PCI\VEN_8086&DEV_10C9&SUBSYS_A03C8086
+%E10E6NC.DeviceDesc%            = E10E6PM,             PCI\VEN_8086&DEV_10E6&SUBSYS_A01F8086
+%E10E6NC.DeviceDesc%            = E10E6PM,             PCI\VEN_8086&DEV_10E6&SUBSYS_A02F8086
+%E10E8NC.DeviceDesc%            = E10E8PM,             PCI\VEN_8086&DEV_10E8&SUBSYS_A02C8086
+%E10E8NC.DeviceDesc%            = E10E8PM,             PCI\VEN_8086&DEV_10E8&SUBSYS_A02B8086
+%E1526NC.DeviceDesc%            = E10E8PM,             PCI\VEN_8086&DEV_1526&SUBSYS_A05C8086
+%E1526NC.DeviceDesc%            = E10E8PM,             PCI\VEN_8086&DEV_1526&SUBSYS_A06C8086
+%E150A.DeviceDesc%              = E150A,               PCI\VEN_8086&DEV_150A
+%E1518.DeviceDesc%              = E1518,               PCI\VEN_8086&DEV_1518
+
+[Intel.NTIA64.6.1]
+;===============================================================================
+;
+
+;                   WINDOWS Server 2008 for Itanium PLATFORMS
+
+;
+;===============================================================================
+
+;-------------------------------------------------------------------------------
+; Intel(R) 82575EB Gigabit Network Connection
+;-------------------------------------------------------------------------------
+[E10A7]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = Copper.reg, Copper1000.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = RSS.reg, RSS4Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E10A7.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E10A7.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKS.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E10A7.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) 82575EB Gigabit Backplane Connection
+;-------------------------------------------------------------------------------
+[E10A9]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = RSS.reg, RSS4Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E10A9.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E10A9.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKS.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E10A9.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) 82574L Gigabit Network Connection
+;-------------------------------------------------------------------------------
+[E10D3]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = Copper.reg, Copper1000.reg
+AddReg             = AIFS.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = RSS.reg, RSS2Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E10D3.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E10D3.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKS.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E10D3.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX3.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) 82576 Gigabit Dual Port Network Connection
+;-------------------------------------------------------------------------------
+[E10C9]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = Copper.reg, Copper1000.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = IPSec.reg
+AddReg             = RSS.reg, RSS8Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E10C9.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E10C9.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKS.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E10C9.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX10.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) 82576NS Gigabit Ethernet Controller
+;-------------------------------------------------------------------------------
+[E150A]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = Copper.reg, Copper1000.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = RSS.reg, RSS8Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E150A.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E150A.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKS.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E150A.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX10.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) 82576NS SerDes Gigabit Ethernet Controller
+;-------------------------------------------------------------------------------
+[E1518]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = RSS.reg, RSS8Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E1518.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E1518.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKS.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E1518.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX10.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) 82576 Gigabit Dual Port Network Connection
+;-------------------------------------------------------------------------------
+[E10E6]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = IPSec.reg
+AddReg             = RSS.reg, RSS8Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E10E6.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E10E6.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKS.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E10E6.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX10.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) Gigabit EF Dual Port Server Adapter
+;-------------------------------------------------------------------------------
+[E10E6PM]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = IPSec.reg
+AddReg             = RSS.reg, RSS8Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E10E6PM.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E10E6PM.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKMPW.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E10E6PM.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX10.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) Gigabit ET Dual Port Server Adapter
+;-------------------------------------------------------------------------------
+[E10C9PM]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = Copper.reg, Copper1000.reg
+AddReg             = WakeOnSlot.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = IPSec.reg
+AddReg             = RSS.reg, RSS8Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E10C9PM.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E10C9PM.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKMPW.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E10C9PM.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX10.reg
+
+;-------------------------------------------------------------------------------
+; Intel(R) Gigabit ET Quad Port Server Adapter
+;-------------------------------------------------------------------------------
+[E10E8PM]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5    ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = e1q.reg, TcpSeg.reg, JumboPacket.reg
+AddReg             = Copper.reg, Copper1000.reg
+AddReg             = WakeOnSlot.reg, WakeOnPort.reg
+AddReg             = EnableWakeOnManagmentOnTCO.reg
+AddReg             = LLI.reg
+AddReg             = IPSec.reg
+AddReg             = RSS.reg, RSS8Q.reg
+AddReg             = UninstallW2.reg
+CopyFiles          = winvista.CopyFiles, UninstallProg.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14 ; NdisPhysicalMedium802_3
+
+[E10E8PM.Services]
+AddService = e1qexpress, 2, winvista.Service, winvista.EventLog
+
+[E10E8PM.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKMP.reg
+CopyFiles          = CoInstaller_CopyFiles
+
+[E10E8PM.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+AddReg             = MSIX10.reg
+
+;-------------------------------------------------------------------------------
+; Do-nothing section used to avoid "Unknown hardware" installation prompts.
+;
+[NO_DRV]
+Characteristics    = 0x01
+Include            = machine.inf
+Needs              = NO_DRV
+
+[NO_DRV.Services]
+Include            = machine.inf
+Needs              = NO_DRV.Services
+
+;-------------------------------------------------------------------------------
+; Registry Settings (decimal)
+;
+[e1q.reg]
+HKR, Ndi\Interfaces,                                    UpperRange,             0, "ndis5"
+HKR, Ndi\Interfaces,                                    LowerRange,             0, "ethernet"
+HKR, Ndi,                                               Service,                0, "e1qexpress"
+HKR, Ndi\Params\*FlowControl,                           ParamDesc,              0, %FlowControl%
+HKR, Ndi\Params\*FlowControl,                           default,                0, "3"
+HKR, Ndi\Params\*FlowControl\Enum,                      "0",                    0, %Disabled%
+HKR, Ndi\Params\*FlowControl\Enum,                      "1",                    0, %FlowControl_TxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,                      "2",                    0, %FlowControl_RxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,                      "3",                    0, %FlowControl_Full%
+HKR, Ndi\Params\*FlowControl,                           type,                   0, "enum"
+
+; *TransmitBuffers
+HKR, Ndi\params\*TransmitBuffers,                       ParamDesc,              0, %TransmitBuffers%
+HKR, Ndi\params\*TransmitBuffers,                       default,                0, "512"
+HKR, Ndi\params\*TransmitBuffers,                       min,                    0, "80"
+HKR, Ndi\params\*TransmitBuffers,                       max,                    0, "2048"
+HKR, Ndi\params\*TransmitBuffers,                       step,                   0, "8"
+HKR, Ndi\params\*TransmitBuffers,                       Base,                   0, "10"
+HKR, Ndi\params\*TransmitBuffers,                       type,                   0, "int"
+
+; *ReceiveBuffers
+HKR, Ndi\params\*ReceiveBuffers,                        ParamDesc,              0, %ReceiveBuffers%
+HKR, Ndi\params\*ReceiveBuffers,                        default,                0, "256"
+HKR, Ndi\params\*ReceiveBuffers,                        min,                    0, "80"
+HKR, Ndi\params\*ReceiveBuffers,                        max,                    0, "2048"
+HKR, Ndi\params\*ReceiveBuffers,                        step,                   0, "8"
+HKR, Ndi\params\*ReceiveBuffers,                        Base,                   0, "10"
+HKR, Ndi\params\*ReceiveBuffers,                        type,                   0, "int"
+
+; *TCPChecksumOffloadIPv4
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,                ParamDesc,              0, %TCPChksumOffv4%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,                default,                0, "3"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,           "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,           "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,           "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,           "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,                type,                   0, "enum"
+
+; *TCPChecksumOffloadIPv6
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,                ParamDesc,              0, %TCPChksumOffv6%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,                default,                0, "3"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,           "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,           "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,           "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,           "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,                type,                   0, "enum"
+
+; *UDPChecksumOffloadIPv4
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,                ParamDesc,              0, %UDPChksumOffv4%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,                default,                0, "3"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,           "0",                    0, %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,           "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,           "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,           "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,                type,                   0, "enum"
+
+; *UDPChecksumOffloadIPv6
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,                ParamDesc,              0, %UDPChksumOffv6%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,                default,                0, "3"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,           "0",                    0, %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,           "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,           "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,           "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,                type,                   0, "enum"
+
+; *IPChecksumOffloadIPv4
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,                 ParamDesc,              0, %IPChksumOffv4%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,                 default,                0, "3"
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,            "0",                    0, %Disabled%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,            "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,            "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,            "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,                 type,                   0, "enum"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,                         ParamDesc,              0, %LAA%
+HKR, Ndi\params\NetworkAddress,                         Default,                0, ""
+HKR, Ndi\params\NetworkAddress,                         type,                   0, "edit"
+HKR, NDI\params\NetworkAddress,                         LimitText,              0, "12"
+HKR, NDI\params\NetworkAddress,                         UpperCase,              0, "1"
+HKR, NDI\params\NetworkAddress,                         optional,               0, "1"
+
+;Log Link State Event
+HKR,Ndi\Params\LogLinkStateEvent,                       ParamDesc,              0, %LogLinkState%
+HKR,Ndi\Params\LogLinkStateEvent,                       Type,                   0, "enum"
+HKR,Ndi\Params\LogLinkStateEvent,                       Default,                0, "51"
+HKR,Ndi\Params\LogLinkStateEvent\Enum,                  "51",                   0, %Enabled%
+HKR,Ndi\Params\LogLinkStateEvent\Enum,                  "16",                   0, %Disabled%
+HKR,,                                                   LogLinkStateEvent,      0, "51"
+
+; Wait for Link
+HKR, Ndi\Params\WaitAutoNegComplete,                    ParamDesc,              0, %WaitAutoNegComplete%
+HKR, Ndi\Params\WaitAutoNegComplete,                    default,                0, "2"
+HKR, Ndi\Params\WaitAutoNegComplete\Enum,               "0",                    0, %Off%
+HKR, Ndi\Params\WaitAutoNegComplete\Enum,               "1",                    0, %On%
+HKR, Ndi\Params\WaitAutoNegComplete\Enum,               "2",                    0, %AutoDetect%
+HKR, Ndi\Params\WaitAutoNegComplete,                    type,                   0, "enum"
+
+;  Interrupt Throttle Rate
+HKR, Ndi\Params\ITR,                                    ParamDesc,              0, %InterruptThrottleRate%
+HKR, Ndi\Params\ITR,                                    default,                0, "65535"
+HKR, Ndi\Params\ITR\Enum,                               "65535",                0, %Adaptive%
+HKR, Ndi\Params\ITR\Enum,                               "3600",                 0, %Extreme%
+HKR, Ndi\Params\ITR\Enum,                               "2000",                 0, %High%
+HKR, Ndi\Params\ITR\Enum,                               "950",                  0, %Medium%
+HKR, Ndi\Params\ITR\Enum,                               "400",                  0, %Low%
+HKR, Ndi\Params\ITR\Enum,                               "200",                  0, %Minimal%
+HKR, Ndi\Params\ITR\Enum,                               "0",                    0, %Off%
+HKR, Ndi\Params\ITR,                                    type,                   0, "enum"
+HKR,,                                                   ITR,                    0, "65535"
+
+; *InterruptModeration
+HKR, Ndi\Params\*InterruptModeration,                   ParamDesc,              0, %InterruptModeration%
+HKR, Ndi\Params\*InterruptModeration,                   default,                0, "1"
+HKR, Ndi\Params\*InterruptModeration\Enum,              "0",                    0, %Disabled%
+HKR, Ndi\Params\*InterruptModeration\Enum,              "1",                    0, %Enabled%
+HKR, Ndi\Params\*InterruptModeration,                   type,                   0, "enum"
+
+; *PriorityVLANTag
+HKR, Ndi\Params\*PriorityVLANTag,                       ParamDesc,              0, %PriorityVLANTag%
+HKR, Ndi\Params\*PriorityVLANTag,                       default,                0, "3"
+HKR, Ndi\Params\*PriorityVLANTag\Enum,                  "0",                    0, %PriorityVlanDisabled%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,                  "1",                    0, %PriorityEnabled%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,                  "2",                    0, %VlanEnabled%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,                  "3",                    0, %PriorityVlanEnabled%
+HKR, Ndi\Params\*PriorityVLANTag,                       type,                   0, "enum"
+
+; EnablePME
+HKR,Ndi\Params\EnablePME,                               ParamDesc,              0, %Enable_PME%
+HKR,Ndi\Params\EnablePME,                               Type,                   0, "enum"
+HKR,Ndi\Params\EnablePME,                               Default,                0, "0"
+HKR,Ndi\Params\EnablePME\Enum,                          "1",                    0, %Enabled%
+HKR,Ndi\Params\EnablePME\Enum,                          "0",                    0, %Disabled%
+
+; Hardwired defaults
+HKR,,                                                   PciScanMethod,          0, "3"
+HKR,,                                                   TxIntDelay,             0, "28"
+HKR,,                                                   MulticastFilterType,    0, "0"
+HKR,,                                                   VlanFiltering,          0, "0"
+HKR,,                                                   *PhysicalMediaType,     0x00010001, 14
+
+; Advanced Power Consumption Features
+
+[TcpSeg.reg]
+; *LsoV2IPv4 / *LsoV2IPv6
+HKR, Ndi\Params\*LsoV2IPv4,                             ParamDesc,              0, %LsoV2IPv4%
+HKR, Ndi\Params\*LsoV2IPv4,                             default,                0, "1"
+HKR, Ndi\Params\*LsoV2IPv4\Enum,                        "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV2IPv4\Enum,                        "1",                    0, %Enabled%
+HKR, Ndi\Params\*LsoV2IPv4,                             type,                   0, "enum"
+HKR, Ndi\Params\*LsoV2IPv6,                             ParamDesc,              0, %LsoV2IPv6%
+HKR, Ndi\Params\*LsoV2IPv6,                             default,                0, "1"
+HKR, Ndi\Params\*LsoV2IPv6\Enum,                        "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV2IPv6\Enum,                        "1",                    0, %Enabled%
+HKR, Ndi\Params\*LsoV2IPv6,                             type,                   0, "enum"
+HKR,,                                                   *LsoV1IPv4,             0, "0"
+
+[Copper.reg]
+HKR, Ndi\params\*SpeedDuplex,                           ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                           default,                0, "0"
+HKR, Ndi\params\*SpeedDuplex,                           type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,                      "0",                    0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,                      "1",                    0, %10Mb_Half_Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,                      "2",                    0, %10Mb_Full_Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,                      "3",                    0, %100Mb_Half_Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,                      "4",                    0, %100Mb_Full_Duplex%
+HKR, PROSetNdi\NdiExt\Params\*SpeedDuplex,              ExposeLevel,            0, "3"
+
+[Copper1000.reg]
+HKR, Ndi\params\*SpeedDuplex\enum,                      "6",                    0, %1000Mb_Full_Duplex%
+
+; Gigabit Master Slave Mode
+HKR,Ndi\Params\MasterSlave,                             ParamDesc,              0, %MasterSlaveMode%
+HKR,Ndi\Params\MasterSlave,                             Type,                   0, "enum"
+HKR,Ndi\Params\MasterSlave,                             Default,                0, "0"
+HKR,Ndi\Params\MasterSlave\Enum,                        "0",                    0, %AutoDetect%
+HKR,Ndi\Params\MasterSlave\Enum,                        "1",                    0, %GigabitMasterMode%
+HKR,Ndi\Params\MasterSlave\Enum,                        "2",                    0, %GigabitSlaveMode%
+
+[AIFS.reg]
+; Adaptive IFS
+HKR, Ndi\Params\AdaptiveIFS,                            ParamDesc,              0, %AdaptiveIFS%
+HKR, Ndi\Params\AdaptiveIFS,                            default,                0, "0"
+HKR, Ndi\Params\AdaptiveIFS,                            type,                   0, "enum"
+HKR, Ndi\Params\AdaptiveIFS\Enum,                       "0",                    0, %Disabled%
+HKR, Ndi\Params\AdaptiveIFS\Enum,                       "1",                    0, %Enabled%
+
+;-------------------------------------------------------------------------------
+; Packet specifics
+;
+
+; *JumboPacket
+[JumboPacket.reg]
+HKR, Ndi\Params\*JumboPacket,                           ParamDesc,              0, %JumboPacket%
+HKR, Ndi\Params\*JumboPacket,                           default,                0, "1514"
+HKR, Ndi\Params\*JumboPacket\Enum,                      "1514",                 0, %Disabled%
+HKR, Ndi\Params\*JumboPacket\Enum,                      "4088",                 0, %Bytes4088%
+HKR, Ndi\Params\*JumboPacket\Enum,                      "9014",                 0, %Bytes9014%
+HKR, Ndi\Params\*JumboPacket,                           type,                   0, "enum"
+
+[RSS.reg]
+; *RSS
+HKR, Ndi\Params\*RSS,                                   ParamDesc,              0, %RSS%
+HKR, Ndi\Params\*RSS,                                   default,                0, "1"
+HKR, Ndi\Params\*RSS,                                   type,                   0, "enum"
+HKR, Ndi\Params\*RSS\Enum,                              "0",                    0, %Disabled%
+HKR, Ndi\Params\*RSS\Enum,                              "1",                    0, %Enabled%
+
+[RSS2Q.reg]
+; NumRssQueues
+HKR, Ndi\Params\NumRssQueues,                           ParamDesc,              0, %NumRssQueues%
+HKR, Ndi\Params\NumRssQueues,                           default,                0, "1"
+HKR, Ndi\Params\NumRssQueues,                           type,                   0, "enum"
+HKR, Ndi\Params\NumRssQueues\Enum,                      "1",                    0, %1queue%
+HKR, Ndi\Params\NumRssQueues\Enum,                      "2",                    0, %2queues%
+
+[RSS4Q.reg]
+; NumRssQueues
+HKR, Ndi\Params\NumRssQueues,                           ParamDesc,              0, %NumRssQueues%
+HKR, Ndi\Params\NumRssQueues,                           default,                0, "1"
+HKR, Ndi\Params\NumRssQueues,                           type,                   0, "enum"
+HKR, Ndi\Params\NumRssQueues\Enum,                      "1",                    0, %1queue%
+HKR, Ndi\Params\NumRssQueues\Enum,                      "2",                    0, %2queues%
+HKR, Ndi\Params\NumRssQueues\Enum,                      "4",                    0, %4queues%
+
+[RSS8Q.reg]
+; NumRssQueues
+HKR, Ndi\Params\NumRssQueues,                           ParamDesc,              0, %NumRssQueues%
+HKR, Ndi\Params\NumRssQueues,                           default,                0, "1"
+HKR, Ndi\Params\NumRssQueues,                           type,                   0, "enum"
+HKR, Ndi\Params\NumRssQueues\Enum,                      "1",                    0, %1queue%
+HKR, Ndi\Params\NumRssQueues\Enum,                      "2",                    0, %2queues%
+HKR, Ndi\Params\NumRssQueues\Enum,                      "4",                    0, %4queues%
+HKR, PROSetNdi\Params\NumRssQueues,                     ParamDesc,              0, %NumRssQueues%
+HKR, PROSetNdi\Params\NumRssQueues,                     default,                0, "1"
+HKR, PROSetNdi\Params\NumRssQueues,                     type,                   0, "enum"
+HKR, PROSetNdi\Params\NumRssQueues\Enum,                "1",                    0, %1queue%
+HKR, PROSetNdi\Params\NumRssQueues\Enum,                "2",                    0, %2queues%
+HKR, PROSetNdi\Params\NumRssQueues\Enum,                "4",                    0, %4queues%
+HKR, PROSetNdi\Params\NumRssQueues\Enum,                "8",                    0, %8queues%
+HKR, PROSetNdi\Params\NumRssQueues,                     ExposeLevel,            0, "3"
+
+[LLI.reg]
+HKR, PROSetNdi\Params\EnableLLI,                        ParamDesc,              0, %EnableLLI%
+HKR, PROSetNdi\Params\EnableLLI,                        default,                0, "0"
+HKR, PROSetNdi\Params\EnableLLI,                        type,                   0, "enum"
+HKR, PROSetNdi\Params\EnableLLI\Enum,                   "0",                    0, %Disabled%
+HKR, PROSetNdi\Params\EnableLLI\Enum,                   "1",                    0, %LLIPortBased%
+HKR, PROSetNdi\Params\EnableLLI\Enum,                   "2",                    0, %LLIPSHBased%
+HKR,,                                                   EnableLLI,              2, "0"
+HKR, PROSetNdi\Params\LLIPorts,                         ParamDesc,              0, %LLIPorts%
+HKR, PROSetNdi\Params\LLIPorts,                         default,                0, ""
+HKR, PROSetNdi\Params\LLIPorts,                         type,                   0, "edit"
+HKR, PROSetNdi\Params\LLIPorts,                         UpperCase,              0, "1"
+HKR, PROSetNdi\Params\LLIPorts,                         optional,               0, "1"
+HKR, PROSetNdi\Params\LLIPorts,                         multi_string,           0, "1"
+HKR,,                                                   LLIPorts,               0x00010002, ""
+ 
+;-------------------------------------------------------------------------------
+[WakeOnSlot.reg]
+HKR,,                                                   WakeOnSlot,             0, 0
+
+;-----------------------------------------------------------------------------
+[WakeOnPort.reg]
+HKR,,                                                   WakeOnPort,             0x00010001, 0
+
+[IPSec.reg]
+; IPSec capabilities
+HKR, Ndi\Params\*IPsecOffloadV2,                        ParamDesc,              0, %IPsecOffloadV2%
+HKR, Ndi\Params\*IPsecOffloadV2,                        default,                0, "0"
+HKR, Ndi\Params\*IPsecOffloadV2\Enum,                   "0",                    0, %Disabled%
+HKR, Ndi\Params\*IPsecOffloadV2\Enum,                   "1",                    0, %IPsecAH%
+HKR, Ndi\Params\*IPsecOffloadV2\Enum,                   "2",                    0, %IPsecESP%
+HKR, Ndi\Params\*IPsecOffloadV2\Enum,                   "3",                    0, %IPsecAHESP%
+HKR, Ndi\Params\*IPsecOffloadV2,                        type,                   0, "enum"
+
+[MSIX.reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 6
+
+[MSIX3.reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 3
+
+[MSIX10.reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 10
+
+;-------------------------------------------------------------------------------
+[EnableWakeOnManagmentOnTCO.reg]
+HKR,,                                                   EnableWakeOnManagmentOnTCO,             0, "0"
+
+;-------------------------------------------------------------------------------
+; Uninstallation
+
+[UninstallW2.reg]
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10A7, 0, "10A7"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10A9, 0, "10A9"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10A6, 0, "10A6"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10D3, 0, "10D3"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10C9, 0, "10C9"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10E6, 0, "10E6"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10E7, 0, "10E7"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10E8, 0, "10E8"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1526, 0, "1526"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 150A, 0, "150A"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1518, 0, "1518"
+HKLM,Software\Intel\Prounstl\Dins, e1q6064.din, 0, "8254x.Uninstall"
+HKLM,Software\Intel\Prounstl\Services, e1qexpress, 0, "e1q6064.sys"
+
+[UninstallProg.CopyFiles]
+e1q6064.din,,,2
+
+;-------------------------------------------------------------------------------
+; WinVista copy files
+;
+
+[winvista.CopyFiles]
+e1q6064.sys,,,2
+
+[winvista.Service]
+DisplayName     = %E1QExpress.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\e1q6064.sys
+LoadOrderGroup  = NDIS
+
+;-------------------------------------------------------------------------------
+; Common base for all drivers for Eventlog and TextModeFlags
+;
+
+[winvista.EventLog]
+AddReg             = winvista.AddEventLog.reg
+
+[winvista.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, %EventLogMessageDllPath%
+HKR, , TypesSupported,   0x00010001, 7
+
+;-------------- Coinstaller installation
+[CoInstaller_CopyFiles]
+NicCo26.dll,,,           0x00000010 ;don't overwrite
+NicInstQ.dll
+e1qmsg.dll
+
+[CoInstaller_AddReg]
+HKR,, CoInstallers32,   0x00010000, "NicCo26.dll,NicCoInstallerEntry"
+HKR,, NicCoPlugins,     0x00010000, "NicInstQ.dll,NicCoInstallerEntry"
+
+[CoInKS.reg]
+HKR,,                                          CoInstallFlag,      0x00010001, 0x80201001
+
+[CoInKMP.reg]
+HKR,,                                          CoInstallFlag,      0x00010001, 0x80201C01
+
+[CoInKMPW.reg]
+HKR,,                                          CoInstallFlag,      0x00010001, 0x80201401
+
+;-------------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir                = 11
+winvista.CopyFiles          = 12
+UninstallProg.CopyFiles          = 11
+CoInstaller_CopyFiles          = 11
+
+[SourceDisksNames]
+;
+; diskid = description[, [tagfile] [, <unused>,subdir]]
+;
+1 = %DISKNAME%,,,
+
+[SourceDisksFiles]
+;
+; filename_on_source = diskID[, [subdir][, size]]
+;
+e1qmsg.dll = 1,,
+NicInstQ.dll = 1,,
+NicCo26.dll  = 1,,
+e1q6064.din = 1,,
+e1q6064.sys = 1,, ; on distribution disk 1
+
+;-------------------------------------------------------------------------------
+; Legacy
+[Advanced.DelReg]
+HKR, Ndi\Params
+HKR, PROSetNdi\Params
+HKR, PROSetNdi\NdiExt
+HKR,, LinkNegotiationProcess
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+
+[Strings]
+AutoDetect                      = "Auto Detect"
+AutoNegotiation                 = "Auto Negotiation"
+SpeedDuplex                     = "Speed & Duplex"
+10Mb_Half_Duplex                = "10 Mbps Half Duplex"
+10Mb_Full_Duplex                = "10 Mbps Full Duplex"
+100Mb_Half_Duplex               = "100 Mbps Half Duplex"
+100Mb_Full_Duplex               = "100 Mbps Full Duplex"
+1000Mb_Full_Duplex              = "1.0 Gbps Full Duplex"
+IPChksumOffv4                   = "IPv4 Checksum Offload"
+TCPChksumOffv4                  = "TCP Checksum Offload (IPv4)"
+UDPChksumOffv4                  = "UDP Checksum Offload (IPv4)"
+TCPChksumOffv6                  = "TCP Checksum Offload (IPv6)"
+UDPChksumOffv6                  = "UDP Checksum Offload (IPv6)"
+LsoV2IPv4                       = "Large Send Offload V2 (IPv4)"
+LsoV2IPv6                       = "Large Send Offload V2 (IPv6)"
+IPsecOffloadV2                  = "IPsec Offload"
+IPsecAH                         = "Auth Header Enabled"
+IPsecESP                        = "ESP Enabled"
+IPSecAHESP                      = "Auth Header & ESP Enabled"
+ChksumOffTxRx                   = "Rx & Tx Enabled"
+ChksumOffTx                     = "Tx Enabled"
+ChksumOffRx                     = "Rx Enabled"
+FlowControl                     = "Flow Control"
+FlowControl_TxOnly              = "Tx Enabled"
+FlowControl_RxOnly              = "Rx Enabled"
+FlowControl_Full                = "Rx & Tx Enabled"
+PriorityVlanDisabled            = "Priority & VLAN Disabled"
+PriorityEnabled                 = "Priority Enabled"
+VlanEnabled                     = "VLAN Enabled"
+PriorityVlanEnabled             = "Priority & VLAN Enabled"
+TransmitBuffers                 = "Transmit Buffers"
+ReceiveBuffers                  = "Receive Buffers"
+PriorityVLANTag                 = "Priority & VLAN"
+RSS                             = "Receive Side Scaling"
+NumRssQueues                    = "Receive Side Scaling Queues"
+1queue                          = "1 Queue"
+2queues                         = "2 Queues"
+4queues                         = "4 Queues"
+8queues                         = "8 Queues"
+On                              = "On"
+Off                             = "Off"
+Enabled                         = "Enabled"
+Disabled                        = "Disabled"
+Bytes4088                       = "4088 Bytes"
+Bytes9014                       = "9014 Bytes"
+LAA                             = "Locally Administered Address"
+JumboPacket                     = "Jumbo Packet"
+AdaptiveIFS                     = "Adaptive Inter-Frame Spacing"
+Enable_PME                      = "Enable PME"
+LogLinkState                    = "Log Link State Event"
+InterruptModeration             = "Interrupt Moderation"
+InterruptThrottleRate           = "Interrupt Moderation Rate"
+Adaptive                        = "Adaptive"
+Extreme                         = "Extreme"
+Minimal                         = "Minimal"
+High                            = "High"
+Medium                          = "Medium"
+Low                             = "Low"
+GigabitMasterMode               = "Force Master Mode"
+GigabitSlaveMode                = "Force Slave Mode"
+MasterSlaveMode                 = "Gigabit Master Slave Mode"
+WaitAutoNegComplete             = "Wait for Link"
+EnableLLI                       = "Low Latency Interrupts"
+LLIPorts                        = "Low Latency Interrupt Ports"
+LLIPortBased                    = "Port-Based"
+LLIPSHBased                     = "PSH Flag-Based"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\e1q6064.sys"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0804] ; Chinese (Simplified)
+AutoDetect                      ="◊‘∂ØºÏ≤‚"
+AutoNegotiation                 ="◊‘∂Ø–≠…Ã"
+SpeedDuplex                     ="ÀŸ∂»∫ÕÀ´π§"
+10Mb_Half_Duplex                ="10 Mbps ∞ÎÀ´π§"
+10Mb_Full_Duplex                ="10 Mbps »´À´π§"
+100Mb_Half_Duplex               ="100 Mbps ∞ÎÀ´π§"
+100Mb_Full_Duplex               ="100 Mbps »´À´π§"
+1000Mb_Full_Duplex              ="1.0 Gbps »´À´π§"
+IPChksumOffv4                   ="IPv4 –£—È∫Õ∑÷‘ÿ¥´ ‰"
+TCPChksumOffv4                  ="TCP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv4)"
+UDPChksumOffv4                  ="UDP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv4)"
+TCPChksumOffv6                  ="TCP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv6)"
+UDPChksumOffv6                  ="UDP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv6)"
+LsoV2IPv4                       ="¥Û–Õ∑¢ÀÕ∑÷‘ÿ V2 (IPv4)"
+LsoV2IPv6                       ="¥Û–Õ∑¢ÀÕ∑÷‘ÿ V2 (IPv6)"
+IPsecOffloadV2                  ="IPsec ∑÷‘ÿ"
+IPsecAH                         ="“—∆Ù”√ Auth Header"
+IPsecESP                        ="“—∆Ù”√ ESP"
+IPSecAHESP                      ="“—∆Ù”√ Auth Header ∫Õ ESP"
+ChksumOffTxRx                   ="“—∆Ù”√ Rx ∫Õ Tx"
+ChksumOffTx                     ="“—∆Ù”√ Tx"
+ChksumOffRx                     ="“—∆Ù”√ Rx"
+FlowControl                     ="¡˜¡øøÿ÷∆"
+FlowControl_TxOnly              ="“—∆Ù”√ Tx"
+FlowControl_RxOnly              ="“—∆Ù”√ Rx"
+FlowControl_Full                ="“—∆Ù”√ Rx ∫Õ Tx"
+PriorityVlanDisabled            ="“—Ω˚”√”≈œ»º∂∫Õ VLAN"
+PriorityEnabled                 ="“—∆Ù”√”≈œ»º∂"
+VlanEnabled                     ="“—∆Ù”√ VLAN"
+PriorityVlanEnabled             ="“—∆Ù”√”≈œ»º∂∫Õ VLAN"
+TransmitBuffers                 ="¥´ ‰ª∫≥Â«¯"
+ReceiveBuffers                  ="Ω” ’ª∫≥Â«¯"
+PriorityVLANTag                 ="”≈œ»º∂∫Õ VLAN"
+RSS                             ="Ω” ’∑Ωµ˜’˚"
+NumRssQueues                    ="Ω” ’∑Ωµ˜’˚∂”¡–"
+1queue                          ="1 ∏ˆ∂”¡–"
+2queues                         ="2 ∏ˆ∂”¡–"
+4queues                         ="4 ∏ˆ∂”¡–"
+8queues                         ="8 ∏ˆ∂”¡–"
+On                              ="ø™∆Ù"
+Off                             ="πÿ±’"
+Enabled                         ="∆Ù”√"
+Disabled                        ="Ω˚”√"
+Bytes4088                       ="4088 ◊÷Ω⁄"
+Bytes9014                       ="9014 ◊÷Ω⁄"
+LAA                             ="±æµÿπ‹¿Ìµÿ÷∑"
+JumboPacket                     ="æﬁ÷° ˝æ›∞¸"
+AdaptiveIFS                     ="  ”¶–‘÷°º‰æ‡µ˜’˚"
+Enable_PME                      ="∆Ù”√ PME"
+LogLinkState                    ="º«¬º¡¥Ω”◊¥Ã¨ ¬º˛"
+InterruptModeration             ="÷–∂œΩ⁄¡˜"
+InterruptThrottleRate           ="÷–∂œΩ⁄¡˜¬ "
+Adaptive                        ="  ”¶–‘"
+Extreme                         ="º´÷µ"
+Minimal                         ="◊Ó–°"
+High                            ="∏ﬂ"
+Medium                          ="÷–"
+Low                             ="µÕ"
+GigabitMasterMode               ="«ø÷∆÷˜ƒ£ Ω"
+GigabitSlaveMode                ="«ø÷∆¥”ƒ£ Ω"
+MasterSlaveMode                 ="«ß’◊Œª÷˜¥”ƒ£ Ω"
+WaitAutoNegComplete             ="µ»¥˝¡¥Ω”"
+EnableLLI                       ="µÕ—”≥Ÿ÷–∂œ"
+LLIPorts                        ="µÕ—”≥Ÿ÷–∂œ∂Àø⁄"
+LLIPortBased                    ="ª˘”⁄∂Àø⁄µƒ"
+LLIPSHBased                     ="ª˘”⁄ PSH ±Íº«µƒ"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0404] ; Chinese (Traditional)
+AutoDetect                      ="¶€∞ ∞ª¥˙"
+AutoNegotiation                 ="¶€∞ •ÊØA"
+SpeedDuplex                     ="≥t´◊ªP¬˘§u"
+10Mb_Half_Duplex                ="10 Mbps •b¬˘§u"
+10Mb_Full_Duplex                ="10 Mbps •˛¬˘§u"
+100Mb_Half_Duplex               ="100 Mbps •b¬˘§u"
+100Mb_Full_Duplex               ="100 Mbps •˛¬˘§u"
+1000Mb_Full_Duplex              ="1.0 Gbps •˛¬˘§u"
+IPChksumOffv4                   ="IPv4 ¿À¨d≠»®¯∏¸"
+TCPChksumOffv4                  ="TCP ¿À¨d≠»®¯∏¸ (IPv4)"
+UDPChksumOffv4                  ="UDP ¿À¨d≠»®¯∏¸ (IPv4)"
+TCPChksumOffv6                  ="TCP ¿À¨d≠»®¯∏¸ (IPv6)"
+UDPChksumOffv6                  ="UDP ¿À¨d≠»®¯∏¸ (IPv6)"
+LsoV2IPv4                       ="§j∂q∂«∞e®¯∏¸ V2 (IPv4)"
+LsoV2IPv6                       ="§j∂q∂«∞e®¯∏¸ V2 (IPv6)"
+IPsecOffloadV2                  ="IPsec ®¯∏¸"
+IPsecAH                         ="º–¿Yª{√“ (Auth Header) §w±“•Œ"
+IPsecESP                        ="ESP §w±“•Œ"
+IPSecAHESP                      ="º–¿Yª{√“ (Auth Header) ªP ESP §w±“•Œ"
+ChksumOffTxRx                   ="Rx ªP Tx §w±“•Œ"
+ChksumOffTx                     ="Tx §w±“•Œ"
+ChksumOffRx                     ="Rx §w±“•Œ"
+FlowControl                     ="¨y∂q±±®Ó"
+FlowControl_TxOnly              ="Tx §w±“•Œ"
+FlowControl_RxOnly              ="Rx §w±“•Œ"
+FlowControl_Full                ="Rx ªP Tx §w±“•Œ"
+PriorityVlanDisabled            ="¿u•˝∂∂ß«ªP VLAN §w∞±•Œ"
+PriorityEnabled                 ="¿u•˝∂∂ß«§w±“•Œ"
+VlanEnabled                     ="VLAN §w±“•Œ"
+PriorityVlanEnabled             ="¿u•˝∂∂ß«ªP VLAN §w±“•Œ"
+TransmitBuffers                 ="∂«øÈΩwΩƒ∞œ"
+ReceiveBuffers                  ="±µ¶¨ΩwΩƒ∞œ"
+PriorityVLANTag                 ="¿u•˝∂∂ß«ªP VLAN"
+RSS                             ="±µ¶¨∫›Ω’æ„§Ò≤v"
+NumRssQueues                    ="±µ¶¨∫›Ω’æ„§Ò≤v¶Ó¶C"
+1queue                          ="§@≠”¶Ó¶C"
+2queues                         ="®‚≠”¶Ó¶C"
+4queues                         ="•|≠”¶Ó¶C"
+8queues                         ="§K≠”¶Ó¶C"
+On                              ="∂}±“"
+Off                             ="√ˆ≥¨"
+Enabled                         ="±“•Œ"
+Disabled                        ="∞±•Œ"
+Bytes4088                       ="4088 ¶Ï§∏≤’"
+Bytes9014                       ="9014 ¶Ï§∏≤’"
+LAA                             ="•ª¶a∫ﬁ≤z¶Ïß}"
+JumboPacket                     ="∂W§j´¨´ •]"
+AdaptiveIFS                     ="Ω’æ„© Æÿ¨[§∫∂°πj"
+Enable_PME                      ="±“•Œ PME"
+LogLinkState                    ="µnø˝≥sµ≤™¨∫A®∆•Û"
+InterruptModeration             ="ß√¬_Ω’∏`"
+InterruptThrottleRate           ="ß√¬_∏`¨yª÷≥t≤v"
+Adaptive                        ="Ω’æ„© "
+Extreme                         ="∑•∞™"
+Minimal                         ="≥ÃßC"
+High                            ="∞™"
+Medium                          ="§§"
+Low                             ="ßC"
+GigabitMasterMode               ="±j≠¢•Dæ˜º“¶°"
+GigabitSlaveMode                ="±j≠¢±qƒ›º“¶°"
+MasterSlaveMode                 ="Gigabit •D±qº“¶°"
+WaitAutoNegComplete             ="µ•´›≥sµ≤"
+EnableLLI                       ="ßC©µøß√¬_"
+LLIPorts                        ="ßC©µøß√¬_≥s±µ∞"
+LLIPortBased                    ="≥s±µ∞¨∞∞Ú¬¶"
+LLIPSHBased                     ="PSH ∫X∏π¨∞∞Ú¬¶"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0407] ; German (Germany)
+AutoDetect                      ="Automatische Erkennung"
+AutoNegotiation                 ="Automatische Aushandlung"
+SpeedDuplex                     ="Geschwindigkeit & Duplex"
+10Mb_Half_Duplex                ="10 Mbit/s Halbduplex"
+10Mb_Full_Duplex                ="10 Mbit/s Vollduplex"
+100Mb_Half_Duplex               ="100 Mbit/s Halbduplex"
+100Mb_Full_Duplex               ="100 Mbit/s Vollduplex"
+1000Mb_Full_Duplex              ="1,0 Gbit/s Vollduplex"
+IPChksumOffv4                   ="IPv4-Pr¸fsummen abladen"
+TCPChksumOffv4                  ="TCP-Pr¸fsummen abladen (IPv4)"
+UDPChksumOffv4                  ="UDP-Pr¸fsummen abladen (IPv4)"
+TCPChksumOffv6                  ="TCP-Pr¸fsummen abladen (IPv6)"
+UDPChksumOffv6                  ="UDP-Pr¸fsummen abladen (IPv6)"
+LsoV2IPv4                       ="Large-Send-Offload V2 (IPv4)"
+LsoV2IPv6                       ="Large-Send-Offload V2 (IPv6)"
+IPsecOffloadV2                  ="IPsec abladen"
+IPsecAH                         ="Auth.-Header aktiviert"
+IPsecESP                        ="ESP aktiviert"
+IPSecAHESP                      ="Auth.-Header und ESP aktiviert"
+ChksumOffTxRx                   ="Rx und Tx aktiviert"
+ChksumOffTx                     ="Tx aktiviert"
+ChksumOffRx                     ="Rx aktiviert"
+FlowControl                     ="Flusssteuerung"
+FlowControl_TxOnly              ="Tx aktiviert"
+FlowControl_RxOnly              ="Rx aktiviert"
+FlowControl_Full                ="Rx und Tx aktiviert"
+PriorityVlanDisabled            ="Priorit‰t und VLAN deaktiviert"
+PriorityEnabled                 ="Priorit‰t aktiviert"
+VlanEnabled                     ="VLAN aktiviert"
+PriorityVlanEnabled             ="Priorit‰t und VLAN aktiviert"
+TransmitBuffers                 ="‹bertragungspuffer"
+ReceiveBuffers                  ="Empfangspuffer"
+PriorityVLANTag                 ="Priorit‰t und VLAN"
+RSS                             ="RSS (Empfangsseitige Skalierung)"
+NumRssQueues                    ="RSS-Warteschlangen (Empfangsseitige Skalierung)"
+1queue                          ="1 Warteschlange"
+2queues                         ="2 Warteschlangen"
+4queues                         ="4 Warteschlangen"
+8queues                         ="8 Warteschlangen"
+On                              ="Ein"
+Off                             ="Aus"
+Enabled                         ="Aktiviert"
+Disabled                        ="Deaktiviert"
+Bytes4088                       ="4088 Byte"
+Bytes9014                       ="9014 Byte"
+LAA                             ="Lokal verwaltete Adresse"
+JumboPacket                     ="Jumbo Packet"
+AdaptiveIFS                     ="Adaptives Interframe-Spacing "
+Enable_PME                      ="PME aktivieren"
+LogLinkState                    ="Verbindungsereignis protokollieren"
+InterruptModeration             ="Interrupt-Drosselung"
+InterruptThrottleRate           ="Interrupt-Drosselungsrate"
+Adaptive                        ="Adaptiv"
+Extreme                         ="Extrem"
+Minimal                         ="Minimal"
+High                            ="Hoch"
+Medium                          ="Mittel"
+Low                             ="Niedrig"
+GigabitMasterMode               ="Mastermodus erzwingen"
+GigabitSlaveMode                ="Slavemodus erzwingen"
+MasterSlaveMode                 ="Gigabit Master/Slave-Modus"
+WaitAutoNegComplete             ="Auf Verbindung warten"
+EnableLLI                       ="Low Latency Interrupts (LLIs)"
+LLIPorts                        ="LLI-Anschl¸sse"
+LLIPortBased                    ="Anschlussbasiert"
+LLIPSHBased                     ="PSH markierungsbasiert"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0C0A] ; Spanish (Spain)
+AutoDetect                      ="DetecciÛn autom·tica"
+AutoNegotiation                 ="NegociaciÛn autom·tica"
+SpeedDuplex                     ="Velocidad y d˙plex"
+10Mb_Half_Duplex                ="D˙plex medio a 10 Mbps"
+10Mb_Full_Duplex                ="D˙plex completo a 10 Mbps"
+100Mb_Half_Duplex               ="D˙plex medio a 100 Mbps"
+100Mb_Full_Duplex               ="D˙plex completo a 100 Mbps"
+1000Mb_Full_Duplex              ="D˙plex completo a 1,0 Gbps"
+IPChksumOffv4                   ="Descarga de suma de comprobaciÛn de IPv4"
+TCPChksumOffv4                  ="Descarga de suma de comprobaciÛn TCP (IPv4)"
+UDPChksumOffv4                  ="Descarga de suma de comprobaciÛn UDP (IPv4)"
+TCPChksumOffv6                  ="Descarga de suma de comprobaciÛn TCP (IPv6)"
+UDPChksumOffv6                  ="Descarga de suma de comprobaciÛn UDP (IPv6)"
+LsoV2IPv4                       ="Descarga grande de envÌo V2 (IPv4)"
+LsoV2IPv6                       ="Descarga grande de envÌo V2 (IPv6)"
+IPsecOffloadV2                  ="Descarga de IPsec"
+IPsecAH                         ="Encabezado de autenticaciÛn habilitado"
+IPsecESP                        ="ESP habilitado"
+IPSecAHESP                      ="Encabezado de autenticaciÛn y ESP habilitados"
+ChksumOffTxRx                   ="RecepciÛn y transmisiÛn habilitadas"
+ChksumOffTx                     ="TransmisiÛn habilitada"
+ChksumOffRx                     ="RecepciÛn habilitada"
+FlowControl                     ="Control de flujo"
+FlowControl_TxOnly              ="TransmisiÛn habilitada"
+FlowControl_RxOnly              ="RecepciÛn habilitada"
+FlowControl_Full                ="RecepciÛn y transmisiÛn habilitadas"
+PriorityVlanDisabled            ="Prioridad y VLAN deshabilitadas"
+PriorityEnabled                 ="Prioridad habilitada"
+VlanEnabled                     ="VLAN habilitada"
+PriorityVlanEnabled             ="Prioridad y VLAN habilitadas"
+TransmitBuffers                 ="B˙feres de transmisiÛn"
+ReceiveBuffers                  ="B˙feres de recepciÛn"
+PriorityVLANTag                 ="Prioridad y VLAN"
+RSS                             ="Receive Side Scaling"
+NumRssQueues                    ="Colas de Receive Side Scaling"
+1queue                          ="1 cola"
+2queues                         ="2 colas"
+4queues                         ="4 colas"
+8queues                         ="8 colas"
+On                              ="Activado"
+Off                             ="Desactivado"
+Enabled                         ="Habilitado"
+Disabled                        ="Deshabilitado"
+Bytes4088                       ="4088 bytes"
+Bytes9014                       ="9014 bytes"
+LAA                             ="DirecciÛn administrada localmente"
+JumboPacket                     ="Paquete jumbo"
+AdaptiveIFS                     ="SeparaciÛn entre tramas ajustables"
+Enable_PME                      ="Activar PME"
+LogLinkState                    ="Registrar sucesos del estado del enlace"
+InterruptModeration             ="ModeraciÛn de interrupciones"
+InterruptThrottleRate           ="Velocidad de obstrucciÛn de la interrupciÛn"
+Adaptive                        ="AdaptaciÛn"
+Extreme                         ="Extremo"
+Minimal                         ="MÌnimo"
+High                            ="Alto"
+Medium                          ="Medio"
+Low                             ="Bajo"
+GigabitMasterMode               ="Forzar modo maestro"
+GigabitSlaveMode                ="Forzar modo esclavo"
+MasterSlaveMode                 ="Modo maestro esclavo Gigabit"
+WaitAutoNegComplete             ="Esperar al enlace"
+EnableLLI                       ="Interrupciones de baja latencia"
+LLIPorts                        ="Puertos de interrupciones de baja latencia"
+LLIPortBased                    ="Basado en puerto"
+LLIPSHBased                     ="Basado en indicador PSH"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.040C] ; French (France)
+AutoDetect                      ="DÈtection automatique"
+AutoNegotiation                 ="NÈgociation automatique"
+SpeedDuplex                     ="Vitesse et duplex"
+10Mb_Half_Duplex                ="10 Mbits/s half duplex"
+10Mb_Full_Duplex                ="10 Mbits/s full duplex"
+100Mb_Half_Duplex               ="100 Mbits/s half duplex"
+100Mb_Full_Duplex               ="100 Mbits/s full duplex"
+1000Mb_Full_Duplex              ="1,0 Gbits/s full duplex"
+IPChksumOffv4                   ="DÈlester somme de contrÙle IPv4"
+TCPChksumOffv4                  ="DÈlester somme de contrÙle TCP (IPv4)"
+UDPChksumOffv4                  ="DÈlester somme de contrÙle UDP (IPv4)"
+TCPChksumOffv6                  ="DÈlester somme de contrÙle TCP (IPv6)"
+UDPChksumOffv6                  ="DÈlester somme de contrÙle UDP (IPv6)"
+LsoV2IPv4                       ="DÈlester envoi important v2 (IPv4)"
+LsoV2IPv6                       ="DÈlester envoi important v2 (IPv6)"
+IPsecOffloadV2                  ="DÈlestage sÈcuritÈ IP"
+IPsecAH                         ="En-tÍte auth. activÈ"
+IPsecESP                        ="ESP activÈ"
+IPSecAHESP                      ="En-tÍte auth. et ESP activÈs"
+ChksumOffTxRx                   ="Rx et Tx activÈes"
+ChksumOffTx                     ="Tx activÈe"
+ChksumOffRx                     ="Rx activÈe"
+FlowControl                     ="ContrÙle de flux"
+FlowControl_TxOnly              ="Tx activÈe"
+FlowControl_RxOnly              ="Rx activÈe"
+FlowControl_Full                ="Rx et Tx activÈes"
+PriorityVlanDisabled            ="PrioritÈ et VLAN dÈsactivÈs"
+PriorityEnabled                 ="PrioritÈ activÈe"
+VlanEnabled                     ="VLAN activÈ"
+PriorityVlanEnabled             ="PrioritÈ et VLAN activÈs"
+TransmitBuffers                 ="Tampons d'Èmission"
+ReceiveBuffers                  ="Tampons de rÈception"
+PriorityVLANTag                 ="PrioritÈ et VLAN"
+RSS                             ="Receive Side Scaling"
+NumRssQueues                    ="Files díattente Receive Side Scaling"
+1queue                          ="1 file d'attente"
+2queues                         ="2 files d'attente"
+4queues                         ="4 files d'attente"
+8queues                         ="8 files d'attente"
+On                              ="ActivÈ(e)"
+Off                             ="DÈsactivÈ(e)"
+Enabled                         ="ActivÈ(e)"
+Disabled                        ="DÈsactivÈ(e)"
+Bytes4088                       ="4088 octets"
+Bytes9014                       ="9014 octets"
+LAA                             ="Adresse administrÈe localement"
+JumboPacket                     ="Paquet Ètendu"
+AdaptiveIFS                     ="Espacement intertrame dynamique"
+Enable_PME                      ="Activer PME"
+LogLinkState                    ="Consigner l'ÈvÈnement de la liaison"
+InterruptModeration             ="Gestion des interruptions"
+InterruptThrottleRate           ="Taux de gestion des interruptions"
+Adaptive                        ="Variable"
+Extreme                         ="ExtrÍme"
+Minimal                         ="Minime"
+High                            ="Haut"
+Medium                          ="Moyen"
+Low                             ="Faible"
+GigabitMasterMode               ="Forcer le mode MaÓtre"
+GigabitSlaveMode                ="Forcer le mode Esclave"
+MasterSlaveMode                 ="Mode MaÓtre-Esclave Gigabit"
+WaitAutoNegComplete             ="Attendre la liaison"
+EnableLLI                       ="Interruptions ‡ faible latence"
+LLIPorts                        ="Ports d'interruption ‡ faible latence"
+LLIPortBased                    ="BasÈ sur le port"
+LLIPSHBased                     ="BasÈ sur le drapeau PSH"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0410] ; Italian (Italy)
+AutoDetect                      ="Rilevamento automatico"
+AutoNegotiation                 ="Negoziazione automatica"
+SpeedDuplex                     ="Velocit‡ e duplex"
+10Mb_Half_Duplex                ="10 Mbps Half Duplex"
+10Mb_Full_Duplex                ="10 Mbps Full Duplex"
+100Mb_Half_Duplex               ="100 Mbps Half Duplex"
+100Mb_Full_Duplex               ="100 Mbps Full Duplex"
+1000Mb_Full_Duplex              ="1.0 Gbps Full Duplex"
+IPChksumOffv4                   ="Offload di checksum IPv4"
+TCPChksumOffv4                  ="Offload di checksum TCP (IPv4)"
+UDPChksumOffv4                  ="Offload di checksum UDP (IPv4)"
+TCPChksumOffv6                  ="Offload di checksum TCP (IPv6)"
+UDPChksumOffv6                  ="Offload di checksum UDP (IPv6)"
+LsoV2IPv4                       ="Large Send Offload V2 (IPv4)"
+LsoV2IPv6                       ="Large Send Offload V2 (IPv6)"
+IPsecOffloadV2                  ="Offload IPsec"
+IPsecAH                         ="Intestazione di autenticazione abilitata"
+IPsecESP                        ="ESP abilitato"
+IPSecAHESP                      ="Intestazione di autenticazione ed ESP abilitati"
+ChksumOffTxRx                   ="Rx e Tx abilitate"
+ChksumOffTx                     ="Tx abilitata"
+ChksumOffRx                     ="Rx abilitata"
+FlowControl                     ="Controllo del flusso"
+FlowControl_TxOnly              ="Tx abilitata"
+FlowControl_RxOnly              ="Rx abilitata"
+FlowControl_Full                ="Rx e Tx abilitate"
+PriorityVlanDisabled            ="Priorit‡ e VLAN disabilitate"
+PriorityEnabled                 ="Priorit‡ abilitata"
+VlanEnabled                     ="VLAN abilitata"
+PriorityVlanEnabled             ="Priorit‡ e VLAN abilitate"
+TransmitBuffers                 ="Trasmetti buffer"
+ReceiveBuffers                  ="Ricevi buffer"
+PriorityVLANTag                 ="Priorit‡ e VLAN"
+RSS                             ="Receive Side Scaling"
+NumRssQueues                    ="Code Receive-Side Scaling"
+1queue                          ="1 coda"
+2queues                         ="2 code"
+4queues                         ="4 code"
+8queues                         ="8 code"
+On                              ="Attivato"
+Off                             ="Disattivato"
+Enabled                         ="Attivato"
+Disabled                        ="Disattivato"
+Bytes4088                       ="4088 byte"
+Bytes9014                       ="9014 byte"
+LAA                             ="Indirizzo amministrato localmente"
+JumboPacket                     ="Pacchetto Jumbo"
+AdaptiveIFS                     ="Spaziatura adattiva tra frame"
+Enable_PME                      ="Abilita PME"
+LogLinkState                    ="Registra evento stato del collegamento"
+InterruptModeration             ="Interrompi moderazione"
+InterruptThrottleRate           ="Velocit‡ di rallentamento dell'interrupt"
+Adaptive                        ="Adattivo"
+Extreme                         ="Estremo"
+Minimal                         ="Minimale"
+High                            ="Alto"
+Medium                          ="Medio"
+Low                             ="Basso"
+GigabitMasterMode               ="Imponi Modo Master"
+GigabitSlaveMode                ="Imponi Modo Slave"
+MasterSlaveMode                 ="Modo Master Slave Gigabit"
+WaitAutoNegComplete             ="Attesa per il collegamento"
+EnableLLI                       ="Interrupt a bassa latenza"
+LLIPorts                        ="Porte di interrupt a bassa latenza"
+LLIPortBased                    ="Basato su porta"
+LLIPSHBased                     ="Basato su flag PSH"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0411] ; Japanese (Japan)
+AutoDetect                      ="é©ìÆåüèo"
+AutoNegotiation                 ="ÉIÅ[ÉgÉlÉSÉVÉGÅ[ÉVÉáÉì"
+SpeedDuplex                     ="ë¨ìxÇ∆ÉfÉÖÉvÉåÉbÉNÉX"
+10Mb_Half_Duplex                ="10 Mbps îºìÒèdí êM"
+10Mb_Full_Duplex                ="10 Mbps ëSìÒèdí êM"
+100Mb_Half_Duplex               ="100 Mbps îºìÒèdí êM"
+100Mb_Full_Duplex               ="100 Mbps ëSìÒèdí êM"
+1000Mb_Full_Duplex              ="1.0 Gbps ëSìÒèdí êM"
+IPChksumOffv4                   ="IPv4 É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh"
+TCPChksumOffv4                  ="TCP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv4)"
+UDPChksumOffv4                  ="UDP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv4)"
+TCPChksumOffv6                  ="TCP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv6)"
+UDPChksumOffv6                  ="UDP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv6)"
+LsoV2IPv4                       ="ëÂó ëóêMÉIÉtÉçÅ[Éh V2 (IPv4)"
+LsoV2IPv6                       ="ëÂó ëóêMÉIÉtÉçÅ[Éh V2 (IPv6)"
+IPsecOffloadV2                  ="IPSec ÉIÉtÉçÅ[Éh"
+IPsecAH                         ="îFèÿÉwÉbÉ_Å[óLå¯"
+IPsecESP                        ="ESP óLå¯"
+IPSecAHESP                      ="îFèÿÉwÉbÉ_Å[Ç∆ ESP óLå¯"
+ChksumOffTxRx                   ="éÛêM/ëóêM óLå¯"
+ChksumOffTx                     ="ëóêM óLå¯"
+ChksumOffRx                     ="éÛêM óLå¯"
+FlowControl                     ="ÉtÉçÅ[êßå‰"
+FlowControl_TxOnly              ="ëóêM óLå¯"
+FlowControl_RxOnly              ="éÛêM óLå¯"
+FlowControl_Full                ="éÛêM/ëóêM óLå¯"
+PriorityVlanDisabled            ="óDêÊ/VLAN ñ≥å¯"
+PriorityEnabled                 ="óDêÊ óLå¯"
+VlanEnabled                     ="VLAN óLå¯"
+PriorityVlanEnabled             ="óDêÊ/VLAN óLå¯"
+TransmitBuffers                 ="ëóêMÉoÉbÉtÉ@Å["
+ReceiveBuffers                  ="éÛêMÉoÉbÉtÉ@Å["
+PriorityVLANTag                 ="óDêÊ/VLAN"
+RSS                             ="éÛêMë§ÉXÉPÅ[ÉäÉìÉO"
+NumRssQueues                    ="éÛêMë§ÉXÉPÅ[ÉäÉìÉOÅEÉLÉÖÅ["
+1queue                          ="1 ÉLÉÖÅ["
+2queues                         ="2 ÉLÉÖÅ["
+4queues                         ="4 ÉLÉÖÅ["
+8queues                         ="8 ÉLÉÖÅ["
+On                              ="ÉIÉì"
+Off                             ="ÉIÉt"
+Enabled                         ="ÉIÉì"
+Disabled                        ="ÉIÉt"
+Bytes4088                       ="4088 ÉoÉCÉg"
+Bytes9014                       ="9014 ÉoÉCÉg"
+LAA                             ="ÉçÅ[ÉJÉãä«óùÇ≥ÇÍÇÈÉAÉhÉåÉX"
+JumboPacket                     ="ÉWÉÉÉìÉ{ ÉpÉPÉbÉg"
+AdaptiveIFS                     ="ÉAÉ_ÉvÉeÉBÉuÅEÉCÉìÉ^Å[ÉtÉåÅ[ÉÄÅEÉXÇÿÅ|ÉVÉìÉO"
+Enable_PME                      ="PME ÇÉIÉìÇ…Ç∑ÇÈ"
+LogLinkState                    ="ÉäÉìÉNÅEÉXÉeÅ[ÉgÅEÉCÉxÉìÉgÇÃÉçÉO"
+InterruptModeration             ="äÑÇËçûÇ›â¡å∏"
+InterruptThrottleRate           ="äÑÇËçûÇ›â¡å∏ó¶"
+Adaptive                        ="ÉAÉ_ÉvÉeÉBÉu"
+Extreme                         ="ç≈ëÂ"
+Minimal                         ="ç≈è¨"
+High                            ="çÇ"
+Medium                          ="íÜ"
+Low                             ="í·"
+GigabitMasterMode               ="É}ÉXÉ^Å[ ÉÇÅ[ÉhÇÃã≠êß"
+GigabitSlaveMode                ="ÉXÉåÅ[Éu ÉÇÅ[ÉhÇÃã≠êß"
+MasterSlaveMode                 ="ÉMÉKÉrÉbÉgÅEÉ}ÉXÉ^Å[ÅEÉXÉåÅ[ÉuÅEÉÇÅ[Éh"
+WaitAutoNegComplete             ="ÉäÉìÉNÇë“ã@"
+EnableLLI                       ="í·ÉåÉCÉeÉìÉVÅ[äÑÇËçûÇ›"
+LLIPorts                        ="í·ÉåÉCÉeÉìÉVÅ[äÑÇËçûÇ›É|Å[Ég"
+LLIPortBased                    ="É|Å[ÉgÉxÅ[ÉX"
+LLIPSHBased                     ="PSH ÉtÉâÉOÉxÅ[ÉX"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0412] ; Korean (Korea)
+AutoDetect                      ="¿⁄µø ∞Àªˆ"
+AutoNegotiation                 ="¿⁄µø «˘ªÛ"
+SpeedDuplex                     ="º”µµ π◊ ¿Ã¡ﬂº∫"
+10Mb_Half_Duplex                ="10 Mbps π›¿Ã¡ﬂ"
+10Mb_Full_Duplex                ="10 Mbps ¿¸¿Ã¡ﬂ"
+100Mb_Half_Duplex               ="100 Mbps π›¿Ã¡ﬂ"
+100Mb_Full_Duplex               ="100 Mbps ¿¸¿Ã¡ﬂ"
+1000Mb_Full_Duplex              ="1.0 Gbps ¿¸¿Ã¡ﬂ"
+IPChksumOffv4                   ="IPv4 √º≈©º∂ ø¿«¡∑ŒµÂ"
+TCPChksumOffv4                  ="TCP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv4)"
+UDPChksumOffv4                  ="UDP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv4)"
+TCPChksumOffv6                  ="TCP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv6)"
+UDPChksumOffv6                  ="UDP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv6)"
+LsoV2IPv4                       ="¥Î«¸ ¿¸º€ ø¿«¡∑ŒµÂ V2(IPv4)"
+LsoV2IPv6                       ="¥Î«¸ ¿¸º€ ø¿«¡∑ŒµÂ V2(IPv6)"
+IPsecOffloadV2                  ="IPsec ø¿«¡∑ŒµÂ"
+IPsecAH                         ="Auth «Ï¥ı »∞º∫»≠µ "
+IPsecESP                        ="ESP »∞º∫»≠µ "
+IPSecAHESP                      ="Auth «Ï¥ı π◊ ESP »∞º∫»≠µ "
+ChksumOffTxRx                   ="Rx & Tx »∞º∫»≠µ "
+ChksumOffTx                     ="Tx »∞º∫»≠µ "
+ChksumOffRx                     ="Rx »∞º∫»≠µ "
+FlowControl                     ="»Â∏ß ¡¶æÓ"
+FlowControl_TxOnly              ="Tx »∞º∫»≠µ "
+FlowControl_RxOnly              ="Rx »∞º∫»≠µ "
+FlowControl_Full                ="Rx & Tx »∞º∫»≠µ "
+PriorityVlanDisabled            ="øÏº±º¯¿ß π◊ VLAN ∫Ò»∞º∫»≠µ "
+PriorityEnabled                 ="øÏº±º¯¿ß »∞º∫»≠µ "
+VlanEnabled                     ="VLAN »∞º∫»≠µ "
+PriorityVlanEnabled             ="øÏº±º¯¿ß π◊ VLAN »∞º∫»≠µ "
+TransmitBuffers                 ="¿¸º€ πˆ∆€"
+ReceiveBuffers                  ="ºˆΩ≈ πˆ∆€"
+PriorityVLANTag                 ="øÏº±º¯¿ß π◊ VLAN"
+RSS                             ="ºˆΩ≈√¯ πË¿≤"
+NumRssQueues                    ="ºˆΩ≈√¯ πË¿≤ ¥Î±‚ø≠"
+1queue                          ="1∞≥¿« ¥Î±‚ø≠"
+2queues                         ="2∞≥¿« ¥Î±‚ø≠"
+4queues                         ="4∞≥¿« ¥Î±‚ø≠"
+8queues                         ="8∞≥¿« ¥Î±‚ø≠"
+On                              ="ø¬"
+Off                             ="ø¿«¡"
+Enabled                         ="»∞º∫»≠µ "
+Disabled                        ="∫Ò»∞º∫»≠µ "
+Bytes4088                       ="4088πŸ¿Ã∆Æ"
+Bytes9014                       ="9014πŸ¿Ã∆Æ"
+LAA                             ="∑Œƒ√ ∞¸∏Æ ¡÷º“"
+JumboPacket                     ="¡°∫∏ ∆–≈∂"
+AdaptiveIFS                     ="¿˚¿¿ «¡∑π¿”∞£ ∞£∞›"
+Enable_PME                      ="PME »∞º∫»≠"
+LogLinkState                    ="∏µ≈© ªÛ≈¬ ¿Ã∫•∆Æ ±‚∑œ"
+InterruptModeration             ="¿Œ≈Õ∑¥∆Æ ¡∂¿˝"
+InterruptThrottleRate           ="¿Œ≈Õ∑¥∆Æ ¡∂¿˝ º”µµ"
+Adaptive                        ="¿˚¿¿"
+Extreme                         ="√÷¥Î"
+Minimal                         ="√÷º“"
+High                            ="≥Ù¿Ω"
+Medium                          ="¡ﬂ∞£"
+Low                             ="≥∑¿Ω"
+GigabitMasterMode               ="∞≠¡¶ ∏≈Ω∫≈Õ ∏µÂ"
+GigabitSlaveMode                ="∞≠¡¶ ΩΩ∑π¿Ã∫Í ∏µÂ"
+MasterSlaveMode                 ="±‚∞°∫Ò∆Æ ∏≈Ω∫≈Õ ΩΩ∑π¿Ã∫Í ∏µÂ"
+WaitAutoNegComplete             ="∏µ≈© ¥Î±‚"
+EnableLLI                       ="≥∑¿∫ ¥Î±‚ Ω√∞£ ¿Œ≈Õ∑¥∆Æ"
+LLIPorts                        ="≥∑¿∫ ¥Î±‚ Ω√∞£ ¿Œ≈Õ∑¥∆Æ ∆˜∆Æ"
+LLIPortBased                    ="∆˜∆Æ ±‚π›"
+LLIPSHBased                     ="PSH «√∑°±◊ ±‚π›"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0416] ; Portuguese (Brazil)
+AutoDetect                      ="DetecÁ„o autom·tica"
+AutoNegotiation                 ="NegociaÁ„o autom·tica"
+SpeedDuplex                     ="Velocidade e duplex"
+10Mb_Half_Duplex                ="Half-duplex de 10 Mbps"
+10Mb_Full_Duplex                ="Full-duplex de 10 Mbps"
+100Mb_Half_Duplex               ="Half-duplex de 100 Mbps"
+100Mb_Full_Duplex               ="Full-duplex de 100 Mbps"
+1000Mb_Full_Duplex              ="Full-duplex de 1,0 Gbps"
+IPChksumOffv4                   ="Offload Checksum IPv4"
+TCPChksumOffv4                  ="Offload Checksum de TCP (IPv4)"
+UDPChksumOffv4                  ="Offload Checksum UDP (IPv4)"
+TCPChksumOffv6                  ="Offload Checksum de TCP (IPv6)"
+UDPChksumOffv6                  ="Offload Checksum UDP (IPv6)"
+LsoV2IPv4                       ="Offload grande de envio v2 (IPv4)"
+LsoV2IPv6                       ="Offload grande de envio v2 (IPv6)"
+IPsecOffloadV2                  ="Descarregamento do IPsec"
+IPsecAH                         ="CabeÁalho de autorizaÁ„o habilitado"
+IPsecESP                        ="ESP habilitado"
+IPSecAHESP                      ="CabeÁalho de autorizaÁ„o e ESP habilitados"
+ChksumOffTxRx                   ="Rx e TX habilitadas"
+ChksumOffTx                     ="Tx habilitada"
+ChksumOffRx                     ="Rx habilitada"
+FlowControl                     ="Controle de fluxo"
+FlowControl_TxOnly              ="Tx habilitada"
+FlowControl_RxOnly              ="Rx habilitada"
+FlowControl_Full                ="Rx e TX habilitadas"
+PriorityVlanDisabled            ="Prioridade e VLAN desabilitadas"
+PriorityEnabled                 ="Prioridade habilitada"
+VlanEnabled                     ="VLAN habilitada"
+PriorityVlanEnabled             ="Prioridade e VLAN habilitadas"
+TransmitBuffers                 ="Buffers de transmiss„o"
+ReceiveBuffers                  ="Buffers de recepÁ„o"
+PriorityVLANTag                 ="Prioridade e VLAN"
+RSS                             ="Escala de recepÁ„o"
+NumRssQueues                    ="Filas de escalas de recepÁ„o"
+1queue                          ="1 fila"
+2queues                         ="2 filas"
+4queues                         ="4 filas"
+8queues                         ="8 Filas"
+On                              ="Ligado"
+Off                             ="Desligado"
+Enabled                         ="Habilitada"
+Disabled                        ="Desabilitada"
+Bytes4088                       ="4088 Bytes"
+Bytes9014                       ="9014 Bytes"
+LAA                             ="EndereÁo administrado localmente (LAA)"
+JumboPacket                     ="Pacote grande"
+AdaptiveIFS                     ="EspaÁamento inter-frames adaptativo"
+Enable_PME                      ="Habilitar PME"
+LogLinkState                    ="Evento de estado de link de registro"
+InterruptModeration             ="ModeraÁ„o de interrupÁıes"
+InterruptThrottleRate           ="Taxa de moderaÁ„o de interrupÁıes"
+Adaptive                        ="Adaptativa"
+Extreme                         ="Extremo"
+Minimal                         ="MÌnimo"
+High                            ="Alto"
+Medium                          ="MÈdio"
+Low                             ="Baixo"
+GigabitMasterMode               ="ForÁar Modo Master"
+GigabitSlaveMode                ="ForÁar Modo Slave"
+MasterSlaveMode                 ="Modo Master Slave Gigabit"
+WaitAutoNegComplete             ="Aguardar pelo link"
+EnableLLI                       ="InterrupÁıes de baixa latÍncia"
+LLIPorts                        ="Portas de interrupÁıes de baixa latÍncia"
+LLIPortBased                    ="Baseado em porta"
+LLIPSHBased                     ="Baseado no sinalizador PSH"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+
+[Strings.0C04] ; Chinese (Traditional)
+AutoDetect                      ="¶€∞ ∞ª¥˙"
+AutoNegotiation                 ="¶€∞ •ÊØA"
+SpeedDuplex                     ="≥t´◊ªP¬˘§u"
+10Mb_Half_Duplex                ="10 Mbps •b¬˘§u"
+10Mb_Full_Duplex                ="10 Mbps •˛¬˘§u"
+100Mb_Half_Duplex               ="100 Mbps •b¬˘§u"
+100Mb_Full_Duplex               ="100 Mbps •˛¬˘§u"
+1000Mb_Full_Duplex              ="1.0 Gbps •˛¬˘§u"
+IPChksumOffv4                   ="IPv4 ¿À¨d≠»®¯∏¸"
+TCPChksumOffv4                  ="TCP ¿À¨d≠»®¯∏¸ (IPv4)"
+UDPChksumOffv4                  ="UDP ¿À¨d≠»®¯∏¸ (IPv4)"
+TCPChksumOffv6                  ="TCP ¿À¨d≠»®¯∏¸ (IPv6)"
+UDPChksumOffv6                  ="UDP ¿À¨d≠»®¯∏¸ (IPv6)"
+LsoV2IPv4                       ="§j∂q∂«∞e®¯∏¸ V2 (IPv4)"
+LsoV2IPv6                       ="§j∂q∂«∞e®¯∏¸ V2 (IPv6)"
+IPsecOffloadV2                  ="IPsec ®¯∏¸"
+IPsecAH                         ="º–¿Yª{√“ (Auth Header) §w±“•Œ"
+IPsecESP                        ="ESP §w±“•Œ"
+IPSecAHESP                      ="º–¿Yª{√“ (Auth Header) ªP ESP §w±“•Œ"
+ChksumOffTxRx                   ="Rx ªP Tx §w±“•Œ"
+ChksumOffTx                     ="Tx §w±“•Œ"
+ChksumOffRx                     ="Rx §w±“•Œ"
+FlowControl                     ="¨y∂q±±®Ó"
+FlowControl_TxOnly              ="Tx §w±“•Œ"
+FlowControl_RxOnly              ="Rx §w±“•Œ"
+FlowControl_Full                ="Rx ªP Tx §w±“•Œ"
+PriorityVlanDisabled            ="¿u•˝∂∂ß«ªP VLAN §w∞±•Œ"
+PriorityEnabled                 ="¿u•˝∂∂ß«§w±“•Œ"
+VlanEnabled                     ="VLAN §w±“•Œ"
+PriorityVlanEnabled             ="¿u•˝∂∂ß«ªP VLAN §w±“•Œ"
+TransmitBuffers                 ="∂«øÈΩwΩƒ∞œ"
+ReceiveBuffers                  ="±µ¶¨ΩwΩƒ∞œ"
+PriorityVLANTag                 ="¿u•˝∂∂ß«ªP VLAN"
+RSS                             ="±µ¶¨∫›Ω’æ„§Ò≤v"
+NumRssQueues                    ="±µ¶¨∫›Ω’æ„§Ò≤v¶Ó¶C"
+1queue                          ="§@≠”¶Ó¶C"
+2queues                         ="®‚≠”¶Ó¶C"
+4queues                         ="•|≠”¶Ó¶C"
+8queues                         ="§K≠”¶Ó¶C"
+On                              ="∂}±“"
+Off                             ="√ˆ≥¨"
+Enabled                         ="±“•Œ"
+Disabled                        ="∞±•Œ"
+Bytes4088                       ="4088 ¶Ï§∏≤’"
+Bytes9014                       ="9014 ¶Ï§∏≤’"
+LAA                             ="•ª¶a∫ﬁ≤z¶Ïß}"
+JumboPacket                     ="∂W§j´¨´ •]"
+AdaptiveIFS                     ="Ω’æ„© Æÿ¨[§∫∂°πj"
+Enable_PME                      ="±“•Œ PME"
+LogLinkState                    ="µnø˝≥sµ≤™¨∫A®∆•Û"
+InterruptModeration             ="ß√¬_Ω’∏`"
+InterruptThrottleRate           ="ß√¬_∏`¨yª÷≥t≤v"
+Adaptive                        ="Ω’æ„© "
+Extreme                         ="∑•∞™"
+Minimal                         ="≥ÃßC"
+High                            ="∞™"
+Medium                          ="§§"
+Low                             ="ßC"
+GigabitMasterMode               ="±j≠¢•Dæ˜º“¶°"
+GigabitSlaveMode                ="±j≠¢±qƒ›º“¶°"
+MasterSlaveMode                 ="Gigabit •D±qº“¶°"
+WaitAutoNegComplete             ="µ•´›≥sµ≤"
+EnableLLI                       ="ßC©µøß√¬_"
+LLIPorts                        ="ßC©µøß√¬_≥s±µ∞"
+LLIPortBased                    ="≥s±µ∞¨∞∞Ú¬¶"
+LLIPSHBased                     ="PSH ∫X∏π¨∞∞Ú¬¶"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\e1qmsg.dll"
+E1QExpress.Service.DispName     = "Intel(R) PCI Express Network Connection Driver Q"
+DISKNAME                        = "Intel(R) Driver Disk"
+
+;; Brandnames.str
+;------------------------------------------------------------------------------
+E10A7NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Network Connection"
+E10A9NC.DeviceDesc              = "Intel(R) 82575EB Gigabit Backplane Connection"
+E10A7DD.DeviceDesc              = "Intel(R) 82575EB Multi-Function Network Device"
+E10D3NC.DeviceDesc              = "Intel(R) 82574L Gigabit Network Connection"
+EA01FNC.DeviceDesc              = "Intel(R) Gigabit CT Desktop Adapter"
+EA01FHFNC.DeviceDesc            = "Intel(R) Gigabit CT2 Desktop Adapter"
+E10C9LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+E10C9NC.DeviceDesc              = "Intel(R) Gigabit ET Dual Port Server Adapter"
+E150A.DeviceDesc                = "Intel(R) 82576NS Gigabit Ethernet Controller"
+E1518.DeviceDesc                = "Intel(R) 82576NS SerDes Gigabit Ethernet Controller"
+E10E6NC.DeviceDesc              = "Intel(R) Gigabit EF Dual Port Server Adapter"
+E10E7NC.DeviceDesc              = "Intel(R) 82576 Gigabit Dual Port Server Network Connection"
+E10E8NC.DeviceDesc              = "Intel(R) Gigabit ET Quad Port Server Adapter"
+E1526NC.DeviceDesc              = "Intel(R) Gigabit ET2 Quad Port Server Adapter"
+E10E6LNC.DeviceDesc             = "Intel(R) 82576 Gigabit Dual Port Network Connection"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+

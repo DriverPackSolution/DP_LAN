@@ -1,0 +1,171 @@
+;*******************************************************************************
+; INF for Windows 98 and Windows 2000
+
+
+[Version]
+Signature  = "$CHICAGO$"
+Compatible = 1
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %SUPERAL%
+DriverVer   = 01/20/2009, 1.00.10377.0
+
+[Manufacturer]
+%SUPERAL%   = SR9USB
+
+[ControlFlags]
+ExcludeFromSelect = USB\VID_0FE6&PID_8101
+
+[SR9USB]
+%SR9USB.DeviceDesc% = SR9USB.Ndi,USB\VID_0FE6&PID_8101
+
+
+;*******************************************************************************
+; Win98 main sections
+
+[SR9USB.Ndi]
+AddReg    = SR9USB.Reg, SR9USB.Params
+CopyFiles = SR9USB.ndis.copyfiles
+
+;*******************************************************************************
+; NT main sections
+
+[SR9USB.Ndi.NT]
+AddReg          = SR9USB.NT.Reg, SR9USB.Params
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 15 ; ISA for pass InfCheck.exe
+CopyFiles       = SR9USB.ndis.copyfiles.NT
+
+
+[SR9USB.Ndi.NT.Services]
+AddService = SR9USB, 2, SR9USB.Service, Common.EventLog
+
+
+[SR9USB.ndis.copyfiles]
+sr9usb.sys,,,2
+
+[SR9USB.ndis.copyfiles.NT]
+sr9usb.sys,,,2
+
+
+;*******************************************************************************
+; Windows 98 section
+;*******************************************************************************
+
+[SR9USB.Reg]
+HKR,Ndi,DeviceID,,USB\VID_0FE6&PID_8101
+HKR,,AdapterName,,SR9USB
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,sr9usb.sys
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,SR9USB
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,,,"SR9USB.Install"
+
+HKR,Ndi,HelpText,,"DM9601 USB To Fast Ethernet Adapter"
+
+
+;*******************************************************************************
+; Driver parameters
+;*******************************************************************************
+
+[SR9USB.Params]
+HKR, ,TxPacketDesc,    0, "46"   ; 0x2E
+HKR, ,RxPacketDesc,    0, "1"   ; 0x01
+
+HKR,Ndi\Params\ConnectionType,ParamDesc,,"ConnectionType"
+HKR,Ndi\Params\ConnectionType,default,,"8"
+HKR,Ndi\Params\ConnectionType,type,,"enum"
+HKR,Ndi\Params\ConnectionType\enum,15,,"AutoSense"
+HKR,Ndi\Params\ConnectionType\enum,2,,"1M PHNA"
+HKR,Ndi\Params\ConnectionType\enum,4,,"10BaseT"
+HKR,Ndi\Params\ConnectionType\enum,5,,"10BaseT Full_Duplex"
+HKR,Ndi\Params\ConnectionType\enum,8,,"100BaseTX"
+HKR,Ndi\Params\ConnectionType\enum,9,,"100BaseTX Full_Duplex"
+HKR,Ndi\Params\ConnectionType,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\WakeUpModeCap,       ParamDesc,,"WakeUpMode"
+HKR,Ndi\Params\WakeUpModeCap,       default,,"0"
+HKR,Ndi\Params\WakeUpModeCap,       type,,"enum"
+HKR,Ndi\Params\WakeUpModeCap\enum,  "0",,%WakeUpMode_None%
+HKR,Ndi\Params\WakeUpModeCap\enum,  "1",,%WakeUpMode_Magic%
+HKR,Ndi\Params\WakeUpModeCap\enum,  "2",,%WakeUpMode_Pattern%
+HKR,Ndi\Params\WakeUpModeCap\enum,  "3",,%WakeUpMode_Both%
+
+;*******************************************************************************
+; Install section for Windows 2000
+;*******************************************************************************
+
+[SR9USB.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "SR9USB"
+HKR,,                Platform,   0, "1"
+
+[SR9USB.Service]
+DisplayName    = %SR9USB.Service.DispName%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\sr9usb.sys
+LoadOrderGroup = NDIS,NTKERN,NDIS
+AddReg         = TextModeFlags.Reg
+
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR, , TypesSupported  , 0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+
+;*******************************************************************************
+; Destination directories
+;*******************************************************************************
+
+[DestinationDirs]
+SR9USB.ndis.copyfiles    = 11
+SR9USB.ndis.copyfiles.NT = 12
+DefaultDestDir           = 11
+
+
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+sr9usb.sys = 1
+sr9usb.inf = 1
+
+;*******************************************************************************
+; Localizable strings
+;*******************************************************************************
+
+[Strings]
+SUPERAL = "ARCHEON Semiconductor, Inc."
+
+;Source Disk Name
+DISKNAME = "SR9600 USB To Fast Ethernet Adapter Driver Disk"
+
+SR9USB.DeviceDesc       = "SR9600 USB To Fast Ethernet Adapter"
+SR9USB.Service.DispName = "SR9600 USB To Fast Ethernet Adapter"
+WakeUpMode_Magic        = "Magic Frame"
+WakeUpMode_Pattern      = "Link Change"
+WakeUpMode_Both         = "Both"
+WakeUpMode_None         = "None"

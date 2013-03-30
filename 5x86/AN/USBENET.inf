@@ -1,0 +1,249 @@
+
+[Version]
+Signature="$CHICAGO$"
+Compatible=1
+Class=Net
+;Signature="$Windows NT$"
+Provider=%ATEN%
+ClassGUID={4D36E972-E325-11CE-BFC1-08002BE10318}
+;CatalogFile=Aoxenet.cat
+
+[Manufacturer]
+%ATEN%=ATEN
+
+[SourceDisksNames]
+50=%DisketteDesc%,,0
+
+[SourceDisksFiles]
+USBENET.SYS =50,
+;AOXenet.cat
+[DestinationDirs]
+AOXENET.CopyFiles = 11
+ndis5.CopyFiles   = 12
+
+
+;****************************************************************************
+; Exclude from select the USB device -- it should be auto-detected!
+;****************************************************************************
+
+[ControlFlags]
+ExcludeFromSelect     = USB\VID_0557&PID_2002
+
+[ATEN]
+%USB\VID_0557&PID_2002.DeviceDesc% = ATENUsbEth, USB\VID_0557&PID_2002
+
+;****************************************************************************
+; Device Install Sections
+;
+; Section names ending in ".NT" point to Windows NT 5.0-compatible sections
+;****************************************************************************
+
+; ATEN USB-Ethernet Adapter
+
+[ATENUsbEth.NT]
+AddReg=AOXENET.ndi,AOXENET_parms.reg
+Characteristics=0x84
+BusType=0 ; USB
+CopyFiles=ndis5.CopyFiles
+
+[ATENUsbEth.NT.Services]
+AddService=AOXENET,2,AOXENET.ServiceDesc,AOXENET.EventLog
+
+[ATENUsbEth]
+AddReg=AOXENET_Win9X.ndi,AOXENET_parms.reg,AOXENET_flags.reg
+CopyFiles=AOXENET.CopyFiles
+;Set the following date to the driver date and uncomment
+;DriverVer=07/15/1999
+DeviceID=USB\VID_0557&PID_2002
+
+[ndis5.CopyFiles]
+USBENET.SYS,,,0x2
+
+[AOXENET.CopyFiles]
+USBENET.SYS
+
+[AOXENET.EventLog]
+AddReg=AOXENET.AddEventLog
+
+[AOXENET.AddEventLog]
+HKR, ,EventMessageFile,  0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, ,TypeSupported,     0x00010001, 7
+
+[AOXENET.ServiceDesc]
+DisplayName      = %AOXENET.DriverDesc%
+ServiceType      = 1
+StartType        = 3
+ErrorControl     = 1
+ServiceBinary    = %12%\USBENET.SYS
+LoadOrderGroup   = NDIS,NTKERN,NDIS
+
+[AOXENET.ndi]
+HKR,Ndi,                Service,         0,  "AOXENET"
+HKR,Ndi\Interfaces,     UpperRange,      0,  "ndis5"
+;HKR,Ndi\Interfaces,     UpperRange,      0,  "ndis5_ip,ndis5_nbf"
+HKR,Ndi\Interfaces,     LowerRange,      0,  "ethernet"
+HKR,,                   PlatformType,    0,  "1"
+
+
+[AOXENET_Win9x.ndi]
+HKR,Ndi,DeviceID,,USB\VID_0557&PID_2002
+HKR,,AdapterName,,AOXENET
+HKR,NDIS,LogDriverName,,AOXENET
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0a
+HKR,Ndi,CardType,,"PNP"
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+HKR,Ndi\Install,,,"AOXENET.Install"
+HKR,Ndi\Remove,,,"AOXENET.Remove"
+HKR,Ndi,HelpText,,"ATEN USB-Ethernet Adapter"
+
+[AOXENET.Install]
+AddReg=AOXENET.Addreg
+
+[AOXENET.AddReg]
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+HKR,,DeviceVxDs,,USBENET.sys
+
+
+;****************************************************************************
+; Device Parameters
+;****************************************************************************
+
+[AOXENET_parms.reg]
+
+; NetAddress
+HKR,NDI\params\NetAddress,ParamDesc,,"%NetAddress%"
+HKR,NDI\params\NetAddress,type,,edit
+HKR,NDI\params\NetAddress,LimitText,,12
+HKR,NDI\params\NetAddress,UpperCase,,1
+HKR,NDI\params\NetAddress,optional,,1
+
+; MaxTransmits
+HKR,NDI\params\MaxTransmits,ParamDesc,,"%MaxTransmits%"
+HKR,NDI\params\MaxTransmits,type,,int
+HKR,NDI\params\MaxTransmits,min,,1
+HKR,NDI\params\MaxTransmits,max,,128
+HKR,NDI\params\MaxTransmits,step,,1
+HKR,NDI\params\MaxTransmits,default,,10
+
+; MaxTxFrameSize
+HKR,NDI\params\MaxTxFrameSize,ParamDesc,,"%MaxTxFrameSize%"
+HKR,NDI\params\MaxTxFrameSize,type,,int
+HKR,NDI\params\MaxTxFrameSize,min,,64
+HKR,NDI\params\MaxTxFrameSize,max,,1514
+HKR,NDI\params\MaxTxFrameSize,step,,1
+HKR,NDI\params\MaxTxFrameSize,default,,1514
+
+; TxBufferSize
+HKR,NDI\params\TxBufferSize,ParamDesc,,"%TxBufferSize%"
+HKR,NDI\params\TxBufferSize,type,,int
+HKR,NDI\params\TxBufferSize,min,,128
+HKR,NDI\params\TxBufferSize,max,,4096
+HKR,NDI\params\TxBufferSize,step,,64
+HKR,NDI\params\TxBufferSize,default,,4096
+
+; MinRcvBuffs
+HKR,NDI\params\MinRcvBuffs,ParamDesc,,"%MinRcvBuffs%"
+HKR,NDI\params\MinRcvBuffs,type,,int
+HKR,NDI\params\MinRcvBuffs,min,,1
+HKR,NDI\params\MinRcvBuffs,max,,200
+HKR,NDI\params\MinRcvBuffs,step,,1
+HKR,NDI\params\MinRcvBuffs,default,,40
+
+; RcvBuffSize
+HKR,NDI\params\RcvBuffSize,ParamDesc,,"%RcvBuffSize%"
+HKR,NDI\params\RcvBuffSize,type,,int
+HKR,NDI\params\RcvBuffSize,min,,64
+HKR,NDI\params\RcvBuffSize,max,,1514
+HKR,NDI\params\RcvBuffSize,step,,1
+HKR,NDI\params\RcvBuffSize,default,,1514
+
+; DebugLevel
+HKR,NDI\params\DebugLevel,ParamDesc,,"%DebugLevel%"
+HKR,NDI\params\DebugLevel,type,,int
+HKR,NDI\params\DebugLevel,min,,0
+HKR,NDI\params\DebugLevel,max,,5
+HKR,NDI\params\DebugLevel,step,,1
+HKR,NDI\params\DebugLevel,default,,0
+
+; NumUsbBuffs
+HKR,NDI\params\NumUsbRcvBuffs,ParamDesc,,"%NumUsbRcvBuffs%"
+HKR,NDI\params\NumUsbRcvBuffs,type,,int
+HKR,NDI\params\NumUsbRcvBuffs,min,,1
+HKR,NDI\params\NumUsbRcvBuffs,max,,100
+HKR,NDI\params\NumUsbRcvBuffs,step,,1
+HKR,NDI\params\NumUsbRcvBuffs,default,,30
+
+; UsbPlugUnplug
+HKR,NDI\params\UsbPlugUnplug,ParamDesc,,"%UsbPlugUnplug%"
+HKR,NDI\params\UsbPlugUnplug,default,,"NO"
+HKR,NDI\params\UsbPlugUnplug,type,,enum
+HKR,NDI\params\UsbPlugUnplug\enum,"NO",,"NO"
+HKR,NDI\params\UsbPlugUnplug\enum,"YES",,"YES"
+
+; UsbReplugDelayTime
+HKR,NDI\params\UsbReplugDelayTime,ParamDesc,,"%UsbReplugDelayTime%"
+HKR,NDI\params\UsbReplugDelayTime,type,,int
+HKR,NDI\params\UsbReplugDelayTime,min,,1
+HKR,NDI\params\UsbReplugDelayTime,max,,255
+HKR,NDI\params\UsbReplugDelayTime,step,,1
+HKR,NDI\params\UsbReplugDelayTime,default,,5
+
+; UsbReadConcatDelay
+HKR,NDI\params\UsbReadConcatDelay,ParamDesc,,"%UsbReadConcatDelay%"
+HKR,NDI\params\UsbReadConcatDelay,type,,int
+HKR,NDI\params\UsbReadConcatDelay,min,,0
+HKR,NDI\params\UsbReadConcatDelay,max,,20
+HKR,NDI\params\UsbReadConcatDelay,step,,1
+HKR,NDI\params\UsbReadConcatDelay,default,,1
+
+; DisableMediaState
+HKR,NDI\params\DisableMediaState,ParamDesc,,"%DisableMediaState%"
+HKR,NDI\params\DisableMediaState,default,,"YES"
+HKR,NDI\params\DisableMediaState,type,,enum
+HKR,NDI\params\DisableMediaState\enum,"NO",,"NO"
+HKR,NDI\params\DisableMediaState\enum,"YES",,"YES"
+
+; These aren't used in Windows NT 5.0, keep for Windows 9X
+
+[AOXENET_flags.reg]
+HKR,NDI\params\RcvBuffSize,flag,1,30,00,00,00
+HKR,NDI\params\MinRcvBuffs,flag,1,30,00,00,00
+HKR,NDI\params\MaxTxFrameSize,flag,1,30,00,00,00
+HKR,NDI\params\TxBufferSize,flag,1,30,00,00,00
+HKR,NDI\params\MaxTransmits,flag,1,30,00,00,00
+HKR,NDI\params\NetAddress,flag,1,30,00,00,00
+HKR,NDI\params\DebugLevel,flag,1,30,00,00,00
+HKR,NDI\params\NumUsbRcvBuffs,flag,1,30,00,00,00
+HKR,NDI\params\UsbReplugDelayTime,flag,1,30,00,00,00
+HKR,NDI\params\UsbPlugUnplug,flag,1,30,00,00,00
+HKR,NDI\params\UsbReadConcatDelay,flag,1,30,00,00,00
+HKR,NDI\params\DisableMediaState,flag,1,30,00,00,00
+
+[strings]
+; Manufacturer and Provider strings
+ATEN="ATEN"
+
+; Diskette Names
+DisketteDesc="USB-Ethernet Device Driver"
+
+; Devices
+USB\VID_0557&PID_2002.DeviceDesc = "ATEN USB-Ethernet Adapter"
+
+; Parameter Names
+NetAddress="Network Address (LAA)"
+MaxTransmits="Max Transmits"
+MaxTxFrameSize="Max TX Frame Size"
+TxBufferSize="TX Buffer Size"
+MinRcvBuffs="Min Receive Buffers"
+RcvBuffSize="Receive Buffer Size"
+DebugLevel="Level for debug msgs"
+NumUsbRcvBuffs="Num of USB Rcv Buffs"
+UsbPlugUnplug="Unplug/Plug on init"
+UsbReplugDelayTime="USB F/W Replug Delay"
+UsbReadConcatDelay="USB Read Concat Delay"
+DisableMediaState="Disable Media Check"

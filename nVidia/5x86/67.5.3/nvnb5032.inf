@@ -1,0 +1,664 @@
+;/***************************************************************************\
+;|*                                                                           *|
+;|*         Copyright 2005-2006 NVIDIA, Corporation.  All rights reserved.    *|
+;|*                                                                           *|
+;|*     THE INFORMATION CONTAINED HEREIN  IS PROPRIETARY AND CONFIDENTIAL     *|
+;|*     TO NVIDIA, CORPORATION.   USE,  REPRODUCTION OR DISCLOSURE TO ANY     *|
+;|*     THIRD PARTY IS SUBJECT TO WRITTEN PRE-APPROVAL BY NVIDIA, CORP.       *|
+;|*                                                                           *|
+;|*     THE INFORMATION CONTAINED HEREIN IS PROVIDED  "AS IS" WITHOUT         *|
+;|*     EXPRESS OR IMPLIED WARRANTY OF ANY KIND, INCLUDING ALL IMPLIED        *|
+;|*     WARRANTIES OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A     *|
+;|*     PARTICULAR PURPOSE.                                                   *|
+;|*                                                                           *|
+;\***************************************************************************/
+
+[version]
+Class       = Net
+ClassGUID   = {4D36E972-E325-11CE-BFC1-08002BE10318}
+Signature   = "$Chicago$"
+Compatible  = 1
+CatalogFile = nvefd2k.CAT
+Provider    = %Nvidia%
+DriverVer = 07/11/2007, 67.5.3
+
+
+[Manufacturer]
+%Nvidia%    = Nvidia
+
+[ControlFlags]
+; Plug and play adapters must be excluded from the list. We are plug
+; and play, so we exclude ourselves from being presented to the user.
+
+; This is real dev id
+ExcludeFromSelect = PCI\VEN_10DE&DEV01C3,\	;MCP1
+                    PCI\VEN_10DE&DEV0066,\	;MCP2
+                    PCI\VEN_10DE&DEV0086,\	;MCP2S
+                    PCI\VEN_10DE&DEV008C,\	;MCP2S, BRIDGE
+                    PCI\VEN_10DE&DEV00D6,\	;CK8
+                    PCI\VEN_10DE&DEV00E6,\	;CK8S
+                    PCI\VEN_10DE&DEV00DF,\	;CK8S, BRIDGE
+                    PCI\VEN_10DE&DEV0037,\	;MCP04
+                    PCI\VEN_10DE&DEV0038,\	;MCP04, BRIDGE
+                    PCI\VEN_10DE&DEV0056,\	;CK804
+                    PCI\VEN_10DE&DEV0057,\	;CK804,BRIDGE
+                    PCI\VEN_10DE&DEV0268,\	;MCP51
+                    PCI\VEN_10DE&DEV0269,\	;MCP51, BRIDGE
+                    PCI\VEN_10DE&DEV0372,\	;MCP55
+                    PCI\VEN_10DE&DEV0373,\	;MCP55, BRIDGE
+                    PCI\VEN_10DE&DEV03EE,\	;MCP61
+                    PCI\VEN_10DE&DEV03EF,\	;MCP61, BRIDGE
+                    PCI\VEN_10DE&DEV03E5,\	;NBP01
+                    PCI\VEN_10DE&DEV03E6,\	;NBP01, BRIDGE
+                    PCI\VEN_10DE&DEV0450,\	;MCP65
+                    PCI\VEN_10DE&DEV0452,\	;MCP65, BRIDGE
+                    PCI\VEN_10DE&DEV0451,\	;MCP65_NBP01
+                    PCI\VEN_10DE&DEV0453,\	;MCP65_NBP01, BRIDGE
+                    PCI\VEN_10DE&DEV0478,\	;T65
+                    PCI\VEN_10DE&DEV047B,\	;T65, BRIDGE
+                    PCI\VEN_10DE&DEV0479,\	;T65_NBP01
+                    PCI\VEN_10DE&DEV047A,\	;T65_NBP01, BRIDGE
+                    PCI\VEN_10DE&DEV054C,\	;MCP67
+                    PCI\VEN_10DE&DEV054E,\	;MCP67, BRIDGE
+                    PCI\VEN_10DE&DEV054D,\	;MCP67_NBP01
+                    PCI\VEN_10DE&DEV054F,	;MCP67_NBP01, BRIDGE
+                    PCI\VEN_10DE&DEV07DC,\	;MCP73
+                    PCI\VEN_10DE&DEV07DE,\	;MCP73, BRIDGE
+                    PCI\VEN_10DE&DEV07DD,\	;MCP73_NBP01
+                    PCI\VEN_10DE&DEV07DF,	;MCP73_NBP01, BRIDGE
+                    PCI\VEN_10DE&DEV0760,\	;MCP77
+                    PCI\VEN_10DE&DEV0761,\	;MCP77_NBP01
+                    PCI\VEN_10DE&DEV0762,\	;MCP77_OEM
+                    PCI\VEN_10DE&DEV0763,	;MCP77_Channel
+
+;ExcludeFromSelect = PCI\VEN_10DE&DEV_01C3
+
+[Nvidia]
+; DisplayName           Section       DeviceID
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_01C3
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0066
+%NVENETFD.DeviceDesc%  =  NVENETFD3.NDI,   PCI\VEN_10DE&DEV_0086
+%NVENETFD.DeviceDesc%  =  NVENETFD3.NDI,   PCI\VEN_10DE&DEV_008C
+%NVENETFD.DeviceDesc%  =  NVENETFD2.NDI,   PCI\VEN_10DE&DEV_00D6
+%NVENETFD.DeviceDesc%  =  NVENETFD3.NDI,   PCI\VEN_10DE&DEV_00E6
+%NVENETFD.DeviceDesc%  =  NVENETFD3.NDI,   PCI\VEN_10DE&DEV_00DF
+%NVENETFD.DeviceDesc%  =  NVENETFD3.NDI,   PCI\VEN_10DE&DEV_0037
+%NVENETFD.DeviceDesc%  =  NVENETFD3.NDI,   PCI\VEN_10DE&DEV_0038
+%NVENETFD.DeviceDesc%  =  NVENETFD3.NDI,   PCI\VEN_10DE&DEV_0056
+%NVENETFD.DeviceDesc%  =  NVENETFD3.NDI,   PCI\VEN_10DE&DEV_0057
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0268
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0269
+%NVENETFD.DeviceDesc%  =  NVENETFD4.NDI,   PCI\VEN_10DE&DEV_0372
+%NVENETFD.DeviceDesc%  =  NVENETFD4.NDI,   PCI\VEN_10DE&DEV_0373
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_03EE
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_03EF
+%NVENETFD.DeviceDesc%  =  NVENETFD5.NDI,   PCI\VEN_10DE&DEV_03E5
+%NVENETFD.DeviceDesc%  =  NVENETFD5.NDI,   PCI\VEN_10DE&DEV_03E6
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0450
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0452
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0451
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0453
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0478
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_047B
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0479
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_047A
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_054C
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_054E
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_054D
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_054F
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_07DC
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_07DE
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_07DD
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_07DF
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0760
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0761
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0762
+%NVENETFD.DeviceDesc%  =  NVENETFD1.NDI,   PCI\VEN_10DE&DEV_0763
+
+; Windows NT specific entry
+[NVENETFD1.NDI.NT]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5                     ; PciBus
+AddReg          = NVENETFD.reg, SpeedSetting.reg
+CopyFiles       = NVENETFD.CopyFiles
+
+[NVENETFD2.NDI.NT]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType		= 5			; PCI Bus
+AddReg          = NVENETFD.reg, SpeedSetting.reg, ASF.reg
+CopyFiles       = NVENETFD.CopyFiles
+
+[NVENETFD3.NDI.NT]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType		= 5			; PCI Bus
+AddReg          = NVENETFD.reg, SpeedSetting.reg, ASF.reg, JumboFrameSize.reg, ChecksumOffload.reg, \
+		  SegOffload.reg, LowPowerStateLinkSpeed.reg
+CopyFiles       = NVENETFD.CopyFiles
+
+[NVENETFD4.NDI.NT]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType		= 5			; PCI Bus
+AddReg          = NVENETFD.reg, SpeedSetting.reg, ASF.reg, JumboFrameSize.reg, ChecksumOffload.reg, \
+		  SegOffload.reg, LowPowerStateLinkSpeed.reg, FlowControl.reg
+CopyFiles       = NVENETFD.CopyFiles
+
+[NVENETFD5.NDI.NT]
+Characteristics = 0x84                  ; NCF_PHYSICAL | NCF_HAS_UI
+BusType		= 5			; PCI Bus
+AddReg          = NVENETFD.reg, SpeedSetting.reg, FlowControl.reg
+CopyFiles       = NVENETFD.CopyFiles
+
+
+; NVENETFD NT specific
+[NVENETFD.reg]
+HKR, Ndi,                       Service,        0, "NVENETFD"
+HKR, Ndi\Interfaces,            LowerRange,     0, "ethernet"
+HKR, Ndi\Interfaces,            UpperRange,     0, "ndis5"
+HKR, NDIS,          LogDriverName,              0, "NVENETFD"
+HKR, NDIS,          MajorNdisVersion,           1, 05
+HKR, NDIS,          MinorNdisVersion,           1, 01
+HKR, Ndi\Install,   ndis5,                      0, "NVENETFD.INSTALL"
+
+; DestinationDirs
+[NVENETFD.CopyFiles]
+nvefd2k.sys,,,2
+NVNRM.SYS,,,2
+
+[NVENETFD1.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENETFD.Service, common.EventLog
+
+[NVENETFD2.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENETFD.Service, common.EventLog
+
+[NVENETFD3.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENETFD.Service, common.EventLog
+
+[NVENETFD4.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENETFD.Service, common.EventLog
+
+[NVENETFD5.ndi.NT.Services]
+AddService = NVENETFD, 2, NVENETFD.Service, common.EventLog
+
+[NVENETFD.Service]
+DisplayName     = %NVENETFD.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\nvefd2k.sys
+LoadOrderGroup  = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+
+; DestinationDirs
+;
+;[NVENETFD.INSTALL]
+;CopyFiles = NVENETFD.CopyFiles
+
+
+[SourceDisksNames]
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+1 =  %DiskId1%, nvnb5032.tag,,
+
+[SourceDisksFiles]
+; filename_on_source = diskID[, [subdir][, size]]
+nvefd2k.sys = 1,,
+NVNRM.SYS = 1,,
+
+[DestinationDirs]
+NVENETFD.CopyFiles     = 12
+;DefaultDestDirs      = 11
+
+
+
+;-----------------------------------------------------------------------------
+; common base for 10/100Mb Adapters
+;
+[SpeedSetting.reg]
+;Uncomment following 5 lines to make it split option
+;HKR, Ndi\params\NegotiationMode,      ParamDesc,  0, "%SpeedDuplexSelectionMethod%"
+;HKR, Ndi\params\NegotiationMode,      default,    0, "1"
+;HKR, Ndi\params\NegotiationMode,      type,       0, "enum"
+;HKR, Ndi\params\NegotiationMode\enum, 0,         0, "Autonegotiate for preference"
+;HKR, Ndi\params\NegotiationMode\enum, 1,        0, "Force speed and duplex"
+
+HKR, Ndi\params\ForceSpeedDpx,       ParamDesc,  0, "%SpeedDuplexSettings%"
+HKR, Ndi\params\ForceSpeedDpx,       default,    0, "0"
+HKR, Ndi\params\ForceSpeedDpx,       type,       0, "enum"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "0",        0, "%Automatic%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "1",        0, "%HD10MB%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "2",        0, "%FD10MB%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "3",        0, "%HD100MB%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "4",        0, "%FD100MB%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "5",        0, "%HD10MBA%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "6",        0, "%FD10MBA%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "7",        0, "%HD100MBA%"
+HKR, Ndi\params\ForceSpeedDpx\enum,  "8",        0, "%FD100MBA%"
+; comment above 4 lines to make it split option
+
+HKR, Ndi\params\NetworkAddress,       ParamDesc,  0, "%NetworkAddress%"
+HKR, Ndi\params\NetworkAddress,       default,    0, " "
+HKR, Ndi\params\NetworkAddress,       type,       0, "edit"
+HKR, Ndi\params\NetworkAddress,       LimitText,  0, "12"
+HKR, Ndi\params\NetworkAddress,       UpperCase,  0, "1"
+HKR, Ndi\params\NetworkAddress,       optional,   0, "1"
+
+HKR, Ndi\params\PollIntervalInus,      ParamDesc,  0, "%OptimizeFor%"
+HKR, Ndi\params\PollIntervalInus,      default,    0, "400"
+HKR, Ndi\params\PollIntervalInus,      type,       0, "enum"
+HKR, Ndi\params\PollIntervalInus\enum, 0,          0, "Throughput"
+HKR, Ndi\params\PollIntervalInus\enum, 400,        0, "CPU"
+
+;
+; Wake on Lan capability control
+;
+HKR, Ndi\params\WakeUpMagic,      ParamDesc,  0, "%WakeUpMagic%"
+HKR, Ndi\params\WakeUpMagic,      default,    0, "1"
+HKR, Ndi\params\WakeUpMagic,       type,      0, "enum"
+HKR, Ndi\params\WakeUpMagic\enum,  "0",       0, "%Disable%"
+HKR, Ndi\params\WakeUpMagic\enum,  "1",       0, "%Enable%"
+
+HKR, Ndi\params\WakeUpPattern,      ParamDesc,  0, "%WakeUpPattern%"
+HKR, Ndi\params\WakeUpPattern,      default,    0, "1"
+HKR, Ndi\params\WakeUpPattern,       type,      0, "enum"
+HKR, Ndi\params\WakeUpPattern\enum,  "0",       0, "%Disable%"
+HKR, Ndi\params\WakeUpPattern\enum,  "1",       0, "%Enable%"
+;
+; Wake on Lan from Power Off
+;
+HKR, Ndi\params\EthWOLFromPowerOff,      ParamDesc,  0, "%WakeOnLANFromPowerOff%"
+HKR, Ndi\params\EthWOLFromPowerOff,      default,    0, "1"
+HKR, Ndi\params\EthWOLFromPowerOff,       type,      0, "enum"
+HKR, Ndi\params\EthWOLFromPowerOff\enum,  "0",       0, "%Disable%"
+HKR, Ndi\params\EthWOLFromPowerOff\enum,  "1",       0, "%Enable%"
+
+;
+; IEEE 802.1q Support
+;
+;HKR, Ndi\params\OemSetting2,      ParamDesc,  0, "Vlan Support"
+;HKR, Ndi\params\OemSetting2,      default,    0, "1"
+;HKR, Ndi\params\OemSetting2,       type,      0, "enum"
+;HKR, Ndi\params\OemSetting2\enum,  "0",       0, "Disable"
+;HKR, Ndi\params\OemSetting2\enum,  "1",       0, "Enable"
+
+;
+; IEEE 802.1p Support
+;
+;HKR, Ndi\params\OemSetting3,      ParamDesc,  0, "IEEE 802.1p Support"
+;HKR, Ndi\params\OemSetting3,      default,    0, "1"
+;HKR, Ndi\params\OemSetting3,       type,      0, "enum"
+;HKR, Ndi\params\OemSetting3\enum,  "0",       0, "Disable"
+;HKR, Ndi\params\OemSetting3\enum,  "1",       0, "Enable"
+
+;
+; VLAN Id
+;
+;HKR, Ndi\params\OemSetting5,      ParamDesc,  0, "VLAN Id"
+;HKR, Ndi\params\OemSetting5,      default,    0, 1
+;HKR, Ndi\params\OemSetting5,      type,       0, "dword"
+
+HKR, Ndi\params\EthVLAN,				ParamDesc,  0, "%VLANSupport%"
+HKR, Ndi\params\EthVLAN,				default,    0, "0"
+HKR, Ndi\params\EthVLAN,				type,       0, "enum"
+HKR, Ndi\params\EthVLAN\enum,			0,          0, "%Disable%"
+HKR, Ndi\params\EthVLAN\enum,			1,			0, "%Enable%"
+
+HKR, Ndi\params\Eth802P,				ParamDesc,  0, "%IEEE802.1PSupport%"
+HKR, Ndi\params\Eth802P,				default,    0, "0"
+HKR, Ndi\params\Eth802P,				type,       0, "enum"
+HKR, Ndi\params\Eth802P\enum,			0,          0, "%Disable%"
+HKR, Ndi\params\Eth802P\enum,			1,			0, "%Enable%"
+
+HKR, Ndi\params\EthVLANId,				ParamDesc,  0, "%VLANId%"
+HKR, Ndi\params\EthVLANId,				default,    0, "1"
+HKR, Ndi\params\EthVLANId,				type,       0, "word"
+HKR, Ndi\params\EthVLANId,				min,        0, "1"
+HKR, Ndi\params\EthVLANId,				max,		0, "4095"
+
+
+
+
+; --------------------- Begin ASF -----------------------------------
+
+[ASF.reg]
+HKR, ,FPGA,                    0, "0"
+HKR, ,FPGAEEPROMSize,          0, "512"
+HKR, ,ASFEventBitmask,         0, "%ASFEventBitmask%" 
+HKR, ,ChecksumOffloadBM,		   0, "%ChecksumOffloadBM%"
+HKR, ,ASFFunctionNameEvent0,       0, "%ASFFunctionNameEvent0%"
+HKR, ,ASFFunctionNameEvent1,       0, "%ASFFunctionNameEvent1%"
+HKR, ,ASFFunctionNameEvent4,       0, "%ASFFunctionNameEvent4%"
+HKR, ,ASFFunctionNameEvent6,       0, "%ASFFunctionNameEvent6%"
+HKR, ,ASFFunctionNameEvent7,       0, "%ASFFunctionNameEvent7%"
+HKR, ,ASFFunctionNameEvent8,       0, "%ASFFunctionNameEvent8%"
+HKR, ,ASFFunctionNameEvent10,      0, "%ASFFunctionNameEvent10%"
+;HKR, ,ASFOemCustomEvents,         1, 0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,10
+
+;
+; ASF Support
+;
+HKR, Ndi\params\ASFSupport,       ParamDesc,  0, "%ASFSupport%" 
+HKR, Ndi\params\ASFSupport,       default,    0, "0"
+HKR, Ndi\params\ASFSupport,       type,       0, "enum"
+HKR, Ndi\params\ASFSupport\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ASFSupport\enum,  "1",        0, "%Enable%"
+
+;
+; ASF Managing station IP address
+;
+HKR, Ndi\params\ASFDestIPAddress,       ParamDesc,  0, "%ASFDestIPAddress%" 
+HKR, Ndi\params\ASFDestIPAddress,       default,    0, " "
+HKR, Ndi\params\ASFDestIPAddress,       type,       0, "edit"
+HKR, Ndi\params\ASFDestIPAddress,       LimitText,  0, "15"
+HKR, Ndi\params\ASFDestIPAddress,       UpperCase,  0, "1"
+HKR, Ndi\params\ASFDestIPAddress,       optional,   0, "1"
+
+;
+; ASF Send Count
+;
+HKR, Ndi\params\ASFSendCount,     ParamDesc,  0, "%ASFSendCount%" 
+HKR, Ndi\params\ASFSendCount,     default,    0, "1"
+HKR, Ndi\params\ASFSendCount,     type,       0, "word"
+HKR, Ndi\params\ASFSendCount,     Min,        0, "0"
+HKR, Ndi\params\ASFSendCount,     Max,        0, "3"
+
+;
+; ASF Heart beat
+;
+HKR, Ndi\params\ASFHeartbeat,        ParamDesc,  0, "%ASFHeartbeat%" 
+HKR, Ndi\params\ASFHeartbeat,        default,    0, "600"
+HKR, Ndi\params\ASFHeartbeat,        type,       0, "enum"
+HKR, Ndi\params\ASFHeartbeat\enum,   "10",       0,  " 10"
+HKR, Ndi\params\ASFHeartbeat\enum,   "20",       0,  " 20"
+HKR, Ndi\params\ASFHeartbeat\enum,   "30",       0,  " 30"
+HKR, Ndi\params\ASFHeartbeat\enum,   "45",       0,  " 45"
+HKR, Ndi\params\ASFHeartbeat\enum,   "60",       0,  " 60"
+HKR, Ndi\params\ASFHeartbeat\enum,   "120",      0,  "120"
+HKR, Ndi\params\ASFHeartbeat\enum,   "180",      0,  "180"
+HKR, Ndi\params\ASFHeartbeat\enum,   "300",      0,  "300"
+HKR, Ndi\params\ASFHeartbeat\enum,   "450",      0,  "450"
+HKR, Ndi\params\ASFHeartbeat\enum,   "600",      0,  "600"
+
+;
+; ASF Event 0
+;
+HKR, Ndi\params\ASFEvent0,       ParamDesc,  0, "%ASFEvent0%" 
+HKR, Ndi\params\ASFEvent0,       default,    0, "1"
+HKR, Ndi\params\ASFEvent0,       type,       0, "enum"
+HKR, Ndi\params\ASFEvent0\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ASFEvent0\enum,  "1",        0, "%Enable%"
+
+;
+; ASF Event 1
+;
+HKR, Ndi\params\ASFEvent1,       ParamDesc,  0, "%ASFEvent1%"
+HKR, Ndi\params\ASFEvent1,       default,    0, "1"
+HKR, Ndi\params\ASFEvent1,       type,       0, "enum"
+HKR, Ndi\params\ASFEvent1\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ASFEvent1\enum,  "1",        0, "%Enable%"
+
+;
+; ASF Event 4
+;
+HKR, Ndi\params\ASFEvent4,       ParamDesc,  0, "%ASFEvent4%" 
+HKR, Ndi\params\ASFEvent4,       default,    0, "1"
+HKR, Ndi\params\ASFEvent4,       type,       0, "enum"
+HKR, Ndi\params\ASFEvent4\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ASFEvent4\enum,  "1",        0, "%Enable%"
+
+;
+;
+; ASF Event 6 (Shows up "ASF Event6 - Power button presse")
+;
+HKR, Ndi\params\ASFEvent6,       ParamDesc,  0, "%ASFEvent6%" 
+HKR, Ndi\params\ASFEvent6,       default,    0, "1"
+HKR, Ndi\params\ASFEvent6,       type,       0, "enum"
+HKR, Ndi\params\ASFEvent6\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ASFEvent6\enum,  "1",        0, "%Enable%"
+
+;
+; ASF Event 7
+;
+HKR, Ndi\params\ASFEvent7,       ParamDesc,  0, "%ASFEvent7%" 
+HKR, Ndi\params\ASFEvent7,       default,    0, "1"
+HKR, Ndi\params\ASFEvent7,       type,       0, "enum"
+HKR, Ndi\params\ASFEvent7\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ASFEvent7\enum,  "1",        0, "%Enable%"
+
+;
+; ASF Event 8
+;
+HKR, Ndi\params\ASFEvent8,       ParamDesc,  0, "%ASFEvent8%" 
+HKR, Ndi\params\ASFEvent8,       default,    0, "1"
+HKR, Ndi\params\ASFEvent8,       type,       0, "enum"
+HKR, Ndi\params\ASFEvent8\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ASFEvent8\enum,  "1",        0, "%Enable%"
+
+;
+; ASF Event 10
+;
+HKR, Ndi\params\ASFEvent10,       ParamDesc,  0, "%ASFEvent10%" 
+HKR, Ndi\params\ASFEvent10,       default,    0, "1"
+HKR, Ndi\params\ASFEvent10,       type,       0, "enum"
+HKR, Ndi\params\ASFEvent10\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\ASFEvent10\enum,  "1",        0, "%Enable%"
+
+; --------------------- End ASF -----------------------------------
+
+; ---------------------- Begin GigE ------------------------------
+[JumboFrameSize.reg]
+HKR, Ndi\Params\JumboFrameSize, ParamDesc, , "%JumboFrameSize%"
+HKR, Ndi\Params\JumboFrameSize, default,   , "1514"
+HKR, Ndi\Params\JumboFrameSize, type,      , "dword"
+HKR, Ndi\Params\JumboFrameSize, min,       , "1514"
+HKR, Ndi\Params\JumboFrameSize, max,       , "9018"
+HKR, Ndi\Params\JumboFrameSize, step,      , "1"
+HKR, Ndi\Params\JumboFrameSize, base,      , "10"
+
+[ChecksumOffload.reg]
+;
+; Byte map of capabilities
+;        V6 Rx   V6 Tx   V4 Rx   V4 Tx
+; Byte     3       2       1       0
+;
+HKR, Ndi\Params\ChecksumOffload,      ParamDesc,   , "%ChecksumOffload%"
+HKR, Ndi\Params\ChecksumOffload,      default,     , "7967"		; enable tx/rx xsum offloads
+HKR, Ndi\Params\ChecksumOffload,      type,        , "enum"
+HKR, Ndi\Params\ChecksumOffload\enum, 0000,        , %ChecksumOffload_None%	        ; 00000000
+HKR, Ndi\Params\ChecksumOffload\enum, 7936,        , %ChecksumOffload_Rx1_Opt1%	    ; Dec 7936 = 0x00001F00
+HKR, Ndi\Params\ChecksumOffload\enum, 7168,        , %ChecksumOffload_Rx1_Opt0%     ; Dec 7168 = 0x00001C00
+HKR, Ndi\Params\ChecksumOffload\enum, 31,          , %ChecksumOffload_Tx1_Opt1%     ; Dec 31   = 0x0000001F
+HKR, Ndi\Params\ChecksumOffload\enum, 28,          , %ChecksumOffload_Tx1_Opt0%     ; Dec 28   = 0x0000001C
+HKR, Ndi\Params\ChecksumOffload\enum, 7967,        , %ChecksumOffload_TxRx1_Opt1%   ; Dec 7967 = 0x00001F1F
+HKR, Ndi\Params\ChecksumOffload\enum, 7196,        , %ChecksumOffload_TxRx1_Opt0%   ; Dec 7196 = 0x00001C1C
+
+[SegOffload.reg]
+HKR, Ndi\params\SegOffload,       ParamDesc,  0, "%SegOffload%" 
+HKR, Ndi\params\SegOffload,       default,    0, "1"
+HKR, Ndi\params\SegOffload,       type,       0, "enum"
+HKR, Ndi\params\SegOffload\enum,  "0",        0, "Disable"
+HKR, Ndi\params\SegOffload\enum,  "1",        0, "Enable"
+
+[LowPowerStateLinkSpeed.reg]
+HKR, Ndi\params\LowPowerStateLinkSpeed,       ParamDesc,  0, "%LowPowerStateLinkSpeed%" 
+HKR, Ndi\params\LowPowerStateLinkSpeed,       default,    0, "1"
+HKR, Ndi\params\LowPowerStateLinkSpeed,       type,       0, "enum"
+HKR, Ndi\params\LowPowerStateLinkSpeed\enum,  "0",        0, "%Disable%"
+HKR, Ndi\params\LowPowerStateLinkSpeed\enum,  "1",        0, "%Enable%"
+
+[FlowControl.reg]
+HKR, Ndi\params\EthFlowControl,					ParamDesc,  0, "%FlowControl%" 
+HKR, Ndi\params\EthFlowControl,					default,    0, "1"
+HKR, Ndi\params\EthFlowControl,					type,       0, "enum"
+HKR, Ndi\params\EthFlowControl\enum,			"0",        0, "%Disable%"
+HKR, Ndi\params\EthFlowControl\enum,			"1",        0, "%Enable%"
+
+
+[Debug.reg]
+HKR, Ndi\params\MediaIF,       ParamDesc,  0, "%MediaIF%" 
+HKR, Ndi\params\MediaIF,       default,    0, "1"
+HKR, Ndi\params\MediaIF,       type,       0, "enum"
+HKR, Ndi\params\MediaIF\enum,  "0",        0, "MII"
+HKR, Ndi\params\MediaIF\enum,  "1",        0, "RGMII"
+
+HKR, Ndi\Params\_Dbg_WatermarkTFBW, ParamDesc, , "_Dbg_WatermarkTFBW"
+HKR, Ndi\Params\_Dbg_WatermarkTFBW, default,   , "1"
+HKR, Ndi\Params\_Dbg_WatermarkTFBW, type,      , "dword"
+HKR, Ndi\Params\_Dbg_WatermarkTFBW, min,       , "1"
+HKR, Ndi\Params\_Dbg_WatermarkTFBW, max,       , "7"
+HKR, Ndi\Params\_Dbg_WatermarkTFBW, step,      , "1"
+HKR, Ndi\Params\_Dbg_WatermarkTFBW, base,      , "10"
+
+
+HKR, Ndi\Params\_Dbg_BackoffRseed, ParamDesc, , "_Dbg_BackoffRseed"
+HKR, Ndi\Params\_Dbg_BackoffRseed, default,   , "8"
+HKR, Ndi\Params\_Dbg_BackoffRseed, type,      , "dword"
+HKR, Ndi\Params\_Dbg_BackoffRseed, min,       , "0"
+HKR, Ndi\Params\_Dbg_BackoffRseed, max,       , "255"
+HKR, Ndi\Params\_Dbg_BackoffRseed, step,      , "1"
+HKR, Ndi\Params\_Dbg_BackoffRseed, base,      , "10"
+
+HKR, Ndi\Params\_Dbg_BackoffSlotTime, ParamDesc, , "_Dbg_BackoffSlotTime"
+HKR, Ndi\Params\_Dbg_BackoffSlotTime, default,   , "127"
+HKR, Ndi\Params\_Dbg_BackoffSlotTime, type,      , "dword"
+HKR, Ndi\Params\_Dbg_BackoffSlotTime, min,       , "0"
+HKR, Ndi\Params\_Dbg_BackoffSlotTime, max,       , "1023"
+HKR, Ndi\Params\_Dbg_BackoffSlotTime, step,      , "1"
+HKR, Ndi\Params\_Dbg_BackoffSlotTime, base,      , "10"
+
+HKR, Ndi\Params\_Dbg_TxReadCompleteEnable, ParamDesc, , "_Dbg_TxReadCompleteEnable"
+HKR, Ndi\Params\_Dbg_TxReadCompleteEnable, default,   , "0"
+HKR, Ndi\Params\_Dbg_TxReadCompleteEnable, type,      , "dword"
+HKR, Ndi\Params\_Dbg_TxReadCompleteEnable, min,       , "0"
+HKR, Ndi\Params\_Dbg_TxReadCompleteEnable, max,       , "1"
+HKR, Ndi\Params\_Dbg_TxReadCompleteEnable, step,      , "1"
+HKR, Ndi\Params\_Dbg_TxReadCompleteEnable, base,      , "10"
+
+
+; ---------------------- End GigE ------------------------------
+
+
+;-----------------------------------------------------------------------------------------
+[Strings]
+Nvidia                   	= "NVIDIA"
+DiskId1                         = "NVIDIA nForce Networking Controller Driver Disk 1"
+NVENETFD.DeviceDesc        	= "NVIDIA nForce Networking Controller"
+NVENETFD.Service.DispName  	= "NVIDIA nForce Networking Controller Driver"
+Enable                       = "Enable"
+Disable                      = "Disable"
+WakeOnLANFromPowerOff        = "WakeOnLAN From PowerOff"
+Throughput                   = "Throughput"
+CPU                          = "CPU"
+NetworkAddress           	= "Network Address"
+OptimizeFor			= "Optimize For"
+SpeedDuplexSettings             = "Speed/duplex settings"
+SpeedDuplexSelectionMethod      = "Speed/duplex selection method"
+Automatic                	= "Full autonegotiation"
+;uncomment following 4 lines for split inf
+;HD10MB				= "10 Mbits Half Duplex"
+;FD10MB				= "10 Mbits Full Duplex"
+;HD100MB			= "100 Mbits Half Duplex" 
+;FD100MB			= "100 Mbits Full Duplex"
+;comment following 4 lines for split inf
+HD10MB				= "Force 10 Half Duplex"
+FD10MB				= "Force 10 Full Duplex"
+HD100MB				= "Force 100 Half Duplex" 
+FD100MB				= "Force 100 Full Duplex"
+
+HD10MBA				= "Autonegotiate for 10HD"
+FD10MBA				= "Autonegotiate for 10FD"
+HD100MBA			= "Autonegotiate for 100HD"
+FD100MBA			= "Autonegotiate for 100FD"
+
+;-------- GigE Specific --------------
+JumboFrameSize				= "Jumbo Frame Size"
+JumboFrameSize_1500  = "1500 (Standard frame)"
+JumboFrameSize_2500  = "2500"
+JumboFrameSize_4500  = "4500"
+JumboFrameSize_9000  = "9000"
+
+ChecksumOffload				= "Checksum Offload"
+ChecksumOffloadBM			= "7967"
+ChecksumOffload_None			= "Disabled"
+ChecksumOffload_Rx1_Opt1		= "Rx Enabled, Opt Enabled"
+ChecksumOffload_Rx1_Opt0		= "Rx Enabled, Opt Disabled"
+ChecksumOffload_Tx1_Opt1		= "Tx Enabled, Opt Enabled"
+ChecksumOffload_Tx1_Opt0		= "Tx Enabled, Opt Disabled"
+ChecksumOffload_TxRx1_Opt1		= "Tx/Rx Enabled, Opt Enabled"
+ChecksumOffload_TxRx1_Opt0		= "Tx/Rx Enabled, Opt Disabled"
+SegOffload				= "Segmentation Offload"
+MediaIF					= "Media Interface"
+LowPowerStateLinkSpeed			= "Low Power State Link Speed"
+FlowControl				= "Flow Control"
+VLANSupport				= "VLAN Support"
+IEEE802.1PSupport			= "IEEE802.1P Support"
+VLANId					= "VLAN Id"
+
+
+;-------- ASF Specific --------------
+; The following section controls default values of the ASFEventCount, ASFEventBitmask, 
+; how the ASF Event strings appear on the advanced panel of the control panel 
+; and the commands that nCLI.exe understands.
+
+
+; ASF Event count and default Bit mask. Shows which events are enabled or disabled.
+; Bit 0 is event 0 and Bit 15 is event 15. ASFEventBitmaskshould have 
+; decimal value in double quotes
+; Ex. If all events are enabled
+; Number of events    Hex value    Decimal value
+;    16                 7FFF        65535
+;    15                 7FFF        32767
+;    14                 3FFF        16383
+;    13                 1FFF         8191
+;    12                  FFF         4095
+;    11                  7FF         2047
+; Currently we have 13 events and all need to be enabled for now
+
+ASFEventCount       = "13"
+ASFEventBitmask     = "8191"
+
+;--------------- Advanced tab of control panel settings --------------
+ASFSupport          = "ASF Support"
+ASFDestIPAddress    = "ASF Managing Station IP address"
+ASFSendCount        = "ASF PET Packet Send Count"
+ASFHeartbeat        = "ASF Heartbeat interval (seconds)"
+ASFEvent0           = "ASF Event0  - Boot Failure"
+ASFEvent1           = "ASF Event1  - Fan Problem"
+ASFEvent2           = "ASF Event2  - SM Bus Error"
+ASFEvent3           = "ASF Event3  - Wake on LAN"
+ASFEvent4           = "ASF Event4  - Heartbeat"
+ASFEvent5           = "ASF Event5  - OS Hung"
+ASFEvent6           = "ASF Event6  - Power button pressed"
+ASFEvent7           = "ASF Event7  - System Hot"
+ASFEvent8           = "ASF Event8  - CPU Overheated"
+ASFEvent9           = "ASF Event9  - CPU Hot"
+ASFEvent10          = "ASF Event10 - Case Intrusion"
+ASFEvent11          = "ASF Event11 - Custom1"
+ASFEvent12          = "ASF Event12 - Custom2"
+ASFEvent13          = "ASF Event13"
+ASFEvent14          = "ASF Event14"
+ASFEvent15          = "ASF Event15"
+
+;------------------ nCLI.exe commands -------------------------------------
+; The name on the right side of "=" below can be upto 40 characters
+ASFFunctionNameEvent0   = "ASFEventBootError"
+ASFFunctionNameEvent1   = "ASFEventFanProblem"
+ASFFunctionNameEvent2   = "ASFEventSMBusError"
+ASFFunctionNameEvent3   = "ASFEventWOL"
+ASFFunctionNameEvent4   = "ASFEventHeartbeat"
+ASFFunctionNameEvent5   = "ASFEventOSHung"
+ASFFunctionNameEvent6   = "ASFEventPowerButton"
+ASFFunctionNameEvent7   = "ASFEventSystemHot"
+ASFFunctionNameEvent8   = "ASFEventCPUOverheated"
+ASFFunctionNameEvent9   = "ASFEventCPUHot"
+ASFFunctionNameEvent10  = "ASFEventCaseIntrusion"
+ASFFunctionNameEvent11  = "ASFEventCustom1"
+ASFFunctionNameEvent12  = "ASFEventCustom2"
+ASFFunctionNameEvent13  = "ASFEvent13"
+ASFFunctionNameEvent14  = "ASFEvent14"
+ASFFunctionNameEvent15  = "ASFEvent15"

@@ -1,0 +1,155 @@
+; W2KEL76X.INF
+;
+; 3COM SOHO 100 NIC
+;
+; Copyright 2000-2001, 3Com Corporation
+
+[version]
+LayoutFile  = layout.inf
+signature   = "$Windows NT$"
+Compatable  = 1
+Class       = Net
+provider    = %V_MS%
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+DriverVer   = 01/12/2001,1.80.01.0000	
+
+[Manufacturer]
+%V_3COM%      = 3COM
+
+[ControlFlags]
+ExcludeFromSelect    = *
+
+[3COM]
+
+%3CSOHO.DeviceDesc%  = EL76BC.3CSOHO.NDI,  PCI\VEN_10b7&DEV_7646
+
+
+;-------------------------------------------------------------------------------
+; 3CSOHO Network Device Section (X86)
+;
+AddService      = EL76BC, 2, EL76BC.Service, EL76BC.EventLog
+
+[EL76BC.3CSOHO.ndi.ntx86]
+AddReg          = EL76BC.reg, EL76BC.params, EL76BC.params.media.tx
+CopyFiles       = EL76BC.CopyFiles
+Characteristics = 0x84
+BusType         = 5
+
+[EL76BC.3CSOHO.ndi.ntx86.Services]
+AddService      = EL76BC, 2, EL76BC.Service, EL76BC.EventLog
+HKR, Ndi\params\media\enum,           100HALF,         0, %media_100_half%
+
+;-------------------------------------------------------------------------------
+; EL76BC Parameters 
+;
+[EL76BC.params]
+HKR, Ndi\params\8021psupport,         ParamDesc,       0, %8021p%
+HKR, Ndi\params\8021psupport,         type,            0, "enum"
+HKR, Ndi\params\8021psupport,         default,         0, "DISABLE"
+HKR, Ndi\params\8021psupport\enum,    ENABLE,          0, %ENABLE%
+HKR, Ndi\params\8021psupport\enum,    DISABLE,         0, %DISABLE%
+
+HKR, Ndi\params\flowcontrol,          ParamDesc,       0, %flowcontrol% 
+HKR, Ndi\params\flowcontrol,          type,            0, "enum"
+HKR, Ndi\params\flowcontrol,          default,         0, "ENABLE"
+HKR, Ndi\params\flowcontrol\enum,     ENABLE,          0, %ENABLE%
+HKR, Ndi\params\flowcontrol\enum,     DISABLE,         0, %DISABLE%
+
+HKR, Ndi\params\RxChecksum,           ParamDesc,       0, %rx_checksum%
+HKR, Ndi\params\RxChecksum,           type,            0, "enum"
+HKR, Ndi\params\RxChecksum,           default,         0, "ENABLE"
+HKR, Ndi\params\RxChecksum\enum,      ENABLE,          0, %ENABLE%
+HKR, Ndi\params\RxChecksum\enum,      DISABLE,         0, %DISABLE%
+
+HKR, Ndi\params\TxChecksum,           ParamDesc,       0, %tx_checksum%
+HKR, Ndi\params\TxChecksum,           type,            0, "enum"
+HKR, Ndi\params\TxChecksum,           default,         0, "ENABLE"
+HKR, Ndi\params\TxChecksum\enum,      ENABLE,          0, %ENABLE%
+HKR, Ndi\params\TxChecksum\enum,      DISABLE,         0, %DISABLE%
+
+HKR, NDI\params\NetworkAddress,       ParamDesc,      0, %NetworkAddress%
+HKR, NDI\params\NetworkAddress,       type,           0, "edit"
+HKR, NDI\params\NetworkAddress,       LimitText,      0, "12"
+HKR, NDI\params\NetworkAddress,       UpperCase,      0, "1"
+HKR, NDI\params\NetworkAddress,       default,        0, " "
+HKR, NDI\params\NetworkAddress,       optional,       0, "1"
+
+[EL76BC.params.media.tx]
+HKR, Ndi\params\Media,                ParamDesc,       0, %media_type%
+HKR, Ndi\params\Media,                type,            0, "enum"
+HKR, Ndi\params\Media,                default,         0, "HARDWAREDEFAULT"
+HKR, Ndi\params\Media\enum,           HARDWAREDEFAULT, 0, %hardware_default%
+HKR, Ndi\params\Media\enum,           AUTOSELECT,      0, %media_auto%
+HKR, Ndi\params\Media\enum,           100FULL,         0, %media_100_full%
+HKR, Ndi\params\Media\enum,           100HALF,         0, %media_100_half%
+HKR, Ndi\params\Media\enum,           10FULL,          0, %media_10_full%
+HKR, Ndi\params\Media\enum,           10HALF,         0, %media_10_half%
+
+;-------------------------------------------------------------------------------
+; 3Com EtherLink 3CSOHO Service and Driver
+;
+[EL76BC.reg]
+HKR, Ndi,               Service,    0, "EL76BC"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR,,RWUMAGIC,			  , "DISABLE"
+
+[el76BC.Service]
+DisplayName     = %el76BC.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\el76xbc5.sys
+LoadOrderGroup  = NDIS
+
+[el76bc.EventLog]
+AddReg = el76bc.AddEventLog.reg
+
+[el76bc.AddEventLog.reg]
+HKR,, EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,, TypesSupported,   0x00010001, 7
+
+[EL76bc.CopyFiles]
+el76xbc5.sys,,,2
+
+[DestinationDirs]
+el76bc.CopyFiles = 12
+
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[strings]
+V_MS                   = "Microsoft"
+V_3COM                 = "3Com"
+
+flowcontrol            = "Flow Control"
+NO                     = "No"
+YES                    = "Yes"
+DISABLE                = "Disable"
+ENABLE                 = "Enable"
+HalfDuplex             = "Half Duplex"
+FullDuplex             = "Full Duplex"
+8021p                  = "802.1p Support"
+DuplexMode             = "Duplex Mode"
+media_type             = "Network Connection"
+media_auto             = "Auto Select"
+media_10_full          = "10 Mbps Full-Duplex"
+media_10_half          = "10 Mbps Half-Duplex"
+media_100_full         = "100 Mbps Full-Duplex"
+media_100_half         = "100 Mbps Half-Duplex"
+media_100BaseTx	       = "100BaseTx"
+media_100BaseFx        = "100BaseFx"
+media_10BaseTx         = "10BaseT"
+media_10BaseFl         = "10BaseFl"
+media_10Base2          = "10Base2"
+media_10AUI            = "10AUI"
+Hardware_Default        = "Hardware Default"
+NetworkAddress         = "Network Address"
+rx_checksum            = "Rx Checksum Offload"
+tx_checksum            = "Tx Checksum Offload"
+
+
+3CSOHO.DeviceDesc      = "3Com officeconnect NIC (3CSOHO100-TX)"
+
+el76bc.Service.DispName = "3Com 3CSOHO Adapter Driver"
+

@@ -1,0 +1,87 @@
+; EP427X2.inf
+;
+; INF file for Windows NT 5.0
+;
+; SURECOM EP-427X 16bit 100/10M Couplerless PCMCIA Adapter
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_SURECOM%
+LayoutFile  = layout.inf
+
+[Manufacturer]
+%V_SURECOM%=SURECOM
+
+[SURECOM]
+%EP427X.DeviceDesc%=EP427X.ndi,PCMCIA\CouplerlessPCMCIA-100BASE-DBEE
+
+[EP427X.ndi.NTX86]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = EP427X.reg
+CopyFiles       = EP427X.CopyFiles.Sys
+
+[EP427X.ndi.NTX86.Services]
+AddService = EP427X, 2, EP427X.Service, EP427X.EventLog
+
+[EP427X.ndi.LogConfigOverride]
+LogConfig = EP427X.LogConfigOverride
+
+[EP427X.LogConfigOverride]
+IRQConfig    = 3,4,5,7,10,11
+IOConfig     = 300,320,340,360,380,200,220,3A0,3C0
+PcCardConfig = 1:20000(W)
+
+;-------------------------------------------------------------------------------
+; EP427X Drivers and Service
+;
+[EP427X.reg]
+HKR, Ndi,               Service,    0, "EP427X"
+HKR, Ndi\Interfaces,    DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,    DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+HKR,               ,    CardType,   0, "1"
+
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,9,,"100BaseTx Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT (Twisted_Pair)"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+[EP427X.Service]
+DisplayName     = %EP427X.DeviceDesc%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\EP427X2.sys
+LoadOrderGroup  = NDIS
+
+[EP427X.CopyFiles.Sys]
+EP427X2.SYS
+
+[DestinationDirs]
+EP427X.CopyFiles.Sys = 12
+EP427X.CopyFiles.Inf = 17
+
+[EP427X.EventLog]
+AddReg = EP427X.AddEventLog.reg
+
+[EP427X.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[strings]
+; Provider
+; Manufacturers
+V_SURECOM="SURECOM Technology Corp."
+; PNP Devices
+EP427X.DeviceDesc="SURECOM EP-427X 16bit 100/10M Couplerless PCMCIA Adapter"
+

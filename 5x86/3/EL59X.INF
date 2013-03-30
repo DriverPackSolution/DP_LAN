@@ -1,0 +1,140 @@
+; NETEL59X.INF
+;
+; INF for Win2000 (Unsupported, these NICs are now obsoleted by 3Com)
+;
+; 3COM EL590/3C595 Adapters:
+;       Fast Etherlink PCI 10/100Mb Bus-Master Ethernet Adapters (3C595-TX)
+;       Etherlink III PCI Bus-Master Ethernet Adapters (3C590)
+;
+; Original Copyright 1995, 3Com Corporation
+;
+; Copyright 1997, Microsoft Corporation
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Msft%
+LayoutFile  = layout.inf
+
+[Manufacturer]
+%V_3COM%=3COM
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_10b7&DEV_5950, \
+                    PCI\VEN_10b7&DEV_5951, \
+                    PCI\VEN_10b7&DEV_5900
+
+[3COM]
+%PCI\VEN_10b7&DEV_5950.DeviceDesc% = PCIEL595.ndi,  PCI\VEN_10b7&DEV_5950  ; Fast Etherlink
+%PCI\VEN_10b7&DEV_5951.DeviceDesc% = PCIEL5951.ndi, PCI\VEN_10b7&DEV_5951  ; Fast Etherlink T4
+%PCI\VEN_10b7&DEV_5900.DeviceDesc% = PCIEL590.ndi,  PCI\VEN_10b7&DEV_5900  ; Etherlink III PCI
+
+;-------------------------------------------------------------------------------
+; Fast Etherlink/Etherlink III PCI boards.
+;
+[PCIEL595.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = EL59x.reg, BusMaster.reg, FullDuplex.reg
+CopyFiles       = el59x.CopyFiles
+
+[PCIEL595.ndi.Services]
+AddService      = EL59X, 2, el59x.Service, el59x.EventLog
+
+;-------------------------------------------------------------------------------
+[PCIEL5951.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = EL59x.reg, BusMaster.reg, FullDuplex.reg
+CopyFiles       = el59x.CopyFiles
+
+[PCIEL5951.ndi.Services]
+AddService      = EL59X, 2, el59x.Service, el59x.EventLog
+
+;-------------------------------------------------------------------------------
+[PCIEL590.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = EL59x.reg, BusMaster.reg, FullDuplex.reg
+CopyFiles       = el59x.CopyFiles
+
+[PCIEL590.ndi.Services]
+AddService      = EL59X, 2, el59x.Service, el59x.EventLog
+
+;-------------------------------------------------------------------------------
+; Fast Etherlink EL59x board common
+;
+[EL59x.reg]
+HKR, Ndi,                         Service,    0, "EL59X"
+HKR, Ndi\Interfaces,              DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,              DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,              UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,              LowerRange, 0, "ethernet"
+
+[BusMaster.reg]
+HKR, Ndi\params\BusMaster,        ParamDesc,  0, %BusMaster%
+HKR, Ndi\params\BusMaster,        default,    0, "Yes"
+HKR, Ndi\params\BusMaster,        type,       0, "enum"
+HKR, Ndi\params\BusMaster\enum,   Yes,        0, %YES%
+HKR, Ndi\params\BusMaster\enum,   NO,         0, %NO%
+HKR, Ndi\params\BusMaster,        optional,   0, "1"
+
+[FullDuplex.reg]
+HKR, Ndi\params\FULL_DUPLEX,      ParamDesc,  0, %FULL_DUPLEX% 
+HKR, Ndi\params\FULL_DUPLEX,      default,    0, "OFF"
+HKR, Ndi\params\FULL_DUPLEX,      type,       0, "enum"
+HKR, Ndi\params\FULL_DUPLEX\enum, OFF,        0, %OFF%
+HKR, Ndi\params\FULL_DUPLEX\enum, ON,         0, %ON%
+HKR, Ndi\params\FULL_DUPLEX,      optional,   0, "1"
+
+;-------------------------------------------------------------------------------
+; EL59X Service and Driver
+;
+[el59x.CopyFiles]
+el59x.sys,,,2
+
+[el59x.Service]
+DisplayName     = %el59x.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\el59x.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[el59x.EventLog]
+AddReg          = el59x.AddEventLog.reg
+
+[el59x.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+;-------------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+el59x.CopyFiles = 12
+
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Msft                             = "Microsoft"
+V_3COM                           = "3Com"
+BusMaster                        = "Bus Master"
+YES                              = "Yes"
+NO                               = "No"
+FULL_DUPLEX                      = "Full Duplex"
+OFF                              = "OFF"
+ON                               = "ON"
+
+
+PCI\VEN_10b7&DEV_5950.DeviceDesc = "3Com Fast EtherLink 10/100Mb Bus-Master PCI Adapter"
+PCI\VEN_10b7&DEV_5951.DeviceDesc = "3Com Fast EtherLink 10/100Mb T4 Bus-Master PCI Adapter"
+PCI\VEN_10b7&DEV_5900.DeviceDesc = "3Com EtherLink III Bus-Master PCI Ethernet Adapter"
+
+el59x.Service.DispName           = "3Com Fast EtherLink 59x Adapter Driver"

@@ -1,0 +1,366 @@
+;
+;  Purpose:   Netcard setup information file for Windows 7
+;
+;  Author:    Anders Ma
+;
+;  Date:      May, 2012
+;
+;  Copyright: VIA Technologies, Inc.
+;
+
+[Version]
+CatalogFile = netvg62.cat
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Prov%
+Compatible  = 1
+DriverVer   = 05/10/2012, 1.41.0.0
+
+[Manufacturer]
+%Manuf%     = MANUF, NTX86
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[MANUF.NTX86]
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_01101106
+%GEN119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119
+
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_011016F3
+;(4)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_043C1462
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_047C1462
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_04701462
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_70761462
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_90271695
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_E0001458
+;(4)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_20011919
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_20031919
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_20041919
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_20061919
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_000218EE
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_85001584
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_FC10270F
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_01101019
+;(4)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_A00A14FF
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_A00E14FF
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_A01614FF
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_A02314FF
+;(3)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_00291B0A
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_00331B0A
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_002F1B0A
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_02221025
+;(3)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_0E1B105B
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_0CF9105B
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_0CD8105B
+;(1)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_0702A0A0
+;(2)
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_31701297
+%VT3119.DeviceDesc% = VT3119.ndi, PCI\VEN_1106&DEV_3119&SUBSYS_51701297
+;-------------------------------------------------------------------------------
+; ndi for 3119
+;-------------------------------------------------------------------------------
+[VT3119.ndi.NTX86]
+Characteristics = 0x84 ; NCF_PHYSICAL + NCF_HAS_UI
+BusType         = 5
+DelReg          = GET.delreg
+AddReg          = VT3119.reg, GET.reg, pQ.reg, Offload.reg
+CopyFiles       = GET.CopyFiles.NTX86
+
+*IfType            = 6          ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0          ; NdisMedium802_3
+*PhysicalMediaType = 0          ; NdisPhysicalMediumUnspecified
+
+[VT3119.ndi.NTX86.Services]
+AddService      = GETNDIS, 2, GET.Service, GET.EventLog
+
+;-------------------------------------------------------------------------------
+; VT3119 specific
+;
+[VT3119.reg]
+HKR, Ndi,                           DeviceID,       0, "PCI\VEN_1106&DEV_3119"
+
+;-------------------------------------------------------------------------------
+; GET common driver parameters
+;
+[GET.reg]
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "GETNDIS"
+
+HKR, ,                                      ReceiveBurstIndicate, 0, "64"
+HKR, ,                                      MaxRx,                0, "64"
+
+HKR, ,                                      ReceiveThreshold,     0, "0"
+HKR, ,                                      BurstLength,          0, "7"
+
+HKR, ,                                      TxSupThr,             0, "31"
+HKR, ,                                      RxSupThr,             0, "31"
+HKR, ,                                      TqeTmr,               0, "99"
+HKR, ,                                      RqeTmr,               0, "30"
+HKR, ,                                      TxCntWak,             0, "8"
+HKR, ,                                      SyncTIC,              0, "1"
+
+; Nway Forced Mode
+HKR, ,                                      NwayForce,            0, "1"
+
+; Power Management Capability
+HKR, ,                                      PMC,                  0, "0"
+
+; Validate Rx SNAP/802.3 packet length
+HKR, ,                                      ValidatePacketLen,    0, "0"
+
+; User defined Network Address (standardized keyword)
+HKR, ,                                      NetworkAddress,       0, ""
+HKR, Ndi\params\NetworkAddress,             ParamDesc,            0, %NetAddress%
+HKR, Ndi\params\NetworkAddress,             Default,              0, ""
+HKR, Ndi\params\NetworkAddress,             type,                 0, "edit"
+HKR, NDI\params\NetworkAddress,             LimitText,            0, "12"
+HKR, NDI\params\NetworkAddress,             UpperCase,            0, "1"
+HKR, NDI\params\NetworkAddress,             optional,             0, "1"
+HKR, NDI\params\NetworkAddress,             Base,                 0, "16"
+
+; Tx Buffers (standardized keyword)
+HKR, ,                                      *TransmitBuffers,     0, "256"
+HKR, Ndi\params\*TransmitBuffers,           ParamDesc,            0, %TXBuffer%
+HKR, Ndi\params\*TransmitBuffers,           default,              0, "256"
+HKR, Ndi\params\*TransmitBuffers,           type,                 0, "int"
+HKR, Ndi\params\*TransmitBuffers,           Min,                  0, "64"
+HKR, Ndi\params\*TransmitBuffers,           Max,                  0, "384"
+HKR, Ndi\params\*TransmitBuffers,           Step,                 0, "1"
+HKR, Ndi\params\*TransmitBuffers,           Base,                 0, "10"
+
+; Rx Buffers (standardized keyword)
+HKR, ,                                      *ReceiveBuffers,      0, "160"
+HKR, Ndi\params\*ReceiveBuffers,            ParamDesc,            0, %RXBuffer%
+HKR, Ndi\params\*ReceiveBuffers,            default,              0, "160"
+HKR, Ndi\params\*ReceiveBuffers,            type,                 0, "int"
+HKR, Ndi\params\*ReceiveBuffers,            Min,                  0, "64"
+HKR, Ndi\params\*ReceiveBuffers,            Max,                  0, "256"
+HKR, Ndi\params\*ReceiveBuffers,            Step,                 0, "4"
+HKR, Ndi\params\*ReceiveBuffers,            Base,                 0, "10"
+
+; Connection Type (standardized keyword)
+HKR, ,                                      *SpeedDuplex,         0, "0"
+HKR, Ndi\params\*SpeedDuplex,               ParamDesc,            0, %SpeedDuplexSet%
+HKR, Ndi\params\*SpeedDuplex,               default,              0, "0"
+HKR, Ndi\params\*SpeedDuplex,               type,                 0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,          "0",                  0, %autoN%
+HKR, Ndi\params\*SpeedDuplex\enum,          "1",                  0, %10HD%
+HKR, Ndi\params\*SpeedDuplex\enum,          "2",                  0, %10FD%
+HKR, Ndi\params\*SpeedDuplex\enum,          "3",                  0, %100HD%
+HKR, Ndi\params\*SpeedDuplex\enum,          "4",                  0, %100FD%
+HKR, Ndi\params\*SpeedDuplex\enum,          "5",                  0, %1000FD%
+
+; Flow control capability advertisement (standardized keyword)
+HKR, ,                                      *FlowControl,         0, "0"
+HKR, Ndi\params\*FlowControl,               ParamDesc,            0, %FlowCtl%
+HKR, Ndi\params\*FlowControl,               default,              0, "0"
+HKR, Ndi\params\*FlowControl,               type,                 0, "enum"
+HKR, Ndi\params\*FlowControl\enum,          "0",                  0, %Disabled%
+HKR, Ndi\params\*FlowControl\enum,          "1",                  0, %EnableRx%
+HKR, Ndi\params\*FlowControl\enum,          "2",                  0, %EnableTx%
+HKR, Ndi\params\*FlowControl\enum,          "3",                  0, %EnableRxTx%
+
+; Interrupt Moderation (standardized keyword)
+HKR, ,                                      *InterruptModeration, 0, "1"
+HKR, Ndi\params\*InterruptModeration,       ParamDesc,            0, %AI%
+HKR, Ndi\params\*InterruptModeration,       default,              0, "1"
+HKR, Ndi\params\*InterruptModeration,       type,                 0, "enum"
+HKR, Ndi\params\*InterruptModeration\enum,  "0",                  0, %Disabled%
+HKR, Ndi\params\*InterruptModeration\enum,  "1",                  0, %Enabled%
+
+; Jumbo Packet Support
+HKR, ,                                      JumboPacketSupport,   0, "0"
+HKR, Ndi\params\JumboPacketSupport,         ParamDesc,            0, %Jumbo%
+HKR, Ndi\params\JumboPacketSupport,         default,              0, "0"
+HKR, Ndi\params\JumboPacketSupport,         type,                 0, "enum"
+HKR, Ndi\params\JumboPacketSupport\enum,    "0",                  0, %Disabled%
+HKR, Ndi\params\JumboPacketSupport\enum,    "1",                  0, %Enabled%
+
+[pQ.reg]
+; number of Tx queue allocation
+HKR, ,                                      TxQueueNum,           0, "4"
+
+; 802.1p/802.1Q Packet Tagging (standardized keyword)
+HKR, ,                                      *PriorityVLANTag,     0, "0"
+HKR, Ndi\Params\*PriorityVLANTag,           ParamDesc,            0, %8021pq%
+HKR, Ndi\Params\*PriorityVLANTag,           Default,              0, "0"
+HKR, Ndi\Params\*PriorityVLANTag,           type,                 0, "enum"
+HKR, Ndi\Params\*PriorityVLANTag\enum,      "0",                  0, %PQDisabled%
+HKR, Ndi\Params\*PriorityVLANTag\enum,      "3",                  0, %PQEnabled%
+
+; static single VLAN ID setting
+HKR, ,                                      VLANID,               0, "0"
+HKR, Ndi\params\VLANID,                     ParamDesc,            0, %VLANID%
+HKR, Ndi\params\VLANID,                     default,              0, "0"
+HKR, Ndi\params\VLANID,                     type,                 0, "int"
+HKR, Ndi\params\VLANID,                     Min,                  0, "0"
+HKR, Ndi\params\VLANID,                     Max,                  0, "4094"
+HKR, Ndi\params\VLANID,                     Step,                 0, "1"
+HKR, Ndi\params\VLANID,                     Base,                 0, "10"
+
+[Offload.reg]
+; IPv4 IP Checksum (standardized keyword)
+HKR, ,                                          *IPChecksumOffloadIPv4,   0, "3"
+HKR, Ndi\params\*IPChecksumOffloadIPv4,         ParamDesc,                0, %IPCKSMv4%
+HKR, Ndi\params\*IPChecksumOffloadIPv4,         default,                  0, "3"
+HKR, Ndi\params\*IPChecksumOffloadIPv4,         type,                     0, "enum"
+HKR, Ndi\params\*IPChecksumOffloadIPv4\enum,    "0",                      0, %Disabled%
+HKR, Ndi\params\*IPChecksumOffloadIPv4\enum,    "1",                      0, %EnableTx%
+HKR, Ndi\params\*IPChecksumOffloadIPv4\enum,    "2",                      0, %EnableRx%
+HKR, Ndi\params\*IPChecksumOffloadIPv4\enum,    "3",                      0, %EnableRxTx%
+
+; IPv4 TCP Checksum (standardized keyword)
+HKR, ,                                          *TCPChecksumOffloadIPv4,  0, "3"
+HKR, Ndi\params\*TCPChecksumOffloadIPv4,        ParamDesc,                0, %TCPCKSMv4%
+HKR, Ndi\params\*TCPChecksumOffloadIPv4,        default,                  0, "3"
+HKR, Ndi\params\*TCPChecksumOffloadIPv4,        type,                     0, "enum"
+HKR, Ndi\params\*TCPChecksumOffloadIPv4\enum,   "0",                      0, %Disabled%
+HKR, Ndi\params\*TCPChecksumOffloadIPv4\enum,   "1",                      0, %EnableTx%
+HKR, Ndi\params\*TCPChecksumOffloadIPv4\enum,   "2",                      0, %EnableRx%
+HKR, Ndi\params\*TCPChecksumOffloadIPv4\enum,   "3",                      0, %EnableRxTx%
+
+; IPv4 UDP Checksum (standardized keyword)
+HKR, ,                                          *UDPChecksumOffloadIPv4,  0, "3"
+HKR, Ndi\params\*UDPChecksumOffloadIPv4,        ParamDesc,                0, %UDPCKSMv4%
+HKR, Ndi\params\*UDPChecksumOffloadIPv4,        default,                  0, "3"
+HKR, Ndi\params\*UDPChecksumOffloadIPv4,        type,                     0, "enum"
+HKR, Ndi\params\*UDPChecksumOffloadIPv4\enum,   "0",                      0, %Disabled%
+HKR, Ndi\params\*UDPChecksumOffloadIPv4\enum,   "1",                      0, %EnableTx%
+HKR, Ndi\params\*UDPChecksumOffloadIPv4\enum,   "2",                      0, %EnableRx%
+HKR, Ndi\params\*UDPChecksumOffloadIPv4\enum,   "3",                      0, %EnableRxTx%
+
+; IPv4 TCP Large Send (standardized keyword)
+HKR, ,                                          TCPLSSeg,                 0, "8"
+
+HKR, ,                                          *LSOv1IPv4,               0, "1"
+HKR, Ndi\params\*LSOv1IPv4,                     ParamDesc,                0, %TCPLSv4%
+HKR, Ndi\params\*LSOv1IPv4,                     default,                  0, "1"
+HKR, Ndi\params\*LSOv1IPv4,                     type,                     0, "enum"
+HKR, Ndi\params\*LSOv1IPv4\enum,                "0",                      0, %Disabled%
+HKR, Ndi\params\*LSOv1IPv4\enum,                "1",                      0, %Enabled%
+
+; WOL Speed Forced 10M
+HKR, ,                                         WOLSpeedForced10M,        0, "1"
+HKR, Ndi\Params\WOLSpeedForced10M,             ParamDesc,                0, %WOL10M%
+HKR, Ndi\Params\WOLSpeedForced10M,             Default,                  0, "1"
+HKR, Ndi\Params\WOLSpeedForced10M,             type,                     0, "enum"
+HKR, Ndi\Params\WOLSpeedForced10M\enum,        "0",                      0, %Disabled%
+HKR, Ndi\Params\WOLSpeedForced10M\enum,        "1",                      0, %10MbpsFirst%
+HKR, Ndi\Params\WOLSpeedForced10M\enum,        "2",                      0, %100MbpsFirst%
+
+; Wake on pattern match (standardized keyword) [NDIS 6.2]
+HKR, ,                                          *WakeOnPattern,           0, "1"
+HKR, Ndi\params\*WakeOnPattern,                 ParamDesc,                0, %WOPDesc%
+HKR, Ndi\params\*WakeOnPattern,                 default,                  0, "1"
+HKR, Ndi\params\*WakeOnPattern,                 type,                     0, "enum"
+HKR, Ndi\params\*WakeOnPattern\enum,            "0",                      0, %Disabled%
+HKR, Ndi\params\*WakeOnPattern\enum,            "1",                      0, %Enabled%
+
+; Wake on Magic Packet (standardized keyword) [NDIS 6.2]
+HKR, ,                                          *WakeOnMagicPacket,       0, "1"
+HKR, Ndi\params\*WakeOnMagicPacket,             ParamDesc,                0, %WOMDesc%
+HKR, Ndi\params\*WakeOnMagicPacket,             default,                  0, "1"
+HKR, Ndi\params\*WakeOnMagicPacket,             type,                     0, "enum"
+HKR, Ndi\params\*WakeOnMagicPacket\enum,        "0",                      0, %Disabled%
+HKR, Ndi\params\*WakeOnMagicPacket\enum,        "1",                      0, %Enabled%
+
+;-------------------------------------------------------------------------------
+; Installation for NT
+;
+
+[GET.CopyFiles.NTX86]
+getn62.sys,,,2
+
+[GET.Service]
+DisplayName     = %GET.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\getn62.sys
+LoadOrderGroup  = NDIS
+
+[GET.EventLog]
+AddReg = GET.AddEventLog.reg
+
+[GET.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+;-------------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir          = 11
+GET.CopyFiles.NTX86     = 12
+
+[SourceDisksNames]
+1 = %DiskName%,,
+
+[SourceDisksFiles]
+getn62.sys         = 1
+
+;-------------------------------------------------------------------------------
+; Uninstall/DelFiles/DelReg
+;
+[GET.delreg]
+HKR,Ndi\Params
+
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Prov                = "VIA"
+DiskName            = "VIA Gigabit Ethernet Adapter driver disk"
+
+SpeedDuplexSet      = "Speed & Duplex Settings"
+autoN               = "Auto Negotiation"
+10HD                = "10 Mbps Half Duplex"
+10FD                = "10 Mbps Full Duplex"
+100HD               = "100 Mbps Half Duplex"
+100FD               = "100 Mbps Full Duplex"
+1000FD              = "1000 Mbps Full Duplex"
+RXBuffer            = "Receive Buffers"
+TXBuffer            = "Transmit Buffers"
+FlowCtl             = "Flow Control"
+Disabled            = "Disabled"
+Enabled             = "Enabled"
+EnableTx            = "Tx enabled"
+EnableRx            = "Rx enabled"
+EnableRxTx          = "Rx & Tx enabled"
+8021pq              = "Priority & VLAN"
+PQDisabled          = "Priority & VLAN Disabled"
+PQEnabled           = "Priority & VLAN Enabled"
+AI                  = "InterruptModeration"
+NetAddress          = "Network Address"
+IPCKSMv4            = "IPv4 Checksum Offload"
+TCPCKSMv4           = "TCP Checksum Offload (IPv4)"
+UDPCKSMv4           = "UDP Checksum Offload (IPv4)"
+TCPLSv4             = "Large Send Offload Version 1 (IPv4)"
+WOL10M              = "WOL Speed"
+100MbpsFirst        = "100 Mbps First"
+10MbpsFirst         = "10 Mbps First"
+WOPDesc             = "Wake on Pattern Match"
+WOMDesc             = "Wake on Magic Packet"
+VLANID              = "VLAN ID"
+Jumbo               = "Jumbo Packet Support"
+
+Manuf                = "VIA Technologies Inc"
+VT3119.DeviceDesc    = "VIA Velocity-Family Gigabit Ethernet Adapter"
+GEN119.DeviceDesc    = "VIA Velocity Compatible Management Adapter"
+GET.Service.DispName = "VIA Velocity Family Gigabit Ethernet Adapter Driver"

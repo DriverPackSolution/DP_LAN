@@ -1,0 +1,83 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 1999-2008 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+;*******************************************************************************
+; e1y60x64.Din
+; $Revision: 1.4 $
+;
+; Intel(R) Gigabit Network Connections
+;
+; Version 9.50.1.0
+;
+[version]
+Signature   = "$Windows NT$"
+SetupClass  = BASE
+Provider    = %Intel%
+
+[Manufacturer]
+%Intel%     = Intel
+
+[ControlFlags]
+
+[Intel]
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir          = 11
+e1000.DelFiles          = 12
+CoInstaller.DelFiles    = 11
+UnInstall.DelFiles      = 11
+
+;----------------------------------------------------------------------------
+; Uninstall
+[825xx.Uninstall]
+DelFiles=e1000.DelFiles, CoInstaller.DelFiles, UnInstall.DelFiles
+DelReg=825xx.DelReg
+
+[e1000.DelFiles]
+e1y60x64.sys,,,1
+
+[CoInstaller.DelFiles]
+e1000msg.dll,,,1
+NicCo.dll,,,1
+NicInstE.dll,,,1
+NicCo6.dll,,,1
+NicCo26.dll,,,1
+NicInE6.dll,,,1
+NicInstQ.dll,,,1
+NicInstY.dll,,,1
+
+[UnInstall.DelFiles]
+Prounstl.exe,,,1
+e1y60x64.din,,,1
+
+[825xx.DelReg]
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\PROSet
+HKLM,Software\INTEL\Prounstl
+HKLM,Software\INTEL\NIC
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Intel                    = "Intel"
+				 
+

@@ -1,0 +1,881 @@
+; EL99x_NT.inf
+; Windows 2k,XP,and Windows 2003 Installation File
+; %ver 1.10.00 - 09/16/2003 (EAA) Copyright 2003 3Com Corporation
+
+
+[version]
+Signature  				= "$Windows NT$"
+Class     				= Net
+ClassGUID  				= {4D36E972-E325-11CE-BFC1-08002BE10318}
+provider   				= %V_MS%
+catalogfile				= EL99X_NT.cat
+Compatible				= 0
+DriverVer 				= 08/16/2005,3.00.00.0023
+
+[Manufacturer]
+%V_3COM%				= 3COM,NT,NTx86.5.1,NTia64.5.1,NTamd64.5.1
+
+[SourceDisksNames]
+50					= %Source_Disk_Name%,,, 
+
+[SourceDisksFiles]
+3c99x.dll				= 50
+EL99XRUN.OUT  				= 50
+EL99XND5.SYS				= 50
+EL99XN51.SYS				= 50
+EL99XN5A.sys				= 50
+EL99XN5I.sys				= 50
+
+; Win 2000 Only
+[SourceDisksFiles.NT]
+EL99XND5.SYS				= 50
+EL99XRUN.OUT  				= 50
+3c99x.dll				= 50
+
+; Win XP Only
+[SourceDisksFiles.NTx86.5.1]
+EL99XN51.SYS				= 50
+EL99XRUN.OUT  				= 50
+3c99x.dll				= 50
+
+; Win NTia64.5.1 Only
+[SourceDisksFiles.NTia64.5.1]
+EL99XN5I.sys				= 50
+EL99XRUN.OUT  				= 50
+
+; Win NTamd64.5.1 Only
+[SourceDisksFiles.NTamd64.5.1]
+EL99XN5A.sys				= 50
+EL99XRUN.OUT  				= 50
+
+
+[ControlFlags]
+ExcludeFromSelect.NT			= *
+
+
+[3COM]
+%PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7.DeviceDesc%	= EL9902.ndi,PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7 
+%PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7.DeviceDesc%	= EL9903.ndi,PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7
+%PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7.DeviceDesc%	= EL9904C.ndi,PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7.DeviceDesc%	= EL9904C.ndi,PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7.DeviceDesc%	= EL9904S.ndi,PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7 
+%PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7.DeviceDesc%	= EL9905C.ndi,PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7
+%PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7.DeviceDesc%	= EL9908.ndi,PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7
+%PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7.DeviceDesc%	= EL9909.ndi,PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7
+
+[3COM.NT]
+%PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7.DeviceDesc%	= EL9902.ndi.NT,PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7 
+%PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7.DeviceDesc%	= EL9903.ndi.NT,PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7
+%PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7.DeviceDesc%	= EL9904C.ndi.NT,PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7.DeviceDesc%	= EL9904C.ndi.NT,PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7.DeviceDesc%	= EL9904S.ndi.NT,PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7 
+%PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7.DeviceDesc%	= EL9905C.ndi.NT,PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7
+%PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7.DeviceDesc%	= EL9908.ndi.NT,PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7
+%PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7.DeviceDesc%	= EL9909.ndi.NT,PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7
+
+[3COM.NTx86.5.1]
+%PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7.DeviceDesc%	= EL9902.ndi.NTx86.5.1,PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7 
+%PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7.DeviceDesc%	= EL9903.ndi.NTx86.5.1,PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7
+%PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7.DeviceDesc%	= EL9904C.ndi.NTx86.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7.DeviceDesc%	= EL9904C.ndi.NTx86.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7.DeviceDesc%	= EL9904S.ndi.NTx86.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7 
+%PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7.DeviceDesc%	= EL9905C.ndi.NTx86.5.1,PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7
+%PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7.DeviceDesc%	= EL9908.ndi.NTx86.5.1,PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7
+%PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7.DeviceDesc%	= EL9909.ndi.NTx86.5.1,PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7
+
+[3COM.NTia64.5.1]
+%PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7.DeviceDesc%	= EL9902.ndi.NTia64.5.1,PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7 
+%PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7.DeviceDesc%	= EL9903.ndi.NTia64.5.1,PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7
+%PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7.DeviceDesc%	= EL9904C.ndi.NTia64.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7.DeviceDesc%	= EL9904C.ndi.NTia64.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7.DeviceDesc%	= EL9904S.ndi.NTia64.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7 
+%PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7.DeviceDesc%	= EL9905C.ndi.NTia64.5.1,PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7
+%PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7.DeviceDesc%	= EL9908.ndi.NTia64.5.1,PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7
+%PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7.DeviceDesc%	= EL9909.ndi.NTia64.5.1,PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7
+
+[3COM.NTamd64.5.1]
+%PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7.DeviceDesc%	= EL9902.ndi.NTamd64.5.1,PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7 
+%PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7.DeviceDesc%	= EL9903.ndi.NTamd64.5.1,PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7
+%PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7.DeviceDesc%	= EL9904C.ndi.NTamd64.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7.DeviceDesc%	= EL9904C.ndi.NTamd64.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7 
+%PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7.DeviceDesc%	= EL9904S.ndi.NTamd64.5.1,PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7 
+%PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7.DeviceDesc%	= EL9905C.ndi.NTamd64.5.1,PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7
+%PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7.DeviceDesc%	= EL9908.ndi.NTamd64.5.1,PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7
+%PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7.DeviceDesc%	= EL9909.ndi.NTamd64.5.1,PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7
+
+
+; Win 2000 Only *******
+
+[EL9902.ndi.NT]
+Characteristics				= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg          			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT, EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NT, Win32.apps.CopyFiles.NT
+
+
+[EL9902.ndi.NT.Services]
+AddService      			= EL99X, 2, EL99X.Service.NT, EL99X.EventLog.NT
+
+[EL9902.ndi.NT.CoInstallers]
+CopyFiles 				= 3C99XCoInstallerFiles
+AddReg 					= 3C99x.CoInstallers_AddReg
+
+
+[EL9903.ndi.NT]
+Characteristics				= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg          			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NT, Win32.apps.CopyFiles.NT
+
+[EL9903.ndi.NT.Services]
+AddService      			= EL99X, 2, EL99X.Service.NT, EL99X.EventLog.NT
+
+[EL9903.ndi.NT.CoInstallers]
+CopyFiles 				= 3C99XCoInstallerFiles
+AddReg 					= 3C99x.CoInstallers_AddReg
+
+
+[EL9908.ndi.NT]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         				= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles      				= EL99X.DriverFiles.NT, Win32.apps.CopyFiles.NT
+
+[EL9908.ndi.NT.Services]
+AddService      			= EL99X, 2, EL99X.Service.NT, EL99X.EventLog.NT
+
+[EL9908.ndi.NT.CoInstallers]
+CopyFiles 				= 3C99XCoInstallerFiles
+AddReg 					= 3C99x.CoInstallers_AddReg
+
+
+[EL9909.ndi.NT]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         				= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NT, Win32.apps.CopyFiles.NT
+
+[EL9909.ndi.NT.Services]
+AddService      			= EL99X, 2, EL99X.Service.NT, EL99X.EventLog.NT
+
+[EL9909.ndi.NT.CoInstallers]
+CopyFiles 				= 3C99XCoInstallerFiles
+AddReg 					= 3C99x.CoInstallers_AddReg
+
+[EL9904C.ndi.NT]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NT, Win32.apps.CopyFiles.NT
+
+[EL9904C.ndi.NT.Services]
+AddService      			= EL99X, 2, EL99X.Service.NT, EL99X.EventLog.NT
+
+[EL9904C.ndi.NT.CoInstallers]
+CopyFiles 				= 3C99XCoInstallerFiles
+AddReg 					= 3C99x.CoInstallers_AddReg
+
+
+[EL9904S.ndi.NT]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NT, Win32.apps.CopyFiles.NT
+
+[EL9904S.ndi.NT.Services]
+AddService      			= EL99X, 2, EL99X.Service.NT, EL99X.EventLog.NT
+
+[EL9904S.ndi.NT.CoInstallers]
+CopyFiles 				= 3C99XCoInstallerFiles
+AddReg 					= 3C99x.CoInstallers_AddReg
+
+[EL9905C.ndi.NT]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_Fiber_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NT, Win32.apps.CopyFiles.NT
+
+[EL9905C.ndi.NT.Services]
+AddService      			= EL99X, 2, EL99X.Service.NT, EL99X.EventLog.NT
+
+[EL9905C.ndi.NT.CoInstallers]
+CopyFiles 				= 3C99XCoInstallerFiles
+AddReg 					= 3C99x.CoInstallers_AddReg
+
+
+[EL9905S.ndi.NT]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_Fiber_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NT, Win32.apps.CopyFiles.NT
+
+[EL9905S.ndi.NT.Services]
+AddService      			= EL99X, 2, EL99X.Service.NT, EL99X.EventLog.NT
+
+[EL9905S.ndi.NT.CoInstallers]
+CopyFiles 				= 3C99XCoInstallerFiles
+AddReg 					= 3C99x.CoInstallers_AddReg
+
+
+[EL99X.reg.NT]
+HKR, Ndi,               Service,    0, "EL99X"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR, ,TCAUDIAG,                      , "TCAUM99X"
+
+[EL99X.Service.NT]
+DisplayName     = %EL99X.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\EL99XND5.SYS
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg.NT
+
+[EL99X.EventLog.NT]
+AddReg = EL99X.AddEventLog.reg.NT
+
+[EL99X.AddEventLog.reg.NT]
+HKR,, EventMessageFile, 0x00020000, "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\EL99Xnd5.sys"
+HKR,, TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg.NT]
+HKR,,TextModeFlags, 0x00010001, 0x0001
+
+; End Win 2000 Only *******
+
+
+
+; Win XP Only ******* 
+
+[EL9902.ndi.NTx86.5.1]
+Characteristics				= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg          			= EL99X.reg.NTx86.5.1, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client,EL99X.XPparams.NTx86.5.1
+CopyFiles       			= EL99X.DriverFiles.NTx86.5.1, Win32.apps.CopyFiles.NTx86.5.1
+
+[EL9902.ndi.NTx86.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTx86.5.1, EL99X.EventLog.NTx86.5.1
+
+
+[EL9903.ndi.NTx86.5.1]
+Characteristics				= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg          			= EL99X.reg.NTx86.5.1, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client,EL99X.XPparams.NTx86.5.1
+CopyFiles       			= EL99X.DriverFiles.NTx86.5.1, Win32.apps.CopyFiles.NTx86.5.1
+
+[EL9903.ndi.NTx86.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTx86.5.1, EL99X.EventLog.NTx86.5.1
+
+
+[EL9908.ndi.NTx86.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         				= EL99X.reg.NTx86.5.1, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server,EL99X.XPparams.NTx86.5.1
+CopyFiles      				= EL99X.DriverFiles.NTx86.5.1, Win32.apps.CopyFiles.NTx86.5.1
+
+[EL9908.ndi.NTx86.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTx86.5.1, EL99X.EventLog.NTx86.5.1
+
+
+[EL9909.ndi.NTx86.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         				= EL99X.reg.NTx86.5.1, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server,EL99X.XPparams.NTx86.5.1
+CopyFiles       			= EL99X.DriverFiles.NTx86.5.1, Win32.apps.CopyFiles.NTx86.5.1
+
+[EL9909.ndi.NTx86.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTx86.5.1, EL99X.EventLog.NTx86.5.1
+
+
+[EL9904C.ndi.NTx86.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NTx86.5.1, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client,EL99X.XPparams.NTx86.5.1
+CopyFiles       			= EL99X.DriverFiles.NTx86.5.1, Win32.apps.CopyFiles.NTx86.5.1
+
+[EL9904C.ndi.NTx86.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTx86.5.1, EL99X.EventLog.NTx86.5.1
+
+
+[EL9904S.ndi.NTx86.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NTx86.5.1, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server,EL99X.XPparams.NTx86.5.1
+CopyFiles       			= EL99X.DriverFiles.NTx86.5.1, Win32.apps.CopyFiles.NTx86.5.1
+
+[EL9904S.ndi.NTx86.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTx86.5.1, EL99X.EventLog.NTx86.5.1
+
+
+[EL9905C.ndi.NTx86.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NTx86.5.1, EL99X.software.NT, EL99X.params.NT,EL99X_Fiber_XCVR.params.NT,EL99X.params.client,EL99X.XPparams.NTx86.5.1
+CopyFiles       			= EL99X.DriverFiles.NTx86.5.1, Win32.apps.CopyFiles.NTx86.5.1
+
+[EL9905C.ndi.NTx86.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTx86.5.1, EL99X.EventLog.NTx86.5.1
+
+
+[EL9905S.ndi.NTx86.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NTx86.5.1, EL99X.software.NT, EL99X.params.NT,EL99X_Fiber_XCVR.params.NT,EL99X.params.server,EL99X.XPparams.NTx86.5.1
+CopyFiles       			= EL99X.DriverFiles.NTx86.5.1, Win32.apps.CopyFiles.NTx86.5.1
+
+[EL9905S.ndi.NTx86.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTx86.5.1, EL99X.EventLog.NTx86.5.1
+
+
+
+[EL99X.reg.NTx86.5.1]
+HKR, Ndi,               Service,    0, "EL99X"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR, ,TCAUDIAG,                      , "TCAUM99X"
+
+[EL99X.Service.NTx86.5.1]
+DisplayName     = %EL99X.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\EL99XN51.SYS
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg.NTx86.5.1
+
+
+[EL99X.EventLog.NTx86.5.1]
+AddReg = EL99X.AddEventLog.reg.NTx86.5.1
+
+[EL99X.AddEventLog.reg.NTx86.5.1]
+HKR,, EventMessageFile, 0x00020000, "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\EL99XN51.SYS"
+HKR,, TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg.NTx86.5.1]
+HKR,,TextModeFlags, 0x00010001, 0x0001
+
+; End Win XP Only *******
+
+
+; Win XP64 IA Only *******
+
+[EL9902.ndi.NTia64.5.1]
+Characteristics				= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg          			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT, EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTia64.5.1
+
+[EL9902.ndi.NTia64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTia64.5.1, EL99X.EventLog.NTia64.5.1
+
+
+[EL9903.ndi.NTia64.5.1]
+Characteristics				= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg          			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTia64.5.1
+
+[EL9903.ndi.NTia64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTia64.5.1, EL99X.EventLog.NTia64.5.1
+
+
+[EL9908.ndi.NTia64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         				= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles      				= EL99X.DriverFiles.NTia64.5.1
+
+[EL9908.ndi.NTia64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTia64.5.1, EL99X.EventLog.NTia64.5.1
+
+
+[EL9909.ndi.NTia64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         				= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTia64.5.1
+
+[EL9909.ndi.NTia64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTia64.5.1, EL99X.EventLog.NTia64.5.1
+
+
+[EL9904C.ndi.NTia64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTia64.5.1
+
+[EL9904C.ndi.NTia64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTia64.5.1, EL99X.EventLog.NTia64.5.1
+
+
+[EL9904S.ndi.NTia64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTia64.5.1
+
+[EL9904S.ndi.NTia64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTia64.5.1, EL99X.EventLog.NTia64.5.1
+
+
+[EL9905C.ndi.NTia64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_Fiber_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTia64.5.1
+
+[EL9905C.ndi.NTia64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTia64.5.1, EL99X.EventLog.NTia64.5.1
+
+
+[EL9905S.ndi.NTia64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_Fiber_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTia64.5.1
+
+[EL9905S.ndi.NTia64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTia64.5.1, EL99X.EventLog.NTia64.5.1
+
+
+[EL99X.reg.NTia64.5.1]
+HKR, Ndi,               Service,    0, "EL99X"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR, ,TCAUDIAG,                      , "TCAUM99X"
+
+[EL99X.Service.NTia64.5.1]
+DisplayName     = %EL99X.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\EL99XN5I.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg.NTia64.5.1
+
+[EL99X.EventLog.NTia64.5.1]
+AddReg = EL99X.AddEventLog.reg.NTia64.5.1
+
+[EL99X.AddEventLog.reg.NTia64.5.1]
+HKR,, EventMessageFile, 0x00020000, "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\EL99XN5I.sys"
+HKR,, TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg.NTia64.5.1]
+HKR,,TextModeFlags, 0x00010001, 0x0001
+
+; End Win XP64 IA Only *******
+
+
+
+; Win XP64 AMD Only *******
+
+[EL9902.ndi.NTamd64.5.1]
+Characteristics				= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg          			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT, EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTamd64.5.1
+
+[EL9902.ndi.NTamd64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTamd64.5.1, EL99X.EventLog.NTamd64.5.1
+
+
+[EL9903.ndi.NTamd64.5.1]
+Characteristics				= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg          			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTamd64.5.1
+
+[EL9903.ndi.NTamd64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTamd64.5.1, EL99X.EventLog.NTamd64.5.1
+
+
+[EL9908.ndi.NTamd64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         				= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles      				= EL99X.DriverFiles.NTamd64.5.1
+
+[EL9908.ndi.NTamd64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTamd64.5.1, EL99X.EventLog.NTamd64.5.1
+
+
+[EL9909.ndi.NTamd64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         				= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTamd64.5.1
+
+[EL9909.ndi.NTamd64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTamd64.5.1, EL99X.EventLog.NTamd64.5.1
+
+
+[EL9904C.ndi.NTamd64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTamd64.5.1
+
+[EL9904C.ndi.NTamd64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTamd64.5.1, EL99X.EventLog.NTamd64.5.1
+
+
+[EL9904S.ndi.NTamd64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTamd64.5.1
+
+[EL9904S.ndi.NTamd64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTamd64.5.1, EL99X.EventLog.NTamd64.5.1
+
+
+[EL9905C.ndi.NTamd64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_Fiber_XCVR.params.NT,EL99X.params.client, EL99X.Perftuning.client.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTamd64.5.1
+
+[EL9905C.ndi.NTamd64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTamd64.5.1, EL99X.EventLog.NTamd64.5.1
+
+
+[EL9905S.ndi.NTamd64.5.1]
+Characteristics 			= 0x84	; NCF_PHYSICAL + NCF_HAS_UI
+BusType         			= 5
+AddReg         	 			= EL99X.reg.NT, EL99X.software.NT, EL99X.params.NT,EL99X_Fiber_XCVR.params.NT,EL99X.params.server, EL99X.Perftuning.Server.NT, EL99X.2000params.NT
+CopyFiles       			= EL99X.DriverFiles.NTamd64.5.1
+
+[EL9905S.ndi.NTamd64.5.1.Services]
+AddService      			= EL99X, 2, EL99X.Service.NTamd64.5.1, EL99X.EventLog.NTamd64.5.1
+
+[EL99X.reg.NTamd64.5.1]
+HKR, Ndi,               Service,    0, "EL99X"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR, ,TCAUDIAG,                      , "TCAUM99X"
+
+[EL99X.Service.NTamd64.5.1]
+DisplayName     = %EL99X.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\EL99XN5A.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg.NTamd64.5.1
+
+
+[EL99X.EventLog.NTamd64.5.1]
+AddReg = EL99X.AddEventLog.reg.NTamd64.5.1
+
+[EL99X.AddEventLog.reg.NTamd64.5.1]
+HKR,, EventMessageFile, 0x00020000, "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\EL99XN5A.sys"
+HKR,, TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg.NTamd64.5.1]
+HKR,,TextModeFlags, 0x00010001, 0x0001
+
+; End Win XP64 AMD Only *******
+
+
+; Either Win 2000 or XP *******
+
+[EL99X.software.NT]
+HKLM,Software\3Com\EL99X\CurrentVersion,Description,0,%ProductSoftwareDescription%
+HKLM,Software\3Com\EL99X\CurrentVersion,MajorVersion,0x00010001,%ProductMajorVersion%
+HKLM,Software\3Com\EL99X\CurrentVersion,MinorVersion,0x00010001,%ProductMinorVersion%
+HKLM,Software\3Com\EL99X\CurrentVersion,Review,0x00010001,%ProductReview%
+HKLM,Software\3Com\EL99X\CurrentVersion,ServiceName,0,%ProductSoftwareName%
+HKLM,Software\3Com\EL99X\CurrentVersion,SoftwareType,0,%SoftwareType%
+HKLM,Software\3Com\EL99X\CurrentVersion,Title,0,%ProductSoftwareTitle%
+
+HKLM,Software\3Com\EL99X\CurrentVersion\NetRules,bindable,0x00010000,%NetRuleSoftwareBindable%
+HKLM,Software\3Com\EL99X\CurrentVersion\NetRules,bindform,0,%NetRuleSoftwareBindForm%
+HKLM,Software\3Com\EL99X\CurrentVersion\NetRules,class,0x00010000,%NetRuleSoftwareClass%
+HKLM,Software\3Com\EL99X\CurrentVersion\NetRules,type,0,%NetRuleSoftwareType%
+HKLM,Software\3Com\EL99X\CurrentVersion\NetRules,use,0,%SoftwareType%
+
+[3C99x.CoInstallers_AddReg]
+HKR,,CoInstallers32,0x00010000,"3C99X.dll,MyEntryPoint_3C99X"
+
+[3C99XCoInstallerFiles]
+3c99x.dll,,,2
+
+; Either End Win 2000 or XP *******
+
+
+[EL99X.params.NT]
+
+HKR,Ndi\params\FlowControl,		ParamDesc,  	0,    		%flow_control%
+HKR,Ndi\params\FlowControl,		type,       	0,    		"enum"
+HKR,Ndi\params\FlowControl,		default,    	0,    		"ENABLE"
+HKR,Ndi\params\FlowControl\enum,	ENABLE,     	0,    		%enable%
+HKR,Ndi\params\FlowControl\enum,	DISABLE,    	0,    		%disable%
+
+HKR,Ndi\params\MBADefaultBoot,		ParamDesc,  	0,    		%rom_boot%
+HKR,Ndi\params\MBADefaultBoot,		type,       	0,    		"enum"
+HKR,Ndi\params\MBADefaultBoot,		default,    	0,    		"0"
+HKR,Ndi\params\MBADefaultBoot\enum,	0,          	0,    		"Hardware Default"
+HKR,Ndi\params\MBADefaultBoot\enum,	1,          	0,    		%disable%
+HKR,Ndi\params\MBADefaultBoot\enum,	2,          	0,    		%enable%
+
+HKR,Ndi\params\IPSecOffload,		ParamDesc,  	0,    		%ipsec_offload%
+HKR,Ndi\params\IPSecOffload,		type,       	0,    		"enum"
+HKR,Ndi\params\IPSecOffload,		default,    	0,    		"ENABLE"
+HKR,Ndi\params\IPSecOffload\enum,	ENABLE,     	0,    		%enable%
+HKR,Ndi\params\IPSecOffload\enum,	DISABLE,    	0,    		%disable%
+
+HKR,Ndi\params\TCPSegOffload,		ParamDesc,  	0,    		%tcpseg_offload%
+HKR,Ndi\params\TCPSegOffload,		type,       	0,    		"enum"
+HKR,Ndi\params\TCPSegOffload,		default,    	0,    		"DISABLE"
+HKR,Ndi\params\TCPSegOffload\enum,	ENABLE,     	0,    		%enable%
+HKR,Ndi\params\TCPSegOffload\enum,	DISABLE,    	0,    		%disable%
+
+HKR,Ndi\params\ChecksumOffload,		ParamDesc,  	0,    		%checksum_offload%
+HKR,Ndi\params\ChecksumOffload,		type,       	0,    		"enum"
+HKR,Ndi\params\ChecksumOffload,		default,    	0,    		"ENABLE"
+HKR,Ndi\params\ChecksumOffload\enum,	ENABLE,     	0,    		%enable%
+HKR,Ndi\params\ChecksumOffload\enum,	DISABLE,    	0,    		%disable%
+
+HKR,Ndi\params\8021pOffload,		ParamDesc,  	0,    		%vlan_offload%
+HKR,Ndi\params\8021pOffload,		type,       	0,    		"enum"
+HKR,Ndi\params\8021pOffload,		default,    	0,    		"DISABLE"
+HKR,Ndi\params\8021pOffload\enum,	ENABLE,     	0,    		%enable%
+HKR,Ndi\params\8021pOffload\enum,	DISABLE,    	0,    		%disable%
+
+HKR,Ndi\params\SelfHealing,		ParamDesc,  	0,    		%self_healing%
+HKR,Ndi\params\SelfHealing,		type,       	0,    		"enum"
+HKR,Ndi\params\SelfHealing,		default,    	0,    		"BASIC"
+HKR,Ndi\params\SelfHealing\enum,	DISABLE,    	0,    		%disable%
+HKR,Ndi\params\SelfHealing\enum,	BASIC,      	0,    		%basic%
+HKR,Ndi\params\SelfHealing\enum,	ENHANCED,   	0,    		%enhanced%
+
+HKR,Ndi\params\NoTxEntries,		ParamDesc,  	0,    		%num_tx_entries%
+HKR,Ndi\params\NoTxEntries,		type,       	0,    		"long"
+HKR,Ndi\params\NoTxEntries,		default,    	0,    		"256"
+HKR,Ndi\params\NoTxEntries,		min,        	0,    		"128"
+HKR,Ndi\params\NoTxEntries,		max,        	0,    		"512"
+HKR,Ndi\params\NoTxEntries,		step,       	0,    		"32"
+HKR,Ndi\params\NoTxEntries,		base,       	0,    		"10"
+
+[EL99X.Perftuning]
+
+HKR,Ndi\params\PerfTuning,		ParamDesc,  	0,    		%perf_tuning%
+HKR,Ndi\params\PerfTuning,		type,       	0,    		"enum"
+HKR,Ndi\params\PerfTuning,		default,    	0,    		"DISABLE"
+HKR,Ndi\params\PerfTuning\enum,		ENABLE,     	0,    		%enable%
+HKR,Ndi\params\PerfTuning\enum,		DISABLE,    	0,    		%disable%
+
+
+;*********************
+
+[EL99X_XCVR.params]
+HKR,,XCVR_SELECT,,"HWDEFAULT"
+HKR,Ndi\params\XCVR_SELECT,		ParamDesc,	0,		%media_select%	
+HKR,Ndi\params\XCVR_SELECT,		type,		0,		"enum"
+HKR,Ndi\params\XCVR_SELECT,		optional,	0,		"0"
+HKR,Ndi\params\XCVR_SELECT,		default,	0,		"HWDEFAULT"
+HKR,Ndi\params\XCVR_SELECT\enum,	AUTO,		0,		%media_auto%
+HKR,Ndi\params\XCVR_SELECT\enum,    	10HALF,     	0,    		%media_10_half%
+HKR,Ndi\params\XCVR_SELECT\enum,    	100HALF,    	0,    		%media_100_half%
+HKR,Ndi\params\XCVR_SELECT\enum,    	10FULL,     	0,    		%media_10_full%
+HKR,Ndi\params\XCVR_SELECT\enum,    	100FULL,    	0,    		%media_100_full%
+HKR,Ndi\params\XCVR_SELECT\enum,    	HWDEFAULT,  	0,    		%media_default%
+
+
+[EL99X_XCVR.params.NT]
+HKR,Ndi\params\XCVR_SELECT,         	ParamDesc,  	0,    		%media_select%
+HKR,Ndi\params\XCVR_SELECT,         	type,       	0,    		"enum"
+HKR,Ndi\params\XCVR_SELECT,         	default,    	0,    		"HWDEFAULT"
+HKR,Ndi\params\XCVR_SELECT\enum,    	AUTO,       	0,    		%media_auto%
+HKR,Ndi\params\XCVR_SELECT\enum,    	10HALF,     	0,    		%media_10_half%
+HKR,Ndi\params\XCVR_SELECT\enum,    	100HALF,    	0,    		%media_100_half%
+HKR,Ndi\params\XCVR_SELECT\enum,    	10FULL,     	0,    		%media_10_full%
+HKR,Ndi\params\XCVR_SELECT\enum,    	100FULL,    	0,    		%media_100_full%
+HKR,Ndi\params\XCVR_SELECT\enum,    	HWDEFAULT,	0,    		%media_default%
+
+[EL99X_Fiber_XCVR.params]
+HKR,Ndi\params\XCVR_SELECT,		ParamDesc,	0,		%media_select%	
+HKR,Ndi\params\XCVR_SELECT,		type,		0,		"enum"
+HKR,Ndi\params\XCVR_SELECT,         	default,    	0,    		"HWDEFAULT"
+HKR,Ndi\params\XCVR_SELECT\enum,    	100HALF,    	0,    		%media_100_half%
+HKR,Ndi\params\XCVR_SELECT\enum,    	100FULL,    	0,    		%media_100_full%
+HKR,Ndi\params\XCVR_SELECT\enum,    	HWDEFAULT,	0,    		%media_default%
+
+
+[EL99X_Fiber_XCVR.params.NT]
+HKR,Ndi\params\XCVR_SELECT,		ParamDesc,	0,		%media_select%	
+HKR,Ndi\params\XCVR_SELECT,		type,		0,		"enum"
+HKR,Ndi\params\XCVR_SELECT,         	default,    	0,    		"HWDEFAULT"
+HKR,Ndi\params\XCVR_SELECT\enum,    	100HALF,    	0,    		%media_100_half%
+HKR,Ndi\params\XCVR_SELECT\enum,    	100FULL,    	0,    		%media_100_full%
+HKR,Ndi\params\XCVR_SELECT\enum,    	HWDEFAULT,	0,    		%media_default%
+
+;*********************
+
+[EL99X.params.client]
+HKR,Ndi\params\NoRxEntries,        	ParamDesc,   	0,    		%num_rx_entries%
+HKR,Ndi\params\NoRxEntries,        	type,        	0,    		"long"
+HKR,Ndi\params\NoRxEntries,        	default,     	0,    		"64"
+HKR,Ndi\params\NoRxEntries,        	min,         	0,    		"32"
+HKR,Ndi\params\NoRxEntries,        	max,         	0,    		"512"
+HKR,Ndi\params\NoRxEntries,        	step,        	0,    		"32"
+HKR,Ndi\params\NoRxEntries,        	base,        	0,    		"10"
+
+[EL99X.params.server]
+HKR,Ndi\params\NoRxEntries,       	ParamDesc,   	0,    		%num_rx_entries%
+HKR,Ndi\params\NoRxEntries,        	type,        	0,    		"long"
+HKR,Ndi\params\NoRxEntries,        	default,     	0,    		"128"
+HKR,Ndi\params\NoRxEntries,        	min,         	0,    		"32"
+HKR,Ndi\params\NoRxEntries,        	max,         	0,    		"512"
+HKR,Ndi\params\NoRxEntries,        	step,        	0,    		"32"
+HKR,Ndi\params\NoRxEntries,        	base,        	0,    		"10"
+
+[EL99X.Perftuning.client.NT]
+HKR,Ndi\params\PerfTuning,         	ParamDesc,   	0,    		%perf_tuning%
+HKR,Ndi\params\PerfTuning,         	type,        	0,    		"enum"
+HKR,Ndi\params\PerfTuning,         	default,     	0,    		"DISABLE"
+HKR,Ndi\params\PerfTuning\enum,    	ENABLE,      	0,    		%enable%
+HKR,Ndi\params\PerfTuning\enum,    	DISABLE,     	0,    		%disable%
+
+[EL99X.Perftuning.Server.NT]
+HKR,Ndi\params\PerfTuning,         	ParamDesc,   	0,    		%perf_tuning%
+HKR,Ndi\params\PerfTuning,         	type,        	0,    		"enum"
+HKR,Ndi\params\PerfTuning,         	default,     	0,    		"ENABLE"
+HKR,Ndi\params\PerfTuning\enum,    	ENABLE,      	0,    		%enable%
+HKR,Ndi\params\PerfTuning\enum,    	DISABLE,     	0,    		%disable%
+
+[EL99X.XPparams.NTx86.5.1]
+HKR,,NDIS_VERSION,,"AUTO"
+HKR,Ndi\params\NDIS_VERSION,		ParamDesc,	,		"NDIS Driver Version"
+HKR,Ndi\params\NDIS_VERSION,		type,		,		"enum"
+HKR,Ndi\params\NDIS_VERSION,		optional,	,		"0"
+HKR,Ndi\params\NDIS_VERSION,		default,	,		"AUTO"
+HKR,Ndi\params\NDIS_VERSION,		optional,	,		"0"
+HKR,Ndi\params\NDIS_VERSION\enum,	AUTO,		,		"Auto Select"
+HKR,Ndi\params\NDIS_VERSION\enum,	NDIS51,		,		"NDIS 5.1"
+HKR,Ndi\params\NDIS_VERSION\enum,	NDIS5,		,		"NDIS 5"
+
+HKR,,RWUPING,,%disable%
+HKR,Ndi\Params\RWUPING,          	ParamDesc,  	, 		"RWU Ping"
+HKR,Ndi\Params\RWUPING,          	type,       	, 		"enum"
+HKR,Ndi\Params\RWUPING,          	optional,   	, 		"0"
+HKR,Ndi\params\RWUPING,			default,	, 		"DISABLE"
+HKR,Ndi\params\RWUPING\enum,		DISABLE,	, 		%disable%
+HKR,Ndi\params\RWUPING\enum,		ENABLE,		,		%enable%
+
+HKR,,RWUMAGIC,,%enable%
+HKR,Ndi\Params\RWUMAGIC,          	ParamDesc,  	, 		"RWU Magic Pkt"
+HKR,Ndi\Params\RWUMAGIC,          	type,       	, 		"enum"
+HKR,Ndi\Params\RWUMAGIC,          	optional,   	, 		"0"
+HKR,Ndi\params\RWUMAGIC,		default,	, 		"ENABLE"
+HKR,Ndi\params\RWUMAGIC\enum,		DISABLE,	, 		%disable%
+HKR,Ndi\params\RWUMAGIC\enum,		ENABLE,		,		%enable%
+
+[EL99X.2000params.NT]
+HKR,,NDIS_VERSION,,"AUTO"
+HKR,Ndi\params\NDIS_VERSION,		ParamDesc,	,		"NDIS Driver Version"
+HKR,Ndi\params\NDIS_VERSION,		type,		,		"enum"
+HKR,Ndi\params\NDIS_VERSION,		optional,	,		"0"
+HKR,Ndi\params\NDIS_VERSION,		default,	,		"AUTO"
+HKR,Ndi\params\NDIS_VERSION,		optional,	,		"0"
+HKR,Ndi\params\NDIS_VERSION\enum,	AUTO,		,		"Auto Select"
+HKR,Ndi\params\NDIS_VERSION\enum,	NDIS5,		,		"NDIS 5"
+
+[EL99X.9Xparams.NT]
+HKR,,NDIS_VERSION,,"AUTO"
+HKR,Ndi\params\NDIS_VERSION,,,"AUTO"
+HKR,Ndi\params\NDIS_VERSION,		flag,1,20,00,00,00
+HKR,Ndi\params\NDIS_VERSION,		ParamDesc,	,		"NDIS Driver Version"
+HKR,Ndi\params\NDIS_VERSION,		type,		,		"enum"
+HKR,Ndi\params\NDIS_VERSION,		optional,	,		"0"
+HKR,Ndi\params\NDIS_VERSION\enum,	AUTO,		,		"Auto Select"
+HKR,Ndi\params\NDIS_VERSION\enum,	NDIS4,		,		"NDIS 4"
+HKR,Ndi\params\NDIS_VERSION\enum,	NDIS3,		,		"NDIS 3"
+
+
+; File Section for Windows IA64 *******
+[EL99X.DriverFiles.NTia64.5.1]
+EL99XN5I.sys,,,2
+EL99XRUN.OUT,,,2
+
+; File Section for Windows AMD64 *******
+[EL99X.DriverFiles.NTamd64.5.1]
+EL99XN5A.sys,,,2
+EL99XRUN.OUT,,,2
+
+; File Section for Windows 2000 *******
+[EL99X.DriverFiles.NT]
+EL99XND5.SYS,,,2
+
+; File Section for Windows XP *******
+[EL99X.DriverFiles.NTx86.5.1]
+EL99XN51.SYS,,,2
+
+[Win32.apps.CopyFiles.NT]
+EL99XRUN.OUT,,,2
+
+[Win32.apps.CopyFiles.NTx86.5.1]
+EL99XRUN.OUT,,,2
+
+
+[DestinationDirs]
+DefaultDestDir        			= 11
+3C99XCoInstallerFiles			= 11
+EL99X.DriverFiles.NT  			= 12
+EL99X.DriverFiles.NTx86.5.1		= 12
+Win32.apps.CopyFiles.NT			= 12
+Win32.apps.CopyFiles.NTx86.5.1		= 12
+EL99X.DriverFiles.NTamd64.5.1		= 12
+EL99X.DriverFiles.NTia64.5.1		= 12
+
+
+[strings]
+V_MS					= "3Com"
+V_3COM					= "3Com"
+Source_Disk_Name			= "ECD200P990"
+disable					= "Disable"
+enable					= "Enable"
+basic					= "Basic"
+enhanced				= "Enhanced"
+media_select      			= "Media Select"
+media_auto        			= "Auto-Negotiate"
+media_10_full     			= "10 Mbps, Full-Duplex"
+media_10_half     			= "10 Mbps, Half-Duplex"
+media_100_full   			= "100 Mpbs, Full-Duplex"
+media_100_half    			= "100 Mbps, Half-Duplex"
+media_default     			= "Hardware Default"
+flow_control				= "Flow Control"
+rom_boot				= "ROMBoot"
+self_healing				= "Self Healing"
+perf_tuning				= "Performance Tuning"
+num_tx_entries				= "Descriptors: Transmit"
+num_rx_entries				= "Descriptors: Receive"
+ipsec_offload				= "Offload: IPSec"
+tcpseg_offload				= "Offload: TCP Segmentation"
+checksum_offload			= "Offload: TCP/IP Checksum"
+vlan_offload				= "Offload: 802.1p"
+
+EL99X.Service.DispName      		= "3Com 3C99x EtherLink XL Adapter"
+ProductSoftwareDescription 		= "3Com 3C99X Adapter Driver"
+ProductSoftwareTitle 			= "3Com 3C99x Adapter Driver"
+ProductMajorVersion 			= "1"
+ProductMinorVersion 			= "0"
+ProductSoftwareName 			= "EL99X"
+ProductReview 				= "1"
+SoftwareType 				= "driver"
+NetRuleSoftwareType 			= "EL99XSys ndisDriver EL99XDriver"
+NetRuleSoftwareBindForm 		= """EL99XSys"" yes no container"
+NetRuleSoftwareClass 			= "EL99XDriver basic"
+NetRuleSoftwareBindable 		= "EL99XDriver EL99XAdapter non exclusive 100"
+
+
+PCI\VEN_10b7&DEV_9902&SUBSYS_990210B7.DeviceDesc = "3Com 10/100 PCI NIC w/3XP (3CR990-TX-95)"
+PCI\VEN_10b7&DEV_9903&SUBSYS_990310B7.DeviceDesc = "3Com 10/100 PCI NIC w/3XP (3CR990-TX-97)"
+PCI\VEN_10b7&DEV_9904&SUBSYS_100010B7.DeviceDesc = "3Com 10/100 Secure NIC (3CR990B-97)"
+PCI\VEN_10b7&DEV_9904&SUBSYS_110210B7.DeviceDesc = "3Com 100 Secure Fiber NIC (3CR990B-FX-97)"
+PCI\VEN_10b7&DEV_9904&SUBSYS_200010B7.DeviceDesc = "3Com 10/100 Secure Server NIC (3CR990B-97)"
+PCI\VEN_10b7&DEV_9905&SUBSYS_110210B7.DeviceDesc = "3Com 100 Secure Fiber NIC (3CR990-FX-97)"
+PCI\VEN_10b7&DEV_9908&SUBSYS_990810B7.DeviceDesc = "3Com 10/100 PCI Server NIC w/3XP (3CR990SVR95)"
+PCI\VEN_10b7&DEV_9909&SUBSYS_990910B7.DeviceDesc = "3Com 10/100 PCI Server NIC w/3XP (3CR990SVR97)"

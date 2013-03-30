@@ -1,0 +1,168 @@
+; NETLM28.INF
+;
+; PCMCIA Network Interface Cards.
+;
+; Copyright 1996
+
+[Version]
+LayoutFile = layout.inf
+Signature  = "$Windows NT$"
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Class      = Net
+Provider   = %Mfabc%
+
+;
+; Table of Contents
+;
+[Manufacturer]
+%Mfabc%=Mfabc
+
+[ControlFlags]
+ExcludeFromSelect = MF\LMNDIS_DEV1
+
+;
+; The Intelligent PCMCIA LanModem cards
+;
+[Mfabc]
+%MfabcA%=LMNDIS.ndi,MF\LMNDIS_DEV1
+
+
+[LMNDIS.ndi.NT]
+Characteristics = 0x4
+BusType         = 8
+AddReg          = LMNDIS.ndi.registry
+CopyFiles = LMNDIS.ndis5.CopyFiles
+
+[LMNDIS.ndi.NT.Services]
+AddService = LMNDIS5, 2, LMNDIS.Service, LMNDIS.AddEventLog
+;----------------------------------------------------------------------------
+;    NE2000 Common
+;
+[LMNDIS.ndi.registry]
+HKR, Ndi,               Service,    0, "LMNDIS5"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis3,ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR,    ,               Pcmcia,     0, "2"
+
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+
+[LMNDIS.ndis5.CopyFiles]
+;LMNDIS5.SYS,,,2
+
+
+[LMNDIS.Service]
+DisplayName     =   %LMNDIS.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_AUTO_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\LMNDIS5.sys
+LoadOrderGroup  =   NDIS
+;AddReg          =   TextModeFlags.reg
+
+[LMNDIS.AddEventLog]
+AddReg = LMNDIS.AddEventLog.reg
+
+[LMNDIS.AddEventLog.reg]
+HKR, ,   EventMessageFile,  0x00020000,"%%SystemRoot%%\System32\netevent.dll"
+HKR, ,   TypesSupported,    0x00010001, 7
+;
+;[TextModeFlags.reg]
+;HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[LMNDIS.ndi]
+AddReg=ADDREG_LMNDIS.ndi.reg,LMNDIS.ndi.reg,Clone.params.reg
+LogConfig=*pnp80D6.LogConfig
+
+
+;****************************************************************************
+;    *PNP80D6   Novell compatible ne2000
+;****************************************************************************
+
+[*pnp80D6.LogConfig]
+IRQConfig=3,5,7,9,10,11,12,15
+IOConfig=20@300-37F%FFE0(3FF::)
+ConfigPriority=HARDRECONFIG
+
+
+;****************************************************************************
+; LMNDIS Drivers
+;****************************************************************************
+; Base section for LanModem users
+[ADDREG_LMNDIS.ndi.reg]
+
+HKR,Ndi,DeviceID,,"MF\LMNDIS_DEV1"
+
+[LMNDIS.ndi.reg]
+HKR,Ndi\Install,ndis3,,"cm3ndis3.ndis3"
+HKR,Ndi,MatchAndMoveID,,"*pnp80D6"
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,LMNDIS.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,LMNDIS
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+HKR,Ndi,CardType,,"PCMCIA"
+
+
+; extra params for clones
+
+[Clone.params.reg]
+; Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,60,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+
+;****************************************************************************
+; Stuff for copying files
+;****************************************************************************
+; Install NDIS3
+[cm3ndi3.ndis3]
+CopyFiles=cm3ndis3.ndis3.CopyFiles
+
+[cm3ndis3.ndis3.CopyFiles]
+LMNDIS.sys
+
+;[SourceDisksFiles]
+
+;[SourceDisksNames]
+;NOTE: USE ONLY DISK NUMBERS 55-59
+;55 = "PCMCIA LanModem Installation Disk", "", 0000-0000
+
+[DestinationDirs]
+DefaultDestDir           = 11   ; LDID_SYS
+cm3ndis3.ndis3.CopyFiles = 11   ; LDID_SYS
+LMNDIS.ndis5.CopyFiles   = 12
+
+
+;****************************************************************************
+; Translatable strings
+;****************************************************************************
+
+[Strings]
+;
+; Manufacturer names
+;
+Mfabc="D-Link"
+
+;
+; Adapter names
+;
+MfabcA                  = "D-Link LANmodem DME336T(Ethernet) Card"
+LMNDIS.Service.DispName = "D-Link LanModem(Ethernet) Device Driver"
+
+

@@ -1,0 +1,265 @@
+; Copyright (c) 2000-2002 National Semiconductor Corporation, All Rights Reserved 
+;
+; Windows XP
+;
+; Installation file (.inf) for the National Semiconductor Corp. device.
+;
+
+[Version]
+    Signature="$Chicago$"
+    Compatible=1
+    Provider=%NSC%
+    ClassGuid = {4d36e972-e325-11ce-bfc1-08002be10318} 
+    Class=Net
+    CatalogFile=net83820.cat
+    DriverVer=03/11/2002,5.0.2.50
+
+[ControlFlags]
+    ExcludeFromSelect = PCI\VEN_100b&DEV_0022&SUBSYS_0022100B,\ 
+	                    PCI\VEN_100B&DEV_0022&SUBSYS_F022100B,\
+						PCI\VEN_100B&DEV_0022&SUBSYS_14071113,\
+						PCI\VEN_100B&DEV_0022&SUBSYS_14081113
+
+;
+; Driver information
+;
+
+[Manufacturer]
+    %NSC%   = NSC.Mfg
+
+;
+;Model section
+;
+
+[NSC.Mfg]
+	%dp83820Copper.DeviceDesc% 		= dp83820.Copper, PCI\VEN_100B&DEV_0022&SUBSYS_0022100B ; National Semi. Copper Adapter
+	%dp83820Fiber.DeviceDesc%  		= dp83820.Fiber,  PCI\VEN_100B&DEV_0022&SUBSYS_F022100B ; National Semi. Fiber Adapter
+	%dp83820Accton1407.DeviceDesc% 	= dp83820.Copper, PCI\VEN_100B&DEV_0022&SUBSYS_14071113 ; Accton EN1407T Adapter
+	%dp83820Accton1408.DeviceDesc% 	= dp83820.Copper, PCI\VEN_100B&DEV_0022&SUBSYS_14081113 ; Accton EN1408T Adapter
+
+;
+; General installation section
+;
+
+
+[dp83820.Copper.NT]	
+    Characteristics	= 0x84    ; NCF_PHYSICAL | NCF_HAS_UI
+    BusType			= 5
+	AddReg          = dp83820.NT.ndi, dp83820.Params.Common, dp83820.Params.Copper
+	CopyFiles       = dp83820.NT.CopyFiles
+
+[dp83820.Copper.NT.Services]
+	AddService = dp83820, 2, dp83820.AddService, dp83820.AddEventLog
+
+[dp83820.Fiber.NT]	
+	Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+	BusType         = 5
+	AddReg          = dp83820.NT.ndi, dp83820.Params.Common, dp83820.Params.Fiber
+	CopyFiles       = dp83820.NT.CopyFiles
+
+[dp83820.Fiber.NT.Services]
+	AddService 		= dp83820, 2, dp83820.AddService, dp83820.AddEventLog
+
+[dp83820.AddService]
+	DisplayName		= %dp83820.SvcDesc%
+	ServiceType    	= 1                 ; SERVICE_KERNEL_DRIVER
+	StartType      	= 3                 ; SERVICE_DEMAND_START
+	ErrorControl   	= 1                 ; SERVICE_ERROR_NORMAL
+	LoadOrderGroup 	= NDIS
+	ServiceBinary  	= %12%\dp83820.sys
+
+[dp83820.AddEventLog]
+	AddReg = dp83820.EventLog.reg
+
+[dp83820.EventLog.reg]
+	HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll;%%SystemRoot%%\System32\drivers\dp83820.sys"
+	HKR, , TypesSupported,   0x00010001, 7
+
+[dp83820.NT.ndi]
+	HKR, Ndi\Interfaces, UpperRange, , "ndis5"
+	HKR, Ndi\Interfaces, LowerRange, , "ethernet"
+	HKR, Ndi,            Service,   0, "dp83820"
+
+[dp83820.NT.CopyFiles]
+    DP83820.sys,,,0x00000004
+
+[dp83820.Params.common]
+    HKR, ,SlotNumber,               0, "-1"
+    HKR, ,BusNumber,                0, "-1"
+    HKR, ,MediaType,                0, "1"
+    HKR, ,AdapterCFID,              0, "0022100b"
+
+	;
+	; For advanced configuration through
+	; the registry only.
+	;
+    HKR, ,RxDMA,	  		0,	"512"
+    HKR, ,TxDMA,	  		0,	"1024"
+    HKR, ,RxIntrHold, 	   	0,	"0"
+    HKR, ,TxIntrHold, 	   	0,	"0"
+    HKR, ,TxDrth, 			0,	"0"
+    HKR, ,TxFlth, 			0,	"1"
+    HKR, ,RxDrth, 			0,	"0"
+    HKR, ,PsSLo,            0,  "4"	
+    HKR, ,PsSHi,            0,  "8"	
+    HKR, ,PsDLo,            0,  "4"	
+    HKR, ,PsDHi,            0,  "8"	
+    HKR, ,PauseCounterVal,  0,  "65535"	
+    HKR, ,MultipleVlan,     0,  "0"	
+
+    ;
+    ;  Recieve Buffers
+    ;
+    HKR, Ndi\params\RxQueueSz,          ParamDesc, 0, %RxQueueSz%
+    HKR, Ndi\params\RxQueueSz,          type,      0, "long"
+    HKR, Ndi\params\RxQueueSz,          default,   0, "106"
+    HKR, Ndi\params\RxQueueSz,          Min,       0, "32"
+    HKR, Ndi\params\RxQueueSz,          Max,       0, "2048"
+    HKR, Ndi\params\RxQueueSz,          Step,      0, "1"
+    ;
+    ;  Transmit Buffers
+    ;
+    HKR, Ndi\params\TxQueueSz,          ParamDesc, 0, %TxQueueSz%
+    HKR, Ndi\params\TxQueueSz,          type,      0, "long"
+    HKR, Ndi\params\TxQueueSz,          default,   0, "2048"
+    HKR, Ndi\params\TxQueueSz,          Min,       0, "64"
+    HKR, Ndi\params\TxQueueSz,          Max,       0, "4096"
+    HKR, Ndi\params\TxQueueSz,          Step,      0, "1"
+    ;
+	; Jumbo Packet Size
+    ; 
+    HKR, Ndi\params\JumboFrame, 	 ParamDesc, 0, %JumboFrame%
+    HKR, Ndi\params\JumboFrame,      type,      0, "enum"
+    HKR, Ndi\params\JumboFrame,      default,   0, "1514" 
+    HKR, Ndi\params\JumboFrame\enum, 1514,         0, "1) 1514 (Standard)"
+    HKR, Ndi\params\JumboFrame\enum, 4088,         0, "2) 4088"
+    HKR, Ndi\params\JumboFrame\enum, 9014,         0, "3) 9014 (Alteon)"
+    HKR, Ndi\params\JumboFrame\enum, 10000,        0, "4) 10000"
+    HKR, Ndi\params\JumboFrame\enum, 16128,        0, "5) 16128"
+    ;
+    ;Network address
+    ; 
+    HKR, Ndi\params\NetworkAddress,     ParamDesc,      0, %NetworkAddress%
+    HKR, Ndi\params\NetworkAddress,     type,           0, "edit"
+    HKR, Ndi\params\NetworkAddress,     LimitText,      0, "12"
+    HKR, Ndi\params\NetworkAddress,     UpperCase,      0, "1"
+    HKR, Ndi\params\NetworkAddress,     default,        0, ""
+    HKR, Ndi\params\NetworkAddress,     optional,       0, "1"
+    ;
+    ; Checksum 
+    ;
+    HKR, Ndi\params\CheckSum,          ParamDesc, 0, %CheckSum%
+    HKR, Ndi\params\CheckSum,          type,      0, "enum"
+    HKR, Ndi\params\CheckSum,          default,   0, "2"
+    HKR, Ndi\params\CheckSum\enum,     0,         0, "1) Tx Checksum"
+    HKR, Ndi\params\CheckSum\enum,     1,         0, "2) Rx CheckSum"
+	HKR, Ndi\params\CheckSum\enum,     2,         0, "3) All CheckSum"
+	HKR, Ndi\params\CheckSum\enum,     3,         0, "4) None"
+    ;
+    ;  Virtual Lan ID
+    ;
+    HKR, Ndi\params\VLANID,          ParamDesc, 0, %VLANID%
+    HKR, Ndi\params\VLANID,          type,      0, "long"
+    HKR, Ndi\params\VLANID,          default,   0, ""
+    HKR, Ndi\params\VLANID,          Min,       0, "1"
+    HKR, Ndi\params\VLANID,          Max,       0, "4095"
+    HKR, Ndi\params\VLANID,          Step,      0, "1"
+    HKR, Ndi\params\VLANID,     	 optional,  0, "1"
+    ;
+    ; Priority Queues
+    ;
+    HKR, Ndi\params\PriQ,          ParamDesc, 0, %PriQ%
+    HKR, Ndi\params\PriQ,          type,      0, "enum"
+    HKR, Ndi\params\PriQ,          default,   0, "0"
+    HKR, Ndi\params\PriQ\enum,     1,         0, "Enable"
+    HKR, Ndi\params\PriQ\enum,     0,         0, "Disable"
+
+
+[dp83820.Params.Copper]
+	;
+	; Network Media Selection 
+	;
+	HKR, Ndi\params\NetworkMedia,      ParamDesc, 0, %NetworkMedia%
+	HKR, Ndi\params\NetworkMedia,      type,      0, "enum"
+	HKR, Ndi\params\NetworkMedia,      default,   0, "8"
+	HKR, Ndi\params\NetworkMedia\enum, 8,         0, "1) Auto Negotiate"
+	HKR, Ndi\params\NetworkMedia\enum, 1,         0, "2) Auto 1000 Mbps"
+	HKR, Ndi\params\NetworkMedia\enum, 2,         0, "3) Auto 100 Mbps"
+	HKR, Ndi\params\NetworkMedia\enum, 3,         0, "4) Auto 10 Mbps"
+	HKR, Ndi\params\NetworkMedia\enum, 4,         0, "5) Force 100 Full"
+	HKR, Ndi\params\NetworkMedia\enum, 5,         0, "6) Force 100 Half"
+	HKR, Ndi\params\NetworkMedia\enum, 6,         0, "7) Force 10 Full"
+	HKR, Ndi\params\NetworkMedia\enum, 7,         0, "8) Force 10 Half"
+	;
+	; IEEE Non Compliance Bit 
+	;
+	HKR, Ndi\params\NcBit,      ParamDesc, 0, %NcBit%
+	HKR, Ndi\params\NcBit,      type,      0, "enum"
+	HKR, Ndi\params\NcBit,      default,   0, "1"
+	HKR, Ndi\params\NcBit\enum, 1,         0, "Enable"
+	HKR, Ndi\params\NcBit\enum, 0,         0, "Disable"
+	;
+	; Pause Control
+	;
+	HKR, Ndi\params\FlowControl,      ParamDesc, 0, %PauseControl%
+	HKR, Ndi\params\FlowControl,      type,      0, "enum"
+	HKR, Ndi\params\FlowControl,      default,   0, "3"
+	HKR, Ndi\params\FlowControl\enum, 0,         0, "Disable"
+	HKR, Ndi\params\FlowControl\enum, 1,         0, "Tx pause frames"
+	HKR, Ndi\params\FlowControl\enum, 3,         0, "Enable"    
+
+[dp83820.Params.Fiber]
+	HKR, , FlowControl, 0, "0"	
+	HKR, , NcBit,       0, "1"	
+	;
+	; Network Media Selection 
+	;
+	HKR, Ndi\params\NetworkMedia,      ParamDesc, 0, %NetworkMedia%
+	HKR, Ndi\params\NetworkMedia,      type,      0, "enum"
+	HKR, Ndi\params\NetworkMedia,      default,   0, "8"
+	HKR, Ndi\params\NetworkMedia\enum, 8,         0, "1) Auto Negotiate"
+	HKR, Ndi\params\NetworkMedia\enum, 9,         0, "2) Force 1000 Full"
+
+;
+; Source file information
+;
+
+[SourceDisksNames.x86]
+    1 = %DiskId1%,,,""
+
+;
+; Files for disk National Semiconductor Corp. Installation Disk #1 (Net)
+;
+
+[SourceDisksFiles]
+    DP83820.sys = 1,,
+
+[DestinationDirs]
+   dp83820.NT.CopyFiles = 12
+   DefaultDestDir =11
+
+;
+; Localizable Strings
+;
+
+[Strings]
+    NSC = "National Semiconductor Corp."
+	dp83820Copper.DeviceDesc 	 = "National Semiconductor DP83820 Copper Gigabit Adapter"
+	dp83820Fiber.DeviceDesc  	 = "National Semiconductor DP83820 Fiber Gigabit Adapter"
+	dp83820Accton1407.DeviceDesc = "Accton EN1407T Giga-bit Ethernet Adapter"
+	dp83820Accton1408.DeviceDesc = "Accton EN1408T Giga-bit Ethernet Adapter"
+    dp83820.SvcDesc="National Semiconductor DP83820 Gigabit Network Controller"
+    DiskId1 = "Gigabit Ethernet Installation Disk"
+    ;
+    ; Advanced property setting 
+    ;
+    NetworkMedia    = "Media Type"
+    PauseControl    = "Pause Control"
+    RxQueueSz       = "Receive Buffers"
+    TxQueueSz       = "Transmit Buffers"
+    JumboFrame      = "Packet Size (maximum)"
+    NcBit      	    = "IEEE Compliant Link"
+    NetworkAddress  = "Address"
+    CheckSum	    = "Offload Checksum"
+    VLANID			= "VLAN ID"
+    PriQ      	    = "Priority Queues"

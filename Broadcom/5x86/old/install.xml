@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cpq_install version="1.0">
+	<inf_information>
+		<inf_file filename="bxvbd.inf" type="PNP"/>
+	</inf_information>
+</cpq_install>

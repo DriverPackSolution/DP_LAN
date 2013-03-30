@@ -1,0 +1,485 @@
+;
+;  Purpose:   Netcard setup information file for Windows XP/Server2003/Vista X64 Edition
+;
+;  Author:    Tevin Chen
+;
+;  Date:      May, 2007
+;
+;  Copyright: D-Link
+;
+
+[Version]
+CatalogFile = netdlf64.cat
+Signature   = "$Chicago$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Prov%
+DriverVer   = 05/16/2007, 3.69.0.454
+
+[Manufacturer]
+%Manuf%       = MANUF,NTAMD64
+
+[MANUF.NTAMD64]
+%VT3106SFX.DeviceDesc% = VT3106SFX.ndi, PCI\VEN_1106&DEV_3053&SUBSYS_14101186
+%VT3106DX.DeviceDesc% = VT3106J.ndi, PCI\VEN_1106&DEV_3106&SUBSYS_14081186
+%VT3106F1.DeviceDesc% = VT3106J.ndi, PCI\VEN_1106&DEV_3106&SUBSYS_14071186
+%VT3106H.DeviceDesc% = VT3106J.ndi, PCI\VEN_1106&DEV_3106&SUBSYS_14061186
+%VT3106S.DeviceDesc% = VT3106S.ndi, PCI\VEN_1106&DEV_3053&SUBSYS_14041186
+%VT3106J.DeviceDesc% = VT3106J.ndi, PCI\VEN_1106&DEV_3106&SUBSYS_14031186
+%VT3065C.DeviceDesc% = VT3065.ndi, PCI\VEN_1106&DEV_3065&SUBSYS_14021186
+%VT3065B.DeviceDesc% = VT3065.ndi, PCI\VEN_1106&DEV_3065&SUBSYS_14011186
+%VT3065A.DeviceDesc% = VT3065.ndi, PCI\VEN_1106&DEV_3065&SUBSYS_14001186
+%VT3206.DeviceDesc% = VT3106J.ndi, PCI\VEN_1106&DEV_3106&SUBSYS_14051186
+%VT3043.DeviceDesc% = VT3043.ndi, PCI\VEN_1106&DEV_3043&SUBSYS_14001186
+
+;-------------------------------------------------------------------------------
+; ndi for 3106SFX
+;-------------------------------------------------------------------------------
+[VT3106SFX.ndi.NTAMD64]
+Characteristics = 0x84 ; NCF_PHYSICAL + NCF_HAS_UI
+BusType         = 5
+DelReg          = FET.delreg, FET.SW.delreg
+AddReg          = VT3106S.reg, FET.reg, ConnTypeFX.reg, FlowCtrl.reg, FET.reg.NT, AI.reg, Wakeup.reg, Tagging.reg, VLAN.reg, Cksumoffload.reg, FET.SW.NT
+CopyFiles       = FET.CopyFiles.NTAMD64, FET.SW.CopyFiles.NTAMD64
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 0          ; NdisPhysicalMediumUnspecified
+
+[VT3106SFX.ndi.NTAMD64.Services]
+AddService      = FETNDISB, 2, FET_NTAMD64.Service, FET.EventLog
+
+;-------------------------------------------------------------------------------
+; ndi for 3106S
+;-------------------------------------------------------------------------------
+[VT3106S.ndi.NTAMD64]
+Characteristics = 0x84 ; NCF_PHYSICAL + NCF_HAS_UI
+BusType         = 5
+DelReg          = FET.delreg, FET.SW.delreg
+AddReg          = VT3106S.reg, FET.reg, ConnType.reg, FlowCtrl.reg, FET.reg.NT, AI.reg, Wakeup.reg, Tagging.reg, VLAN.reg, Cksumoffload.reg, FET.SW.NT
+CopyFiles       = FET.CopyFiles.NTAMD64, FET.SW.CopyFiles.NTAMD64
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 0          ; NdisPhysicalMediumUnspecified
+
+[VT3106S.ndi.NTAMD64.Services]
+AddService      = FETNDISB, 2, FET_NTAMD64.Service, FET.EventLog
+
+;-------------------------------------------------------------------------------
+; ndi for 3106J
+;-------------------------------------------------------------------------------
+[VT3106J.ndi.NTAMD64]
+Characteristics = 0x84 ; NCF_PHYSICAL + NCF_HAS_UI
+BusType         = 5
+DelReg          = FET.delreg, FET.SW.delreg
+AddReg          = VT3106J.reg, FET.reg, ConnType.reg, FlowCtrl.reg, FET.reg.NT, AI.reg, Wakeup.reg, FET.SW.NT
+CopyFiles       = FET.CopyFiles.NTAMD64, FET.SW.CopyFiles.NTAMD64
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 0          ; NdisPhysicalMediumUnspecified
+
+[VT3106J.ndi.NTAMD64.Services]
+AddService      = FETNDISB, 2, FET_NTAMD64.Service, FET.EventLog
+
+;-------------------------------------------------------------------------------
+; ndi for 3065
+;-------------------------------------------------------------------------------
+[VT3065.ndi.NTAMD64]
+Characteristics = 0x84 ; NCF_PHYSICAL + NCF_HAS_UI
+BusType         = 5
+DelReg          = FET.delreg, FET.SW.delreg
+AddReg          = VT3065.reg, FET.reg, ConnType.reg, FlowCtrl.reg, FET.reg.NT, AI.reg, Wakeup.reg, FET.SW.NT
+CopyFiles       = FET.CopyFiles.NTAMD64, FET.SW.CopyFiles.NTAMD64
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 0          ; NdisPhysicalMediumUnspecified
+
+[VT3065.ndi.NTAMD64.Services]
+AddService      = FETNDISB, 2, FET_NTAMD64.Service, FET.EventLog
+
+;-------------------------------------------------------------------------------
+; ndi for 3043
+;-------------------------------------------------------------------------------
+[VT3043.ndi.NTAMD64]
+Characteristics = 0x84 ; NCF_PHYSICAL + NCF_HAS_UI
+BusType         = 5
+DelReg          = FET.delreg, FET.SW.delreg
+AddReg          = VT3043.reg, FET.reg, ConnType.reg, FET.reg.NT, FET.SW.NT
+CopyFiles       = FET.CopyFiles.NTAMD64, FET.SW.CopyFiles.NTAMD64
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 0          ; NdisPhysicalMediumUnspecified
+
+[VT3043.ndi.NTAMD64.Services]
+AddService      = FETNDISB, 2, FET_NTAMD64.Service, FET.EventLog
+
+;-------------------------------------------------------------------------------
+; VT3106S specific , AdapterCFID = 0x30531106 (HEX) = 810750214 (DEC)
+;
+[VT3106S.reg]
+HKR, Ndi,                                   DeviceID,        0, "PCI\VEN_1106&DEV_3053"
+HKR, ,                                      AdapterType,     0, "5"
+HKR, ,                                      MediaType,       0, "1"
+
+HKR, ,                                      ReceiveBurstIndicate,0, "64"
+HKR, ,                                      ReceiveThreshold,    0, "0"
+HKR, ,                                      TransmitThreshold,   0, "0"
+HKR, ,                                      BurstLength,         0, "1"
+HKR, ,                                      MapRegisters,        0, "32"
+HKR, ,                                      EarlyReceive,        0, "0"
+HKR, ,                                      EarlyTransmit,       0, "0"
+; Nway Forced Mode
+HKR, ,                                      NwayForce,           0, "0"
+; Power Management Capability
+HKR, ,                                      PMC,                 0, "0"
+
+HKR, ,                                      TransmitBuffers, 0, "64"
+HKR, Ndi\params\TransmitBuffers,            ParamDesc,       0, %TXBuffer%
+HKR, Ndi\params\TransmitBuffers,            default,         0, "64"
+HKR, Ndi\params\TransmitBuffers,            type,            0, "int"
+HKR, Ndi\params\TransmitBuffers,            Min,             0, "48"
+HKR, Ndi\params\TransmitBuffers,            Max,             0, "256"
+HKR, Ndi\params\TransmitBuffers,            Step,            0, "1"
+HKR, Ndi\params\TransmitBuffers,            Base,            0, "10"
+HKR, Ndi\params\TransmitBuffers,            flag,            1, "20","00","00","00"
+
+HKR, ,                                      ReceiveBuffers,  0, "64"
+HKR, Ndi\params\ReceiveBuffers,             ParamDesc,       0, %RXBuffer%
+HKR, Ndi\params\ReceiveBuffers,             default,         0, "64"
+HKR, Ndi\params\ReceiveBuffers,             type,            0, "int"
+HKR, Ndi\params\ReceiveBuffers,             Min,             0, "64"
+HKR, Ndi\params\ReceiveBuffers,             Max,             0, "256"
+HKR, Ndi\params\ReceiveBuffers,             Step,            0, "1"
+HKR, Ndi\params\ReceiveBuffers,             Base,            0, "10"
+HKR, Ndi\params\ReceiveBuffers,             flag,            1, "20","00","00","00"
+;-------------------------------------------------------------------------------
+; VT3106J specific , AdapterCFID = 0x31061106 (HEX) = 822481158 (DEC)
+;
+[VT3106J.reg]
+HKR, Ndi,                                   DeviceID,        0, "PCI\VEN_1106&DEV_3106"
+HKR, ,                                      AdapterType,     0, "5"
+HKR, ,                                      MediaType,       0, "1"
+
+HKR, ,                                      ReceiveBurstIndicate,0, "64"
+HKR, ,                                      ReceiveThreshold,    0, "0"
+HKR, ,                                      TransmitThreshold,   0, "0"
+HKR, ,                                      BurstLength,         0, "1"
+HKR, ,                                      MapRegisters,        0, "32"
+HKR, ,                                      EarlyReceive,        0, "0"
+HKR, ,                                      EarlyTransmit,       0, "0"
+; Nway Forced Mode
+HKR, ,                                      NwayForce,           0, "0"
+; Power Management Capability
+HKR, ,                                      PMC,                 0, "0"
+
+HKR, ,                                      TransmitBuffers, 0, "64"
+HKR, Ndi\params\TransmitBuffers,            ParamDesc,       0, %TXBuffer%
+HKR, Ndi\params\TransmitBuffers,            default,         0, "64"
+HKR, Ndi\params\TransmitBuffers,            type,            0, "int"
+HKR, Ndi\params\TransmitBuffers,            Min,             0, "48"
+HKR, Ndi\params\TransmitBuffers,            Max,             0, "256"
+HKR, Ndi\params\TransmitBuffers,            Step,            0, "1"
+HKR, Ndi\params\TransmitBuffers,            Base,            0, "10"
+HKR, Ndi\params\TransmitBuffers,            flag,            1, "20","00","00","00"
+
+HKR, ,                                      ReceiveBuffers,  0, "64"
+HKR, Ndi\params\ReceiveBuffers,             ParamDesc,       0, %RXBuffer%
+HKR, Ndi\params\ReceiveBuffers,             default,         0, "64"
+HKR, Ndi\params\ReceiveBuffers,             type,            0, "int"
+HKR, Ndi\params\ReceiveBuffers,             Min,             0, "64"
+HKR, Ndi\params\ReceiveBuffers,             Max,             0, "256"
+HKR, Ndi\params\ReceiveBuffers,             Step,            0, "1"
+HKR, Ndi\params\ReceiveBuffers,             Base,            0, "10"
+HKR, Ndi\params\ReceiveBuffers,             flag,            1, "20","00","00","00"
+;-------------------------------------------------------------------------------
+; VT3065 specific , AdapterCFID = 0x30651106 (HEX) = 811929862 (DEC)
+;
+[VT3065.reg]
+HKR, Ndi,                                   DeviceID,        0, "PCI\VEN_1106&DEV_3065"
+HKR, ,                                      AdapterType,     0, "5"
+HKR, ,                                      MediaType,       0, "1"
+
+HKR, ,                                      ReceiveBurstIndicate,0, "64"
+HKR, ,                                      ReceiveThreshold,    0, "0"
+HKR, ,                                      TransmitThreshold,   0, "0"
+HKR, ,                                      BurstLength,         0, "1"
+HKR, ,                                      MapRegisters,        0, "32"
+HKR, ,                                      EarlyReceive,        0, "0"
+HKR, ,                                      EarlyTransmit,       0, "0"
+; Nway Forced Mode
+HKR, ,                                      NwayForce,           0, "0"
+; HW Phy Reset
+HKR, ,                                      HWPhyReset,          0, "0"
+; Power Management Capability
+HKR, ,                                      PMC,                 0, "0"
+
+HKR, ,                                      TransmitBuffers, 0, "64"
+HKR, Ndi\params\TransmitBuffers,            ParamDesc,       0, %TXBuffer%
+HKR, Ndi\params\TransmitBuffers,            default,         0, "64"
+HKR, Ndi\params\TransmitBuffers,            type,            0, "int"
+HKR, Ndi\params\TransmitBuffers,            Min,             0, "48"
+HKR, Ndi\params\TransmitBuffers,            Max,             0, "256"
+HKR, Ndi\params\TransmitBuffers,            Step,            0, "1"
+HKR, Ndi\params\TransmitBuffers,            Base,            0, "10"
+HKR, Ndi\params\TransmitBuffers,            flag,            1, "20","00","00","00"
+
+HKR, ,                                      ReceiveBuffers,  0, "64"
+HKR, Ndi\params\ReceiveBuffers,             ParamDesc,       0, %RXBuffer%
+HKR, Ndi\params\ReceiveBuffers,             default,         0, "64"
+HKR, Ndi\params\ReceiveBuffers,             type,            0, "int"
+HKR, Ndi\params\ReceiveBuffers,             Min,             0, "64"
+HKR, Ndi\params\ReceiveBuffers,             Max,             0, "256"
+HKR, Ndi\params\ReceiveBuffers,             Step,            0, "1"
+HKR, Ndi\params\ReceiveBuffers,             Base,            0, "10"
+HKR, Ndi\params\ReceiveBuffers,             flag,            1, "20","00","00","00"
+;-------------------------------------------------------------------------------
+; VT3043 specific , AdapterCFID = 0x30431106 (HEX) = 809701638 (DEC)
+;
+[VT3043.reg]
+HKR, Ndi,                                   DeviceID,        0, "PCI\VEN_1106&DEV_3043"
+HKR, ,                                      AdapterType,     0, "5"
+HKR, ,                                      MediaType,       0, "1"
+
+HKR, ,                                      ReceiveBurstIndicate,0, "64"
+HKR, ,                                      ReceiveThreshold,    0, "0"
+HKR, ,                                      TransmitThreshold,   0, "0"
+HKR, ,                                      BurstLength,         0, "1"
+HKR, ,                                      MapRegisters,        0, "8"
+HKR, ,                                      EarlyReceive,        0, "0"
+HKR, ,                                      EarlyTransmit,       0, "0"
+
+HKR, ,                                      TransmitBuffers, 0, "8"
+HKR, Ndi\params\TransmitBuffers,            ParamDesc,       0, %TXBuffer%
+HKR, Ndi\params\TransmitBuffers,            default,         0, "8"
+HKR, Ndi\params\TransmitBuffers,            type,            0, "int"
+HKR, Ndi\params\TransmitBuffers,            Min,             0, "4"
+HKR, Ndi\params\TransmitBuffers,            Max,             0, "64"
+HKR, Ndi\params\TransmitBuffers,            Step,            0, "1"
+HKR, Ndi\params\TransmitBuffers,            Base,            0, "10"
+HKR, Ndi\params\TransmitBuffers,            flag,            1, "20","00","00","00"
+
+HKR, ,                                      ReceiveBuffers,  0, "64"
+HKR, Ndi\params\ReceiveBuffers,             ParamDesc,       0, %RXBuffer%
+HKR, Ndi\params\ReceiveBuffers,             default,         0, "64"
+HKR, Ndi\params\ReceiveBuffers,             type,            0, "int"
+HKR, Ndi\params\ReceiveBuffers,             Min,             0, "64"
+HKR, Ndi\params\ReceiveBuffers,             Max,             0, "256"
+HKR, Ndi\params\ReceiveBuffers,             Step,            0, "1"
+HKR, Ndi\params\ReceiveBuffers,             Base,            0, "10"
+HKR, Ndi\params\ReceiveBuffers,             flag,            1, "20","00","00","00"
+;-------------------------------------------------------------------------------
+; FET common driver parameters
+;
+[FET.reg]
+; Validate Rx SNAP/802.3 packet length
+HKR, ,                                      ValidatePacketLen, 0, "0"
+
+[ConnType.reg]
+; Connection Type
+HKR, ,                                      ConnectionType,  0, "0"
+HKR, Ndi\params\ConnectionType,             ParamDesc,       0, %ConnectionType%
+HKR, Ndi\params\ConnectionType,             default,         0, "0"
+HKR, Ndi\params\ConnectionType,             type,            0, "enum"
+HKR, Ndi\params\ConnectionType\enum,        0,               0, %autoN%
+HKR, Ndi\params\ConnectionType\enum,        1,               0, %100HD%
+HKR, Ndi\params\ConnectionType\enum,        2,               0, %100FD%
+HKR, Ndi\params\ConnectionType\enum,        3,               0, %10HD%
+HKR, Ndi\params\ConnectionType\enum,        4,               0, %10FD%
+HKR, Ndi\params\ConnectionType,             flag,            1, "30","00","00","00"
+
+[ConnTypeFX.reg]
+HKR, ,                                      ConnectionType,  0, "2"
+
+[FlowCtrl.reg]
+; Flow control capability advertisement
+HKR, ,                                      FlowCtrl,        0, "1"
+HKR, Ndi\params\FlowCtrl,                   ParamDesc,       0, %FlowCtl%
+HKR, Ndi\params\FlowCtrl,                   default,         0, "1"
+HKR, Ndi\params\FlowCtrl,                   type,            0, "enum"
+HKR, Ndi\params\FlowCtrl\enum,              0,               0, %HwDefault%
+HKR, Ndi\params\FlowCtrl\enum,              1,               0, %Disabled%
+HKR, Ndi\params\FlowCtrl\enum,              2,               0, %Enabled%
+HKR, Ndi\params\FlowCtrl,                   flag,            1, "30","00","00","00"
+
+[AI.reg]
+; Adaptive Interrupt Capability
+HKR, ,                                      AdaptiveInt,     0, "1"
+HKR, Ndi\params\AdaptiveInt,                ParamDesc,       0, %AdaptiveInt%
+HKR, Ndi\params\AdaptiveInt,                default,         0, "1"
+HKR, Ndi\params\AdaptiveInt,                type,            0, "enum"
+HKR, Ndi\params\AdaptiveInt\enum,           0,               0, %Disabled%
+HKR, Ndi\params\AdaptiveInt\enum,           1,               0, %Enabled%
+HKR, Ndi\params\AdaptiveInt,                flag,            1, "20","00","00","00"
+
+[Wakeup.reg]
+HKR, ,                                      Wakeup,          0, "0"
+HKR, Ndi\params\Wakeup,                     ParamDesc,       0, %Wakeup%
+HKR, Ndi\params\Wakeup,                     default,         0, "0"
+HKR, Ndi\params\Wakeup,                     type,            0, "enum"
+HKR, Ndi\params\Wakeup\enum,                0,               0, %OSControl%
+HKR, Ndi\params\Wakeup\enum,                1,               0, %Magic%
+HKR, Ndi\params\Wakeup\enum,                2,               0, %Pattern%
+HKR, Ndi\params\Wakeup\enum,                3,               0, %All%
+HKR, Ndi\params\Wakeup,                     flag,            1, "20","00","00","00"
+
+[Tagging.reg]
+; number of Tx queue allocation
+HKR, ,                                      TxQueueNum,      0, "8"
+; 802.1p/802.1q Packet Tagging
+HKR, ,                                      8021pqtag,       0, "0"
+HKR,Ndi\Params\8021pqtag,                   ParamDesc,       0, %8021pq%
+HKR,Ndi\Params\8021pqtag,                   Default,         0, "0"
+HKR,Ndi\Params\8021pqtag,                   type,            0, "enum"
+HKR,Ndi\Params\8021pqtag\enum,              "0",             0, %Disabled%
+HKR,Ndi\Params\8021pqtag\enum,              "1",             0, %Enabled%
+HKR,Ndi\params\8021pqtag,                   flag,            1, "20","00","00","00"
+
+[VLAN.reg]
+; static single VLAN ID setting
+HKR, ,                                      VLANID,          0, "0"
+HKR, Ndi\params\VLANID,                     ParamDesc,       0, %VLANID%
+HKR, Ndi\params\VLANID,                     default,         0, "0"
+HKR, Ndi\params\VLANID,                     type,            0, "int"
+HKR, Ndi\params\VLANID,                     Min,             0, "0"
+HKR, Ndi\params\VLANID,                     Max,             0, "4094"
+HKR, Ndi\params\VLANID,                     Step,            0, "1"
+HKR, Ndi\params\VLANID,                     Base,            0, "10"
+HKR, Ndi\params\VLANID,                     flag,            1, "20","00","00","00"
+
+[Cksumoffload.reg]
+HKR, ,                                      Checksum,        0, "0"
+HKR, Ndi\params\Checksum,                   ParamDesc,       0, %Checksum%
+HKR, Ndi\params\Checksum,                   default,         0, "0"
+HKR, Ndi\params\Checksum,                   type,            0, "enum"
+HKR, Ndi\params\Checksum\enum,              0,               0, %Disabled%
+HKR, Ndi\params\Checksum\enum,              1,               0, %Enabled%
+HKR, Ndi\params\Checksum,                   flag,            1, "20","00","00","00"
+
+[FET.reg.NT]
+; Windows 2000/XP
+HKR, Ndi\Interfaces,                        LowerRange,      0, "ethernet"
+HKR, Ndi\Interfaces,                        UpperRange,      0, "ndis5"
+HKR, Ndi,                                   Service,         0, "FETNDISB"
+
+; Win2K ScatterGather DMA Capability
+HKR, ,                                      2KScatterGather, 0, "0"
+
+; User defined Network Address, only in NT-kernel Windows (Win2000/XP)
+HKR, ,                                      NetworkAddress,  0, ""
+HKR, Ndi\params\NetworkAddress,             ParamDesc,       0, %NetAddress%
+HKR, Ndi\params\NetworkAddress,             Default,         0, ""
+HKR, Ndi\params\NetworkAddress,             type,            0, "edit"
+HKR, NDI\params\NetworkAddress,             LimitText,       0, "12"
+HKR, NDI\params\NetworkAddress,             UpperCase,       0, "1"
+HKR, NDI\params\NetworkAddress,             optional,        0, "1"
+HKR, NDI\params\NetworkAddress,             Base,            0, "16"
+HKR, Ndi\params\NetworkAddress,             flag,            1, "20","00","00","00"
+
+; 64-bit UnInstaller
+[FET.SW.NT]
+HKLM, Software\Microsoft\Windows\CurrentVersion\Uninstall\VN_VUIns_Rhine_D-Link, DisplayName, 0, %Rhine.DeviceDesc%
+HKLM, Software\Microsoft\Windows\CurrentVersion\Uninstall\VN_VUIns_Rhine_D-Link, UninstallString, 0, "Rundll32.exe vuins64.dll,vuins64Ex $Rhine $D-Link"
+HKLM, Software\VN_VUIns\Rhine\D-Link\DeviceIdList, 3065, 0, "0"
+HKLM, Software\VN_VUIns\Rhine\D-Link\DeviceIdList, 3053, 0, "0"
+HKLM, Software\VN_VUIns\Rhine\D-Link\DeviceIdList, 3106, 0, "0"
+HKLM, Software\VN_VUIns\Rhine\D-Link\DeviceIdList, 3043, 0, "0"
+
+;-------------------------------------------------------------------------------
+; Installation for NT
+;
+[FET.CopyFiles.NTAMD64]
+dlkf5a64.sys,,,2
+
+[FET.SW.CopyFiles.NTAMD64]
+vuins64.dll,,,2
+difxapi.dll,,,2
+
+[FET_NTAMD64.Service]
+DisplayName     = %FET.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\dlkf5a64.sys
+LoadOrderGroup  = NDIS
+
+[FET.EventLog]
+AddReg = FET.AddEventLog.reg
+
+[FET.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+
+
+;-------------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir          = 11
+FET.CopyFiles.NTAMD64   = 12
+FET.SW.CopyFiles.NTAMD64 = 11
+
+[SourceDisksFiles]
+dlkf5a64.sys         = 1
+vuins64.dll          = 1
+difxapi.dll          = 1
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+;-------------------------------------------------------------------------------
+; Uninstall/DelFiles/DelReg
+;
+[FET.delreg]
+HKR,Ndi\Params
+
+[FET.SW.delreg]
+HKLM, Software\Microsoft\Windows\CurrentVersion\Uninstall\VN_VUIns_Rhine_D-Link
+HKLM, Software\VN_VUIns\Rhine\D-Link
+
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Prov                = "D-Link"
+DiskName            = "D-Link Fast Ethernet adapter driver disk"
+ConnectionType      = "Connection Type"
+autoN               = "Auto-Negotiation"
+100HD               = "100BaseTx Half Duplex"
+100FD               = "100BaseTx Full Duplex"
+10HD                = "10BaseT   Half Duplex"
+10FD                = "10BaseT   Full Duplex"
+Disabled            = "Disabled"
+Enabled             = "Enabled"
+WOLEvent            = "Wake On LAN Event"
+OSDefault           = "OS Default Event"
+OSAndUnicast        = "OS Default & Unicast"
+TXBuffer            = "Transmit Buffers"
+RXBuffer            = "Receive Buffers"
+NetAddress          = "Network Address"
+FlowCtl             = "Flow Control"
+HwDefault           = "Hardware Default (Auto)"
+AdaptiveInt         = "Adaptive Interrupt"
+Wakeup              = "Wake up Type"
+OSControl           = "OS Controlled"
+Magic               = "Magic Packet"
+Pattern             = "Pattern Match"
+All                 = "ALL"
+8021pq              = "802.1p/Q Tagging"
+VLANID              = "VLAN ID"
+Checksum            = "Checksum Offload"
+
+Manuf   = "D-Link"
+VT3106SFX.DeviceDesc = "D-Link DFE-551FX 100Base-FX Fiber PCI Adapter"
+VT3106DX.DeviceDesc  = "Dynex DX-E101 PCI Adapter"
+VT3106F1.DeviceDesc  = "D-Link DFE-538TX PCI Fast Ethernet Adapter"
+VT3106H.DeviceDesc   = "D-Link DFE-530TX+ PCI Fast Ethernet Adapter (rev.F)"
+VT3106S.DeviceDesc   = "D-Link DFE-530TX PCI Fast Ethernet Adapter (rev.D)"
+VT3106J.DeviceDesc   = "D-Link DFE-530TX PCI Fast Ethernet Adapter (rev.C)"
+VT3065C.DeviceDesc   = "D-Link DFE-530TX PCI Fast Ethernet Adapter (rev.B)"
+VT3065B.DeviceDesc   = "D-Link DFE-530TX PCI Fast Ethernet Adapter (rev.B)"
+VT3065A.DeviceDesc   = "D-Link DFE-530TX PCI Fast Ethernet Adapter (rev.A)"
+VT3206.DeviceDesc    = "D-Link DFE-520TX PCI Fast Ethernet Adapter"
+VT3043.DeviceDesc    = "D-Link DFE-530TX PCI Fast Ethernet Adapter (rev.A)"
+FET.Service.DispName = "D-Link PCI Fast Ethernet Adapter Driver Service"
+Rhine.DeviceDesc     = "D-Link PCI Fast Ethernet Adapter"

@@ -1,0 +1,98 @@
+
+; Windows 2000 Installation Script File
+;
+; PCMCIA 10/100 Ethernet Card INF file for Windows 2000
+;
+; (C) Copyright 1997-1999. PCMCIA Technology Inc. All rights reserved.
+
+[version]
+signature  = "$Windows NT$"
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+provider   = %V_MS%
+
+[Manufacturer]
+%V_PCMCIA%=PCMCIA
+
+[ControlFlags]
+ExcludeFromSelect   = PCMCIA\PCMCIA-Ethernet_Card-2BE6
+ExcludeFromSelect   = PCMCIA\PCMCIA-Ethernet_Card-26E1
+
+
+[PCMCIA]
+; DisplayName           Section         DeviceID
+  -----------           -------         --------
+%EN10T2T%            = EN10T2T.ndi ,  PCMCIA\PCMCIA-Ethernet_Card-2BE6
+%EN10T2T%            = EN10T2T1.ndi , PCMCIA\PCMCIA-Ethernet_Card-26E1
+
+;------------------------------------------------------------------------------
+; PCMCIA 10Mbps Ethernet Card.
+;
+[EN10T2T.ndi]
+Characteristics = 0x84
+BusType         = 8      ; PCMCIA Bus
+AddReg          = PcCard.ndi.reg
+CopyFiles       = PcCard.ndis3.CopyFiles
+
+[EN10T2T.ndi.LogConfigOverride]
+LogConfig = Override
+
+[EN10T2T.ndi.Services]
+AddService = EN10T2T, 2, PcCard.Service, PcCard.AddEventLog
+
+
+[EN10T2T1.ndi]
+Characteristics = 0x84
+BusType         = 8      ; PCMCIA Bus
+AddReg          = PcCard.ndi.reg
+CopyFiles       = PcCard.ndis3.CopyFiles
+
+[EN10T2T1.ndi.Services]
+AddService = EN10T2T, 2, PcCard.Service, PcCard.AddEventLog
+;-------------------------------------------------------------------------------
+; Service and Driver
+;
+[PcCard.ndi.reg]
+HKR, Ndi,               Service,    0, "EN10T2T"
+HKR,Ndi\Interfaces,DefUpper,,"ndis5"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,0,"ndis5"
+HKR,Ndi\Interfaces,LowerRange,0,"ethernet"
+
+[PcCard.ndis3.CopyFiles]
+PCMNDIS.sys,,,2
+
+[PcCard.Service]
+DisplayName         =   %Service.DispName%
+ServiceType         =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType           =   3 ;%SERVICE_AUTO_START%
+ErrorControl        =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary       =   %12%\PCMNDIS.sys
+LoadOrderGroup      =   NDIS
+
+[PcCard.AddEventLog]
+AddReg = PcCard.AddEventLog.reg
+
+[PcCard.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000,"%%SystemRoot%%\System32\netevent.dll,%%SystemRoot%%\System32\drivers\PCMNDIS.sys"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+HKR,    ,   TextModeFlags,      0x00010001,0x0001
+
+[DestinationDirs]
+PcCard.ndis3.CopyFiles  =   12
+
+[Override]
+ConfigPriority =    normal
+IOConfig       =    20@300-37F%FFE0
+IRQConfig      =    3,4,5,7,9,10,11,12
+PcCardConfig   =    20::(W)
+
+[Strings]
+V_MS                =   "Microsoft"
+Service.DispName    =   "PCMCIA 10Mbps Ethernet Card"
+V_PCMCIA="PCMCIA Technology Inc."
+EN10T2T="PCMCIA 10Mbps Ethernet Card"
+Disk_Desc="PCMCIA 10Mbps Ethernet Card Driver Diskette"
+
+

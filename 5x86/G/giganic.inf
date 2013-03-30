@@ -1,0 +1,297 @@
+; GigaNIC.inf created 04-Jul-2003
+;
+; Nobrand PCI Gigabit Ethernet Adapter
+;
+; (C)Copyright 1998-2003 Marvell(R).
+; 
+; All rights reserved
+;
+; INF File for NDIS5.1 Miniport Driver for Windows XP (x86) GigaNIC.sys v6.14 Rev. 1
+
+[Version]
+Signature	= "$windows nt$"
+Class		= Net
+ClassGUID	= {4D36E972-E325-11CE-BFC1-08002BE10318}
+Provider	= %Nobrand%
+CatalogFile	= GigaNIC.CAT
+DriverVer=07/04/2003, 6.14.0.0
+
+[Manufacturer]
+%Nobrand%	= Nobrand
+
+
+[ControlFlags]
+
+ExcludeFromSelect	= *
+
+[Nobrand]
+%GigaNIC.DeviceDesc% = SingleV2Copper.ndi, PCI\VEN_11AB&DEV_4320&SUBSYS_00091113
+
+
+
+
+
+;-------------------------------------------------------------------------------
+; Gigabit Ethernet Adapters <single link Version 2.0 Copper>
+
+[SingleV2Copper.ndi]
+AddReg		= GigaNIC.reg, GigaNIC.params, GigaNIC.Copper.params, GigaNIC.V2.Copper.params 
+Characteristics	= 0x84
+BusType		= 5
+CopyFiles	= GigaNIC.CopyFiles
+CopyFiles   = wmi
+[SingleV2Copper.ndi.Services]
+AddService	= GigaNIC, 2, GigaNIC.Service, common.EventLog
+
+
+
+
+
+
+;-------------------------------------------------------------------------------
+; General Driver Parameters
+;
+[GigaNIC.params]
+
+HKR, Ndi\Params\NetworkAddress,	ParamDesc,,	%NetAddress%
+HKR, Ndi\Params\NetworkAddress,	Type,,		"edit"
+HKR, Ndi\Params\NetworkAddress,	LimitText,,	"18"
+HKR, Ndi\Params\NetworkAddress,	UpperCase,,	"1"
+HKR, Ndi\Params\NetworkAddress,	Default,,	""
+HKR, Ndi\Params\NetworkAddress,	Optional,,	"1"
+
+HKR, Ndi\Params\MaxFrameSize,	ParamDesc,,	%MaxFrSize%
+HKR, Ndi\Params\MaxFrameSize,	Type,,		"int"
+HKR, Ndi\Params\MaxFrameSize,	Base,,		"10"
+HKR, Ndi\Params\MaxFrameSize,	Min,,		"12"
+HKR, Ndi\Params\MaxFrameSize,	Max,,		"9014"
+HKR, Ndi\Params\MaxFrameSize,	Step,,		"1"
+HKR, Ndi\Params\MaxFrameSize,	Default,,	"1514"
+
+HKR, Ndi\Params\HwChecksum,	ParamDesc,,	%HwCsum%
+HKR, Ndi\Params\HwChecksum,	Type,,		"enum"
+HKR, Ndi\Params\HwChecksum\enum,1,,		%On%
+HKR, Ndi\Params\HwChecksum\enum,0,,		%Off%
+HKR, Ndi\Params\HwChecksum,	Default,,	"1"
+
+HKR, Ndi\Params\Moderate,	ParamDesc,,	%IntMod%
+HKR, Ndi\Params\Moderate,	Type,,		"enum"
+HKR, Ndi\Params\Moderate\enum,1,,		%On%
+HKR, Ndi\Params\Moderate\enum,0,,		%Off%
+HKR, Ndi\Params\Moderate,	Default,,	"1"
+
+HKR, Ndi\Params\FixedIntMod,	ParamDesc,,	%MaxIrq%
+HKR, Ndi\Params\FixedIntMod,	Type,,		"int"
+HKR, Ndi\Params\FixedIntMod,	Base,,		"10"
+HKR, Ndi\Params\FixedIntMod,	Min,,		"1000"
+HKR, Ndi\Params\FixedIntMod,	Max,,		"30000"
+HKR, Ndi\Params\FixedIntMod,	Step,,		"1"
+HKR, Ndi\Params\FixedIntMod,	Default,,	"5000"
+
+HKR, Ndi\Params\MessageLog,	ParamDesc,,	%LogMsg%
+HKR, Ndi\Params\MessageLog,	Type,,		"enum"
+HKR, Ndi\Params\MessageLog\enum,4,,		%Non%
+HKR, Ndi\Params\MessageLog\enum,3,,		%Err%
+HKR, Ndi\Params\MessageLog\enum,2,,		%Wrn%
+HKR, Ndi\Params\MessageLog\enum,1,,		%Sta%
+HKR, Ndi\Params\MessageLog\enum,0,,		%All%
+HKR, Ndi\Params\MessageLog,	Default,,	"1"
+
+HKR, Ndi\Params\MaxReceives,	ParamDesc,,	%NumRcv%
+HKR, Ndi\Params\MaxReceives,	Type,,		"int"
+HKR, Ndi\Params\MaxReceives,	Base,,		"10"
+HKR, Ndi\Params\MaxReceives,	Min,,		"3"
+HKR, Ndi\Params\MaxReceives,	Max,,		"500"
+HKR, Ndi\Params\MaxReceives,	Step,,		"1"
+HKR, Ndi\Params\MaxReceives,	Default,,	"50"
+
+HKR, Ndi\Params\MaxTransmits,	ParamDesc,,	%NumTx%
+HKR, Ndi\Params\MaxTransmits,	Type,,		"int"
+HKR, Ndi\Params\MaxTransmits,	Base,,		"10"
+HKR, Ndi\Params\MaxTransmits,	Min,,		"4"
+HKR, Ndi\Params\MaxTransmits,	Max,,		"200"
+HKR, Ndi\Params\MaxTransmits,	Step,,		"1"
+HKR, Ndi\Params\MaxTransmits,	Default,,	"50"
+
+HKR, Ndi\Params\AutoNegotiation_A,	ParamDesc,,	%AutonegA%
+HKR, Ndi\Params\AutoNegotiation_A,	Type,,		"enum"
+HKR, Ndi\Params\AutoNegotiation_A\enum,2,,		%Sense%
+HKR, Ndi\Params\AutoNegotiation_A\enum,1,,		%On%
+HKR, Ndi\Params\AutoNegotiation_A\enum,0,,		%Off%
+HKR, Ndi\Params\AutoNegotiation_A,	Default,,	"1"
+
+HKR, Ndi\Params\DuplexCapabilities_A,	ParamDesc,,	%DupCapA%
+HKR, Ndi\Params\DuplexCapabilities_A,	Type,,		"enum"
+HKR, Ndi\Params\DuplexCapabilities_A\enum,3,,		%both%
+HKR, Ndi\Params\DuplexCapabilities_A\enum,2,,		%full%
+HKR, Ndi\Params\DuplexCapabilities_A\enum,1,,		%half%
+HKR, Ndi\Params\DuplexCapabilities_A,	Default,,	"3"
+
+HKR, Ndi\Params\FlowControl_A,	ParamDesc,,	%FlowCtrlA%
+HKR, Ndi\Params\FlowControl_A,	Type,,		"enum"
+HKR, Ndi\Params\FlowControl_A\enum,3,,		%bothFC%
+HKR, Ndi\Params\FlowControl_A\enum,2,,		%sym%
+HKR, Ndi\Params\FlowControl_A\enum,1,,		%asym%
+HKR, Ndi\Params\FlowControl_A\enum,0,,		%noFc%
+HKR, Ndi\Params\FlowControl_A,	Default,,	"3"
+
+HKR,, MaxMulticast,,         "128"
+HKR,, WaitForRxResources,,   "1"
+HKR,, SGMapRegistersNeeded,, "64"
+
+
+;-------------------------------------------------------------------------------
+; Additional Driver Parameters for Single Link Copper Adapters
+;
+ [GigaNIC.Copper.params]
+;
+; Configurable Parameters
+;
+HKR, Ndi\Params\Role_A,	ParamDesc,,	%RoleA%
+HKR, Ndi\Params\Role_A,	Type,,		"enum"
+HKR, Ndi\Params\Role_A\enum,3,,		%Slave%
+HKR, Ndi\Params\Role_A\enum,2,,		%Master%
+HKR, Ndi\Params\Role_A\enum,0,,		%Auto%
+HKR, Ndi\Params\Role_A,	Default,,	"0"
+
+
+;-------------------------------------------------------------------------------
+; Additional Driver Parameters for Version 2.0 Copper Adapters
+;
+[GigaNIC.V2.Copper.params]
+;
+; Configurable Parameters
+;
+
+HKR, Ndi\Params\WakeUpModeCap_A,       ParamDesc,,	%WakeUpCaps%
+HKR, Ndi\Params\WakeUpModeCap_A,       type,,		"enum"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  0,,		"None"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  15,,		"OS Controlled"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  25,,		"Magic Packet"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  26,,		"Pattern Match"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  27,,		"Magic Packet and Pattern Match"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  28,,		"Link Change"
+HKR, Ndi\Params\WakeUpModeCap_A, Default,,		"15"
+
+HKR, Ndi\Params\Speed_A,       ParamDesc,,	%Speed%
+HKR, Ndi\Params\Speed_A,       type,,		"enum"
+HKR, Ndi\Params\Speed_A\enum,  1,,		"Auto"
+HKR, Ndi\Params\Speed_A\enum,  2,,		"10"
+HKR, Ndi\Params\Speed_A\enum,  3,,		"100"
+HKR, Ndi\Params\Speed_A\enum,  4,,		"1000"
+HKR, Ndi\Params\Speed_A,	Default,,	"1"
+
+HKR,, WaitForRxResources,,   "0"
+
+
+
+
+;-------------------------------------------------------------------------------
+; General Registry Entries
+;
+[GigaNIC.reg]
+HKR, Ndi, HelpText,, %HelpText%
+HKR, Ndi\Interfaces, UpperRange,, "ndis5"
+HKR, Ndi\Interfaces, LowerRange,, "ethernet"
+HKR, Ndi, Service,, "GigaNIC"
+
+[GigaNIC.Service]
+DisplayName	= %GigaNIC.DriverDesc%
+ServiceType	= 1
+StartType = 3
+ErrorControl = 1
+ServiceBinary  = %12%\GigaNIC.sys
+LoadOrderGroup = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR,, EventMessageFile,	0x00020000, "%%SystemRoot%%\System32\Drivers\GigaNIC.sys"
+HKR,, TypesSupported,	0x00010001, 7
+
+;-------------------------------------------------------------------------------
+; Source Files
+;
+[SourceDisksNames]
+1 = %DriverDisk%,,,
+
+[SourceDisksFiles]
+GigaNIC.sys	= 1,,
+gewmi.mof = 1,,
+
+[GigaNIC.CopyFiles]
+GigaNIC.sys,,,2
+
+
+;-------------------------------------------------------------------------------
+; Destination Directories
+;
+[DestinationDirs]
+
+DefaultDestDir = 12
+GigaNIC.CopyFiles	= 12
+wmi = 11, wbem\mof
+
+[wmi]
+gewmi.mof
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Nobrand = "Nobrand"
+NetAddress              = "Network Address"
+MaxFrSize               = "Maximum Frame Size"
+HwCsum                  = "Hardware Checksumming"
+WakeUpCaps              = "Wake Up Capabilities"
+Speed	                = "LinkSpeed"
+IntMod                  = "Interrupt Moderation"
+MaxIrq                  = "Max IRQ per Sec"
+LogMsg                  = "Log Status Messages"
+NumRcv                  = "Number of Receive Buffers"
+NumTx                   = "Number of Transmit Buffers"
+RLMT                    = "RLMT Mode"
+Link                    = "CLS"             
+OtherPort               = "CLP"                  
+Segment                 = "CLPSS" 
+Preferred               = "Preferred Port"
+Sense			= "Auto-Sense"
+On                      = "On"
+Off                     = "Off"
+Non                     = "None"
+Err                     = "Errors"
+Wrn                     = "Warnings"
+Sta                     = "Status Messages"
+All                     = "All Messages"
+A                       = "A"
+B                       = "B"
+AutonegA		= "Autonegotiation Port A"
+AutonegB		= "Autonegotiation Port B"
+DupCapA			= "DuplexCapabilities Port A"
+DupCapB			= "DuplexCapabilities Port B"
+RoleA			= "Role on Port A"
+RoleB			= "Role on Port B"
+Slave			= "Slave"
+Master			= "Master"
+Auto			= "Auto"
+both			= "Half and Full Duplex"
+full			= "Full Duplex"
+half			= "Half Duplex"
+FlowCtrlA		= "FlowControl Port A"
+FlowCtrlB		= "FlowControl Port B"
+bothFC			= "Asymmetrical and Symmetrical Flow Control"
+sym			= "Symmetrical Flow Control"
+asym			= "Asymmetrical Flow Control"
+noFc			= "No Flow Control"
+
+GigaNIC.DeviceDesc = "Nobrand PCI 10/100/1000 Gigabit Ethernet Adapter, PCI 32bit, Copper RJ-45"
+
+
+
+GigaNIC.DriverDesc	= "NDIS5.1 Miniport Driver for Nobrand PCI Gigabit Ethernet Adapter"
+
+DriverDisk		= "Nobrand PCI Gigabit Ethernet Adapter Installation Disk"
+
+HelpText		= "This Nobrand network adapter connects you to the network."
+
+

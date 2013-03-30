@@ -1,0 +1,171 @@
+;****************************************************************
+; SMC2209.INF for Windows 98/ME/2000 and XP			*
+;								*
+; SMC EZ Networking Compact 10/100 USB 2.0 Adapter       	*
+;								*
+; Copyright 2003	                                        *
+;****************************************************************
+
+[Version]
+Signature  = "$Windows NT$"
+CatalogFile = SMC2209.cat
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %usb2%
+;LayoutFile = layout.inf
+DriverVer = 10/30/2002,5.1.2600.2
+
+[Manufacturer]
+%usb2%   = USB
+
+[ControlFlags]
+ExcludeFromSelect = USB\VID_0B95&PID_1720
+
+[USB]
+%usb20l.DeviceDesc% = usb20l.Ndi,USB\VID_0B95&PID_1720
+
+;****************************************************************
+; Win98 main sections						*
+;****************************************************************
+[usb20l.Ndi]
+AddReg   = usb20l.Reg, usb20l.Params, usb20l.Con.Reg
+DeviceID = USB\VID_0B95&PID_1720
+
+
+;****************************************************************
+; NT main sections						*
+;****************************************************************
+[usb20l.Ndi.NT]
+AddReg          = usb20l.NT.Reg, usb20l.Params, usb20l.Con.Reg
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 15	; USB
+CopyFiles       = CopyFile.NT.Sys
+
+[usb20l.Ndi.NT.Services]
+AddService = usb20l, 2, usb20l.Service, Common.EventLog
+
+
+;****************************************************************
+; Windows 98 section						*
+;****************************************************************
+[usb20l.Reg]
+HKR,Ndi,DeviceID,,USB\VID_0B95&PID_1720
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,AdapterName,,usb20l
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,SMC2209.sys
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,usb20l
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,ndis3,,"usb20l.Install"
+
+HKR,Ndi,HelpText,,"usb20l USB2 to Fast Ethernet Adpater"
+
+
+;****************************************************************
+; Driver parameters						*
+;****************************************************************
+[usb20l.Params]
+
+[usb20l.Con.Reg]
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT (Twisted_Pair)"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,9,,"100BaseTx Full_Duplex"
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+;****************************************************************
+; Install section for OSR2 and Windows 98			*
+;****************************************************************
+
+[usb20l.Install]
+;CopyFiles=CopyFile.Inf,CopyFile.Sys	;Signability
+CopyFiles=CopyFile.Sys
+
+;[CopyFile.Inf]		;Signability
+;SMC2209.inf		;Signability
+
+[CopyFile.Sys]
+SMC2209.sys
+
+
+;****************************************************************
+; Install section for Windows NT 5				*
+;****************************************************************
+
+[usb20l.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "usb20l"
+
+[usb20l.Service]
+DisplayName    = %usb20l.DeviceDesc%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\SMC2209.sys
+LoadOrderGroup = NDIS
+AddReg         = TextModeFlags.Reg
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported  , 0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[CopyFile.NT.Sys]
+SMC2209.sys,,,2
+
+
+;**********************************************************************
+; Destination directories                                             *
+;**********************************************************************
+
+[DestinationDirs]
+CopyFile.Sys    = 11
+;CopyFile.Inf    = 17	;Signability
+CopyFile.NT.Sys = 12
+
+[SourceDisksNames]
+; Cabinet file names and associated disks
+; <cab#> = <disk#>,<cabinet filename>, ID (Unused, must be 0)
+50=%usb20l.DiskName%,,
+
+[SourceDisksFiles]
+;<file> = <cabinet number>,<subdir>,<filename>,<size>
+;Note: File is not in a cabinet if cab# is 0
+SMC2209.sys=50,.,SMC2209.sys,10000
+;SMC2209.inf=50,.,SMC2209.inf,10000	;Signability
+
+
+;**********************************************************************
+; Localizable strings                                                 *
+;**********************************************************************
+
+[Strings]
+usb2 = "SMC Networks"
+usb20l.DiskName = "USB 2.0 Adapter Driver Diskette"
+usb20l.DeviceDesc = "SMC EZ Networking Compact 10/100 USB 2.0 Adapter"
+
+

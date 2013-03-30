@@ -1,0 +1,144 @@
+; NET2216.INF		
+; Accton EN2216/2316 PCMCIA Ethernet Adapter
+; Copyright 1994-2004, Accton Technology Corporation
+
+[version]
+Signature  = "$CHICAGO$"
+Compatible = 1
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+provider   = %Accton%
+LayoutFile = layout.inf
+DriverVer  = 03/08/2004, 2.10.0308.2004
+;*******************************************************************************
+
+[ClassInstall32.NT]
+AddReg = NetClass.NT.AddReg
+
+[NetClass.NT.AddReg]
+HKR, , ,                0, %DisplayClassName%
+HKR, , EnumPropPages32, 0, "NetCfgx.dll,NetPropPageProvider"
+HKR, , Icon,            0, "-5"
+HKR, , Installer32,     0, "NetCfgx.dll,NetClassInstaller"
+;*******************************************************************************
+;*******************************************************************************
+
+[Manufacturer]
+
+%Accton%   = Accton
+
+[ControlFlags]
+ExcludeFromSelect = PCMCIA\ACCTON-EN2216-PCMCIA-ETHERNET-2909
+[Accton]
+%AcctonPCM.DeviceDesc% = en2216.ndi,  PCMCIA\ACCTON-EN2216-PCMCIA-ETHERNET-2909
+
+;----------------------------------------------------------------------------
+; Accton EN2216 PCMCIA Adapter
+;----------------------------------------------------------------------------
+[en2216.ndi]
+DriverVer  = 03/08/2004, 2.10.0308.2004
+AddReg     = en2216.id.reg,en22169x.ndi.reg
+
+[en2216.id.reg]
+HKR,Ndi,DeviceID,,"PCMCIA\ACCTON-EN2216-PCMCIA-ETHERNET-2909"
+
+[en22169x.ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,en2216.SYS
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+
+; NDIS Info
+HKR,NDIS,LogDriverName,,"EN2216"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+
+HKR,NDI,CardType,,"PCMCIA"
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,ndis3,,"en22169x.ndis3"
+
+; Parameters
+HKR,,INTERRUPTNUMBER,1,04,00,00,00
+HKR,,IOBASEADDRESS,1,02,00,00,00
+
+; Install NDIS3
+[en22169x.ndis3]
+CopyFiles=en22169x.ndis3.CopyFiles
+
+[en22169x.ndis3.CopyFiles]
+EN2216.SYS
+
+
+;****************************************************************************
+;     Diskette information
+;****************************************************************************
+[SourceDisksNames]
+1="Accton EN2216/2316 PCMCIA Ethernet Adapter Driver Disk",,0
+
+;****************************************************************************
+; Source files in diskette
+;****************************************************************************
+[SourceDisksFiles]
+EN2216.SYS = 1, , EN2216.SYS
+
+;----------------------------------------------------------------------------
+;				for WIN2000 
+;----------------------------------------------------------------------------
+
+[en2216.ndi.NT]
+DriverVer       = 03/08/2004, 2.10.0308.2004
+Characteristics = 0x04
+BusType         = 8
+AddReg          = en2216.ndi.reg
+CopyFiles       = en2216.CopyFiles
+
+[en2216.ndi.NT.Services]
+AddService = en2216, 2, en2216.Service, en2216.AddEventLog
+
+[en2216.ndi.reg]
+HKR, Ndi,               Service,    0, "en2216"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+[en2216.CopyFiles]
+en2216.sys,,,2
+
+[en2216.Service]
+DisplayName     =   %en2216.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\en2216.sys
+LoadOrderGroup  =   NDIS
+
+[en2216.AddEventLog]
+AddReg = en2216.AddEventLog.reg
+
+[en2216.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+;****************************************************************************
+; Common for WIN98 and WIN2000 
+;****************************************************************************
+
+; Destination Directories
+[DestinationDirs]
+en2216.CopyFiles       =   12
+DefaultDestDir           =11 	; LDID_SYS  
+en2216.ndis3.CopyFiles =11		
+
+;----------------------------------------------------------------------------
+; Localizable Strings
+[Strings]
+DisplayClassName        = "Network adapters"
+Accton                  = "Accton"
+AcctonPCM.DeviceDesc    = "Accton EN2216/2316 PCMCIA Ethernet Adapter"
+en2216.Service.DispName = "Accton EN2216/2316 Ethernet PCMCIA Adapter Driver"

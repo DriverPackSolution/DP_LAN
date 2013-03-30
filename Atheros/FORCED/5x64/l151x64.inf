@@ -1,0 +1,261 @@
+;*****************************************************************************
+;*
+;*  l151x64.INF  -   Atheros L1 Gigabit Ethernet 10/100/1000Base-T Controller
+;*  Copyright 2005-, Atheros Technology.
+;*
+;*  Created on 07/04/2005 by Yu Hao
+;*
+;*****************************************************************************
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Atheros%
+CatalogFile = l151x64.cat
+Compatible  = 1
+DriverVer   = 08/20/2009,2.3.7.14
+
+
+[Manufacturer]
+%Atheros% = Atheros,NTamd64
+
+[Atheros.NTamd64]
+; DisplayName           Section       DeviceID
+; -----------           -------	      --------
+%Atheros.AtcL001% = 	OEM.ndi,     PCI\VEN_1969&DEV_1048&SUBSYS_826B1043&REV_B0
+%Atheros.AtcL001% = 	AtcL001.ndi, PCI\VEN_1969&DEV_1048&SUBSYS_10481969&REV_B0
+%Atheros.AtcL001% = 	AtcL001.ndi, PCI\VEN_1969&DEV_1048&SUBSYS_10481019&REV_B0
+%Atheros.AtcL001% = 	AtcL001.ndi, PCI\VEN_1969&DEV_1048&SUBSYS_82261043&REV_B0
+%Atheros.AtcL001% = 	AtcL001.ndi, PCI\VEN_1969&DEV_1048
+
+; Windows NT specific entry
+[AtcL001.ndi.NT]
+Characteristics = 0x84
+BusType         = 5				 ;PCI
+AddReg          = AtcL001.reg, AtcL001.params, AtcL001.Params.WinNT, Common.Params
+CopyFiles       = AtcL001.CopyFiles
+
+[AtcL001.ndi.NT.Services]
+AddService = AtcL001, 2, AtcL001.Service, Common.EventLog
+
+[OEM.ndi.NT]
+Characteristics = 0x84
+BusType         = 5				 ;PCI
+AddReg          = AtcL001.reg, AtcL001.params, AtcL001.Params.WinNT, OEM.Params
+CopyFiles       = AtcL001.CopyFiles
+
+[OEM.ndi.NT.Services]
+AddService = AtcL001, 2, AtcL001.Service, Common.EventLog
+
+;-----------------------------------------------------------------------------
+; AtcL001 NT specific
+;
+[AtcL001.reg]
+HKR, Ndi, HelpText,, %HelpText%
+HKR, Ndi, Service,    0, "AtcL001"
+; use ndis5 as the upper bound because NT supports it
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+
+[AtcL001.Service]
+DisplayName     = %AtcL001.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\l151x64.sys
+LoadOrderGroup  = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR,, EventMessageFile,	0x00020000, "%%SystemRoot%%\System32\Drivers\l151x64.sys"
+HKR,, TypesSupported,	0x00010001, 7
+
+[AtcL001.params]
+HKR, Ndi\Params\NetworkAddress,	ParamDesc,,	%NetAddr%
+HKR, Ndi\Params\NetworkAddress,	Type,,		"edit"
+HKR, Ndi\Params\NetworkAddress,	LimitText,,	"18"
+HKR, Ndi\Params\NetworkAddress,	UpperCase,,	"1"
+HKR, Ndi\Params\NetworkAddress,	Default,,	""
+HKR, Ndi\Params\NetworkAddress,	Optional,,	"1"
+
+HKR, Ndi\Params\MaxFrameSize,	ParamDesc,,	%MTU%
+HKR, Ndi\Params\MaxFrameSize,	Type,,		"int"
+HKR, Ndi\Params\MaxFrameSize,	Base,,		"10"
+HKR, Ndi\Params\MaxFrameSize,	Min,,		"16"
+HKR, Ndi\Params\MaxFrameSize,	Max,,		"10240"
+HKR, Ndi\Params\MaxFrameSize,	Step,,		"1"
+HKR, Ndi\Params\MaxFrameSize,	Default,,	"1514"
+
+HKR, Ndi\Params\Moderate,	ParamDesc,,	%IntMod%
+HKR, Ndi\Params\Moderate,	Type,,		"enum"
+HKR, Ndi\Params\Moderate\enum,	1,,		%On%
+HKR, Ndi\Params\Moderate\enum,	0,,		%Off%
+HKR, Ndi\Params\Moderate,	Default,,	"1"
+
+HKR, Ndi\Params\MaxInterrupt,	ParamDesc,,	%MaxIrq%
+HKR, Ndi\Params\MaxInterrupt,	Type,,		"int"
+HKR, Ndi\Params\MaxInterrupt,	Base,,		"10"
+HKR, Ndi\Params\MaxInterrupt,	Min,,		"1000"
+HKR, Ndi\Params\MaxInterrupt,	Max,,		"30000"
+HKR, Ndi\Params\MaxInterrupt,	Step,,		"500"
+HKR, Ndi\Params\MaxInterrupt,	Default,,	"5000"
+
+HKR, Ndi\Params\MediaType,	ParamDesc,,  	%MediaType%
+HKR, Ndi\Params\MediaType,	Type,,       	"enum"
+HKR, Ndi\Params\MediaType,	Default,,	 "0"
+HKR, Ndi\Params\MediaType\enum, "0",,		 %Auto%
+HKR, Ndi\Params\MediaType\enum, "1",,		 %10MHD%
+HKR, Ndi\Params\MediaType\enum, "2",,		 %10MFD%
+HKR, Ndi\Params\MediaType\enum, "3",,		 %100MHD%
+HKR, Ndi\Params\MediaType\enum, "4",,		 %100MFD%
+HKR, Ndi\Params\MediaType\enum, "6",,		 %1000MFD%
+
+HKR, Ndi\Params\FlowControl,	ParamDesc,,	 %FlowCtrl%
+HKR, Ndi\Params\FlowControl,	Type,,       	"enum"
+HKR, Ndi\Params\FlowControl,	Default,,	 "1"
+HKR, Ndi\Params\FlowControl\enum, "1",,		 %On%
+HKR, Ndi\Params\FlowControl\enum, "0",,		 %Off%
+
+[Common.Params]
+HKR, Ndi\Params\ShutdownWake,	ParamDesc,,	%ShutDW%
+HKR, Ndi\Params\ShutdownWake,	Type,,		"enum"
+HKR, Ndi\Params\ShutdownWake\enum,1,,		%On%
+HKR, Ndi\Params\ShutdownWake\enum,0,,		%Off%
+HKR, Ndi\Params\ShutdownWake,	Default,,	"0"
+
+HKR, Ndi\Params\WakeUpCapabilities,	ParamDesc,,  	%WakeUpCapabilities%
+HKR, Ndi\Params\WakeUpCapabilities,	Type,,       	"enum"
+HKR, Ndi\Params\WakeUpCapabilities,	Default,,	 "6"
+HKR, Ndi\Params\WakeUpCapabilities\enum, "0",,		 %None%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "1",,		 %LinkChange%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "2",,		 %MagicPacket%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "4",,		 %PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "6",,		 %MagicPacket_PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "7",,		 %All%
+
+HKR, Ndi\Params\SleepPowerSaving,	ParamDesc,,  	%SleepMode%
+HKR, Ndi\Params\SleepPowerSaving,	Type,,       	"enum"
+HKR, Ndi\Params\SleepPowerSaving,	Default,,	 "0"
+HKR, Ndi\Params\SleepPowerSaving\enum, "1",,		 %On%
+HKR, Ndi\Params\SleepPowerSaving\enum, "0",,		 %Off%
+
+HKR, Ndi\Params\SleepSpeed,	ParamDesc,	0,	%SleepSpeedDown%
+HKR, Ndi\Params\SleepSpeed,	Type,		0,	"enum"
+HKR, Ndi\Params\SleepSpeed\enum,1,              0,	%On%
+HKR, Ndi\Params\SleepSpeed\enum,0,	        0,	%Off%
+HKR, Ndi\Params\SleepSpeed,	Default,	0,	"1"
+
+[OEM.Params]
+HKR, Ndi\Params\ShutdownWake,	ParamDesc,,	%ShutDW%
+HKR, Ndi\Params\ShutdownWake,	Type,,		"enum"
+HKR, Ndi\Params\ShutdownWake\enum,1,,		%On%
+HKR, Ndi\Params\ShutdownWake\enum,0,,		%Off%
+HKR, Ndi\Params\ShutdownWake,	Default,,	"1"
+
+HKR, Ndi\Params\WakeUpCapabilities,	ParamDesc,,  	%WakeUpCapabilities%
+HKR, Ndi\Params\WakeUpCapabilities,	Type,,       	"enum"
+HKR, Ndi\Params\WakeUpCapabilities,	Default,,	 "2"
+HKR, Ndi\Params\WakeUpCapabilities\enum, "0",,		 %None%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "1",,		 %LinkChange%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "2",,		 %MagicPacket%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "4",,		 %PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "6",,		 %MagicPacket_PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "7",,		 %All%
+
+HKR, Ndi\Params\SleepPowerSaving,	ParamDesc,,  	%SleepMode%
+HKR, Ndi\Params\SleepPowerSaving,	Type,,       	"enum"
+HKR, Ndi\Params\SleepPowerSaving,	Default,,	 "0"
+HKR, Ndi\Params\SleepPowerSaving\enum, "1",,		 %On%
+HKR, Ndi\Params\SleepPowerSaving\enum, "0",,		 %Off%
+
+HKR, Ndi\Params\SleepSpeed,	ParamDesc,	0,	%SleepSpeedDown%
+HKR, Ndi\Params\SleepSpeed,	Type,		0,	"enum"
+HKR, Ndi\Params\SleepSpeed\enum,1,              0,	%On%
+HKR, Ndi\Params\SleepSpeed\enum,0,	        0,	%Off%
+HKR, Ndi\Params\SleepSpeed,	Default,	0,	"0"
+
+[AtcL001.Params.WinNT]
+HKR, Ndi\Params\TaskOffload,	ParamDesc,,	%TOff%
+HKR, Ndi\Params\TaskOffload,	Type,,		"enum"
+HKR, Ndi\Params\TaskOffload\enum,1,,		%On%
+HKR, Ndi\Params\TaskOffload\enum,0,,		%Off%
+HKR, Ndi\Params\TaskOffload,	Default,,	"1"
+
+HKR, Ndi\Params\MaxRxBuffer,	ParamDesc,,	%NumRx%
+HKR, Ndi\Params\MaxRxBuffer,	Type,,		"int"
+HKR, Ndi\Params\MaxRxBuffer,	Base,,		"10"
+HKR, Ndi\Params\MaxRxBuffer,	Min,,		"16"
+HKR, Ndi\Params\MaxRxBuffer,	Max,,		"2048"
+HKR, Ndi\Params\MaxRxBuffer,	Step,,		"16"
+HKR, Ndi\Params\MaxRxBuffer,	Default,,	"256"
+
+HKR, Ndi\Params\MaxTxBuffer,	ParamDesc,,	%NumTx%
+HKR, Ndi\Params\MaxTxBuffer,	Type,,		"int"
+HKR, Ndi\Params\MaxTxBuffer,	Base,,		"10"
+HKR, Ndi\Params\MaxTxBuffer,	Min,,		"16"
+HKR, Ndi\Params\MaxTxBuffer,	Max,,		"1024"
+HKR, Ndi\Params\MaxTxBuffer,	Step,,		"16"
+HKR, Ndi\Params\MaxTxBuffer,	Default,,		"256"
+
+
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[AtcL001.CopyFiles]
+l151x64.sys,,,2
+
+[SourceDisksNames]
+;
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+;
+1 = %DriverDisk%,,,
+
+[SourceDisksFiles]
+;
+; filename_on_source = diskID[, [subdir][, size]]
+;
+l151x64.sys = 1
+
+[DestinationDirs]
+AtcL001.CopyFiles     = 12
+DefaultDestDir        = 11
+
+[Strings]
+Atheros			= "Atheros"
+NetAddr			  = "Network Address"
+MTU						= "Maximum Frame Size"
+TOff					= "Task Offload"
+IntMod        = "Interrupt Moderation"
+VLanID				= "VLAN ID"
+MaxIrq        = "Max IRQ per Second"
+NumRx					= "Number of Receive Buffers"
+NumTx         = "Number of Transmit Buffers"
+Auto					= "Auto"
+On            = "On"
+Off           = "Off"
+MediaType			= "MediaType"
+10MHD         = "10Mbps Half Duplex"
+10MFD         = "10Mbps Full Duplex"
+100MHD        = "100Mbps Half Duplex"
+100MFD        = "100Mbps Full Duplex"
+1000MHD				= "1000Mbps Half Duplex"
+1000MFD				= "1000Mbps Full Duplex"
+FlowCtrl			= "Flow Control"
+ShutDW				= "Shutdown wake up"
+SleepMode                       = "Power Saving mode"
+WakeUpCapabilities = "Wake Up Capabilities"
+None = "None"
+LinkChange = "Link Change"
+MagicPacket = "Magic Packet"
+PatternMatch = "Pattern Match"
+MagicPacket_PatternMatch = "MagicPacket & PatternMatch"
+All = "All"
+SleepSpeedDown	= "Sleep Speed down to 10M"
+
+Atheros.AtcL001 					= "Atheros L1 Gigabit Ethernet 10/100/1000Base-T Controller"
+AtcL001.Service.DispName 	= "NDIS Miniport Driver for Atheros L1 Gigabit Ethernet Controller"
+DriverDisk								= "Atheros Gigabit Ethernet Controller Installation Disk"
+HelpText									= "This Atheros network Controller connects you to the network."

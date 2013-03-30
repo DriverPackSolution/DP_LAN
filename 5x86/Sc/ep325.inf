@@ -1,0 +1,91 @@
+;; EP325.INF (NT 5.0 & Win98 combined inf for NDIS5 driver)
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %SURECOM%
+LayoutFile  = layout.inf
+DriverVer=07/01/2001,5.508.803.2000
+
+[Manufacturer]
+%SURECOM%   = SURECOM
+
+
+[ControlFlags]
+ExcludeFromSelect       = *
+
+[SURECOM]
+
+%RTL8029s.DeviceDesc%   = RTL8029.ndi, PCI\VEN_10EC&DEV_8029&SUBSYS_802910EC ; Realtek RTL8029(AS)-based PCI Ethernet Adapter
+
+
+;-------------------------------------------------------------------------------
+; Realtek Common
+;
+[RTL8029.ndi]
+AddReg          = RTL8029.reg, RTL8029.ntpci.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = RTL8029.CopyFiles
+
+[RTL8029.ndi.Services]
+AddService      = rtl8029, 2, pcint.Service, RTL8029.EventLog
+
+[RTL8029.CopyFiles]
+RTL8029.sys,,,2
+
+;-------------------------------------------------------------------------------
+; RTL8029 Advanced UI
+;
+[RTL8029.ntpci.reg]
+HKR, Ndi\params\MediaMode,       ParamDesc,  0, %MediaMode%
+HKR, Ndi\params\MediaMode,       type,       0, "enum"
+HKR, Ndi\params\MediaMode,       default,    0, "0"
+HKR, Ndi\params\MediaMode\enum,  0,          0, %TPHD%
+HKR, Ndi\params\MediaMode\enum,  1,          0, %TPFD%
+HKR, Ndi\params\MediaMode\enum,  2,          0, %BNC%
+HKR, Ndi\params\MediaMode\enum,  3,          0, %AUI%
+
+;-------------------------------------------------------------------------------
+; RTL8029 Service and Driver
+;
+[RTL8029.reg]
+HKR, Ndi,                        Service,    0, "RTL8029"
+HKR, Ndi\Interfaces,             UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,             LowerRange, 0, "ethernet"
+
+[pcint.Service]
+DisplayName     = %RTL8029.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\RTL8029.SYS
+LoadOrderGroup  = NDIS
+
+[RTL8029.EventLog]
+Addreg = RTL8029.AddEventLog.reg
+
+[RTL8029.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+[DestinationDirs]
+DefaultDestDir     = 12
+RTL8029.CopyFiles  = 12
+
+[Strings]
+;Msft                      = "Microsoft"
+
+SURECOM                   = "SURECOM Technology Corp."
+
+MediaMode                 = "Line Speed"
+TPHD                      = "TP Half Duplex"
+TPFD                      = "TP Full Duplex"
+BNC                       = "BNC / 10Base2"
+AUI                       = "AUI / 10Base5"
+
+
+
+RTL8029s.DeviceDesc       = "SURECOM EP-325 PCI Ethernet Adapter"
+RTL8029.Service.DispName  = "SURECOM EP-325 PCI Ethernet Adapter NT Driver"

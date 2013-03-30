@@ -1,0 +1,171 @@
+AskToCloseAndExitIfRunning nvcplui.exe
+
+killapp nvNetUtils.exe
+call Uninstall
+del {sysdir}\drivers\nvnetvfd.sys
+
+Del {sysdir}\drivers\nvmfdx32.sys
+Del {sysdir}\drivers\nvmfdx64.sys
+Del {sysdir}\drivers\nvmf6232.sys
+Del {sysdir}\drivers\nvmf6264.sys
+
+DelReg HKLM\System\CurrentControlSet\Control\Network\{4D36E972-E325-11CE-BFC1-08002BE10318}\Descriptions\NVIDIA nForce Networking Controller
+Del {current Script}
+
+; Uninstall network management and network utilities
+[Uninstall]
+set DelCmd=delbootquiet
+if {LeaveDriverStoreCache}=No then set DelCmd=delboot
+Call UninstallMSINAM
+Call UninstallInstScriptNAM
+Call UninstallNetDiag
+
+; Remove the co-installer before removing the device silently
+{DelCmd} {sysdir}\nvconrm.dll
+
+; Delete co-installers. Can't rely on wildcards since these names are not nv-specific
+{DelCmd} {sysdir}\fdco1.dll
+{DelCmd} {sysdir}\fdco2.dll
+{DelCmd} {sysdir}\fdco3.dll
+{DelCmd} {sysdir}\fdco4.dll
+{DelCmd} {sysdir}\fdco5.dll
+{DelCmd} {sysdir}\fdco6.dll
+{DelCmd} {sysdir}\fdcoXins.dll
+{DelCmd} {sysdir}\fdco1ins.dll
+
+; echo Checking for Network device
+enumregcmd HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002BE10318}\{*},call CheckNVIDIAKeys
+CheckPath INFCHECK={windir}\Inf\{InfPath}
+if {INFCHECK}=TRUE then GetInfGUID GUIDName={InfPath}
+call clean
+
+Set Display Name=Nvidia Network Bus Enumerator 
+; Remove any NVIDIA device driver if present
+
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_008C, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_00DF, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0038, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0057, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0269, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0373, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0389, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_03EF, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_03E6, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0452, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0453, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_054E, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_054F, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0086, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_00E6, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0037, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0056, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0268, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0372, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_03E5, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_03EE, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0450, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0451, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_054C, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_054D, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_07DC, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_07DE, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_07DD, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_07DF, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0760, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0761, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0762, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0763, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0AB0, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0AB1, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0AB2, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE&DEV_0AB3, any
+if {LeaveDriverStoreCache}=No then RemoveDeviceEx pci,VEN_10DE, Net
+
+if {INFCHECK}=TRUE then if {InfPath}%oem then if {LeaveDriverStoreCache}=No then RemoveDriverStore {windir}\Inf\{InfPath}
+
+[clean]
+ClassSweep {GUIDName},*DeviceSleepOnDisconnect;EthWOLFromPowerOff;LowPowerIdleMode;LowPowerStateLinkSpeed;*InterruptModeration;*FlowControl;*SpeedDuplex
+enumregcmd HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002BE10318}\{*},call GetEtherNodes
+
+[GetEtherNodes]
+set DriverDesc=FOOBAR
+GetReg DriverDesc={Current Root Key}\{Current Reg Key}\DriverDesc
+GetReg Provider={Current Root Key}\{Current Reg Key}\ProviderName
+if {DriverDesc}%NVIDIA then if {Provider}%NVIDIA then enumregcmd {Current Root Key}\{Current Reg Key}\Ndi\params\{*},call DelEtherParam
+
+[DelEtherParam]
+;echo {Current Root Key}\{Current Reg Key}
+DelReg {Current Root Key}\{Current Reg Key}
+
+[EnumNetworkKeys]
+set MyBaseKey={Current Root Key}\{Current Reg Key}
+enumregcmd {MyBaseKey}\{*},call CheckNVIDIAKeys
+
+[CheckNVIDIAKeys]
+set DriverDesc=FOOBAR
+; echo Current Root Key : {Current Root Key}
+GetReg DriverDesc={Current Root Key}\{Current Reg Key}\DriverDesc
+if {DriverDesc}%NVIDIA then set NVIDIADriverFound=TRUE
+if {DriverDesc}%NVIDIA then if {DriverDesc}%Microsoft then set InBoxDriverFound=TRUE
+if {DriverDesc}%NVIDIA then GetReg InfPath={Current Root Key}\{Current Reg Key}\InfPath
+
+[UninstallMSINAM]
+; Uninstall network management
+; get the NAM GUID
+GetReg NAM_GUID=HKEY_LOCAL_MACHINE\Software\NVIDIA Corporation\nForce\network management\settings\GUID
+
+;also get the UninstallReboot key
+GetReg NAMReboot=HKEY_LOCAL_MACHINE\Software\NVIDIA Corporation\nForce\network management\settings\UninstallReboot
+
+if {NAMReboot}=1 then Call TriggerNeedReboot
+set 64Bit=FALSE
+getreg UninstallCommand=HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\InstallShield_{NAM_GUID}\UninstallString
+if {UninstallCommand}%.exe then set 64Bit=TRUE
+if {64Bit}=TRUE then getreg UninstallCommand=HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\InstallShield_{NAM_GUID}\UninstallString
+if {64Bit}=FALSE then getreg UninstallCommand={uninstregkey}\InstallShield_{NAM_GUID}\UninstallString
+RmString UninstallCommand = {UninstallCommand} (-) " -runfromtemp"
+if {UninstallCommand}%.exe then syscallandwait {UninstallCommand} /z"noreboot" -s
+if {64Bit}=FALSE then waitonregdel {uninstregkey}\InstallShield_{NAM_GUID},,10000,12, echo Unable to uninstall NAM
+if {64Bit}=TRUE then waitonregdel HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\InstallShield_{NAM_GUID},,10000,12, echo Unable to uninstall NAM
+set UninstallCommand
+
+[UninstallInstScriptNAM]
+; Uninstall network management
+; get the NAM GUID
+GetReg NAM_GUID=HKEY_LOCAL_MACHINE\Software\NVIDIA Corporation\nForce\network management\settings\GUID
+
+;also get the UninstallReboot key
+GetReg NAMReboot=HKEY_LOCAL_MACHINE\Software\NVIDIA Corporation\nForce\network management\settings\UninstallReboot
+
+if {NAMReboot}=1 then Call TriggerNeedReboot
+set 64BitInstScript=FALSE
+getreg UninstallCommand=HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{NAM_GUID}\UninstallString
+if {UninstallCommand}%.exe then set 64Bit=TRUE
+if {64Bit}=TRUE then getreg UninstallCommand=HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{NAM_GUID}\UninstallString
+if {64Bit}=FALSE then getreg UninstallCommand={uninstregkey}\{NAM_GUID}\UninstallString
+getreg Var_InstallPath=HKLM\SOFTWARE\NVIDIA Corporation\nForce\network management\settings\installPath
+set InstallPath={Var_InstallPath}bin32\setup.iss
+RmString UninstallCommand = {UninstallCommand} (-) " -runfromtemp"
+if {UninstallCommand}%.exe then syscallandwait {UninstallCommand} /z"noreboot" -s /f1"{InstallPath}"
+if {64Bit}=FALSE then waitonregdel {uninstregkey}\{NAM_GUID},,10000,12, echo Unable to uninstall NAM
+if {64Bit}=TRUE then waitonregdel HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{NAM_GUID},,10000,12, echo Unable to uninstall NAM
+set UninstallCommand
+
+
+[UninstallNetDiag]
+; Uninstall network diagnostics
+RunOnce {programfilesdir}\NVIDIA Corporation\Uninstall\nvnetdiag.nvu
+Del {programfilesdir}\NVIDIA Corporation\Uninstall\nvnetdiag.nvu
+Del {programfilesdir}\NVIDIA Corporation\Uninstall
+del {ProgramFilesDir}\NVIDIA Corporation
+
+RunOnce {sysdir}\nvnetdiag.nvu
+Del {sysdir}\nvnetdiag.nvu
+
+[TriggerNeedReboot]
+; Hack to trigger a reboot...borrowed from Display NVU.
+Copy {current Script},{sysdir}\deleteme_eth.txt
+DelBoot {sysdir}\deleteme_eth.txt
+DelBoot {sysdir}\nvnrm.nvu
+DelBoot {ProgramFilesDir}\NVIDIA Corporation\Uninstall\nvnrm.nvu
+

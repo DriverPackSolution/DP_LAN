@@ -1,0 +1,365 @@
+;;  DFE-520TX Fast Ethernet PCI Adapter
+;;
+;; INF for Vista x86
+;;
+;;  Copyright 2011 D-Link Corporation, Inc. All rights reserved.
+;;
+
+[version]
+Signature      = "$Windows NT$"
+Class          = Net
+ClassGUID      = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %D-Link%
+;;LayoutFile     = layout.inf
+DriverVer      = 07/23/2009,6.111.0723.2009
+CatalogFile.NT = DLKRTEC64.cat
+
+[Manufacturer]
+%D-Link% = D-Link, NTamd64
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[D-Link.NTamd64]
+; DisplayName            Section            DeviceID
+; -----------            -------            --------
+%D-Link.DeviceDesc% = RTL8139x.ndi, PCI\VEN_1186&DEV_4200&SUBSYS_11031186&REV_10  ;C1
+%D-Link.DeviceDesc% = RTL8139x.ndi, PCI\VEN_10EC&DEV_8139&SUBSYS_11041186&REV_10  ;D1
+
+[RTL8139x.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = RTL8023xp.reg, RTLnic.all.reg, RTL39.common.reg, RTL39.only.reg, about.reg
+CopyFiles       = Rtlnic.CopyFilesXP, RTLDLL.CopyFiles
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD 
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 14		; NdisPhysicalMedium802_3
+
+[RTL8139x.ndi.Services]
+AddService = DLKRTEC64, 2, rtsntxp.Service, common.EventLog
+
+[RTL8139_TOSx.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = RTL8023xp.reg, RTLnic.all.reg, RTL8139TOS.common.reg
+CopyFiles       = Rtlnic.CopyFilesXP
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD 
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 14		; NdisPhysicalMedium802_3 
+
+[RTL8139_TOSx.ndi.Services]
+AddService = RTL8023xp, 2, rtsntxp.Service, common.EventLog
+
+;[RTL8139Px.ndi]
+;Characteristics = 0x84
+;BusType         = 5
+;AddReg          = RTL8023xp.reg, RTLnic.all.reg, RTL39.common.reg, RTL39p.only.reg, RTL39p.w2k.reg
+;CopyFiles       = Rtlnic.CopyFilesXP
+;*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD 
+;*MediaType      = 0             ; NdisMedium802_3
+;*PhysicalMediaType = 14		 ; NdisPhysicalMedium802_3
+
+;[RTL8139Px.ndi.Services]
+;AddService = RTL8023xp, 2, rtsntxp.Service, common.EventLog
+
+;;****************************************************************************
+;; common parameters
+;;****************************************************************************
+[about.reg]
+HKR,,EnumPropPages32,,"rtnicprop.dll,RTNicPropPageProvider"
+
+[RTLnic.all.reg]
+HKR,Ndi\params\NetworkAddress,  ParamDesc,      0, %NetworkAddress%
+HKR,Ndi\params\NetworkAddress,  type,           0, "edit"
+HKR,Ndi\params\NetworkAddress,  default,        0, "000000000000"
+HKR,Ndi\params\NetworkAddress,  LimitText,      0, "12"
+HKR,Ndi\params\NetworkAddress,  UpperCase,      0, "1"
+HKR,Ndi\params\NetworkAddress,  Optional,       0, "1"
+
+[RTL39.common.reg]
+HKR,Ndi\params\S5WakeOnLan,       ParamDesc,  0, %S5WakeOnLan%
+HKR,Ndi\params\S5WakeOnLan,       default,    0, "1"
+HKR,Ndi\params\S5WakeOnLan,       type,       0, "enum"
+HKR,Ndi\params\S5WakeOnLan\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\S5WakeOnLan\enum,  "1",        0, %Enabled%
+HKR,,S5WakeOnLan,0,"1"
+
+HKR,Ndi\params\DuplexMode,        ParamDesc,   0, %SpeedDuplexMode%
+HKR,Ndi\params\DuplexMode,        type,        0, "enum"
+HKR,Ndi\params\DuplexMode,        default,     0, "1"
+HKR,Ndi\params\DuplexMode\enum,   1,           0, %auto_nego%
+HKR,Ndi\params\DuplexMode\enum,   2,           0, %sd10half%
+HKR,Ndi\params\DuplexMode\enum,   3,           0, %sd10full%
+HKR,Ndi\params\DuplexMode\enum,   4,           0, %sd100half%
+HKR,Ndi\params\DuplexMode\enum,   5,           0, %sd100full%
+
+HKR,Ndi\params\OptimalPerf,      ParamDesc,  0, %OptimalPerf%
+HKR,Ndi\params\OptimalPerf,      default,    0, "0"
+HKR,Ndi\params\OptimalPerf,      type,       0, "enum"
+HKR,Ndi\params\OptimalPerf\enum, "1",        0, %enable%
+HKR,Ndi\params\OptimalPerf\enum, "0",        0, %disable%
+HKR,,OptimalPerf, 0, "0"
+
+HKR,Ndi\params\WakeUpFrame,     ParamDesc,      0, %WOLCapability%
+HKR,Ndi\params\WakeUpFrame,     default,        0, "1"
+HKR,Ndi\params\WakeUpFrame,     type,           0, "enum"
+HKR,Ndi\params\WakeUpFrame\enum,"0",            0, %disable%
+HKR,Ndi\params\WakeUpFrame\enum,"1",            0, %enable%
+HKR,,WakeUpFrame, 0, "1"
+
+HKR,Ndi\params\LinkUp,           ParamDesc, 0, %WakeUpOnLinkChange%
+HKR,Ndi\params\LinkUp,           default,   0, "0"
+HKR,Ndi\params\LinkUp,           type,      0, "enum"
+HKR,Ndi\params\LinkUp\enum,      "1",       0, %enable%
+HKR,Ndi\params\LinkUp\enum,      "0",       0, %disable%
+
+HKR,Ndi\params\EnableLDPS,       ParamDesc, 0, %LinkDownPowerSaving%
+HKR,Ndi\params\EnableLDPS,       default,   0, "0"
+HKR,Ndi\params\EnableLDPS,       type,      0, "enum"
+HKR,Ndi\params\EnableLDPS\enum,  "1",       0, %enable%
+HKR,Ndi\params\EnableLDPS\enum,  "0",       0, %disable%
+
+HKR, Ndi\params\WolCap,            ParamDesc,  0, %WolCap%
+HKR, Ndi\params\WolCap,            type,       0, "enum"
+HKR, Ndi\params\WolCap,            default,    0, "3"
+HKR, Ndi\params\WolCap\enum,       "0",        0, %None%
+HKR, Ndi\params\WolCap\enum,       "1",        0, %PatternMatch%
+HKR, Ndi\params\WolCap\enum,       "2",        0, %MagicPacket%
+HKR, Ndi\params\WolCap\enum,       "3",        0, %PatternAndMagic%
+HKR,,WolCap,0,"3"
+
+HKR,,ForceMode,0,"0"
+
+HKR,,SupportExternalPhy,0,"1"
+
+[RTL39.only.reg]
+HKR,Ndi\params\RxBufLen,         ParamDesc, 0, %ReceiveBufferSize%
+HKR,Ndi\params\RxBufLen,         type,      0, "enum"
+HKR,Ndi\params\RxBufLen,         default,   0, "3"
+HKR,Ndi\params\RxBufLen\enum,    "0",       0, %8Kbytes%
+HKR,Ndi\params\RxBufLen\enum,    "1",       0, %16Kbytes%
+HKR,Ndi\params\RxBufLen\enum,    "2",       0, %32Kbytes%
+HKR,Ndi\params\RxBufLen\enum,    "3",       0, %64Kbytes%
+
+HKR,Ndi\params\RTPME,            ParamDesc, 0, %WakeUpUsingAPMMode%
+HKR,Ndi\params\RTPME,            default,   0, "0"
+HKR,Ndi\params\RTPME,            type,      0, "enum"
+HKR,Ndi\params\RTPME\enum,       "1",       0, %enable%
+HKR,Ndi\params\RTPME\enum,       "0",       0, %disable%
+
+;[RTL39p.only.reg]
+;HKR,Ndi\Params\NumCoalesce,       ParamDesc,  0, %NumberTxCoalesceBuffer%
+;HKR,Ndi\Params\NumCoalesce,       Type,       0, "int"
+;HKR,Ndi\Params\NumCoalesce,       Default,    0, "16"
+;HKR,Ndi\Params\NumCoalesce,       Min,        0, "0"
+;HKR,Ndi\Params\NumCoalesce,       Max,        0, "32"
+;HKR,Ndi\Params\NumCoalesce,       Step,       0, "1"
+;HKR,Ndi\Params\NumCoalesce,       Base,       0, "10"
+
+;[RTL39p.w2k.reg]
+;HKR,Ndi\params\Offload,           ParamDesc,  0, %TaskOffload%
+;HKR,Ndi\params\Offload,           default,    0, "1"
+;HKR,Ndi\params\Offload,           type,       0, "enum"
+;HKR,Ndi\params\Offload\enum,      "0",        0, %AllDisable%
+;HKR,Ndi\params\Offload\enum,      "1",        0, %checksum%
+;HKR,Ndi\params\Offload\enum,      "2",        0, %ChksumTCPSegment%
+
+;HKR,Ndi\params\Support8021p,      ParamDesc,  0, %VLanTagging%
+;HKR,Ndi\params\Support8021p,      default,    0, "0"
+;HKR,Ndi\params\Support8021p,      type,       0, "enum"
+;HKR,Ndi\params\Support8021p\enum, "0",        0, %disable%
+;HKR,Ndi\params\Support8021p\enum, "1",        0, %enable%
+
+[RTL8139TOS.common.reg]
+HKR,Ndi\params\RxBufLen,          ParamDesc,  0, %ReceiveBufferSize%
+HKR,Ndi\params\RxBufLen,          type,       0, "enum"
+HKR,Ndi\params\RxBufLen,          default,    0, "3"
+HKR,Ndi\params\RxBufLen\enum,     "0",        0, %8Kbytes%
+HKR,Ndi\params\RxBufLen\enum,     "1",        0, %16Kbytes%
+HKR,Ndi\params\RxBufLen\enum,     "2",        0, %32Kbytes%
+HKR,Ndi\params\RxBufLen\enum,     "3",        0, %64Kbytes%
+
+HKR,Ndi\params\LinkUp,            ParamDesc,  0, %WakeUpOnLinkChange%
+HKR,Ndi\params\LinkUp,            default,    0, "0"
+HKR,Ndi\params\LinkUp,            type,       0, "enum"
+HKR,Ndi\params\LinkUp\enum,       "1",        0, %enable%
+HKR,Ndi\params\LinkUp\enum,       "0",        0, %disable%
+
+HKR,Ndi\params\WakeUpFrame,       ParamDesc,  0, %WakeUpOnARPPING%
+HKR,Ndi\params\WakeUpFrame,       default,    0, "1"                          
+HKR,Ndi\params\WakeUpFrame,       type,       0, "enum"                       
+HKR,Ndi\params\WakeUpFrame\enum,  "1",        0, %enable%
+HKR,Ndi\params\WakeUpFrame\enum,  "0",        0, %disable%
+
+HKR,Ndi\params\RTPME,             ParamDesc,  0, %WakeUpUsingAPMMode%
+HKR,Ndi\params\RTPME,             default,    0, "0"
+HKR,Ndi\params\RTPME,             type,       0, "enum"
+HKR,Ndi\params\RTPME\enum,        "1",        0, %enable%
+HKR,Ndi\params\RTPME\enum,        "0",        0, %disable%
+
+HKR,Ndi\params\EnableLDPS,        ParamDesc,  0, %LinkDownPowerSaving%
+HKR,Ndi\params\EnableLDPS,        default,    0, "1"
+HKR,Ndi\params\EnableLDPS,        type,       0, "enum"
+HKR,Ndi\params\EnableLDPS\enum,   "1",        0, %enable%
+HKR,Ndi\params\EnableLDPS\enum,   "0",        0, %disable%
+
+HKR,Ndi\params\TxMaxDMABurst,     ParamDesc,  0, %TransmitDMABurstSize%
+HKR,Ndi\params\TxMaxDMABurst,     type,       0, "enum"                           
+HKR,Ndi\params\TxMaxDMABurst,     default,    0, "6"                           
+HKR,Ndi\params\TxMaxDMABurst\enum,0,          0, %16bytes%
+HKR,Ndi\params\TxMaxDMABurst\enum,1,          0, %32bytes%
+HKR,Ndi\params\TxMaxDMABurst\enum,2,          0, %64bytes%
+HKR,Ndi\params\TxMaxDMABurst\enum,3,          0, %128bytes%
+HKR,Ndi\params\TxMaxDMABurst\enum,4,          0, %256bytes%
+HKR,Ndi\params\TxMaxDMABurst\enum,5,          0, %512bytes%
+HKR,Ndi\params\TxMaxDMABurst\enum,6,          0, %1024bytes%
+HKR,Ndi\params\TxMaxDMABurst\enum,7,          0, %2048bytes%
+
+HKR,Ndi\params\RxMaxDMABurst,     ParamDesc,  0, %ReceiveDMABurstSize%
+HKR,Ndi\params\RxMaxDMABurst,     type,       0, "enum"
+HKR,Ndi\params\RxMaxDMABurst,     default,    0, "6"                      
+HKR,Ndi\params\RxMaxDMABurst\enum,0,          0, %16bytes%
+HKR,Ndi\params\RxMaxDMABurst\enum,1,          0, %32bytes%
+HKR,Ndi\params\RxMaxDMABurst\enum,2,          0, %64bytes%
+HKR,Ndi\params\RxMaxDMABurst\enum,3,          0, %128bytes%
+HKR,Ndi\params\RxMaxDMABurst\enum,4,          0, %256bytes%
+HKR,Ndi\params\RxMaxDMABurst\enum,5,          0, %512bytes%
+HKR,Ndi\params\RxMaxDMABurst\enum,6,          0, %1024bytes%
+HKR,Ndi\params\RxMaxDMABurst\enum,7,          0, %Unlimitted%
+
+HKR,,EnableLDPS,        0,   "1"
+HKR,,WakeUpFrame,       0,   "1"          
+HKR,,RTPME,             0,   "0"         
+HKR,,LinkUp,            0,   "0"
+HKR,,RxBufLen,          0,   "3"
+HKR,,RxMaxDMABurst,     0,   "6"
+HKR,,TxMaxDMABurst,     0,   "6" 
+
+[RTL8023xp.reg]
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+HKR, Ndi,                       Service,    0, "DLKRTEC64"
+
+[rtsntxp.Service]
+DisplayName     = %Rtlnicxp.Service.DispName%
+ServiceType     = 1                             ; %SERVICE_KERNEL_DRIVER%
+StartType       = 3                             ; %SERVICE_DEMAND_START%
+ErrorControl    = 1                             ; %SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\DLKRTEC64.sys
+LoadOrderGroup  = NDIS
+
+[common.EventLog]
+Addreg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+
+;;****************************************************************************
+;; Destination Directory
+;;****************************************************************************
+[Rtlnic.CopyFilesXP]
+DLKRTEC64.sys,,,2
+
+[RTLDLL.CopyFiles]
+RtNicProp.dll,,,0x10
+
+[DestinationDirs]
+Rtlnic.CopyFilesXP         = 12
+RTLDLL.CopyFiles           = 11
+DefaultDestDir             = 11        ; LDID_SYS
+
+;;****************************************************************************
+;; Source Files
+;;****************************************************************************
+[SourceDisksNames]
+1 = %DiskDescription%,DLKRTEC64.sys,,
+
+[SourceDisksFiles]
+DLKRTEC64.sys = 1,, ; on distribution disk 1
+RTNicProp.dll	= 1
+
+;;****************************************************************************
+;; Strings
+;;****************************************************************************
+[Strings]
+D-Link = "D-Link"
+
+VLanTagging             = "802.1Q/1p VLAN Tagging"
+;VLanID                 = "802.1Q VLAN ID"
+ChecksumOffload         = "Offload Checksum"
+LargesendOffload        = "Offload TCP_LargeSend"
+SpeedDuplexMode         = "Link Speed/Duplex Mode"
+auto_nego               = "Auto Negotiation"
+sd10half                = "10Mbps/Half Duplex"
+sd10full                = "10Mbps/Full Duplex"
+sd100half               = "100Mbps/Half Duplex"
+sd100full               = "100Mbps/Full Duplex"
+sd1000full              = "1000Mbps/Full Duplex"
+NetworkAddress          = "Network Address"
+JumboFrame              = "Jumbo Frame"
+;TxDescNumber           = "Number of Tx Descriptor"
+;RxDescNumber           = "Number of Rx Descriptor"
+;TxHPQDescNumber        = "Number of High Priority Tx Descriptor"
+WOLCapability           = "WakeUp on ARP/PING"
+WOLLinkChange           = "WakeUp on Link Change"
+LDPSCapability          = "Link Down Power Saving"
+OptimalPerf             = "Optimal Performance"
+FlowControl             = "Flow Control"
+enable                  = "Enable"
+disable                 = "Disable"
+WakeUpOnLinkChange      = "WakeUp on Link Change"
+LinkDownPowerSaving     = "Link Down Power Saving"
+ReceiveBufferSize       = "Receive Buffer Size"
+8Kbytes                 = "8K bytes"
+16Kbytes                = "16K bytes"
+32Kbytes                = "32K bytes"
+64Kbytes                = "64K bytes"
+WakeUpUsingAPMMode      = "WakeUp using APM Mode"
+NumberTxCoalesceBuffer  = "Number of Tx Coalesce Buffer"
+TaskOffload             = "Task Offload"
+AllDisable              = "All Disable"
+checksum                = "Checksum"
+ChksumTCPSegment        = "Chksum & TCP_Segment"
+2KBMTU                  = "2KB MTU"
+3KBMTU                  = "3KB MTU"
+4KBMTU                  = "4KB MTU"
+5KBMTU                  = "5KB MTU"
+6KBMTU                  = "6KB MTU"
+7KBMTU                  = "7KB MTU"
+TxRxChecksum            = "Tx/Rx Checksum"
+RxChecksum              = "Rx Checksum"
+TxChecksum              = "Tx Checksum"
+WakeUpOnARPPING         = "WakeUp on ARP/PING"
+TransmitDMABurstSize    = "Transmit DMA burst size"
+16bytes                 = "16 bytes"
+32bytes                 = "32 bytes"
+64bytes                 = "64 bytes"
+128bytes                = "128 bytes"
+256bytes                = "256 bytes"
+512bytes                = "512 bytes"
+1024bytes               = "1024 bytes"
+2048bytes               = "2048 bytes"
+ReceiveDMABurstSize     = "Receive DMA burst size"
+Unlimitted              = "unlimitted"
+ReceiveFIFOthreshold    = "Receive FIFO threshold"
+NoThreshold             = "No threshold"
+S5WakeOnLan             = "Shutdown Wake-On-Lan"
+Enabled                 = "Enabled"
+Disabled                = "Disabled"
+WolCap                  = "Wake-On-Lan Capabilities"
+None                    = "None"
+PatternMatch            = "Pattern Match"
+MagicPacket             = "Magic Packet"
+PatternAndMagic         = "Pattern Match & Magic Packet"
+
+
+;;Source disk name
+DiskDescription = "D-Link 10/100 NIC Family NDIS Driver"
+D-Link.DeviceDesc = "DFE-520TX Fast Ethernet PCI Adapter"
+
+;;NT service name
+Rtlnicxp.Service.DispName = "DFE-520TX Fast Ethernet PCI Adapter"
+
+

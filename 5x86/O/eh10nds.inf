@@ -1,0 +1,137 @@
+
+[version]
+Signature  = "$CHICAGO$"
+Class      = Net
+Compatible = 1
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+provider   = %PC_CARD%
+LayoutFile = layout.inf
+DriverVer  = 01/17/2000
+
+[Manufacturer]
+%PC_CARD%  = PC_CARD
+
+[PC_CARD]
+%PC_CARD.DeviceDesc%  = le10cc.ndi, PCMCIA\Ethernet-Adapter-D51F
+
+;----------------------------------------------------------------------------
+; Win 2000 main sections
+;
+[le10cc.ndi.NT]
+Characteristics = 0x4
+BusType         = 8
+AddReg          = le10.ndi.reg
+CopyFiles       = le10.ndis5.CopyFiles
+
+[le10cc.ndi.NT.Services]
+AddService = le10, 2, le10.Service, le10.AddEventLog
+
+;----------------------------------------------------------------------------
+;    Win 2000 Drivers
+;
+[le10.ndi.reg]
+HKR, Ndi,               Service,    0, "le10"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR,               ,    Pcmcia    , 0, "2"
+
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+
+[le10.ndis5.CopyFiles]
+eh10nds.sys,,,2
+
+[le10.Service]
+DisplayName     =   %Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_AUTO_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\eh10nds.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+[le10.AddEventLog]
+AddReg = le10.AddEventLog.reg
+
+[le10.AddEventLog.reg]
+HKR, , EventMessageFile,0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,  0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+
+;----------------------------------------------------------------------------
+; Win 9x main sections
+;
+[le10cc.ndi]
+AddReg    = le10X.ndi.reg, ne2000.ndi.reg, Clone.params.reg
+LogConfig = le10cc.LogConfigOverride
+
+[le10cc.LogConfigOverride]
+IRQConfig=3,4,5,7,10,11,12,13,15
+IOConfig=20@200-3FF%FFE0(3FF::)
+ConfigPriority = HARDRECONFIG
+
+[le10X.ndi.reg]
+HKR,Ndi,DeviceID,,"PCMCIA-Ethernet-Adapter-D51F"
+HKR,Ndi,CardType,,"PCMCIA"
+
+
+;****************************************************************************
+; Win 9x Drivers
+; Base section for ne2000 users
+;
+[ne2000.ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,eh10nds.sys
+HKR,,Driver,,"eh10nds.sys"
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"le10"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+; Install sectioins
+HKR,Ndi\Install,ndis3,,"le10X.ndis3"
+
+;Install NDIS3
+[le10X.ndis3]
+CopyFiles = le10X.ndis3.CopyFiles
+
+[le10X.ndis3.CopyFiles]
+eh10nds.sys,,,2
+
+;extra params for clones
+[Clone.params.reg]
+; Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,60,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+
+;
+;----------------------------------------------------------------------------
+; Destination Directories
+;
+[DestinationDirs]
+DefaultDestDir        = 11 ; LDID_SYS
+le10X.ndis3.CopyFiles = 11
+le10.ndis5.CopyFiles  = 12
+
+
+[Strings]
+Service.DispName =   "PCMCIA Ethernet Card NT Driver"
+
+PC_CARD   =   "PC Card Series Products"
+PC_CARD.DeviceDesc  =   "PCMCIA Ethernet Card"
+

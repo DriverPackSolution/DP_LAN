@@ -1,0 +1,144 @@
+; EN2228.INF for Win 98 & Win 2000
+;
+; 10/100 Base FastEthernet PC Card
+;
+
+[Version]
+signature  = "$Windows NT$"
+Class=Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider=%V_PCCARD%
+LayoutFile=layout.inf, layout1.inf
+
+[Manufacturer]
+%V_PCCARD%=PCCARD
+
+[PCCARD]
+%*EN2228.DeviceDesc%=EN2228.ndi,PCMCIA\CHEETAH_ETHERCARD-EN2228-71C2
+
+[EN2228.ndi.NT]
+Characteristics = 0x4
+BusType         = 8
+AddReg          = EN2228cc.ndi.reg, common.reg
+CopyFiles = EN2228.ndis5.CopyFiles
+
+[EN2228.ndi.NT.Services]
+AddService = EN2228, 2, EN2228.Service, EN2228.AddEventLog
+
+[Common.reg]
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT (Twisted_Pair)"
+
+
+
+[EN2228cc.ndi.reg]
+HKR, Ndi,               Service,    0, "EN2228"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR,               ,    Pcmcia    , 0, "2"
+
+[EN2228.ndis5.CopyFiles]
+EN2228.sys,,,2
+
+[EN2228.Service]
+DisplayName     =   %Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_AUTO_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\EN2228.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+[EN2228.AddEventLog]
+AddReg = EN2228.AddEventLog.reg
+
+[EN2228.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000,"%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;---------------
+
+[EN2228.ndi]
+AddReg=EN2228.ndi.reg,EN2228.params.reg
+LogConfig=EN2228.LogConfigOverride
+CopyFiles=EN2228.ndis3.CopyFiles
+CopyFiles=Inf.CopyFiles
+
+[EN2228.LogConfigOverride]
+IRQConfig=3,4,5,7,9,10,11,12,13,15
+IOConfig=20@200-3FF%FFE0(3FF::)
+ConfigPriority = NORMAL
+
+[EN2228.ndi.reg]
+HKR,,DevLoader,0,*ndis
+HKR,,DeviceVxDs,0,EN2228.sys
+HKR,,EnumPropPages,0,netdi.dll
+HKR,Ndi,DeviceID,0,PCMCIA\CHEETAH_ETHERCARD-EN2228-71C2
+HKR,Ndi,CardType,0,PCMCIA
+HKR,NDIS,LogDriverName,0,EN2228
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0a
+HKR,Ndi\Interfaces,DefUpper,0,ndis3
+HKR,Ndi\Interfaces,DefLower,0,ethernet
+HKR,Ndi\Interfaces,UpperRange,0,ndis3
+HKR,Ndi\Interfaces,LowerRange,0,ethernet
+; Install sectioins
+HKR,Ndi\Install,ndis3,,"EN2228.ndis3"
+
+[EN2228.params.reg]
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,Ndi\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,,"Interrupt Level"
+HKR,Ndi\params\InterruptNumber,flag,1,60,00,00,00
+
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,Ndi\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,Ndi\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,Ndi\params\IOBaseAddress,flag,1,20,00,00,00
+
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT (Twisted_Pair)"
+
+[EN2228.ndis3]
+CopyFiles=EN2228.ndis3.CopyFiles
+
+[EN2228.ndis3.CopyFiles]
+EN2228.SYS
+
+[Inf.CopyFiles]
+EN2228.INF
+
+[SourceDisksNames]
+1="CHEETAH ETHERCARD EN2228 Installation Diskette", "",
+
+[SourceDisksFiles]
+EN2228.SYS=1
+EN2228.INF=1
+
+[DestinationDirs]
+DefaultDestDir=11
+EN2228.ndis3.CopyFiles       =11
+Inf.CopyFiles =17 ; Windows 95 Inf Directory
+EN2228.ndis5.CopyFiles  =   12
+
+;****************************************************************************
+; Localizable Strings
+;****************************************************************************
+[strings]
+Service.DispName =   "CHEETAH ETHERCARD EN2228 NT Driver"
+; Provider
+; Manufacturers
+V_PCCARD="CHEETAH"
+; PNP Devices
+*EN2228.DeviceDesc="CHEETAH ETHERCARD EN2228"

@@ -1,0 +1,432 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 1999-2012 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+;*******************************************************************************
+;
+; ANSMW2K.INF
+; $Revision: 1.79 $
+;
+; Intel(R) Advanced Network Services Virtual Adapter
+;
+;*******************************************************************************
+
+
+[Version]
+Signature               = "$Windows NT$"
+Class                   = Net
+ClassGUID               = {4D36E972-E325-11CE-BFC1-08002BE10318}
+Provider                = %V_Intel%
+CatalogFile             = ians2kxp.cat
+DriverVer               = 08/09/2012,8.6.47.0
+
+[Manufacturer]
+%V_Intel%               = Intel, NT.5.1, NTIA64, NTAMD64
+
+[ControlFlags]
+ExcludeFromSelect =  *
+
+[Intel.NT.5.1]
+%iANSMiniport.Desc%     = iANSMP.ndi.NT.5.1,     iANSMiniport
+
+[Intel.NTIA64]
+
+[Intel.NTAMD64]
+
+
+
+; [Intel.NT.5.1]
+;------------------------------------------------------------------------------
+;------------------------------------------------------------------------------
+[iANSMP.ndi.NT.5.1]
+AddReg                  = iANSMP.ndi.AddReg.wxp
+Characteristics         = 0x80a1 ; NCF_FORCE_NDIS_NOTIFY | NCF_VIRTUAL | NCF_NOT_USER_REMOVABLE
+CopyFiles               = iANSMP.ndi.CopyFiles.wxp
+
+[iANSMP.ndi.NT.5.1.Services]
+AddService              = iANSMiniport,   %SPSVCINST_ASSOCSERVICE%, iANSMP.AddService.wxp, NetEventLog.wxp
+
+[iANSMP.ndi.NT.5.1.CoInstallers]
+AddReg                  = CoInstaller_AddReg.wxp
+CopyFiles               = CoInstaller_CopyFiles.wxp
+;------------------------------------------------------------------------------
+
+[iANSMP.ndi.CopyFiles.wxp]
+ianswxp.sys,,,2
+iansmsg.dll,,,2
+
+; [Event Log] sections.
+;****************************************************************************
+[NetEventLog.wxp]
+AddReg = NetEventLog.AddReg.wxp
+
+[NetEventLog.AddReg.wxp]
+HKR,,EventMessageFile,0x00020000, %CustomizedEventMessageFile_wxp%
+HKR,,TypesSupported,0x00010001,7
+
+[iANSMP.AddService.wxp]
+DisplayName             = %iANSMiniport.Desc%
+ServiceType             = %SERVICE_KERNEL_DRIVER%
+StartType               = %SERVICE_DEMAND_START%
+ServiceBinary           = %12%\ianswxp.sys
+LoadOrderGroup          = NDIS
+ErrorControl            = %SERVICE_ERROR_NORMAL%
+;StartName               = ; No name
+AddReg                  = iANSMP.AddService.AddReg.wxp
+
+
+[iANSMP.AddService.AddReg.wxp]
+; ----------------------------------------------------------------------
+; Add any miniport-specific parameters here.  These are params that your
+; miniport driver is going to use.
+;
+
+[iANSMP.ndi.AddReg.wxp]
+HKR,Ndi,				Service,    , "iANSMiniport"
+HKR,Ndi,				HelpText,   , %iANSMiniport.Help%
+
+HKR,Ndi\Interfaces,                   "UpperRange", %FLG_NOCLOBBER%, "ndis5"
+HKR,Ndi\Interfaces,                   "LowerRange", %FLG_NOCLOBBER%, "ethernet"
+
+;-----------------------------------------------------------------------------------
+; CoInstaller section
+; This section installs the CoInstaller files, and sets the registry for Intermediate driver
+[CoInstaller_CopyFiles.wxp]
+NicCo2.dll,,,           0x00000010 ;don't overwrite
+
+[CoInstaller_AddReg.wxp]
+HKR,, CoInstallers32,   0x00010000, "NicCo2.dll,NicCoInstallerEntry"
+HKR,, NicCoPlugins,     0x00010000, "NCS2DMIX.dll,NCS2DMIXEntry,1"
+;------------------------------------------------------------------------------------
+;------------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------------
+[DestinationDirs]
+DefaultDestDir          = 11
+iANSMP.ndi.CopyFiles.wxp    = 12
+CoInstaller_CopyFiles.wxp   = 11
+
+[SourceDisksNames]
+1 = %DISKNAME%,,,
+
+[SourceDisksFiles]
+ianswxp.sys = 1
+iansmsg.dll = 1
+NicCo2.dll = 1
+;------------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------------
+[Strings]
+CustomizedEventMessageFile_wxp  = "%SystemRoot%\System32\drivers\ianswxp.sys"
+CustomizedEventMessageFile_w32e  = "%SystemRoot%\System32\drivers\iansw32e.sys"
+CustomizedEventMessageFile_w64  = "%SystemRoot%\System32\drivers\iansw64.sys"
+iANSMiniport.Help           = "Intel(R) Advanced Network Services Virtual Adapter is used for advanced features like teaming and virtual LAN"
+DISKNAME                    = "Intel(R) Advanced Network Services CD-ROM or floppy disk"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.0804] ; Chinese (Simplified)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="”¢Ãÿ∂˚(R) ∏ﬂº∂Õ¯¬Á∑˛ŒÒ–Èƒ‚  ≈‰∆˜”√”⁄∑÷◊È∫Õ–Èƒ‚æ÷”ÚÕ¯÷Æ¿‡µƒ∏ﬂº∂π¶ƒ‹°£"
+DISKNAME                    ="”¢Ãÿ∂˚(R) ∏ﬂº∂Õ¯¬Á∑˛ŒÒµƒπ‚≈ÃªÚ»Ì≈Ã"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.0404] ; Chinese (Traditional)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="Intel(R) ∂i∂•∫Ù∏Ù™A∞» Virtual Adapter ®œ•Œ©Û¶®≤’©MµÍ¿¿ LAN ™∫∂i∂••\Ø‡°C"
+DISKNAME                    ="Intel(R) ∂i∂•∫Ù∏Ù™A∞» •˙∫–§˘©Œ∫œ§˘"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.0407] ; German (Germany)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="Intel(R) Erweiterte Netzwerkleistungen Virtual Adapter wird f¸r erweiterte Funktionen wie Gruppenbildung und virtuelles LAN verwendet."
+DISKNAME                    ="Intel(R) Erweiterte Netzwerkleistungen CD-ROM oder Diskette"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.0C0A] ; Spanish (Spain)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="El Adaptador virtual de Servicios avanzados de red Intel(R) se utiliza para funciones avanzadas como la creaciÛn de equipos y LAN virtual."
+DISKNAME                    ="CD-ROM o disquete de los Servicios avanzados de red Intel(R)"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.040C] ; French (France)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="La carte virtuelle Services rÈseau avancÈs Intel(R) est utilisÈe pour les fonctionnalitÈs ÈvoluÈes telles que l'agrÈgation de cartes ou les rÈseaux VLAN."
+DISKNAME                    ="CD-ROM ou disquette Services rÈseau avancÈs Intel(R)"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.0410] ; Italian (Italy)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="Servizi avanzati di rete Intel(R) Virtual Adapter Ë usato per funzioni evolute quali il raggruppamento e le LAN virtuali."
+DISKNAME                    ="CD-ROM o dischetto di Servizi avanzati di rete Intel(R)"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.0411] ; Japanese (Japan)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="ÉCÉìÉeÉã(R) ÉAÉhÉoÉìÉXÉgÅEÉlÉbÉgÉèÅ[ÉNÅEÉTÅ[ÉrÉX Virtual Adapter ÇÕÉ`Å[ÉÄâªÇ®ÇÊÇ—âºëz LAN Ç»Ç«ÇÃçÇìxã@î\Ç…égÇÌÇÍÇ‹Ç∑ÅB"
+DISKNAME                    ="ÉCÉìÉeÉã(R) ÉAÉhÉoÉìÉXÉgÅEÉlÉbÉgÉèÅ[ÉNÅEÉTÅ[ÉrÉX CD-ROM Ç‹ÇΩÇÕÉtÉçÉbÉsÅ[ÉfÉBÉXÉN"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.0412] ; Korean (Korea)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="¿Œ≈⁄(R) ∞Ì±ﬁ ≥◊∆Æøˆ≈© º≠∫ÒΩ∫ ∞°ªÛ æÓ¥≈Õ¥¬ ∆¿ ±∏º∫ π◊ ∞°ªÛ LAN∞˙ ∞∞¿∫ ∞Ì±ﬁ ±‚¥…ø° ªÁøÎµÀ¥œ¥Ÿ."
+DISKNAME                    ="¿Œ≈⁄(R) ∞Ì±ﬁ ≥◊∆Æøˆ≈© º≠∫ÒΩ∫ CD-ROM ∂«¥¬ «√∑Œ«« µΩ∫≈©"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002
+;------------------------------------------------------------------------------------
+[Strings.0416] ; Portuguese (Brazil)
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSMiniport.Help           ="O Adaptador virtual Intel(R) para serviÁos avanÁados de rede È usado para recursos avanÁados como agrupamento e LAN virtual."
+DISKNAME                    ="CD-ROM ou disquete do ServiÁos avanÁados de rede Intel(R)"
+
+
+V_Intel                     = "Intel"
+iANSMiniport.Desc           = "Intel(R) Advanced Network Services Virtual Adapter"
+
+; ServiceType values
+SERVICE_KERNEL_DRIVER       = 0x00000001
+
+; StartType values
+SERVICE_DEMAND_START        = 0x00000003
+
+; ErrorControl values
+SERVICE_ERROR_NORMAL        = 0x00000001
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+; AddReg flags
+FLG_NOCLOBBER        = 0x00000002

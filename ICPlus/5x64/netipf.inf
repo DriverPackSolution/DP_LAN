@@ -1,0 +1,289 @@
+;(c) Copyright 2004 IC Plus Corp. All rights reserved.                         
+
+[version]
+Signature   = "$Chicago$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %ICPlus%
+CatalogFile    = ip100sn.cat
+DriverVer   = 05/26/2005,4.6.50526
+
+[Manufacturer]
+%ICPlus%  = ICPlus, NT.5.1, NTamd64
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_13f0&DEV_0200
+
+[ICPlus]
+%IP100.DeviceDesc%      = ip100.ndi, PCI\VEN_13f0&DEV_0200
+%IP100.DeviceDesc%      = ip100.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020013F0
+%IP100.DeviceDesc%      = ip100.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020113F0
+[ICPlus.NT.5.1]
+%IP100XP.DeviceDesc%    = ip100xp.ndi, PCI\VEN_13F0&DEV_0200
+%IP100XP.DeviceDesc%    = ip100xp.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020013F0
+%IP100XP.DeviceDesc%    = ip100xp.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020113F0
+[ICPlus.NTamd64]
+%IP100XP.DeviceDesc%    = ip100xp64.ndi, PCI\VEN_13F0&DEV_0200
+%IP100XP.DeviceDesc%    = ip100xp64.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020013F0
+%IP100XP.DeviceDesc%    = ip100xp64.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020113F0
+
+;-----------------------------------------------------------------------------
+;   W i n d o w s   9 x
+;-----------------------------------------------------------------------------
+[ip100.ndi]
+CopyFiles   = ip100.win9x.CopyFiles, ip100.inf.CopyFiles
+AddReg      = ip100.win9x.reg, ip100.common.reg
+
+;-----------------------------------------------------------------------------
+[ip100.win9x.reg]
+HKR, ,                              BusType,            0,  5
+HKR, ,                              DevLoader,          0,  *ndis
+HKR, ,                              DeviceVxDs,         0,  ipfnd5.sys
+HKR, ,				    EnumPropPages,      0,  netdi.dll,	EnumPropPages
+
+HKR, NDIS,                          LogDriverName,      0,  "ip100"
+HKR, NDIS,                          MajorNdisVersion,   1,  03
+HKR, NDIS,                          MinorNdisVersion,   1,  0a
+
+HKR, Ndi,                            DeviceID,           0,  "PCI\VEN_13f0&DEV_0200"  
+
+HKR, Ndi\Interfaces,                DefLower,           ,   "ethernet"
+HKR, Ndi\Interfaces,                LowerRange,         ,   "ethernet"
+HKR, Ndi\Interfaces,                DefUpper,           ,   "ndis3"
+HKR, Ndi\Interfaces,                UpperRange,         ,   "ndis3"
+
+HKR, Ndi\params\RxBuffer,                   flag,       1,  "20","00","00","00"
+HKR, Ndi\params\TxBuffer,                   flag,       1,  "20","00","00","00"
+HKR, Ndi\params\NoCableIndication,          flag,       1,  "20","00","00","00"
+HKR, Ndi\params\NetworkAddress,             flag,       1,  "20","00","00","00"
+HKR, Ndi\params\ConnectionType,             flag,       1,  "20","00","00","00"
+
+[ip100.win9x.CopyFiles]
+ipfnd5.sys,,,2
+[ip100.inf.CopyFiles]
+netipf.inf,,,2
+
+;--------------------------------------------------------------------------
+;   W i n d o w s   2 0 0 0
+;--------------------------------------------------------------------------
+[ip100.ndi.nt]
+Characteristics = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5     ; PCI
+AddReg          = ip100.nt.reg, ip100.common.reg
+CopyFiles       = ip100.nt.CopyFiles
+
+[ip100.ndi.nt.Services]
+AddService = IP100, 2, ip100.Service, ip100.EventLog
+
+
+[ip100.nt.reg]
+HKR, Ndi,                           Service,            ,   "IP100"
+HKR, Ndi\Interfaces,                LowerRange,         ,   "ethernet"
+HKR, Ndi\Interfaces,                UpperRange,         ,   "ndis5"
+
+[ip100.Service]
+DisplayName     = %ip100.Service.DispName%
+ServiceType     = 1 ; %SERVICE_KERNEL_DRIVER%
+StartType       = 3 ; %SERVICE_AUTO_START%
+ErrorControl    = 1 ; %SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ipfnd5.sys
+LoadOrderGroup  = NDIS
+
+[ip100.EventLog]
+AddReg = ip100.AddEventLog.reg
+
+[ip100.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystenRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[ip100.nt.CopyFiles]
+ipfnd5.sys,,,2
+
+;-----------------------------------------------------------------------------
+;   W i n d o w s   XP
+;-----------------------------------------------------------------------------
+[ip100xp.ndi.nt]
+Characteristics = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5     ; PCI
+AddReg          = ip100xp.nt.reg, ip100.common.reg
+CopyFiles       = ip100xp.nt.CopyFiles
+
+[ip100xp.ndi.nt.Services]
+AddService = ip100xp, 2, ip100xp.Service, ip100xp.EventLog
+
+[ip100xp.nt.reg]
+HKR, Ndi,                           Service,            ,   "ip100xp"
+HKR, Ndi\Interfaces,                LowerRange,         ,   "ethernet"
+HKR, Ndi\Interfaces,                UpperRange,         ,   "ndis5"
+
+[ip100xp.Service]
+DisplayName     = %ip100xp.Service.DispName%
+ServiceType     = 1 ; %SERVICE_KERNEL_DRIVER%
+StartType       = 3 ; %SERVICE_AUTO_START%
+ErrorControl    = 1 ; %SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ipfnd51.sys
+LoadOrderGroup  = NDIS
+
+[ip100xp.EventLog]
+AddReg = ip100xp.AddEventLog.reg
+
+[ip100xp.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystenRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[ip100xp.nt.CopyFiles]
+ipfnd64.sys,,,2
+
+;-----------------------------------------------------------------------------
+;   W i n d o w s   XP 64Bit Edition
+;-----------------------------------------------------------------------------
+[ip100xp64.ndi.nt]
+Characteristics = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5     ; PCI
+AddReg          = ip100xp64.nt.reg, ip100.common.reg
+CopyFiles       = ip100xp64.nt.CopyFiles
+
+[ip100xp64.ndi.nt.Services]
+AddService = ip100xp64, 2, ip100xp64.Service, ip100xp64.EventLog
+
+[ip100xp64.nt.reg]
+HKR, Ndi,                           Service,            ,   "ip100xp64"
+HKR, Ndi\Interfaces,                LowerRange,         ,   "ethernet"
+HKR, Ndi\Interfaces,                UpperRange,         ,   "ndis5"
+
+[ip100xp64.Service]
+DisplayName     = %ip100xp.Service.DispName%
+ServiceType     = 1 ; %SERVICE_KERNEL_DRIVER%
+StartType       = 3 ; %SERVICE_AUTO_START%
+ErrorControl    = 1 ; %SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ipfnd64.sys
+LoadOrderGroup  = NDIS
+
+[ip100xp64.EventLog]
+AddReg = ip100xp64.AddEventLog.reg
+
+[ip100xp64.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystenRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[ip100xp64.nt.CopyFiles]
+ipfnd64.sys,,,2
+
+;-----------------------------------------------------------------------------
+;Both Windows 2000 & 9x
+;-----------------------------------------------------------------------------
+[ip100.common.reg]
+HKR, ,                              AdapterCFID,        0,  "020013f0"
+HKR, ,                              AdapterType,        0,  "5"
+HKR, ,                              MediaType,          0,  "1"
+
+; Connection Type
+HKR, Ndi\params\ConnectionType,             ParamDesc,  ,   %ConnectionType%
+HKR, Ndi\params\ConnectionType,             default,    ,   "0"
+HKR, Ndi\params\ConnectionType,             type,       ,   "enum"
+HKR, Ndi\params\ConnectionType\enum,        0,          ,   %Autosense%
+;HKR, Ndi\params\ConnectionType\enum,        1,          ,   %10BaseT%
+;HKR, Ndi\params\ConnectionType\enum,        2,          ,   %10BaseTFD%
+;HKR, Ndi\params\ConnectionType\enum,        3,          ,   %100BaseTx%
+;HKR, Ndi\params\ConnectionType\enum,        4,          ,   %100BaseTxFD%
+HKR, Ndi\params\ConnectionType\enum,        6,          ,   %N10BaseT%
+HKR, Ndi\params\ConnectionType\enum,        7,          ,   %N10BaseTFD%
+HKR, Ndi\params\ConnectionType\enum,        8,          ,   %N100BaseTx%
+HKR, Ndi\params\ConnectionType\enum,        9,          ,   %N100BaseTxFD%
+
+; Receive Buffers
+HKR, Ndi\params\RxBuffer,                   ParamDesc,  ,   %RxBuffer%
+HKR, Ndi\params\RxBuffer,                   default,    ,   "96"
+HKR, Ndi\params\RxBuffer,                   type,       ,   "enum"
+HKR, Ndi\params\RxBuffer\enum,              16,         ,   "16"
+HKR, Ndi\params\RxBuffer\enum,              32,         ,   "32"
+HKR, Ndi\params\RxBuffer\enum,              48,         ,   "48"
+HKR, Ndi\params\RxBuffer\enum,              64,         ,   "64"
+HKR, Ndi\params\RxBuffer\enum,              80,         ,   "80"
+HKR, Ndi\params\RxBuffer\enum,              96,         ,   "96"
+HKR, Ndi\params\RxBuffer\enum,              112,         ,   "112"
+HKR, Ndi\params\RxBuffer\enum,              128,         ,   "128"
+
+; Transmit Buffers
+HKR, Ndi\params\TxBuffer,                   ParamDesc,  ,   %TxBuffer%
+HKR, Ndi\params\TxBuffer,                   default,    ,   "96"
+HKR, Ndi\params\TxBuffer,                   type,       ,   "enum"
+HKR, Ndi\params\TxBuffer\enum,              16,         ,   "16"
+HKR, Ndi\params\TxBuffer\enum,              32,         ,   "32"
+HKR, Ndi\params\TxBuffer\enum,              48,         ,   "48"
+HKR, Ndi\params\TxBuffer\enum,              64,         ,   "64"
+HKR, Ndi\params\TxBuffer\enum,              80,         ,   "80"
+HKR, Ndi\params\TxBuffer\enum,              96,         ,   "96"
+HKR, Ndi\params\TxBuffer\enum,              112,         ,   "112"
+HKR, Ndi\params\TxBuffer\enum,              128,         ,   "128"
+
+; No Cable Indication
+HKR, Ndi\params\NoCableIndication,          ParamDesc,  ,   %NoCableIndication%
+HKR, Ndi\params\NoCableIndication,          default,    ,   "0"
+HKR, Ndi\params\NoCableIndication,          type,       ,   "enum"
+HKR, Ndi\params\NoCableIndication\enum,     0,          ,   %Disabled%
+HKR, Ndi\params\NoCableIndication\enum,     1,          ,   %Enabled%
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,             ParamDesc,  ,   %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,             type,       ,   "edit"
+HKR, Ndi\params\NetworkAddress,             LimitText,  ,   "12"
+HKR, Ndi\params\NetworkAddress,             UpperCase,  ,   "1"
+HKR, Ndi\params\NetworkAddress,             default,    ,   ""
+HKR, Ndi\params\NetworkAddress,             optional,   ,   "1"
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir 	= 11
+ip100.win9x.CopyFiles = 11
+ip100.inf.CopyFiles = 17
+ip100.nt.CopyFiles = 12
+ip100xp.nt.CopyFiles = 12
+ip100xp64.nt.CopyFiles = 12
+;-----------------------------------------------------------------------------
+; Source Disk layout
+;
+[SourceDisksNames]
+3=%DriverDisketteName%,"netipf.inf",		
+
+[SourceDisksFiles]
+ipfnd64.sys = 3
+ipfnd51.sys = 3
+ipfnd5.sys = 3
+ipfnd4.sys = 3
+ipfnd3.sys = 3
+netipf.inf = 3
+
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+ICPlus              = "IC Plus Corp."
+
+RxBuffer            = "Receive Buffers"
+TxBuffer            = "Transmit Buffers"
+NoCableIndication   = "No Cable Indication"
+NetworkAddress      = "Network Address"
+ConnectionType      = "Connection Type"
+Disabled            = "Disabled"
+Enabled             = "Enabled"
+Autosense           = "AutoSense"
+10BaseT             = "10Half (Force)"
+10BaseTFD           = "10Full (Force)"
+100BaseTx           = "100Half(Force)"
+100BaseTxFD         = "100Full(Force)"
+N10BaseT             = "10Half (Nway)"
+N10BaseTFD           = "10Full (Nway)"
+N100BaseTx           = "100Half(Nway)"
+N100BaseTxFD         = "100Full(Nway)"
+
+IP100.DeviceDesc	 = "IC Plus IP100 10/100 Fast Ethernet Adapter"
+IP100.Service.DispName   = "IC Plus IP100 10/100 Fast Ethernet Adapter NT Driver"
+IP100xp.DeviceDesc	 = "IC Plus IP100 10/100 Fast Ethernet Adapter"
+IP100xp.Service.DispName   = "IC Plus IP100 10/100 Fast Ethernet Adapter NT Driver"
+
+DriverDisketteName	 = "IC Plus IP100 10/100 Fast Ethernet Adapter Driver Diskette"

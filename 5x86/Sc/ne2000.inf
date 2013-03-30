@@ -1,0 +1,90 @@
+; EP-427.INF
+;
+
+[version]
+LayoutFile = layout.inf
+signature  = "$Windows NT$"
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+provider   = %Msft%
+
+[Manufacturer]
+%SURECOM% = SURECOM
+
+[ControlFlags]
+ExcludeFromSelect = PCMCIA\TAMARACK-ETHERNET-A71D
+
+[SURECOM]
+%TMIPCM.DeviceDesc%    = *ne2000cc.ndi,  PCMCIA\TAMARACK-ETHERNET-A71D  ;
+
+;----------------------------------------------------------------------------
+; Ne2000 compatible PCMCIA Adapter
+;
+[*ne2000cc.ndi]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = ne2000.ndi.reg
+LogConfig       = *ne2000cc.LogConfig
+CopyFiles       = ne2000.CopyFiles
+
+[*ne2000cc.ndi.Services]
+AddService = ne2000, 2, ne2000.Service, ne2000.AddEventLog
+
+[*ne2000cc.LogConfig]
+IRQConfig      = 3,4,5,7,9,10,11,12,13,14,15
+IOConfig       = 20@200-3FF%FFE0(3FF::)
+ConfigPriority = HARDRECONFIG
+
+;----------------------------------------------------------------------------
+; NE2000 Common
+;
+[ne2000.ndi.reg]
+HKR, Ndi,               Service,    0, "ne2000"
+HKR, Ndi\Interfaces,    DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,    DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+[ne2000.CopyFiles]
+ne2000.sys,,,2
+
+[ne2000.Service]
+DisplayName     =   %ne2000.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\ne2000.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+[ne2000.AddEventLog]
+AddReg = ne2000.AddEventLog.reg
+
+[ne2000.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+;---------------------------------------------------------------------------
+; Common TextMode Flags Section
+;
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;----------------------------------------------------------------------------
+; Destination Directories
+;
+[DestinationDirs]
+ne2000.CopyFiles  =   12
+
+;----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Msft                    = "Microsoft"
+
+SURECOM                = "SURECOM Technology Corp."
+
+TMIPCM.DeviceDesc       = "SURECOM EtherPerfect-427 Lan Card"
+
+ne2000.Service.DispName = "Novell/Eagle NE2000 Adapter Driver"

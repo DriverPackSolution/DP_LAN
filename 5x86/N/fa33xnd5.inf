@@ -1,0 +1,249 @@
+; NETFA33X.INF
+;
+; NETGEAR FA330/FA331 PCI Adapter.
+;
+
+[Version]
+Signature  = "$Windows NT$"
+Compatible = 1
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+LayoutFile = layout.inf
+Provider   = %V_MS%
+DriverVer   = 04/23/2001, 5.00.0124.0
+
+[Manufacturer]
+%V_MS%     = NETGEAR
+
+[NETGEAR]
+%FA33X.DeviceDesc% = FA33X.ndi, PCI\VEN_100B&DEV_0020&SUBSYS_F3301385
+%FA33X.DeviceDesc% = FA33X.ndi, PCI\VEN_100B&DEV_0020&SUBSYS_F3311385
+
+[ControlFlags]
+ExcludeFromSelect    = PCI\VEN_100B&DEV_0020
+
+;
+; Windows 2000, Me
+;
+[FA33X.ndi.NT]
+AddReg          = FA33X.param.reg, FA33X.reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = FA33X.ndis5.CopyFiles
+
+[FA33X.ndis5.CopyFiles]
+FA33XND5.SYS, FA33XND5.SYS,,2
+
+[FA33X.ndi.NT.Services]
+AddService = FA33X, 2, FA33X.Service, FA33X.EventLog
+
+[FA33X.param.reg]
+; NetworkMedia
+HKR, Ndi\params\NetworkMedia,      ParamDesc, 0, %NetworkMedia%
+HKR, Ndi\params\NetworkMedia,      type,      0, "enum"
+HKR, Ndi\params\NetworkMedia,      default,   0, "0"
+HKR, Ndi\params\NetworkMedia\enum, 0,         0, %Auto%
+HKR, Ndi\params\NetworkMedia\enum, 1,         0, %100Half%
+HKR, Ndi\params\NetworkMedia\enum, 2,         0, %10Half%
+HKR, Ndi\params\NetworkMedia\enum, 3,         0, %100Full%
+HKR, Ndi\params\NetworkMedia\enum, 4,         0, %10Full%
+
+; NetworkAddress
+HKR, Ndi\params\NetworkAddress,    ParamDesc, 0, %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,    base,      0, 16
+HKR, Ndi\params\NetworkAddress,    type,      0, edit
+HKR, Ndi\params\NetworkAddress,    optional,  0, 1
+
+; RxBufferCount
+HKR, Ndi\params\RxBufferCount,     ParamDesc, 0, %RxBufferCount%
+HKR, Ndi\params\RxBufferCount,     default,   0, "40"
+HKR, Ndi\params\RxBufferCount,     min,       0, "8"
+HKR, Ndi\params\RxBufferCount,     max,       0, "128"
+HKR, Ndi\params\RxBufferCount,     step,      0, "8"
+HKR, Ndi\params\RxBufferCount,     base,      0, "10"
+HKR, Ndi\params\RxBufferCount,     type,      0, "int"
+
+HKR, ,                             Slot,      0, "0"
+
+[FA33X.reg]
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi,            Service,    0, "FA33X"
+
+[FA33X.Service]
+DisplayName     = %FA33X.Service.DispName%
+ServiceType     = 1     ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3     ;%SERVICE_DEMAND_START%
+ErrorControl    = 1     ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\FA33XND5.SYS
+LoadOrderGroup  = NDIS
+
+[FA33X.EventLog]
+Addreg = FA33X.AddEventLog.reg
+
+[FA33X.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+;
+; Windows 98, 95
+;
+[FA33X.ndi]
+AddReg    = FA33X.ndi.reg, FA33X.con.reg
+DeviceID  = "PCI\VEN_100B&DEV_0020&SUBSYS_F3301385"
+DeviceID  = "PCI\VEN_100B&DEV_0020&SUBSYS_F3311385"
+CopyFiles = FA33X.ndis3.CopyFiles
+CopyFiles = FA33X.inf.CopyFiles
+
+[FA33X.ndi.reg]
+; key,subkey,valuename,type,value
+HKR,Ndi,DeviceID,,"PCI\VEN_100B&DEV_0020&SUBSYS_F3311385","PCI\VEN_100B&DEV_0020&SUBSYS_F3301385"
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,FA33XND3.SYS
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"FA33X"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+; Install sections
+HKR,Ndi\Install,ndis3,,"FA33X.ndis3"
+HKR,Ndi,CardType,,"PCI"
+
+[FA33X.con.reg]
+; Speed
+HKR, Ndi\params\Speed,                      ParamDesc, , %LineSpeed%
+HKR, Ndi\params\Speed,                      default,   , 1
+HKR, Ndi\params\Speed,                      type,      , enum
+HKR, Ndi\params\Speed\enum,                 0,         , "Default"
+HKR, Ndi\params\Speed\enum,                 1,         , "AutoNegotiate"
+HKR, Ndi\params\Speed\enum,                 2,         , "10BaseT"
+HKR, Ndi\params\Speed\enum,                 3,         , "100BaseTx"
+HKR, NDI\params\Speed,                      flag,1,20,00,00,00
+
+; ForceDpx
+HKR, Ndi\params\FullDuplex,                 ParamDesc, , %DuplexMode%
+HKR, Ndi\params\FullDuplex,                 default,   , 0
+HKR, Ndi\params\FullDuplex,                 type,      , enum
+HKR, Ndi\params\FullDuplex\enum,            0,         , "Default"
+HKR, Ndi\params\FullDuplex\enum,            1,         , "Full-Duplex"
+HKR, Ndi\params\FullDuplex\enum,            2,         , "Half-Duplex"
+HKR, NDI\params\FullDuplex,                 flag,1,20,00,00,00
+
+; TransmitPadding
+HKR, Ndi\params\TransmitPadding,            ParamDesc, , %TransmitPadding%
+HKR, Ndi\params\TransmitPadding,            default,   , 0
+HKR, Ndi\params\TransmitPadding,            type,      , enum
+HKR, Ndi\params\TransmitPadding\enum,       0,         , "On"
+HKR, Ndi\params\TransmitPadding\enum,       1,         , "Off"
+HKR, NDI\params\TransmitPadding,            flag,1,20,00,00,00
+
+; MACAddressOverride
+HKR, Ndi\params\MACAddressOverride,         ParamDesc, , %MACAddressOverride%
+HKR, Ndi\params\MACAddressOverride,         default,   , 0
+HKR, Ndi\params\MACAddressOverride,         type,      , enum
+HKR, Ndi\params\MACAddressOverride\enum,    0,         , "Off"
+HKR, Ndi\params\MACAddressOverride\enum,    1,         , "On"
+HKR, NDI\params\MACAddressOverride,         flag,1,20,00,00,00
+
+; NetworkAddress
+HKR, Ndi\params\NetworkAddress,             ParamDesc, 0, %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,             default,   0, 0
+HKR, Ndi\params\NetworkAddress,             base,      0, 16
+HKR, Ndi\params\NetworkAddress,             type,      0, edit
+HKR, Ndi\params\NetworkAddress,             optional,  0, 1
+HKR, NDI\params\NetworkAddress,             flag,1,20,00,00,00
+
+; NumberOfReceiveDescriptors
+HKR, Ndi\params\NumberOfReceiveDescriptors, ParamDesc, , %ReceiveFrameDescriptors%
+HKR, Ndi\params\NumberOfReceiveDescriptors, default,   , 64
+HKR, Ndi\params\NumberOfReceiveDescriptors, min,       , 1
+HKR, Ndi\params\NumberOfReceiveDescriptors, max,       , 00000128
+HKR, Ndi\params\NumberOfReceiveDescriptors, step,      , 1
+HKR, Ndi\params\NumberOfReceiveDescriptors, base,      , 10
+HKR, Ndi\params\NumberOfReceiveDescriptors, type,      , int
+HKR, NDI\params\NumberOfReceiveDescriptors, flag,1,20,00,00,00
+
+; NumberOfTransmitPackets
+HKR, Ndi\params\NumberOfTransmitPackets,    ParamDesc, , %TransmitControlBlocks%
+HKR, Ndi\params\NumberOfTransmitPackets,    default,   , 32
+HKR, Ndi\params\NumberOfTransmitPackets,    min,       , 1
+HKR, Ndi\params\NumberOfTransmitPackets,    max,       , 00000064
+HKR, Ndi\params\NumberOfTransmitPackets,    step,      , 1
+HKR, Ndi\params\NumberOfTransmitPackets,    base,      , 10
+HKR, Ndi\params\NumberOfTransmitPackets,    type,      , int
+HKR, NDI\params\NumberOfTransmitPackets,    flag,1,20,00,00,00
+
+; NumCoalesce
+HKR, Ndi\params\NumberOfCoalesceBuffers,    ParamDesc, , %CoalesceBuffers%
+HKR, Ndi\params\NumberOfCoalesceBuffers,    default,   , 20
+HKR, Ndi\params\NumberOfCoalesceBuffers,    min,       , 1
+HKR, Ndi\params\NumberOfCoalesceBuffers,    max,       , 00000032
+HKR, Ndi\params\NumberOfCoalesceBuffers,    step,      , 1
+HKR, Ndi\params\NumberOfCoalesceBuffers,    base,      , 10
+HKR, Ndi\params\NumberOfCoalesceBuffers,    type,      , int
+HKR, NDI\params\NumberOfCoalesceBuffers,    flag,1,20,00,00,00
+
+; NumberOfMapRegisters
+HKR, Ndi\params\NumberOfMapRegisters,       ParamDesc, , %MapRegisters%
+HKR, Ndi\params\NumberOfMapRegisters,       default,   , 64
+HKR, Ndi\params\NumberOfMapRegisters,       min,       , 0
+HKR, Ndi\params\NumberOfMapRegisters,       max,       , 64
+HKR, Ndi\params\NumberOfMapRegisters,       step,      , 1
+HKR, Ndi\params\NumberOfMapRegisters,       base,      , 10
+HKR, Ndi\params\NumberOfMapRegisters,       type,      , int
+HKR, NDI\params\NumberOfMapRegisters,       flag,1,20,00,00,00
+
+
+[FA33X.ndis3]
+Copyfiles = FA33X.ndis3.CopyFiles, FA33X.inf.CopyFiles
+
+[FA33X.ndis3.CopyFiles]
+FA33XND3.SYS, FA33XND3.SYS,,2
+
+[FA33X.inf.CopyFiles]
+NETFA33X.INF, NETFA33X.INF
+
+[DestinationDirs]
+DefaultDestDir        = 11
+FA33X.ndis3.CopyFiles = 11
+FA33X.ndis5.CopyFiles = 12
+FA33X.inf.CopyFiles   = 17
+old.inf.DelFiles      = 17
+
+[SourceDisksNames]
+1 = "NETGEAR FA330/FA331 PCI Adapter Drivers disk","",0
+
+[SourceDisksFiles]
+;FA33XND3.SYS = 1
+FA33XND5.SYS = 1
+NETFA33X.INF = 1
+
+[Strings]
+; Manufacturer and Provider string.
+V_MS = "NETGEAR"
+
+RxBufferCount           = "Receive Buffer Count"
+NetworkAddress          = "Network(MAC) Address"
+NetworkMedia            = "Network Media"
+Auto                    = "Auto Sense"
+10Half                  = "10BaseT"
+10Full                  = "10BaseT Full Duplex "
+100Half                 = "100BaseTx"
+100Full                 = "100BaseTx Full Duplex"
+
+LineSpeed               = "Line Speed"
+DuplexMode              = "Duplex Mode"
+TransmitPadding         = "Transmit Padding"
+MACAddressOverride      = "MAC Address Override"
+ReceiveFrameDescriptors = "Receive Frame Descriptors"
+TransmitControlBlocks   = "Transmit Control Blocks"
+CoalesceBuffers         = "Coalesce Buffers"
+MapRegisters            = "Map Registers"
+
+FA33X.DeviceDesc       = "NETGEAR FA330/FA331 PCI Adapter"
+FA33X.Service.DispName = "NETGEAR FA330/FA331 NDIS 5.0 Miniport Driver"

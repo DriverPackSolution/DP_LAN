@@ -1,0 +1,184 @@
+;****************************************************************
+; USB200M.INF for Windows 98/ME/2000 and XP			*
+;								*
+; Linksys USB 2.0 10/100 Adapter      	                	*
+;								*
+; Copyright 2002	                                        *
+;****************************************************************
+
+[Version]
+Signature  = "$Windows NT$"
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %USB%
+LayoutFile = layout.inf
+
+[Manufacturer]
+%USB%   = USB
+
+[ControlFlags]
+ExcludeFromSelect = USB\VID_077B&PID_2226
+
+[USB]
+%USB20L.DeviceDesc% = USB20L.Ndi,USB\VID_077B&PID_2226
+
+;****************************************************************
+; Win98 main sections						*
+;****************************************************************
+[USB20L.Ndi]
+AddReg   = USB20L.Reg, USB20L.Params, USB20L.Con.Reg
+DeviceID = USB\VID_077B&PID_2226
+
+
+;****************************************************************
+; NT main sections						*
+;****************************************************************
+[USB20L.Ndi.NT]
+AddReg          = USB20L.NT.Reg, USB20L.Params, USB20L.Con.Reg
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 0 ; USB
+CopyFiles       = CopyFile.NT.Sys
+
+[USB20L.Ndi.NT.Services]
+AddService = USB20L, 2, USB20L.Service, Common.EventLog
+
+
+;****************************************************************
+; Windows 98 section						*
+;****************************************************************
+[USB20L.Reg]
+HKR,Ndi,DeviceID,,USB\VID_077B&PID_2226
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,AdapterName,,USB20L
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,USB200M.sys
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,USB20L
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,ndis3,,"USB20L.Install"
+
+HKR,Ndi,HelpText,,"USB2.0 10/100 Ethernet Adapterr"
+
+
+;****************************************************************
+; Driver parameters						*
+;****************************************************************
+
+[USB20L.Params]
+HKR, ,TxPacketDesc,    0, "20"   ; 0x32
+HKR, ,RxPacketDesc,    0, "20"   ; 0x78
+
+[USB20L.Con.Reg]
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT (Twisted_Pair)"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,9,,"100BaseTx Full_Duplex"
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+HKR,Ndi\params\RemoteWakeup,ParamDesc,,"Remote Wakeup"
+HKR,Ndi\params\RemoteWakeup,default,,2
+HKR,Ndi\params\RemoteWakeup,type,,enum
+HKR,Ndi\params\RemoteWakeup\enum,0,,"Disable"
+HKR,Ndi\params\RemoteWakeup\enum,2,,"Link up"
+HKR,Ndi\params\RemoteWakeup\enum,6,,"Magic Packet"
+HKR,NDI\params\RemoteWakeup,flag,1,20,00,00,00
+
+HKR,Ndi\params\FlowControl,ParamDesc,,"Flow Control"
+HKR,Ndi\params\FlowControl,default,,1
+HKR,Ndi\params\FlowControl,type,,enum
+HKR,Ndi\params\FlowControl\enum,0,,"Disable"
+HKR,Ndi\params\FlowControl\enum,1,,"Enable"
+HKR,NDI\params\FlowControl,flag,1,20,00,00,00
+
+
+;****************************************************************
+; Install section for OSR2 and Windows 98			*
+;****************************************************************
+
+[USB20L.Install]
+CopyFiles=CopyFile.Inf,CopyFile.Sys
+
+[CopyFile.Inf]
+USB200M.inf
+
+[CopyFile.Sys]
+USB200M.sys
+
+
+;****************************************************************
+; Install section for Windows NT 5				*
+;****************************************************************
+
+[USB20L.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "USB20L"
+
+[USB20L.Service]
+DisplayName    = %USB20L.DeviceDesc%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\USB200M.sys
+LoadOrderGroup = NDIS
+AddReg         = TextModeFlags.Reg
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported  , 0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[CopyFile.NT.Sys]
+USB200M.sys,,,2
+
+
+;**********************************************************************
+; Destination directories                                             *
+;**********************************************************************
+
+[DestinationDirs]
+CopyFile.Sys    = 11
+CopyFile.NT.Sys = 12
+DefaultDestDir = 11
+
+[SourceDisksNames]
+; Cabinet file names and associated disks
+; <cab#> = <disk#>,<cabinet filename>, ID (Unused, must be 0)
+50="Linksys USB 2.0 10/100 Adapter Driver Diskette",, 0
+
+[SourceDisksFiles]
+;<file> = <cabinet number>,<subdir>,<filename>,<size>
+;Note: File is not in a cabinet if cab# is 0
+USB200M.sys=50,.,USB200M.sys,10000
+USB200M.inf=50,.,USB200M.inf,10000
+
+
+;**********************************************************************
+; Localizable strings                                                 *
+;**********************************************************************
+
+[Strings]
+USB = "Linksys"
+USB20L.DeviceDesc = "Linksys USB 2.0 10/100 Adapter"

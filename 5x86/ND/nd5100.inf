@@ -1,0 +1,147 @@
+; NETND51.INF
+;
+; ND5100 PCMCIA Network Interface Cards.
+;
+; Copyright 1993-1998, NDC 
+
+[version]
+LayoutFile = layout.inf
+signature  = "$Windows NT$"
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+provider   = %Msft%
+
+[Manufacturer]
+%NDC% = NDC
+
+[ControlFlags]
+ExcludeFromSelect = PCMCIA\NDC-Ethernet-24A3
+ExcludeFromSelect = PCMCIA\NDC-Ethernet-0197
+ExcludeFromSelect = PCMCIA\NDC-Ethernet-6BF4
+ExcludeFromSelect = PCMCIA\NDC-Ethernet-6669
+ExcludeFromSelect = PCMCIA\NDC-Ethernet-CB56
+
+[NDC]
+%NDCPCM_n1.DeviceDesc%    = *nd5100_n1.ndi,  PCMCIA\NDC-Ethernet-24A3  ; NDC ND5100
+%NDCPCM_n2.DeviceDesc%    = *nd5100_n2.ndi,  PCMCIA\NDC-Ethernet-0197  ; NDC ND5100
+%NDCPCM_j2.DeviceDesc%    = *nd5100_j2.ndi,  PCMCIA\NDC-Ethernet-6BF4  ; NDC ND5100
+%NDCPCM_j3.DeviceDesc%    = *nd5100_j3.ndi,  PCMCIA\NDC-Ethernet-6669  ; NDC ND5100
+%NDCPCM_e1.DeviceDesc%    = *nd5100_e1.ndi,  PCMCIA\NDC-Ethernet-CB56  ; NDC ND5100
+
+;----------------------------------------------------------------------------
+; nd5100 compatible PCMCIA Adapter
+;
+[*nd5100_e1.ndi]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = nd5100.ndi.reg
+CopyFiles       = nd5100.CopyFiles
+
+[*nd5100_e1.ndi.Services]
+AddService = nd5100, 2, nd5100.Service, nd5100.AddEventLog
+
+;----------------------------------------------------------------------------
+; nd5100 compatible PCMCIA Adapter
+;
+[*nd5100_j3.ndi]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = nd5100.ndi.reg
+CopyFiles       = nd5100.CopyFiles
+
+[*nd5100_j3.ndi.Services]
+AddService = nd5100, 2, nd5100.Service, nd5100.AddEventLog
+
+;----------------------------------------------------------------------------
+; nd5100 compatible PCMCIA Adapter
+;
+[*nd5100_j2.ndi]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = nd5100.ndi.reg
+CopyFiles       = nd5100.CopyFiles
+
+[*nd5100_j2.ndi.Services]
+AddService = nd5100, 2, nd5100.Service, nd5100.AddEventLog
+
+;----------------------------------------------------------------------------
+; nd5100 compatible PCMCIA Adapter
+;
+[*nd5100_n2.ndi]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = nd5100.ndi.reg
+CopyFiles       = nd5100.CopyFiles
+
+[*nd5100_n2.ndi.Services]
+AddService = nd5100, 2, nd5100.Service, nd5100.AddEventLog
+
+;----------------------------------------------------------------------------
+; nd5100 compatible PCMCIA Adapter
+;
+[*nd5100_n1.ndi]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = nd5100.ndi.reg
+CopyFiles       = nd5100.CopyFiles
+
+[*nd5100_n1.ndi.Services]
+AddService = nd5100, 2, nd5100.Service, nd5100.AddEventLog
+
+;----------------------------------------------------------------------------
+; nd5100 Common
+;
+[nd5100.ndi.reg]
+HKR, Ndi,               Service,    0, "nd5100"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+[nd5100.CopyFiles]
+ND5100.sys,,,2
+
+[nd5100.Service]
+DisplayName     =   %nd5100.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\ND5100.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+[nd5100.AddEventLog]
+AddReg = nd5100.AddEventLog.reg
+
+[nd5100.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+;---------------------------------------------------------------------------
+; Common TextMode Flags Section
+;
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;----------------------------------------------------------------------------
+; Destination Directories
+;
+[DestinationDirs]
+nd5100.CopyFiles  =   12
+
+;----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+; Provider
+Msft                    = "NDC"
+; Manufacturer names
+NDC                = "National Datacomm Corporation"
+; Adapter names
+NDCPCM_n1.DeviceDesc       = "NDC ND5100 Ethernet PC Card"
+NDCPCM_n2.DeviceDesc       = "NDC ND5100 Ethernet PC Card"
+NDCPCM_j2.DeviceDesc       = "NDC ND5100 Ethernet PC Card"
+NDCPCM_j3.DeviceDesc       = "NDC ND5100 Ethernet PC Card"
+NDCPCM_e1.DeviceDesc       = "NDC ND5100 Ethernet PC Card"
+
+nd5100.Service.DispName = "NDC ND5100 Adapter Driver"
+

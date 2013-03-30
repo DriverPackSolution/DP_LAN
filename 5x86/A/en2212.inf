@@ -1,0 +1,84 @@
+; NET2212.INF
+; INF file for Windows XP
+;
+; Accton EN2212 PCMCIA Ethernet Adapter
+; Copyright 2004, Accton Technology Corporation
+
+[Version]
+signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_Accton%
+LayoutFile  = layout.inf,layout1.inf
+
+[Manufacturer]
+%V_Accton%=Accton
+
+[Accton]
+%*EN2212.DeviceDesc%=EN2212.ndi,PCMCIA\ACCTON-EN2212-C817
+%*EN2212.DeviceDesc%=EN2212.ndi,PCMCIA\ACCTON-EN2212-0153
+%*EN2212.DeviceDesc%=EN2212.ndi,PCMCIA\ACCTON-EN2212-DEBC
+%*EN2212.DeviceDesc%=EN2212.ndi,PCMCIA\ACCTON-PCMCIA-ETHERNET-465B
+
+[EN2212.ndi.NT]
+Characteristics = 0x4
+BusType         = 8
+AddReg          = EN2212.reg
+CopyFiles       = EN2212.CopyFiles.Sys
+
+[EN2212.ndi.NT.Services]
+AddService = EN2212, 2, EN2212.Service, EN2212.EventLog
+
+[EN2212.ndi.NT.LogConfigOverride]
+LogConfig = EN2212.LogConfigOverride
+
+[EN2212.LogConfigOverride]
+IRQConfig    =  3,4,5,7,9,10,11,12,13,15
+IOConfig     =  20@200-3FF%FFE0(3FF::)
+MemConfig    =  1000@00000-FFFFF	;;size = 4K 
+PcCardConfig =  2:00000(W)		;;attribute Memory based at 00000
+ConfigPriority = DESIRED 
+;;NORMAL 
+
+;-------------------------------------------------------------------------------
+; EN2212 Drivers and Service
+;
+[EN2212.reg]
+HKR, Ndi,               Service,    0, "EN2212"
+HKR, Ndi\Interfaces,    DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,    DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR,               ,    CardType,   0, "1"
+HKR,               ,    Pcmcia    , 0, "2"
+
+[EN2212.Service]
+DisplayName     = %Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\EN2212.sys
+LoadOrderGroup  = NDIS
+
+[EN2212.CopyFiles.Sys]
+EN2212.sys
+
+[DestinationDirs]
+DefaultDestDir=11
+EN2212.CopyFiles.Sys = 12
+;EN2212.CopyFiles.Inf = 17
+
+[EN2212.EventLog]
+AddReg = EN2212.AddEventLog.reg
+
+[EN2212.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[strings]
+Service.DispName =   "Accton EN2212 PCMCIA Ethernet WinXP Driver"
+; Provider
+; Manufacturers
+V_Accton="Accton"
+; PNP Devices
+*EN2212.DeviceDesc="Accton EN2212 PCMCIA Ethernet Adapter"

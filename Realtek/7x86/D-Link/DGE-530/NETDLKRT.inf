@@ -1,0 +1,557 @@
+; Copyright (C) 2011 D-Link Corporation Inc, All Right Reserved.
+;
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %D-Link%
+DriverVer   = 07/06/2011,7.047.0706.2011
+CatalogFile.NT = DLKRT32.cat
+
+[Manufacturer]
+%D-Link% = D-Link, NTx86
+
+[ControlFlags]
+ExcludeFromSelect     = *
+
+[D-Link.NTx86]
+%EthDriver.DeviceDesc% = EthDriver.ndi, PCI\VEN_1186&DEV_4300&SUBSYS_4C001186
+
+;
+;
+; Windows NT specific entry
+[EthDriver.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+DelReg          = del.reg
+AddReg          = Speed.reg, NetworkAddress.reg, flowctrl.reg, PriorityVlanTag.reg, InterruptModeration.reg, TxRxBuf.reg
+AddReg          = Offload.reg, Jumboframe.reg, s5wol.reg, wolptnmagic.reg, EthDriver.reg, WolShutdownLinkSpeed.reg, Common.reg
+AddReg          = about.reg
+CopyFiles       = EthDriver.CopyFiles, RTLDLL.CopyFiles
+*IfType         = 6		; IF_TYPE_ETHERNET_CSMACD 
+*MediaType      = 0		; NdisMedium802_3
+*PhysicalMediaType = 14		; NdisPhysicalMedium802_3
+
+
+
+[EthDriver.ndi.NT.Services]
+AddService = DLKRT32, 2, EthDriver.Service, common.EventLog
+
+
+;-----------------------------------------------------------------------------
+; common base for 10/100/1000 Mb Adapters
+;
+
+[Common.reg]
+HKR,,DeviceRemovable,0,"0" 
+
+HKR,,HwParaMask,0x00010001,0 
+
+HKR,,LogDisconnectEvent,0,"0" 
+
+HKR,,EnableEDT,0,"1"
+
+HKR,,RIACP,0,"0"
+
+HKR,,S5NicKeepOverrideMacAddr,0,"0"
+
+HKR,,PPSW,0,"1"
+
+[Speed.reg]
+HKR,Ndi\params\*SpeedDuplex,       ParamDesc,  0, %SpeedDuplex%
+HKR,Ndi\params\*SpeedDuplex,       default,    0, "0"
+HKR,Ndi\params\*SpeedDuplex,       type,       0, "enum"
+HKR,Ndi\params\*SpeedDuplex\enum,  "0",        0, %AutoDetect%
+HKR,Ndi\params\*SpeedDuplex\enum,  "1",        0, %10Mb-Half-Duplex%
+HKR,Ndi\params\*SpeedDuplex\enum,  "2",        0, %10Mb-Full-Duplex%
+HKR,Ndi\params\*SpeedDuplex\enum,  "3",        0, %100Mb-Half-Duplex%
+HKR,Ndi\params\*SpeedDuplex\enum,  "4",        0, %100Mb-Full-Duplex%
+HKR,Ndi\params\*SpeedDuplex\enum,  "6",        0, %1000Mb-Full-Duplex%
+HKR,,*SpeedDuplex,0,"0"
+
+HKR,Ndi\params\AutoDisableGigabit,       ParamDesc,  0, %AutoDisableGigabit%
+HKR,Ndi\params\AutoDisableGigabit,       default,    0, "0"
+HKR,Ndi\params\AutoDisableGigabit,       type,       0, "enum"
+HKR,Ndi\params\AutoDisableGigabit\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\AutoDisableGigabit\enum,  "1",        0, %BatteryRe-Link%
+HKR,Ndi\params\AutoDisableGigabit\enum,  "2",        0, %AcBatteryRe-Link%
+HKR,,AutoDisableGigabit,0,"0"
+
+
+[Speed10_100.reg]
+HKR,Ndi\params\*SpeedDuplex,       ParamDesc,  0, %SpeedDuplex%
+HKR,Ndi\params\*SpeedDuplex,       default,    0, "0"
+HKR,Ndi\params\*SpeedDuplex,       type,       0, "enum"
+HKR,Ndi\params\*SpeedDuplex\enum,  "0",        0, %AutoDetect%
+HKR,Ndi\params\*SpeedDuplex\enum,  "1",        0, %10Mb-Half-Duplex%
+HKR,Ndi\params\*SpeedDuplex\enum,  "2",        0, %10Mb-Full-Duplex%
+HKR,Ndi\params\*SpeedDuplex\enum,  "3",        0, %100Mb-Half-Duplex%
+HKR,Ndi\params\*SpeedDuplex\enum,  "4",        0, %100Mb-Full-Duplex%
+HKR,,*SpeedDuplex,0,"0"
+
+HKR,,ForceMode,0,"0"
+
+HKR,,DeviceRemovable,0,"0" 
+
+[about.reg]
+HKR,,EnumPropPages32,,"rtnicprop.dll,RTNicPropPageProvider"
+
+[NetworkAddress.reg]
+HKR,Ndi\params\NetworkAddress,	   ParamDesc,  0, %NetworkAddress%
+HKR,Ndi\params\NetworkAddress,	   type,       0, "edit"
+HKR,Ndi\params\NetworkAddress,	   default,    0, "000000000000"
+HKR,Ndi\params\NetworkAddress,	   LimitText,  0, "12"
+HKR,Ndi\params\NetworkAddress,	   UpperCase,  0, "1"
+HKR,Ndi\params\NetworkAddress,	   Optional,   0, "1"
+
+[flowctrl.reg]
+HKR,Ndi\params\*FlowControl,	   ParamDesc,  0, %FlowControl%
+HKR,Ndi\params\*FlowControl,	   default,    0, "1"
+HKR,Ndi\params\*FlowControl,	   type,       0, "enum"
+HKR,Ndi\params\*FlowControl\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*FlowControl\enum,  "1",        0, %Enabled%
+HKR,,*FlowControl,0,"1"
+
+
+[PriorityVlanTag.reg]
+HKR,Ndi\params\*PriorityVLANTag,	ParamDesc,  0, %PriorityVLAN%
+HKR,Ndi\params\*PriorityVLANTag,	default,    0, "0"
+HKR,Ndi\params\*PriorityVLANTag,	type,       0, "enum"
+HKR,Ndi\params\*PriorityVLANTag\enum,	"0",        0, %PriorityVLANDisabled%
+HKR,Ndi\params\*PriorityVLANTag\enum,	"1",        0, %PriorityEnabled%
+HKR,Ndi\params\*PriorityVLANTag\enum,	"2",        0, %VLANEnabled%
+HKR,Ndi\params\*PriorityVLANTag\enum,	"3",        0, %PriorityVLANEnabled%
+HKR,,*PriorityVLANTag,0,"3"
+
+[InterruptModeration.reg]
+HKR,Ndi\params\*InterruptModeration,	ParamDesc,  0, %InterruptModeration%
+HKR,Ndi\params\*InterruptModeration,	default,    0, "1"
+HKR,Ndi\params\*InterruptModeration,	type,       0, "enum"
+HKR,Ndi\params\*InterruptModeration\enum,	"0",        0, %Disabled%
+HKR,Ndi\params\*InterruptModeration\enum,	"1",        0, %Enabled%
+HKR,,*InterruptModeration,0,"1"
+
+[TxRxBuf.reg]
+HKR,Ndi\Params\*ReceiveBuffers,       ParamDesc,  0, %ReceiveBuffers%
+HKR,Ndi\Params\*ReceiveBuffers,       Type,       0, "int"
+HKR,Ndi\Params\*ReceiveBuffers,       Default,    0, "512"
+HKR,Ndi\Params\*ReceiveBuffers,       Min,        0, "1"
+HKR,Ndi\Params\*ReceiveBuffers,       Max,        0, "512"
+HKR,Ndi\Params\*ReceiveBuffers,       Step,       0, "1"
+HKR,Ndi\Params\*ReceiveBuffers,       Base,       0, "10"
+HKR,,*ReceiveBuffers,0,"512"
+
+HKR,Ndi\Params\*TransmitBuffers,      ParamDesc,  0, %TransmitBuffers%
+HKR,Ndi\Params\*TransmitBuffers,      Type,       0, "int"
+HKR,Ndi\Params\*TransmitBuffers,      Default,    0, "128"
+HKR,Ndi\Params\*TransmitBuffers,      Min,        0, "1"
+HKR,Ndi\Params\*TransmitBuffers,      Max,        0, "128"
+HKR,Ndi\Params\*TransmitBuffers,      Step,       0, "1"
+HKR,Ndi\Params\*TransmitBuffers,      Base,       0, "10"
+HKR,,*TransmitBuffers,0,"128"
+
+[Jumboframe.reg]
+HKR,Ndi\params\*JumboPacket,        ParamDesc,  0, %JumboFrame%
+HKR,Ndi\params\*JumboPacket,        default,    0, "1514"
+HKR,Ndi\params\*JumboPacket,        type,       0, "enum"
+HKR,Ndi\params\*JumboPacket\enum,   "1514",     0, %Disabled%
+HKR,Ndi\params\*JumboPacket\enum,   "2048",     0, %2KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "3072",     0, %3KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "4096",     0, %4KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "5120",     0, %5KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "6144",     0, %6KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "7168",     0, %7KBMTU%
+HKR,,*JumboPacket,0,"1514"
+
+[Jumboframe4k.reg]
+HKR,Ndi\params\*JumboPacket,        ParamDesc,  0, %JumboFrame%
+HKR,Ndi\params\*JumboPacket,        default,    0, "1514"
+HKR,Ndi\params\*JumboPacket,        type,       0, "enum"
+HKR,Ndi\params\*JumboPacket\enum,   "1514",     0, %Disabled%
+HKR,Ndi\params\*JumboPacket\enum,   "2048",     0, %2KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "3072",     0, %3KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "4096",     0, %4KBMTU%
+HKR,,*JumboPacket,0,"1514"
+
+[Jumboframe9k.reg]
+HKR,Ndi\params\*JumboPacket,        ParamDesc,  0, %JumboFrame%
+HKR,Ndi\params\*JumboPacket,        default,    0, "1514"
+HKR,Ndi\params\*JumboPacket,        type,       0, "enum"
+HKR,Ndi\params\*JumboPacket\enum,   "1514",     0, %Disabled%
+HKR,Ndi\params\*JumboPacket\enum,   "2048",     0, %2KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "3072",     0, %3KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "4096",     0, %4KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "5120",     0, %5KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "6144",     0, %6KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "7168",     0, %7KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "8192",     0, %8KBMTU%
+HKR,Ndi\params\*JumboPacket\enum,   "9216",     0, %9KBMTU%
+HKR,,*JumboPacket,0,"1514"
+
+[Offload.reg]
+HKR,Ndi\params\*IPChecksumOffloadIPv4,        ParamDesc,  0, %IPChksumOffv4%
+HKR,Ndi\params\*IPChecksumOffloadIPv4,        default,    0, "3"
+HKR,Ndi\params\*IPChecksumOffloadIPv4,        type,       0, "enum"
+HKR,Ndi\params\*IPChecksumOffloadIPv4\enum,   "0",        0, %Disabled%
+HKR,Ndi\params\*IPChecksumOffloadIPv4\enum,   "1",        0, %TxEnabled%
+HKR,Ndi\params\*IPChecksumOffloadIPv4\enum,   "2",        0, %RxEnabled%
+HKR,Ndi\params\*IPChecksumOffloadIPv4\enum,   "3",        0, %RxTxEnabled%
+HKR,,*IPChecksumOffloadIPv4,0,"3"
+
+HKR,Ndi\params\*TCPChecksumOffloadIPv4,       ParamDesc,  0, %TCPChksumOffv4%
+HKR,Ndi\params\*TCPChecksumOffloadIPv4,       default,    0, "3"
+HKR,Ndi\params\*TCPChecksumOffloadIPv4,       type,       0, "enum"
+HKR,Ndi\params\*TCPChecksumOffloadIPv4\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv4\enum,  "1",        0, %TxEnabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv4\enum,  "2",        0, %RxEnabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv4\enum,  "3",        0, %RxTxEnabled%
+HKR,,*TCPChecksumOffloadIPv4,0,"3"
+
+HKR,Ndi\params\*UDPChecksumOffloadIPv4,       ParamDesc,  0, %UDPChksumOffv4%
+HKR,Ndi\params\*UDPChecksumOffloadIPv4,       default,    0, "3"
+HKR,Ndi\params\*UDPChecksumOffloadIPv4,       type,       0, "enum"
+HKR,Ndi\params\*UDPChecksumOffloadIPv4\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv4\enum,  "1",        0, %TxEnabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv4\enum,  "2",        0, %RxEnabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv4\enum,  "3",        0, %RxTxEnabled%
+HKR,,*UDPChecksumOffloadIPv4,0,"3"
+
+HKR,Ndi\params\*LsoV1IPv4,	ParamDesc,  0, %LSOv4%
+HKR,Ndi\params\*LsoV1IPv4,	default,    0, "1"
+HKR,Ndi\params\*LsoV1IPv4,	type,       0, "enum"
+HKR,Ndi\params\*LsoV1IPv4\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*LsoV1IPv4\enum,  "1",        0, %Enabled%
+HKR,,*LsoV1IPv4,0,"1"
+
+[OffloadChksum.reg]
+HKR,Ndi\params\*IPChecksumOffloadIPv4,        ParamDesc,  0, %IPChksumOffv4%
+HKR,Ndi\params\*IPChecksumOffloadIPv4,        default,    0, "3"
+HKR,Ndi\params\*IPChecksumOffloadIPv4,        type,       0, "enum"
+HKR,Ndi\params\*IPChecksumOffloadIPv4\enum,   "0",        0, %Disabled%
+HKR,Ndi\params\*IPChecksumOffloadIPv4\enum,   "1",        0, %TxEnabled%
+HKR,Ndi\params\*IPChecksumOffloadIPv4\enum,   "2",        0, %RxEnabled%
+HKR,Ndi\params\*IPChecksumOffloadIPv4\enum,   "3",        0, %RxTxEnabled%
+HKR,,*IPChecksumOffloadIPv4,0,"3"
+
+HKR,Ndi\params\*TCPChecksumOffloadIPv4,       ParamDesc,  0, %TCPChksumOffv4%
+HKR,Ndi\params\*TCPChecksumOffloadIPv4,       default,    0, "3"
+HKR,Ndi\params\*TCPChecksumOffloadIPv4,       type,       0, "enum"
+HKR,Ndi\params\*TCPChecksumOffloadIPv4\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv4\enum,  "1",        0, %TxEnabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv4\enum,  "2",        0, %RxEnabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv4\enum,  "3",        0, %RxTxEnabled%
+HKR,,*TCPChecksumOffloadIPv4,0,"3"
+
+HKR,Ndi\params\*UDPChecksumOffloadIPv4,       ParamDesc,  0, %UDPChksumOffv4%
+HKR,Ndi\params\*UDPChecksumOffloadIPv4,       default,    0, "3"
+HKR,Ndi\params\*UDPChecksumOffloadIPv4,       type,       0, "enum"
+HKR,Ndi\params\*UDPChecksumOffloadIPv4\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv4\enum,  "1",        0, %TxEnabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv4\enum,  "2",        0, %RxEnabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv4\enum,  "3",        0, %RxTxEnabled%
+HKR,,*UDPChecksumOffloadIPv4,0,"3"
+
+[s5wol.reg]
+HKR,Ndi\params\S5WakeOnLan,       ParamDesc,  0, %S5WakeOnLan%
+HKR,Ndi\params\S5WakeOnLan,       default,    0, "1"
+HKR,Ndi\params\S5WakeOnLan,       type,       0, "enum"
+HKR,Ndi\params\S5WakeOnLan\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\S5WakeOnLan\enum,  "1",        0, %Enabled%
+HKR,,S5WakeOnLan,0,"1"
+
+[OffloadIpv6Lsov2.reg]
+HKR,Ndi\params\*TCPChecksumOffloadIPv6,       ParamDesc,  0, %TCPChksumOffv6%
+HKR,Ndi\params\*TCPChecksumOffloadIPv6,       default,    0, "3"
+HKR,Ndi\params\*TCPChecksumOffloadIPv6,       type,       0, "enum"
+HKR,Ndi\params\*TCPChecksumOffloadIPv6\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv6\enum,  "1",        0, %TxEnabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv6\enum,  "2",        0, %RxEnabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv6\enum,  "3",        0, %RxTxEnabled%
+HKR,,*TCPChecksumOffloadIPv6,0,"3"
+
+HKR,Ndi\params\*UDPChecksumOffloadIPv6,       ParamDesc,  0, %UDPChksumOffv6%
+HKR,Ndi\params\*UDPChecksumOffloadIPv6,       default,    0, "3"
+HKR,Ndi\params\*UDPChecksumOffloadIPv6,       type,       0, "enum"
+HKR,Ndi\params\*UDPChecksumOffloadIPv6\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv6\enum,  "1",        0, %TxEnabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv6\enum,  "2",        0, %RxEnabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv6\enum,  "3",        0, %RxTxEnabled%
+HKR,,*UDPChecksumOffloadIPv6,0,"3"
+
+HKR,Ndi\params\*LsoV2IPv4,	ParamDesc,  0, %LSOv2v4%
+HKR,Ndi\params\*LsoV2IPv4,	default,    0, "0"
+HKR,Ndi\params\*LsoV2IPv4,	type,       0, "enum"
+HKR,Ndi\params\*LsoV2IPv4\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*LsoV2IPv4\enum,  "1",        0, %Enabled%
+HKR,,*LsoV2IPv4,0,"0"
+
+HKR,Ndi\params\*LsoV2IPv6,	ParamDesc,  0, %LSOv2v6%
+HKR,Ndi\params\*LsoV2IPv6,	default,    0, "1"
+HKR,Ndi\params\*LsoV2IPv6,	type,       0, "enum"
+HKR,Ndi\params\*LsoV2IPv6\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*LsoV2IPv6\enum,  "1",        0, %Enabled%
+HKR,,*LsoV2IPv6,0,"1"
+
+HKR,Ndi\params\*RSS,	ParamDesc,  0, %RSS%
+HKR,Ndi\params\*RSS,	default,    0, "1"
+HKR,Ndi\params\*RSS,	type,       0, "enum"
+HKR,Ndi\params\*RSS\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*RSS\enum,  "1",        0, %Enabled%
+HKR,,*RSS,0,"1"
+
+HKR,Ndi\params\*LsoV1IPv4,	ParamDesc,  0, %LSOv4%
+HKR,Ndi\params\*LsoV1IPv4,	default,    0, "1"
+HKR,Ndi\params\*LsoV1IPv4,	type,       0, "enum"
+HKR,Ndi\params\*LsoV1IPv4\enum,  "0",       0, %Disabled%
+HKR,Ndi\params\*LsoV1IPv4\enum,  "1",       0, %Enabled%
+HKR,,*LsoV1IPv4,0,"1"
+
+[OffloadIpv6Lsov2_8102.reg]
+HKR,Ndi\params\*TCPChecksumOffloadIPv6,       ParamDesc,  0, %TCPChksumOffv6%
+HKR,Ndi\params\*TCPChecksumOffloadIPv6,       default,    0, "3"
+HKR,Ndi\params\*TCPChecksumOffloadIPv6,       type,       0, "enum"
+HKR,Ndi\params\*TCPChecksumOffloadIPv6\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv6\enum,  "1",        0, %TxEnabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv6\enum,  "2",        0, %RxEnabled%
+HKR,Ndi\params\*TCPChecksumOffloadIPv6\enum,  "3",        0, %RxTxEnabled%
+HKR,,*TCPChecksumOffloadIPv6,0,"3"
+
+HKR,Ndi\params\*UDPChecksumOffloadIPv6,       ParamDesc,  0, %UDPChksumOffv6%
+HKR,Ndi\params\*UDPChecksumOffloadIPv6,       default,    0, "3"
+HKR,Ndi\params\*UDPChecksumOffloadIPv6,       type,       0, "enum"
+HKR,Ndi\params\*UDPChecksumOffloadIPv6\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv6\enum,  "1",        0, %TxEnabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv6\enum,  "2",        0, %RxEnabled%
+HKR,Ndi\params\*UDPChecksumOffloadIPv6\enum,  "3",        0, %RxTxEnabled%
+HKR,,*UDPChecksumOffloadIPv6,0,"3"
+
+HKR,Ndi\params\*RSS,	ParamDesc,  0, %RSS%
+HKR,Ndi\params\*RSS,	default,    0, "1"
+HKR,Ndi\params\*RSS,	type,       0, "enum"
+HKR,Ndi\params\*RSS\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*RSS\enum,  "1",        0, %Enabled%
+HKR,,*RSS,0,"1"
+
+HKR,Ndi\params\*LsoV2IPv4,	ParamDesc,  0, %LSOv2v4%
+HKR,Ndi\params\*LsoV2IPv4,	default,    0, "1"
+HKR,Ndi\params\*LsoV2IPv4,	type,       0, "enum"
+HKR,Ndi\params\*LsoV2IPv4\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*LsoV2IPv4\enum,  "1",        0, %Enabled%
+HKR,,*LsoV2IPv4,0,"1"
+
+HKR,Ndi\params\*LsoV2IPv6,	ParamDesc,  0, %LSOv2v6%
+HKR,Ndi\params\*LsoV2IPv6,	default,    0, "1"
+HKR,Ndi\params\*LsoV2IPv6,	type,       0, "enum"
+HKR,Ndi\params\*LsoV2IPv6\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*LsoV2IPv6\enum,  "1",        0, %Enabled%
+HKR,,*LsoV2IPv6,0,"1"
+
+[AutoCrossoverDet.reg]
+HKR,Ndi\params\AutoCrossoverDet,	ParamDesc,  0, %AutoCrossoverDet%
+HKR,Ndi\params\AutoCrossoverDet,	default,    0, "0"
+HKR,Ndi\params\AutoCrossoverDet,	type,       0, "enum"
+HKR,Ndi\params\AutoCrossoverDet\enum,   "0",        0, %Disabled%
+HKR,Ndi\params\AutoCrossoverDet\enum,   "1",        0, %Enabled%
+HKR,,AutoCrossoverDet,0,"0"
+
+[WolShutdownLinkSpeed.reg]
+HKR,Ndi\params\WolShutdownLinkSpeed,	ParamDesc,  0, %WolShutdownLinkSpeed%
+HKR,Ndi\params\WolShutdownLinkSpeed,	default,    0, "0"
+HKR,Ndi\params\WolShutdownLinkSpeed,	type,       0, "enum"
+HKR,Ndi\params\WolShutdownLinkSpeed\enum,   "0",    0, %10MbFirst%
+HKR,Ndi\params\WolShutdownLinkSpeed\enum,   "1",    0, %100MbFirst%
+HKR,,WolShutdownLinkSpeed,0,"0"
+
+[wolptnmagic.reg]
+HKR,Ndi\params\*WakeOnPattern,  ParamDesc,  0, %WakeOnPtn%
+HKR,Ndi\params\*WakeOnPattern,	default,    0, "0"
+HKR,Ndi\params\*WakeOnPattern,	type,       0, "enum"
+HKR,Ndi\params\*WakeOnPattern\enum,   "0",        0, %Disabled%
+HKR,Ndi\params\*WakeOnPattern\enum,   "1",        0, %Enabled%
+HKR,,*WakeOnPattern,0,"1"
+
+HKR,Ndi\params\*WakeOnMagicPacket,	ParamDesc,  0, %WakeOnMagPkt%
+HKR,Ndi\params\*WakeOnMagicPacket,	default,    0, "0"
+HKR,Ndi\params\*WakeOnMagicPacket,	type,       0, "enum"
+HKR,Ndi\params\*WakeOnMagicPacket\enum,   "0",        0, %Disabled%
+HKR,Ndi\params\*WakeOnMagicPacket\enum,   "1",        0, %Enabled%
+HKR,,*WakeOnMagicPacket,0,"1"
+
+[GreenEthEnabled.reg]
+HKR, Ndi\params\EnableGreenEthernet,        ParamDesc,  0, %GreenEthernet%
+HKR, Ndi\params\EnableGreenEthernet,        type,       0, "enum"
+HKR, Ndi\params\EnableGreenEthernet,        default,    0, "1"
+HKR, Ndi\params\EnableGreenEthernet\enum,   "0",        0, %Disabled%
+HKR, Ndi\params\EnableGreenEthernet\enum,   "1",        0, %Enabled%
+HKR,,EnableGreenEthernet,0,"1"
+
+[GreenEthDisabled.reg]
+HKR, Ndi\params\EnableGreenEthernet,        ParamDesc,  0, %GreenEthernet%
+HKR, Ndi\params\EnableGreenEthernet,        type,       0, "enum"
+HKR, Ndi\params\EnableGreenEthernet,        default,    0, "0"
+HKR, Ndi\params\EnableGreenEthernet\enum,   "0",        0, %Disabled%
+HKR, Ndi\params\EnableGreenEthernet\enum,   "1",        0, %Enabled%
+HKR,,EnableGreenEthernet,0,"0"
+
+[ArpNsProtOffload.reg]
+HKR,Ndi\params\*PMARPOffload,       ParamDesc,  0, %ArpOffload%
+HKR,Ndi\params\*PMARPOffload,	    default,    0, "1"
+HKR,Ndi\params\*PMARPOffload,	    type,       0, "enum"
+HKR,Ndi\params\*PMARPOffload\enum,  "0",        0, %Disabled%
+HKR,Ndi\params\*PMARPOffload\enum,  "1",        0, %Enabled%
+HKR,,*PMARPOffload,0,"1"
+
+HKR,Ndi\params\*PMNSOffload,	    ParamDesc,  0, %NsOffload%
+HKR,Ndi\params\*PMNSOffload,	    default,    0, "1"
+HKR,Ndi\params\*PMNSOffload,	    type,       0, "enum"
+HKR,Ndi\params\*PMNSOffload\enum,   "0",        0, %Disabled%
+HKR,Ndi\params\*PMNSOffload\enum,   "1",        0, %Enabled%
+HKR,,*PMNSOffload,0,"1"
+
+;HKR,,PnPCapabilities,0x10001,0x0000
+
+[PDPllDisabled.reg]
+HKR,,PowerDownPll,0,"0"
+
+[PDPllEnabled.reg]
+HKR,,PowerDownPll,0,"1"
+
+
+[del.reg]
+HKR,Ndi\params\JumboFrame
+HKR,,JumboFrame
+
+HKR,Ndi\params\S3S4WolPowerSaving
+HKR,,S3S4WolPowerSaving
+
+HKR,,PowerDownPll
+
+[dellsov1_8102.reg]
+HKR,Ndi\params\*LsoV1IPv4
+HKR,,*LsoV1IPv4
+
+
+;-----------------------------------------------------------------------------
+;
+
+[EthDriver.reg]
+HKR, Ndi,                       Service,    0, "DLKRT32"
+; use ndis5 as the upper bound because NT supports it
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+
+
+[EthDriver.Service]
+DisplayName     = %EthDriver.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\DLKRT32.sys
+LoadOrderGroup  = NDIS
+
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[EthDriver.CopyFiles]
+DLKRT32.sys,,,2
+
+[RTLDLL.CopyFiles]
+RtNicProp.dll,,,0x02
+
+[SourceDisksNames]
+1 = %DiskDescription%,DLKRT32.sys,,
+
+
+[SourceDisksFiles]
+DLKRT32.sys = 1,, ; on distribution disk 1
+RtNicProp.dll = 1,, ; on distribution disk 1
+
+
+[DestinationDirs]
+EthDriver.CopyFiles  = 12
+DefaultDestDir     = 11
+
+[Strings]
+D-Link = "D-Link"
+AutoDetect               = "Auto Negotiation"
+SpeedDuplex              = "Speed & Duplex"
+10Mb-Half-Duplex         = "10 Mbps Half Duplex"
+10Mb-Full-Duplex         = "10 Mbps Full Duplex"
+100Mb-Half-Duplex        = "100 Mbps Half Duplex"
+100Mb-Full-Duplex        = "100 Mbps Full Duplex"
+1000Mb-Full-Duplex       = "1.0 Gbps Full Duplex"
+NetworkAddress		 = "Network Address"
+IPChksumOffv4            = "IPv4 Checksum Offload"
+TCPChksumOffv4           = "TCP Checksum Offload (IPv4)"
+UDPChksumOffv4           = "UDP Checksum Offload (IPv4)"
+TCPChksumOffv6           = "TCP Checksum Offload (IPv6)"
+UDPChksumOffv6           = "UDP Checksum Offload (IPv6)"
+Enabled                  = "Enabled"
+Disabled                 = "Disabled"
+TxEnabled                = "Tx Enabled"
+RxEnabled                = "Rx Enabled"
+RxTxEnabled              = "Rx & Tx Enabled"
+LSOv4                    = "Large Send Offload (IPv4)"
+LSOv2v4                  = "Large Send Offload v2 (IPv4)"
+LSOv2v6                  = "Large Send Offload v2 (IPv6)"
+FlowControl              = "Flow Control"
+PriorityVLAN             = "Priority & VLAN"
+PriorityVLANDisabled     = "Priority & VLAN Disabled"
+PriorityVLANEnabled      = "Priority & VLAN Enabled"
+InterruptModeration      = "Interrupt Moderation"
+ReceiveBuffers           = "Receive Buffers"
+TransmitBuffers          = "Transmit Buffers"
+AutoDisableGigabit       = "Auto Disable Gigabit (PowerSaving)"
+AutoLinkDownPhyOff       = "Auto Disable PHY (PowerSaving)"
+BatteryRe-Link           = "Re-Link, Battery"
+AcBatteryRe-Link         = "Re-Link, Battery or AC"
+Battery                  = "Enabled, Battery"
+AcBattery                = "Enabled, Battery or AC"
+JumboFrame               = "Jumbo Frame"
+2KBMTU                   = "2KB MTU"
+3KBMTU                   = "3KB MTU"
+4KBMTU                   = "4KB MTU"
+5KBMTU                   = "5KB MTU"
+6KBMTU                   = "6KB MTU"
+7KBMTU                   = "7KB MTU"
+8KBMTU                   = "8KB MTU"
+9KBMTU                   = "9KB MTU"
+S5WakeOnLan              = "Shutdown Wake-On-Lan"
+AutoLinkDownPcieMacOff   = "Auto Disable PCIe (PowerSaving)"
+
+RSS                      = "Receive Side Scaling"
+AutoCrossoverDet         = "Auto Crossover Detection"
+PriorityEnabled          = "Priority Enabled"
+VLANEnabled              = "VLAN Enabled"
+10MbFirst                = "10 Mbps First"
+100MbFirst               = "100 Mbps First"
+WolShutdownLinkSpeed     = "WOL & Shutdown Link Speed"
+NotSpeedDown             = "Not Speed Down"
+WolCap                   = "Wake-On-Lan Capabilities"
+None                     = "None"
+PatternMatch             = "Pattern Match"
+MagicPacket              = "Magic Packet"
+PatternAndMagic          = "Pattern Match & Magic Packet"
+GreenEthernet            = "Green Ethernet"
+WakeOnPtn                = "Wake on pattern match"
+WakeOnMagPkt             = "Wake on Magic Packet"
+ARPOffload               = "ARP Offload"
+NsOffload                = "NS Offload"
+
+EthDriver.DeviceDesc = "DGE-530T Gigabit Ethernet Adapter."
+
+EthDriver.Service.DispName = "DGE-530T Gigabit Ethernet Adapter."
+
+DiskDescription 	 = "EthDriver Driver Disk 1"
+
+
+;;;;; InfVer = 2.000

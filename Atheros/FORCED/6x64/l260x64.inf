@@ -1,0 +1,191 @@
+;*****************************************************************************
+;*
+;*  l260x64.INF  -   Atheros Atc002 Fast Ethernet 10/100Base-T Controller
+;*  Copyright 2004-, Atheros Co., Ltd.
+;*
+;*  Created on 12/13/2006 by Yu Hao
+;*  INF File for NDIS6.0 Miniport Driver for Windows Vista x64 
+;*
+;*****************************************************************************
+[Version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Atheros%
+CatalogFile = l260x64.cat
+DriverVer   = 10/16/2008,2.6.7.17
+
+[Manufacturer]
+%Atheros% = Atheros, NTamd64.6.0
+
+[ControlFlags]
+
+ExcludeFromSelect	= *
+
+
+[Atheros.NTamd64.6.0]
+; DisplayName           Section       DeviceID
+; -----------           -------	      --------
+%Atc002.Atc002% = 	Atc002.ndi, PCI\VEN_1969&DEV_2048
+%Atc002.Atc002% = 	Atc002.ndi, PCI\VEN_1969&DEV_2048&SUBSYS_20481969&REV_A0
+%Atc002.Atc002% = 	Atc002.ndi, PCI\VEN_1969&DEV_2048&SUBSYS_20481019&REV_A0
+%Atc002.Atc002% = 	Atc002.ndi, PCI\VEN_1969&DEV_2048&SUBSYS_82331043&REV_A0
+
+[Atc002.ndi]
+Characteristics = 0x84
+BusType         = 5				 ;PCI
+AddReg          = Atc002.reg, Atc002.params
+CopyFiles       = Atc002.CopyFiles
+*IfType         = 6		; IF_TYPE_ETHERNET_CSMACD 
+*MediaType      = 0		; NdisMedium802_3
+*PhysicalMediaType = 0	; NdisPhysicalMediumUnspecified
+
+[Atc002.ndi.Services]
+AddService = Atc002, 2, Atc002.Service, Common.EventLog
+
+;-----------------------------------------------------------------------------
+; Atc002  specific
+;
+[Atc002.reg]
+HKR, Ndi, HelpText,, %HelpText%
+HKR, Ndi, Service,    0, "Atc002"
+; use ndis5 as the upper bound because NT supports it
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+
+[Atc002.Service]
+DisplayName     = %Atc002.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\l260x64.sys
+LoadOrderGroup  = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR,, EventMessageFile,	0x00020000, "%%SystemRoot%%\System32\Drivers\l260x64.sys"
+HKR,, TypesSupported,	0x00010001, 7
+
+[Atc002.params]
+HKR, Ndi\Params\NetworkAddress,	ParamDesc,,	%NetAddr%
+HKR, Ndi\Params\NetworkAddress,	Type,,		"edit"
+HKR, Ndi\Params\NetworkAddress,	LimitText,,	"18"
+HKR, Ndi\Params\NetworkAddress,	UpperCase,,	"1"
+HKR, Ndi\Params\NetworkAddress,	Default,,	""
+HKR, Ndi\Params\NetworkAddress,	Optional,,	"1"
+
+HKR, Ndi\Params\Moderate,		ParamDesc,,	%IntMod%
+HKR, Ndi\Params\Moderate,		Type,,		"enum"
+HKR, Ndi\Params\Moderate\enum,	1,,			%On%
+HKR, Ndi\Params\Moderate\enum,	0,,			%Off%
+HKR, Ndi\Params\Moderate,		Default,,	"1"
+
+HKR, Ndi\Params\MaxInterrupt,	ParamDesc,,	%MaxIrq%
+HKR, Ndi\Params\MaxInterrupt,	Type,,		"int"
+HKR, Ndi\Params\MaxInterrupt,	Base,,		"10"
+HKR, Ndi\Params\MaxInterrupt,	Min,,		"1000"
+HKR, Ndi\Params\MaxInterrupt,	Max,,		"30000"
+HKR, Ndi\Params\MaxInterrupt,	Step,,		"500"
+HKR, Ndi\Params\MaxInterrupt,	Default,,	"5000"
+
+HKR, Ndi\Params\WakeUpCapabilities,	ParamDesc,,  	%WakeUpCapabilities%
+HKR, Ndi\Params\WakeUpCapabilities,	Type,,       	"enum"
+HKR, Ndi\Params\WakeUpCapabilities,	Default,,	 "6"
+HKR, Ndi\Params\WakeUpCapabilities\enum, "0",,		 %None%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "1",,		 %LinkChange%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "2",,		 %MagicPacket%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "4",,		 %PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "6",,		 %MagicPacket_PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "7",,		 %All%
+
+HKR, Ndi\Params\MediaType,		ParamDesc,,  %MediaType%
+HKR, Ndi\Params\MediaType,		Type,,       "enum"
+HKR, Ndi\Params\MediaType,		Default,,	 "0"
+HKR, Ndi\Params\MediaType\enum, "0",,		 %Auto%
+HKR, Ndi\Params\MediaType\enum, "1",,		 %10MHD%
+HKR, Ndi\Params\MediaType\enum, "2",,		 %10MFD%
+HKR, Ndi\Params\MediaType\enum, "3",,		 %100MHD%
+HKR, Ndi\Params\MediaType\enum, "4",,		 %100MFD%
+
+HKR, Ndi\Params\FlowControl,	ParamDesc,,	 %FlowCtrl%
+HKR, Ndi\Params\FlowControl,	Type,,       "enum"
+HKR, Ndi\Params\FlowControl,	Default,,	 "1"
+HKR, Ndi\Params\FlowControl\enum, "1",,		 %On%
+HKR, Ndi\Params\FlowControl\enum, "0",,		 %Off%
+
+HKR, Ndi\Params\MaxRxBuffer,	ParamDesc,,	%NumRx%
+HKR, Ndi\Params\MaxRxBuffer,	Type,,		"int"
+HKR, Ndi\Params\MaxRxBuffer,	Base,,		"10"
+HKR, Ndi\Params\MaxRxBuffer,	Min,,		"16"
+HKR, Ndi\Params\MaxRxBuffer,	Max,,		"2048"
+HKR, Ndi\Params\MaxRxBuffer,	Step,,		"16"
+HKR, Ndi\Params\MaxRxBuffer,	Default,,	"128"
+
+HKR, Ndi\Params\MaxTxBuffer,	ParamDesc,,	%NumTx%
+HKR, Ndi\Params\MaxTxBuffer,	Type,,		"int"
+HKR, Ndi\Params\MaxTxBuffer,	Base,,		"10"
+HKR, Ndi\Params\MaxTxBuffer,	Min,,		"16"
+HKR, Ndi\Params\MaxTxBuffer,	Max,,		"1024"
+HKR, Ndi\Params\MaxTxBuffer,	Step,,		"16"
+HKR, Ndi\Params\MaxTxBuffer,	Default,,	"64"
+
+HKR, Ndi\Params\ShutdownWake,	ParamDesc,,	%ShutDW%
+HKR, Ndi\Params\ShutdownWake,	Type,,		"enum"
+HKR, Ndi\Params\ShutdownWake\enum,1,,		%On%
+HKR, Ndi\Params\ShutdownWake\enum,0,,		%Off%
+HKR, Ndi\Params\ShutdownWake,	Default,,	"0"
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[Atc002.CopyFiles]
+l260x64.sys,,,2
+
+[SourceDisksNames]
+;
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+;
+1 = %DriverDisk%,,,
+
+[SourceDisksFiles]
+;
+; filename_on_source = diskID[, [subdir][, size]]
+;
+l260x64.sys = 1
+
+[DestinationDirs]
+Atc002.CopyFiles     = 12
+DefaultDestDir       = 11
+
+[Strings]
+Atheros			= "Atheros"
+NetAddr			    = "Network Address"
+IntMod              = "Interrupt Moderation"
+VLanID				= "VLAN ID"
+MaxIrq              = "Max IRQ per Second"
+NumRx				= "Number of Receive Buffers"
+NumTx               = "Number of Transmit Buffers"
+Auto				= "Auto"
+On                  = "On"
+Off                 = "Off"
+MediaType			= "MediaType"
+10MHD               = "10Mbps Half Duplex"
+10MFD               = "10Mbps Full Duplex"
+100MHD              = "100Mbps Half Duplex"
+100MFD              = "100Mbps Full Duplex"
+FlowCtrl			= "Flow Control"
+ShutDW				= "Shutdown wake up"
+WakeUpCapabilities = "Wake Up Capabilities"
+None = "None"
+LinkChange = "Link Change"
+MagicPacket = "Magic Packet"
+PatternMatch = "Pattern Match"
+MagicPacket_PatternMatch = "MagicPacket & PatternMatch"
+All = "All"
+
+Atc002.Atc002 		= "Atheros L2 Fast Ethernet 10/100Base-T Controller"
+Atc002.Service.DispName 	= "NDIS Miniport Driver for Atheros L2 Fast Ethernet Controller"
+DriverDisk			= "Atheros Fast Ethernet Controller Installation Disk"
+HelpText			= "This Atheros network Controller connects you to the network."

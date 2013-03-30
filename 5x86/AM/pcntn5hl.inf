@@ -1,0 +1,285 @@
+; NETAMDHL.INF
+;
+; AMD Based Network Interface Cards.
+;
+; Copyright 1993-1995, Microsoft Corporation
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %AMD%
+LayoutFile  = layout.inf
+
+[Manufacturer]
+%AMD%    = AMD
+%DIAMOND% = DIAMOND
+
+;[SourceDisksNames]
+;1="AMD HomeLan Driver Disk"
+
+[SourceDisksFiles]
+PCNTN5HL.SYS = 1,,pcntn5hl.sys,12345
+NETAMDHL.INF = 1,,netamdhl.inf,1234
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_1022&DEV_2001, \
+		    PCI\VEN_1022&DEV_2001&SUBSYS_0A781092
+
+[AMD]
+%HomeLan.DeviceDesc%    =HomeLan.ndi,  PCI\VEN_1022&DEV_2001     ;AMD PCnet-HL
+
+[DIAMOND]
+%DIAMOND.DeviceDesc%    =DiamondHL.ndi,  PCI\VEN_1022&DEV_2001&SUBSYS_0A781092 ;Diamond PCnet-HL
+
+;****************************************************************************
+; AMD PCnet-HL only params section
+;****************************************************************************
+; NT5.0 section
+[HomeLan.ndi.NT]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnetHL.NT.reg, HomeLanDP.reg, HomeLanBP.reg
+CopyFiles       = PCnetHL.CopyFiles;, PCnetHL.inf.CopyFiles
+
+[HomeLan.ndi.NT.services]
+AddService      = PCnetHL, 2, PCnetHL.Service, PCnetHL.AddEventLog
+
+; Win9x Section
+[HomeLan.ndi]
+AddReg = HomeLan.ndi.reg,PCnetHL.Win.reg, WinDefault.reg, HomeLanDF.reg, HomeLanBP.reg, HomeLanDP.reg
+;CopyFiles=PCnetHL.ezi.CopyFiles;,PCnetHL.ndis3.CopyFiles, PCnetHL.inf.CopyFiles
+DeviceID = "PCI\VEN_1022&DEV_2001"
+
+[HomeLan.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2001"
+;HKR,Ndi,NdiInstaller,,"PCNETEZI.DLL,PCnetNdiProc"
+
+;****************************************************************************
+; Diamond Multimedia params section
+;****************************************************************************
+; NT5.0 section
+[DiamondHL.ndi.NT]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnetHL.NT.reg, HomeLanDP.reg, HomeLanBP.reg
+CopyFiles       = PCnetHL.CopyFiles;, PCnetHL.inf.CopyFiles
+
+[DiamondHL.ndi.NT.services]
+AddService      = PCnetHL, 2, PCnetHL.Service, PCnetHL.AddEventLog
+
+; Win9x Section
+[DiamondHL.ndi]
+AddReg = DiamondHL.ndi.reg,PCnetHL.Win.reg, WinDefault.reg, HomeLanDF.reg, HomeLanBP.reg, HomeLanDP.reg
+;CopyFiles=PCnetHL.ezi.CopyFiles;,PCnetHL.ndis3.CopyFiles, PCnetHL.inf.CopyFiles
+DeviceID = "PCI\VEN_1022&DEV_2001&SUBSYS_0A781092"
+
+[DiamondHL.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2001&SUBSYS_0A781092"
+;HKR,Ndi,NdiInstaller,,"PCNETEZI.DLL,PCnetNdiProc"
+
+;-------------------------------------------------------------------------------
+; Common Section for NT5.0 and Win9x.
+;-------------------------------------------------------------------------------
+;
+; AMD PCnet-HL only params section
+;
+[HomeLanDP.reg]
+HKR, ,                              EXTPHY,      0, "127"
+HKR, ,                              CRCperSec,   0, "5"
+HKR, ,                              HomeLan,     0, "0"
+HKR, ,                              HomeLanLinkOff,0, "0"
+HKR, ,                              HomeLanBackOff,0, "1"
+HKR, ,                              LevelCtrl,65537, 0,0,0,0
+HKR, ,                              AnalogTest,65537, 0,0,0,0
+HKR, ,                              HomeRun0,65537, 0,0,0,0
+HKR, ,                              HomeRun1,65537, 0,0,0,0
+;Home Run Phy programming example
+;To program HomeRun phy register 16(0x10) with value 0x55aa,
+;use the following sample
+;HKR, , HomeRun0, 65537, aa,55,10,0
+;In above sample, HomeRun0 can be replaced to HomeRun1
+
+[HomeLanBP.reg]
+HKR, Ndi\params\EXTPHY,             ParamDesc,   0, %EXTPHY%
+HKR, Ndi\params\EXTPHY,             default,     0, "127"
+HKR, Ndi\params\EXTPHY,             type,        0, "enum"
+HKR, Ndi\params\EXTPHY\enum,        "127",       0, %Auto% 
+HKR, Ndi\params\EXTPHY\enum,        "1",         0, %10HD% 
+HKR, Ndi\params\EXTPHY\enum,        "2",         0, %10FD% 
+
+HKR, Ndi\params\HomeLan,            ParamDesc,   0, %HomeLan%
+HKR, Ndi\params\HomeLan,            default,     0, "0"
+HKR, Ndi\params\HomeLan,            type,        0, "enum"
+HKR, Ndi\params\HomeLan\enum,       "0",         0, %AUTOLPHS% 
+;HKR, Ndi\params\HomeLan\enum,       "1",         0, %AUTOHPHS% 
+HKR, Ndi\params\HomeLan\enum,       "9",         0, %LPHS% 
+HKR, Ndi\params\HomeLan\enum,       "5",         0, %HPHS% 
+HKR, Ndi\params\HomeLan\enum,       "6",         0, %HPLS% 
+
+HKR, Ndi\params\PhySelected,            ParamDesc,   0, %PhySelect%
+HKR, Ndi\params\PhySelected,            default,     0, "3"
+HKR, Ndi\params\PhySelected,            type,        0, "enum"
+HKR, Ndi\params\PhySelected\enum,       "0",         0, %SFEX% 
+HKR, Ndi\params\PhySelected\enum,       "1",         0, %HOMERUN% 
+HKR, Ndi\params\PhySelected\enum,       "2",         0, %EXTERNAL% 
+HKR, Ndi\params\PhySelected\enum,       "3",         0, %AUTOFIND% 
+
+[PCnetHL.NTFiles]
+CopyFiles=PCnetHL.CopyFiles, PCnetHL.inf.CopyFiles
+
+[PCnetHL.CopyFiles]
+pcntn5hl.sys,,,2
+
+;-------------------------------------------------------------------------------
+; NT 5.0 only sections
+;-------------------------------------------------------------------------------
+
+[PCnetHL.NT.reg]
+HKR, Ndi,            Service,    0, "PCnetHL"
+HKR, Ndi\Interfaces, DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces, DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+
+[PCnetHL.Service]
+DisplayName     = %PCnetHL.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\pcntn5hl.sys
+LoadOrderGroup  = NDIS
+
+[PCnetHL.AddEventLog]
+AddReg = PCnetHL.AddEventLog.reg
+
+[PCnetHL.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+
+;-------------------------------------------------------------------------------
+; Win9x only sections
+;-------------------------------------------------------------------------------
+[DefaultF.reg]
+HKR,NDI\params\BUS_TO_SCAN,flag,1,30,00,00,00
+HKR,NDI\params\BUSTIMER,flag,1,30,00,00,00
+HKR,NDI\params\FDUP,flag,1,30,00,00,00
+HKR,NDI\params\LED0,flag,1,20,00,00,00
+HKR,NDI\params\LED1,flag,1,20,00,00,00
+HKR,NDI\params\LED2,flag,1,20,00,00,00
+HKR,NDI\params\LED3,flag,1,20,00,00,00
+HKR,NDI\params\MPMODE,flag,1,20,00,00,00
+HKR,NDI\params\TP,flag,1,20,00,00,00
+HKR,NDI\params\EXTPHY,flag,1,20,00,00,00
+
+[HomeLanDF.reg]
+HKR,NDI\params\EXTPHY,flag,1,20,00,00,00
+HKR,NDI\params\HomeLan,flag,1,20,00,00,00
+HKR,NDI\params\PhySelected,flag,1,20,00,00,00
+
+[WinDefault.reg]
+HKR,,Interrupt,1,04,00,00,00
+HKR,,IOAddress,1,02,00,00,00
+HKR,,DMAChannel,1,03,00,00,00
+HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+HKR,Ndi\params\Interrupt,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\Interrupt,flag,1,20,00,00,00
+HKR,Ndi\params\IOAddress,resc,1,02,00,00,00
+HKR,Ndi\params\IOAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOAddress,flag,1,20,00,00,00
+HKR,NDI\params\DMAChannel,resc,1,03,00,00,00
+HKR,NDI\params\DMAChannel,ParamDesc,,"DMA Channel"
+HKR,NDI\params\DMAChannel,flag,1,20,00,00,00
+
+[PCnetHL.Win.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,pcntn5hl.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+
+;EZInstall only
+;HKLM,"Software\AMD\EZI",Progress,,"On"
+
+; NDIS Info
+HKR,NDIS,LogDriverName,,"PCnetHL"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0a
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install-Remove
+HKR,Ndi\Install,ndis3,,"PCnetHL.ndis3"
+;HKR,Ndi\Remove,,,"PCnetHL.Remove"
+
+; Install NDIS3
+[PCnetHL.ndis3]
+CopyFiles=PCnetHL.ndis3.CopyFiles, PCnetHL.inf.CopyFiles
+
+[PCnetHL.ndis3.CopyFiles]
+pcntn5hl.sys,,,2
+
+[PCnetHL.inf.CopyFiles]
+netamdhl.inf,,,2
+
+[PCnetHL.ezi.CopyFiles]
+;pcnetezi.dll,,,2
+;pcnetezi.exe,,,2
+
+[PCnetHL.Remove]
+DelReg=PCnetHL.rmv.AddReg
+DelFiles=PCnetHL.ezi.DelFiles
+
+[PCnetHL.rmv.AddReg]
+HKLM,"Software\AMD\EZI"
+
+[PCnetHL.ezi.DelFiles]
+;pcnetezi.dll
+;pcnetezi.exe
+
+;-------------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+PCnetHL.CopyFiles = 12
+PCnetHL.ndis3.CopyFiles = 11
+PCnetHL.inf.CopyFiles = 17
+PCnetHL.ezi.CopyFiles = 11
+PCnetHL.ezi.DelFiles = 11
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Msft                     = "Microsoft"
+
+AMD                      = "Advanced Micro Devices (AMD)"
+DIAMOND                  = "Diamond Multimedia"
+
+EXTPHY                   = "Ethernet Config"
+Auto                     = "Auto Detect"
+100HD                    = "100Mbps Half Duplex"
+100FD                    = "100Mbps Full Duplex"
+10HD                     = "10Mbps Half Duplex"
+10FD                     = "10Mbps Full Duplex"
+
+HomeLan                  = "Phone Line Config"
+AUTOLPHS                 = "Auto Config" ; with LPHS"
+AUTOHPHS                 = "Auto Config with HPHS"
+LPHS                     = "LowPower/HighSpeed"
+HPHS                     = "HighPower/HighSpeed"
+HPLS                     = "HighPower/LowSpeed"
+
+PhySelect                = "Mode Selection"
+SFEX                     = "Internal Ethernet Phy"
+HOMERUN          		 = "Phone Line"
+EXTERNAL                 = "External Ethernet Phy"
+AUTOFIND                 = "Auto Detect"
+
+HomeLan.DeviceDesc       = "AMD PCnet-Home Based Adapter"
+DIAMOND.DeviceDesc       = "Diamond Multimedia Home Network Adapter"
+
+PCnetHL.Service.DispName   = "AMD PCnet-Home Adapter Driver"

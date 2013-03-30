@@ -1,0 +1,1 @@
+winsetup.exe -p -s

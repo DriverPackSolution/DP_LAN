@@ -1,0 +1,172 @@
+; NETUSR.INF
+;
+; U.S. Robotics 10/100 PCMCIA NIC TX
+;
+; Copyright 2002, U.S. Robotics
+
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %USR%
+CatalogFile = NETUSR.cat
+DriverVer   = 02/26/2002, 1.00.0226.2002
+
+[Manufacturer]
+%USR% = USR
+
+[ControlFlags]
+ExcludeFromSelect = PCMCIA\U.S._Robotics-10/100_PCMCIA_NIC_TX-AA2C
+
+[USR]
+%NETUSR.DeviceDesc%    = *NETUSR.ndi,  PCMCIA\U.S._Robotics-10/100_PCMCIA_NIC_TX-AA2C
+
+;-----------------------------------------------------------------
+;;for 98
+[*NETUSR.ndi]
+DriverVer   = 02/26/2002, 1.00.0226.2002
+AddReg      = NETUSR.ndi.reg,ne2k98.ndi.reg,Clone.params.reg,speed100.reg
+CopyFiles   = NETUSR.CopyFiles98
+
+
+;;for 2000
+[*NETUSR.ndi.NT]
+DriverVer       = 02/26/2002, 1.00.0226.2002
+Characteristics = 0x84
+BusType         = 8
+AddReg          = NETUSR.ndi.NT.reg,speed100.reg
+CopyFiles       = NETUSR.CopyFiles
+
+[*NETUSR.ndi.NT.Services]
+AddService = NETUSR, 2, NETUSR.Service, NETUSR.AddEventLog
+
+;;--------------------------------------------------------------------
+;;for win98
+
+[NETUSR.ndi.reg]
+HKR,Ndi,DeviceID,,"PCMCIA\U.S._Robotics-10/100_PCMCIA_NIC_TX-AA2C"
+HKR,Ndi,CardType,,"PCMCIA"
+
+[ne2k98.ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,USRPCM.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"USRPCM"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+; Install sectioins
+HKR,Ndi\Install,ndis3,,"NETUSR.ndis3"
+
+
+[Clone.params.reg]
+; Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,60,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+;ndis2
+HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+HKR,Ndi\params\interrupt,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\Interrupt,flag,1,10,00,00,00
+HKR,NDI\params\IOBase,resc,1,02,00,00,00
+HKR,NDI\params\IOBase,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBase,flag,1,10,00,00,00
+
+;----------------------------------------------------------------------------
+; NETUSR Common
+;
+[NETUSR.ndi.NT.reg]
+HKR, Ndi,               Service,    0, "NETUSR"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+
+[speed100.reg]
+;Speed Duplex Mode
+HKR,Ndi\params\ConnectionType,          ParamDesc,      0, %ConnectionType%
+HKR,Ndi\params\ConnectionType,          default,        0, "0"
+HKR,Ndi\params\ConnectionType,          type,           0, "enum"
+HKR,Ndi\params\ConnectionType\enum,     0,              0, %AutoSense%
+HKR,Ndi\params\ConnectionType\enum,     1,              0, %10HD%
+HKR,Ndi\params\ConnectionType\enum,     2,              0, %10FD%
+HKR,Ndi\params\ConnectionType\enum,     3,              0, %100HD%
+HKR,Ndi\params\ConnectionType\enum,     4,              0, %100FD%
+
+HKR,                              ,     ConnectionType, 0, "0"
+
+[NETUSR.CopyFiles]
+USRPCM.sys,,,2
+
+[NETUSR.CopyFiles98]
+USRPCM.sys,,,2
+
+[NETUSR.Service]
+DisplayName     =   %NETUSR.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\USRPCM.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+[NETUSR.AddEventLog]
+AddReg = NETUSR.AddEventLog.reg
+
+[NETUSR.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+;---------------------------------------------------------------------------
+; Common TextMode Flags Section
+;
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;----------------------------------------------------------------------------
+; Destination Directories
+;
+[DestinationDirs]
+NETUSR.CopyFiles   =   12
+NETUSR.CopyFiles98 =   11
+DefaultDestDir     =   11
+
+;;============================================================================
+;; Source Files
+;;============================================================================
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+USRPCM.sys  = 1
+NETUSR.INF  = 1
+
+;----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+USR                  = "U.S. Robotics"
+DISKNAME = "U.S. Robotics 10/100 PCMCIA NIC TX driver Disk" 
+
+ConnectionType          = "Connection Type"
+AutoSense               = "Auto Sense"
+100FD                   = "100Mbps Full Duplex"
+100HD                   = "100Mbps Half Duplex"
+10HD                    = "10Mbps Half Duplex"
+10FD                    = "10Mbps Full Duplex"
+
+NETUSR.DeviceDesc       = "U.S. Robotics 10/100 PCMCIA NIC TX"
+NETUSR.Service.DispName = "U.S. Robotics 10/100 PCMCIA NIC TX Driver"

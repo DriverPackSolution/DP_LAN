@@ -1,0 +1,395 @@
+;;/*********************************************************************
+;;
+;;  (c) Copyright 2002
+;;
+;;  MosUMac ndis-wdm driver
+;;
+;;  netmosu.inf: INF file for USB-Ethernet Adapter driver
+;;
+;;*********************************************************************/
+
+[Version]
+Signature="$CHICAGO$"
+Compatible=1
+Class=Net
+Provider=%ProviderName%
+ClassGUID={4D36E972-E325-11CE-BFC1-08002BE10318}
+CatalogFile=USBMAC.cat
+DriverVer = 06/01/2010,1.0.0.17		;MM/DD/YYYY
+
+[Manufacturer]
+%MfgName%=COMPANY
+
+[SourceDisksNames]
+50=%DisketteDesc%,,0
+
+[SourceDisksFiles]
+MOSUMAC.SYS = 50
+
+[DestinationDirs]
+;MOSUMAC.CopyFiles = 10,system32\drivers
+ndis5.CopyFiles   = 12
+
+
+;****************************************************************************
+; Exclude from select the USB device -- it should be auto-detected!
+;****************************************************************************
+
+[ControlFlags]
+ExcludeFromSelect     = USB\VID_9710&PID_7832
+ExcludeFromSelect     = USB\VID_9710&PID_7830
+ExcludeFromSelect     = USB\VID_9710&PID_7730
+
+
+
+[COMPANY]
+%USB\VID_9710&PID_7832.DeviceDesc% = MosUsbEth, USB\VID_9710&PID_7832
+%USB\VID_9710&PID_7830.DeviceDesc% = MosUsbEth, USB\VID_9710&PID_7830
+%USB\VID_9710&PID_7730.DeviceDesc% = MosUsbEth, USB\VID_9710&PID_7730
+
+
+;****************************************************************************
+; Device Install Sections
+;
+; Section names ending in ".NT" point to Windows NT 5.0-compatible sections
+;****************************************************************************
+
+;;;;;;;;;;;;;;;;
+; NT SECTION
+;;;;;;;;;;;;;;;;
+
+[MOSUsbEth.NT]
+AddReg=MOSUMAC.ndi,MOSUMAC_parms.reg
+Characteristics=0x84; NCF_PHYSICAL, NCF_HAS_UI
+BusType=15 ; USB
+CopyFiles=ndis5.CopyFiles
+*IfType	       =6
+*MediaType    =0
+*PhysicalMediaType =0	
+
+[MOSUsbEth.NT.Services]
+AddService=MOSUMAC,2,MOSUMAC.ServiceDesc,MOSUMAC.EventLog
+
+[ndis5.CopyFiles]
+MOSUMAC.SYS,,,0x2
+
+;[MOSUMAC.CopyFiles]
+;MOSUMAC.SYS
+
+[MOSUMAC.EventLog]
+AddReg=MOSUMAC.AddEventLog
+
+[MOSUMAC.AddEventLog]
+HKR, ,EventMessageFile,  0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, ,TypeSupported,     0x00010001, 7
+
+[MOSUMAC.ServiceDesc]
+DisplayName      = %MOSUMAC.DriverDesc%
+ServiceType      = 1
+StartType        = 3
+ErrorControl     = 1
+ServiceBinary    = %12%\MOSUMAC.SYS
+LoadOrderGroup   = NDIS,NTKERN,NDIS
+
+[MOSUMAC.ndi]
+HKR,Ndi,                Service,         0,  "MOSUMAC"
+HKR,Ndi\Interfaces,     UpperRange,      0,  "ndis5"
+HKR,Ndi\Interfaces,     LowerRange,      0,  "ethernet"
+HKR,,                   PlatformType,    0,  "1"
+
+;****************************************************************************
+; Device Parameters
+;****************************************************************************
+
+[MOSUMAC_parms.reg]
+
+;Flow Control
+HKR, Ndi\params\DuplexMode,      ParamDesc, 0, %DuplexMode%
+HKR, Ndi\params\DuplexMode,      type,      0, "enum"
+HKR, Ndi\params\DuplexMode,      default,   0, "0"
+HKR, Ndi\params\DuplexMode\enum, 0,         0, %AutoMode%
+HKR, Ndi\params\DuplexMode\enum, 1,         0, %10HalfMode%
+HKR, Ndi\params\DuplexMode\enum, 2,         0, %10FullMode%
+HKR, Ndi\params\DuplexMode\enum, 3,         0, %100HalfMode%
+HKR, Ndi\params\DuplexMode\enum, 4,         0, %100FullMode%
+
+;FPGA 
+HKR, Ndi\params\FPGA,  		ParamDesc, 	0, %HWVersion%
+HKR, Ndi\params\FPGA,  		type, 	0, "enum"
+HKR, Ndi\params\FPGA,   	default, 	0, "0"
+HKR, Ndi\params\FPGA\enum,   	0, 		0, %VerASIC%
+HKR, Ndi\params\FPGA\enum,   	1, 		0, %VerFPGA%
+
+;NetworkAddress
+HKR, NDI\params\NetworkAddress,       ParamDesc,       0, %NetworkAddress%
+HKR, NDI\params\NetworkAddress,       type,            0, "edit"
+HKR, NDI\params\NetworkAddress,       LimitText,       0, "12"
+HKR, NDI\params\NetworkAddress,       UpperCase,       0, "1"
+HKR, NDI\params\NetworkAddress,       default,         0, " "
+HKR, NDI\params\NetworkAddress,       optional,        0, "1"
+
+;PauseFrame Enable/Disable
+HKR, Ndi\params\PauseFrames,  	ParamDesc, 	0, %PauseFrames%
+HKR, Ndi\params\PauseFrames,  	type, 	0, "enum"
+HKR, Ndi\params\PauseFrames,   	default, 	0, "0"
+HKR, Ndi\params\PauseFrames\enum,   0, 		0, %Enable%
+HKR, Ndi\params\PauseFrames\enum,   1, 		0, %Disable%
+
+;PauseThreshold Values
+HKR, Ndi\params\PauseThreshold,  ParamDesc, 0, %PauseThreshold%
+HKR, Ndi\params\PauseThreshold,  type,	  0, "enum"
+HKR, Ndi\params\PauseThreshold,  default,   0, "0"
+HKR, Ndi\params\PauseThreshold\enum,  0,   0, %1516WORDS%
+HKR, Ndi\params\PauseThreshold\enum,  1,   0, %758WORDS%
+HKR, Ndi\params\PauseThreshold\enum,  2,   0, %1000WORDS%
+HKR, Ndi\params\PauseThreshold\enum,  3,   0, %1600WORDS%
+HKR, Ndi\params\PauseThreshold\enum,  4,   0, %1650WORDS%
+HKR, Ndi\params\PauseThreshold\enum,  5,   0, %1700WORDS%
+HKR, Ndi\params\PauseThreshold\enum,  6,   0, %1800WORDS%
+HKR, Ndi\params\PauseThreshold\enum,  7,   0, %2000WORDS%
+
+;Threshold Difference Values
+HKR, Ndi\params\ThresholdDifference, ParamDesc, 0, %Threshold Difference%
+HKR, Ndi\params\ThresholdDifference,  type,	0, "enum"
+HKR, Ndi\params\ThresholdDifference,  default,  0, "0"
+HKR, Ndi\params\ThresholdDifference\enum,   0,  0, %0WORDS%
+HKR, Ndi\params\ThresholdDifference\enum,   1,  0, %128WORDS%
+HKR, Ndi\params\ThresholdDifference\enum,   2,  0, %256WORDS%
+HKR, Ndi\params\ThresholdDifference\enum,   3,  0, %384WORDS%
+HKR, Ndi\params\ThresholdDifference\enum,   4,  0, %512WORDS%
+HKR, Ndi\params\ThresholdDifference\enum,   5,  0, %640WORDS%
+HKR, Ndi\params\ThresholdDifference\enum,   6,  0, %700WORDS%
+HKR, Ndi\params\ThresholdDifference\enum,   7,  0, %758_WORDS%
+
+;PauseTime
+;HKR,Ndi\Params\PauseTime,  ParamDesc,  0, "PauseTime"
+;HKR,Ndi\Params\PauseTime,  Type,       0, "int"
+;HKR,Ndi\Params\PauseTime,  Default,    0, "-1"
+;HKR,Ndi\Params\PauseTime,  Min,        0, "0"
+;HKR,Ndi\Params\PauseTime,  Max,        0, "255"
+;HKR,Ndi\Params\PauseTime,  Step,       0, "10"
+;HKR,Ndi\Params\PauseTime,  Base,       0, "10"
+
+;SetPowerDelay
+HKR,Ndi\Params\SetPowerDelayInMilliSec,  ParamDesc,  0, %SetPowerDelayinMilliSec%
+HKR,Ndi\Params\SetPowerDelayInMilliSec,  Type,       0, "int"
+HKR,Ndi\Params\SetPowerDelayInMilliSec,  Default,    0, "2000"
+HKR,Ndi\Params\SetPowerDelayInMilliSec,  Min,        0, "2000"
+HKR,Ndi\Params\SetPowerDelayInMilliSec,  Max,        0, "5000"
+HKR,Ndi\Params\SetPowerDelayInMilliSec,  Step,       0, "500"
+HKR,Ndi\Params\SetPowerDelayInMilliSec,  Base,       0, "10"
+
+
+;TCBS
+HKR,Ndi\Params\TCBS,  ParamDesc,  0, %TCBS%
+HKR,Ndi\Params\TCBS,  Type,       0, "int"
+HKR,Ndi\Params\TCBS,  Default,    0, "64"
+HKR,Ndi\Params\TCBS,  Min,        0, "1"
+HKR,Ndi\Params\TCBS,  Max,        0, "256"
+HKR,Ndi\Params\TCBS,  Step,       0, "1"
+HKR,Ndi\Params\TCBS,  Base,       0, "10"
+HKR,Ndi\Params\TCBS,  LimitText,  0, 3
+
+
+;RCBS
+HKR,Ndi\Params\RCBS,  ParamDesc,  0, %RCBS%
+HKR,Ndi\Params\RCBS,  Type,       0, "int"
+HKR,Ndi\Params\RCBS,  Default,    0, "4"
+HKR,Ndi\Params\RCBS,  Min,        0, "0"
+HKR,Ndi\Params\RCBS,  Max,        0, "256"
+HKR,Ndi\Params\RCBS,  Step,       0, "1"
+HKR,Ndi\Params\RCBS,  Base,       0, "10"
+HKR,Ndi\Params\RCBS,  LimitText,  0, 3
+
+;RxThreshold
+HKR,Ndi\Params\RxThreshold,  ParamDesc,  0, %RxThreshold%
+HKR,Ndi\Params\RxThreshold,  Type,       0, "int"
+HKR,Ndi\Params\RxThreshold,  Default,    0, "32"
+HKR,Ndi\Params\RxThreshold,  Min,        0, "1"
+HKR,Ndi\Params\RxThreshold,  Max,        0, "64"
+HKR,Ndi\Params\RxThreshold,  Step,       0, "1"
+HKR,Ndi\Params\RxThreshold,  Base,       0, "10"
+HKR,Ndi\Params\RxThreshold,  LimitText,  0, 3
+
+;RxFast
+HKR, Ndi\params\RxFast,  	ParamDesc, 	0, %RxFast%
+HKR, Ndi\params\RxFast,  	type, 	0, "enum"
+HKR, Ndi\params\RxFast,   	default, 	0, "0"
+HKR, Ndi\params\RxFast\enum,   0, 		0, %Disable%
+HKR, Ndi\params\RxFast\enum,   1, 		0, %Enable%
+
+;TxFast
+HKR, Ndi\params\TxFast,  	ParamDesc, 	0, %TxFast%
+HKR, Ndi\params\TxFast,  	type, 	0, "enum"
+HKR, Ndi\params\TxFast,   	default, 	0, "0"
+HKR, Ndi\params\TxFast\enum,   0, 		0, %Disable%
+HKR, Ndi\params\TxFast\enum,   1, 		0, %Enable%
+
+;TxTrigger
+HKR, Ndi\params\TxTrigger,  		ParamDesc, 	0, %TxTrigger%
+HKR, Ndi\params\TxTrigger,  		type, 		0, "enum"
+HKR, Ndi\params\TxTrigger,   		default, 	0, "0"
+HKR, Ndi\params\TxTrigger\enum,		0, 			0, %Disable%
+HKR, Ndi\params\TxTrigger\enum,		1, 			0, %Enable%
+
+;IPG
+HKR,Ndi\Params\IPG,  ParamDesc,  0, %IPG%
+HKR,Ndi\Params\IPG,  Type,       0, "int"
+HKR,Ndi\Params\IPG,  Default,    0, "40"
+HKR,Ndi\Params\IPG,  Min,        0, "1"
+HKR,Ndi\Params\IPG,  Max,        0, "128"
+HKR,Ndi\Params\IPG,  Step,       0, "1"
+HKR,Ndi\Params\IPG,  Base,       0, "10"
+HKR,Ndi\Params\IPG,  LimitText,  0, 3
+
+
+;IPG1
+HKR,Ndi\Params\IPG1,  ParamDesc,  0, %IPG1%
+HKR,Ndi\Params\IPG1,  Type,       0, "int"
+HKR,Ndi\Params\IPG1,  Default,    0, "32"
+HKR,Ndi\Params\IPG1,  Min,        0, "1"
+HKR,Ndi\Params\IPG1,  Max,        0, "128"
+HKR,Ndi\Params\IPG1,  Step,       0, "1"
+HKR,Ndi\Params\IPG1,  Base,       0, "10"
+HKR,Ndi\Params\IPG1,  LimitText,  0,  3
+
+
+
+;MII Mode 
+HKR, Ndi\params\PHYMode,  		ParamDesc, 	0, %PHYMode%
+HKR, Ndi\params\PHYMode,  		type, 		0, "enum"
+HKR, Ndi\params\PHYMode,   		default, 	0, "1"
+HKR, Ndi\params\PHYMode\enum,   	1, 		0, %PHY%
+HKR, Ndi\params\PHYMode\enum,   	0, 		0, %MII%
+
+
+;SafeRemovalIcon 
+HKR, Ndi\params\SafeRemovalIcon,  		ParamDesc, 	0, %SafeRemovalIcon%
+HKR, Ndi\params\SafeRemovalIcon,  		type, 		0, "enum"
+HKR, Ndi\params\SafeRemovalIcon,   		default, 	0, "1"
+HKR, Ndi\params\SafeRemovalIcon\enum,   	1, 		0, %SafeRemovalNeeded%
+HKR, Ndi\params\SafeRemovalIcon\enum,   	0, 		0, %SafeRemovalNotNeeded%
+
+;VendorCmdTryCount
+HKR,Ndi\Params\VendorCmdTryCount,  ParamDesc,  0, %VendorCmdTryCount%
+HKR,Ndi\Params\VendorCmdTryCount,  Type,       0, "int"
+HKR,Ndi\Params\VendorCmdTryCount,  Default,    0, "10"
+HKR,Ndi\Params\VendorCmdTryCount,  Min,        0, "5"
+HKR,Ndi\Params\VendorCmdTryCount,  Max,        0, "100"
+HKR,Ndi\Params\VendorCmdTryCount,  Step,       0, "1"
+HKR,Ndi\Params\VendorCmdTryCount,  Base,       0, "10"
+HKR,Ndi\Params\VendorCmdTryCount,  LimitText,  0, 3
+
+;EnableCyclePort
+HKR, Ndi\params\EnableCyclePort,  		ParamDesc, 	0, %EnableCyclePort%
+HKR, Ndi\params\EnableCyclePort,  		type, 		0, "enum"
+HKR, Ndi\params\EnableCyclePort,   		default, 	0, "1"
+HKR, Ndi\params\EnableCyclePort\enum,   0, 			0, %Disable%
+HKR, Ndi\params\EnableCyclePort\enum,   1, 			0, %Enable%
+
+;EnableRemoteWakeUp
+HKR, Ndi\params\EnableRemoteWakeUp,			ParamDesc, 	0, %EnableRemoteWakeUp%
+HKR, Ndi\params\EnableRemoteWakeUp,			type, 		0, "enum"
+HKR, Ndi\params\EnableRemoteWakeUp,			default, 	0, "0"
+HKR, Ndi\params\EnableRemoteWakeUp\enum,	0, 			0, %Disable%
+HKR, Ndi\params\EnableRemoteWakeUp\enum,	1, 			0, %Enable%
+
+;ResetBulkOutPipe
+HKR, Ndi\params\ResetBulkOutPipe,			ParamDesc, 	0, %ResetBulkOutPipe%
+HKR, Ndi\params\ResetBulkOutPipe,			type, 		0, "enum"
+HKR, Ndi\params\ResetBulkOutPipe,			default, 	0, "0"
+HKR, Ndi\params\ResetBulkOutPipe\enum,		0, 			0, %Disable%
+HKR, Ndi\params\ResetBulkOutPipe\enum,		1, 			0, %Enable%
+
+;ResetBulkOutTimeout
+HKR, Ndi\params\ResetBulkOutTimeout,	ParamDesc, 	0, %ResetBulkOutTimeout%
+HKR, Ndi\Params\ResetBulkOutTimeout,	Type,       0, "int"
+HKR, Ndi\Params\ResetBulkOutTimeout,	Default,    0, "3"
+HKR, Ndi\Params\ResetBulkOutTimeout,	Min,        0, "1"
+HKR, Ndi\Params\ResetBulkOutTimeout,	Max,        0, "255"
+HKR, Ndi\Params\ResetBulkOutTimeout,	Step,       0, "1"
+HKR, Ndi\Params\ResetBulkOutTimeout,	Base,       0, "10"
+HKR, Ndi\Params\ResetBulkOutTimeout,	LimitText,  0, 3
+
+
+;EnableSetTargetProcessor
+HKR, Ndi\params\EnableSetTargetProcessor,		ParamDesc, 	0, %EnableSetTargetProcessor%
+HKR, Ndi\params\EnableSetTargetProcessor,		type, 		0, "enum"
+HKR, Ndi\params\EnableSetTargetProcessor,		default, 	0, "1"
+HKR, Ndi\params\EnableSetTargetProcessor\enum,	0, 			0, %Disable%
+HKR, Ndi\params\EnableSetTargetProcessor\enum,	1, 			0, %Enable%
+
+[strings]
+; Manufacturer and Provider strings
+ProviderName="MosChip"
+MfgName="MosChip"
+
+; Diskette Names
+DisketteDesc="USB-Ethernet Device Drivers: Windows 98/2000/XP"
+
+; Devices
+USB\VID_9710&PID_7832.DeviceDesc = "HighSpeed USB-Ethernet Adapter"
+USB\VID_9710&PID_7830.DeviceDesc = "HighSpeed USB-Ethernet Adapter"
+USB\VID_9710&PID_7730.DeviceDesc = "FullSpeed USB-Ethernet Adapter"
+
+
+; Parameter Names
+HWVersion="Version"
+VerASIC="ASIC"
+VerFPGA="FPGA"
+NetworkAddress="NetworkAddress"
+PauseFrames="PauseFrames"
+Enable="Enable"
+Disable="Disable"
+PHY= "PHY"
+MII="MII"
+
+PauseThreshold="PauseThreshold"
+1516WORDS="1516 WORDS"
+758WORDS=" 758 WORDS"
+1000WORDS="1000 WORDS"
+1600WORDS="1600 WORDS"
+1650WORDS="1650 WORDS"
+1700WORDS="1700 WORDS"
+1800WORDS="1800 WORDS"
+2000WORDS="2000 WORDS"
+Threshold Difference="Threshold Difference"
+0WORDS="0 WORDS"
+128WORDS="128 WORDS"
+256WORDS="256 WORDS"
+384WORDS="384 WORDS"
+512WORDS="512 WORDS"
+640WORDS="640 WORDS"
+700WORDS="700 WORDS"
+758_WORDS="758 WORDS"
+SetPowerDelayinMilliSec="SetPowerDelay in MilliSec"
+TCBS="TCBS"
+RCBS="RCBS"
+RxThreshold="Rx Threshold"
+RxFast="RxFast"
+IPG="IPG"
+IPG1="IPG1"
+PHYMode="PHYMode"
+DebugLevel="Level for debug msgs"
+DuplexMode="Link Speed/Duplex Mode"
+AutoMode="AutoNegotiation"
+10HalfMode="Force 10Mbps Half-Duplex"
+10FullMode="Force 10Mbps Full-Duplex"
+100HalfMode="Force 100Mbps Half-Duplex"
+100FullMode="Force 100Mbps Full-Duplex"
+PhySelection="PhySelection"
+IntelPhy="IntelPhy"
+FaradayPhy="FaradayPhy"
+MOSUMAC.DriverDesc="USB-Ethernet Driver"
+MosUsbMac.DevName="USB-Ethernet Adapter Device"
+SafeRemovalIcon="SafeRemovalIcon"
+SafeRemovalNotNeeded="SafeRemovalNotNeeded"
+SafeRemovalNeeded="SafeRemovalNeeded"
+VendorCmdTryCount="VendorCmdTryCount"
+EnableCyclePort="EnableCyclePort"
+EnableRemoteWakeUp="EnableRemoteWakeUp"
+ResetBulkOutPipe="ResetBulkOutPipe"
+ResetBulkOutTimeout="ResetBulkOutTimeout"
+EnableSetTargetProcessor="EnableSetTargetProcessor"
+TxFast="TxFast"
+TxTrigger="TxTrigger"

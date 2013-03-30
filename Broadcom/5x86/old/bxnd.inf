@@ -1,0 +1,976 @@
+;*******************************************************************************
+; Copyright (c) 2002-2009 Broadcom Corporation.
+;
+; L2 Ndis Bus Driver client INF for Windows Server 2000 and 2003.
+;
+; History:
+;    10/25/02 havk             Inception.
+; INF version: 5.0.13.0d
+;*******************************************************************************
+
+
+[Version]
+signature   = "$Windows NT$"
+class       = Net
+classguid   = {4d36e972-e325-11ce-bfc1-08002be10318}
+compatible  = 1
+provider    = %HPQ%
+catalogfile = bxnd.cat
+driverver   = 06/23/2009,5.0.13.0
+
+
+[manufacturer]
+%HPQ% = HPQ, ntx86, ntamd64, ntia64, ntx86.6.0, ntamd64.6.0, ntia64.6.0
+
+
+[controlflags]
+excludefromselect = *
+
+
+; W2K installation.
+[HPQ]
+%NC370T_desc% = NC370T_x86w2k, b06bdrv\l2nd&pci_164a14e4&subsys_3101103c
+%NC370F_desc% = NC370F_x86w2k, b06bdrv\l2nd&pci_16aa14e4&subsys_3102103c
+%NC370i_desc% = NC370i_x86w2k, b06bdrv\l2nd&pci_164a14e4&subsys_3106103c
+%NC373i_desc% = NC373i_x86w2k, b06bdrv\l2nd&pci_164c14e4&subsys_7038103c
+%NC373Fi_desc% = NC373Fi_x86w2k, b06bdrv\l2nd&pci_16ac14e4&subsys_703b103c
+%NC380T_desc% = NC380T_x86w2k, b06bdrv\l2nd&pci_164a14e4&subsys_3070103c
+%NC370Fi_desc% = NC370Fi_x86w2k, b06bdrv\l2nd&pci_16aa14e4&subsys_310c103c
+%NC371i_desc% = NC371i_x86w2k, b06bdrv\l2nd&pci_164a14e4&subsys_1709103c
+%NC373m_desc% = NC373m_x86w2k, b06bdrv\l2nd&pci_16ac14e4&subsys_1706103c
+%NC373F_desc% = NC373F_x86w2k, b06bdrv\l2nd&pci_16ac14e4&subsys_703d103c
+%NC374m_desc% = NC374m_x86w2k, b06bdrv\l2nd&pci_164c14e4&subsys_7045103c
+%NC373T_desc% = NC373T_x86w2k, b06bdrv\l2nd&pci_164c14e4&subsys_7037103c
+%NC382i_desc% = NC382i_x86w2k, b06bdrv\l2nd&pci_163914e4&subsys_7055103c
+%NC382i_f_desc% = NC382i_f_x86w2k, b06bdrv\l2nd&pci_163a14e4&subsys_7056103c
+%NC382T_desc% = NC382T_x86w2k, b06bdrv\l2nd&pci_163914e4&subsys_7059103c
+%NC382m_desc% = NC382m_x86w2k, b06bdrv\l2nd&pci_163a14e4&subsys_171d103c
+%NC532m_164e171c_desc% = NC532m_164e171c_x86w2k, ebdrv\l2nd&pci_164e14e4&subsys_171c103c
+%NC532i_164e7058_desc% = NC532i_164e7058_x86w2k, ebdrv\l2nd&pci_164e14e4&subsys_7058103c
+%NC532m_164f171c_desc% = NC532m_164f171c_x86w2k, ebdrv\l2nd&pci_164f14e4&subsys_171c103c
+%NC532i_164f7058_desc% = NC532i_164f7058_x86w2k, ebdrv\l2nd&pci_164f14e4&subsys_7058103c
+%NC532m_1650171c_desc% = NC532m_1650171c_x86w2k, ebdrv\l2nd&pci_165014e4&subsys_171c103c
+%NC532i_16507058_desc% = NC532i_16507058_x86w2k, ebdrv\l2nd&pci_165014e4&subsys_7058103c
+%NC532i_16507105_desc% = NC532i_16507105_x86w2k, ebdrv\l2nd&pci_165014e4&subsys_7105103c
+%NC_SFP_16507061_desc% = NC_SFP_16507061_x86w2k, ebdrv\l2nd&pci_165014e4&subsys_7061103c
+%NC532i_16503654_desc% = NC532i_16503654_x86w2k, ebdrv\l2nd&pci_165014e4&subsys_3654103c
+
+
+; x86 WS3 or XP installation.
+[HPQ.ntx86]
+%NC370T_desc% = NC370T_x86ws3, b06bdrv\l2nd&pci_164a14e4&subsys_3101103c
+%NC370F_desc% = NC370F_x86ws3, b06bdrv\l2nd&pci_16aa14e4&subsys_3102103c
+%NC370i_desc% = NC370i_x86ws3, b06bdrv\l2nd&pci_164a14e4&subsys_3106103c
+%NC373i_desc% = NC373i_x86ws3, b06bdrv\l2nd&pci_164c14e4&subsys_7038103c
+%NC373Fi_desc% = NC373Fi_x86ws3, b06bdrv\l2nd&pci_16ac14e4&subsys_703b103c
+%NC380T_desc% = NC380T_x86ws3, b06bdrv\l2nd&pci_164a14e4&subsys_3070103c
+%NC370Fi_desc% = NC370Fi_x86ws3, b06bdrv\l2nd&pci_16aa14e4&subsys_310c103c
+%NC371i_desc% = NC371i_x86ws3, b06bdrv\l2nd&pci_164a14e4&subsys_1709103c
+%NC373m_desc% = NC373m_x86ws3, b06bdrv\l2nd&pci_16ac14e4&subsys_1706103c
+%NC373F_desc% = NC373F_x86ws3, b06bdrv\l2nd&pci_16ac14e4&subsys_703d103c
+%NC374m_desc% = NC374m_x86ws3, b06bdrv\l2nd&pci_164c14e4&subsys_7045103c
+%NC373T_desc% = NC373T_x86ws3, b06bdrv\l2nd&pci_164c14e4&subsys_7037103c
+%NC382i_desc% = NC382i_x86ws3, b06bdrv\l2nd&pci_163914e4&subsys_7055103c
+%NC382i_f_desc% = NC382i_f_x86ws3, b06bdrv\l2nd&pci_163a14e4&subsys_7056103c
+%NC382T_desc% = NC382T_x86ws3, b06bdrv\l2nd&pci_163914e4&subsys_7059103c
+%NC382m_desc% = NC382m_x86ws3, b06bdrv\l2nd&pci_163a14e4&subsys_171d103c
+%NC532m_164e171c_desc% = NC532m_164e171c_x86ws3, ebdrv\l2nd&pci_164e14e4&subsys_171c103c
+%NC532i_164e7058_desc% = NC532i_164e7058_x86ws3, ebdrv\l2nd&pci_164e14e4&subsys_7058103c
+%NC532m_164f171c_desc% = NC532m_164f171c_x86ws3, ebdrv\l2nd&pci_164f14e4&subsys_171c103c
+%NC532i_164f7058_desc% = NC532i_164f7058_x86ws3, ebdrv\l2nd&pci_164f14e4&subsys_7058103c
+%NC532m_1650171c_desc% = NC532m_1650171c_x86ws3, ebdrv\l2nd&pci_165014e4&subsys_171c103c
+%NC532i_16507058_desc% = NC532i_16507058_x86ws3, ebdrv\l2nd&pci_165014e4&subsys_7058103c
+%NC532i_16507105_desc% = NC532i_16507105_x86ws3, ebdrv\l2nd&pci_165014e4&subsys_7105103c
+%NC_SFP_16507061_desc% = NC_SFP_16507061_x86ws3, ebdrv\l2nd&pci_165014e4&subsys_7061103c
+%NC532i_16503654_desc% = NC532i_16503654_x86ws3, ebdrv\l2nd&pci_165014e4&subsys_3654103c
+
+
+; x86-64 WS3 or XP installation.
+[HPQ.ntamd64]
+
+
+; ia64 WS3 or XP installation.
+[HPQ.ntia64]
+
+
+; x86 Longhorn installation.
+[HPQ.ntx86.6.0]
+
+
+; x86-64 Longhorn installation.
+[HPQ.ntamd64.6.0]
+
+
+; ia64 Longhorn installation.
+[HPQ.ntia64.6.0]
+
+
+
+;*******************************************************************************
+; x86 install sections for W2K.
+;*******************************************************************************
+
+[NC370T_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC370T_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC370F_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC370F_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC370i_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC370i_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC373i_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC373i_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC373Fi_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_fiber, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC373Fi_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC380T_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC380T_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC370Fi_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC370Fi_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC371i_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC371i_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC373m_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_fiber, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC373m_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC373F_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_fiber, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC373F_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC374m_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC374m_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC373T_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC373T_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC382i_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_fiber, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC382i_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC382i_f_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC382i_f_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC382T_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_utp, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC382T_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC382m_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_fiber, params_w2klso, params_flow, params_flow_auto
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC382m_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC532m_164e171c_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC532m_164e171c_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC532i_164e7058_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC532i_164e7058_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC532m_164f171c_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC532m_164f171c_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC532i_164f7058_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC532i_164f7058_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC532m_1650171c_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC532m_1650171c_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC532i_16507058_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC532i_16507058_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC532i_16507105_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC532i_16507105_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC_SFP_16507061_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_rx_tx_pause_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC_SFP_16507061_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+[NC532i_16503654_x86w2k]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86w2k_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_w2klso
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86w2k_sys_file
+bustype         = 5
+
+[NC532i_16503654_x86w2k.Services]
+addservice      = l2nd, 2, x86w2k_add_service, x86w2k_eventlog
+
+
+
+;*******************************************************************************
+; x86 common sections for W2K.
+;*******************************************************************************
+
+[x86w2k_add_service]
+displayname     = %mp_srv_desc%
+servicetype     = 1 
+starttype       = 3
+errorcontrol    = 1
+servicebinary   = %12%\bxnd50x.sys
+loadordergroup  = ndis
+
+[x86w2k_addreg]
+hkr, ndi,            service,    0, "l2nd"
+hkr, ndi\interfaces, upperrange, 0, "ndis5"
+hkr, ndi\interfaces, lowerrange, 0, "ethernet"
+
+[x86w2k_eventlog]
+addreg = x86w2k_addreg_eventlog
+
+[x86w2k_addreg_eventlog]
+hkr, , eventmessagefile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll;%%SystemRoot%%\System32\drivers\bxnd50x.sys"
+hkr, , typessupported  , 0x00010001, 7
+
+
+
+;*******************************************************************************
+; x86 install sections for XP, W2K3, and later.
+;*******************************************************************************
+
+[NC370T_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC370T_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC370F_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC370F_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC370i_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC370i_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC373i_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC373i_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC373Fi_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_fiber, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC373Fi_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC380T_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC380T_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC370Fi_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC370Fi_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC371i_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC371i_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC373m_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_fiber, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC373m_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC373F_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_fiber, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC373F_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC374m_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC374m_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC373T_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC373T_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC382i_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_fiber, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC382i_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC382i_f_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC382i_f_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC382T_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_utp, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC382T_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC382m_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_fiber, params_lso, params_rss, params_flow, params_flow_auto, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC382m_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC532m_164e171c_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_lso, params_rss, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC532m_164e171c_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC532i_164e7058_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_lso, params_rss, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC532i_164e7058_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC532m_164f171c_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_lso, params_rss, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC532m_164f171c_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC532i_164f7058_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_lso, params_rss, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC532i_164f7058_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC532m_1650171c_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_lso, params_rss, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC532m_1650171c_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC532i_16507058_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_lso, params_rss, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC532i_16507058_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC532i_16507105_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_lso, params_rss, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC532i_16507105_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC_SFP_16507061_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_rx_tx_pause_no_enum, params_speed_auto_no_enum, params_lso, params_rss, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC_SFP_16507061_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+[NC532i_16503654_x86ws3]
+characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+addreg          = x86ws3_addreg, params_nt, params_flow_auto_no_enum, params_speed_auto_no_enum, params_lso, no_rss, no_toe, params_tx_bufs
+delreg          = delreg.req_medium, delreg.enable_chimney, delreg.pre_allocate_ndis_pkts
+copyfiles       = x86ws3_sys_file
+bustype         = 5
+
+[NC532i_16503654_x86ws3.Services]
+addservice      = l2nd, 2, x86ws3_add_service, x86ws3_eventlog
+
+
+
+;*******************************************************************************
+; x86 common sections for XP, W2K3, and later.
+;*******************************************************************************
+
+[x86ws3_add_service]
+displayname     = %mp_srv_desc%
+servicetype     = 1 
+starttype       = 3
+errorcontrol    = 1
+servicebinary   = %12%\bxnd52x.sys
+loadordergroup  = ndis
+
+[x86ws3_addreg]
+hkr, ndi,            service,    0, "l2nd"
+hkr, ndi\interfaces, upperrange, 0, "ndis5"
+hkr, ndi\interfaces, lowerrange, 0, "ethernet"
+
+[x86ws3_eventlog]
+addreg = x86ws3_addreg_eventlog
+
+[x86ws3_addreg_eventlog]
+hkr, , eventmessagefile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll;%%SystemRoot%%\System32\drivers\bxnd52x.sys"
+hkr, , typessupported  , 0x00010001, 7
+
+
+
+;*******************************************************************************
+; Registry parameters.
+;*******************************************************************************
+
+[indicate_link_up_time]
+hkr, , delay_link_up_ind_ms, 0, "100"
+
+[no_rss]
+hkr, , enable_rss, 0, "0"
+
+[no_toe]
+hkr, , *TCPConnectionOffloadIPv4, 0, "0"
+hkr, , *TCPConnectionOffloadIPv6, 0, "0"
+
+
+[params_nt]
+hkr, ndi\params\ofld_cap,      paramDesc, , %taskoffload_desc_ipv4%
+hkr, ndi\params\ofld_cap,      default,   , "63"
+hkr, ndi\params\ofld_cap,      type,      , "enum"
+hkr, ndi\params\ofld_cap\enum, 0,         , %taskoffload_none%
+hkr, ndi\params\ofld_cap\enum, 21,        , %taskoffload_tx_cksum%
+hkr, ndi\params\ofld_cap\enum, 42,        , %taskoffload_rx_cksum%
+hkr, ndi\params\ofld_cap\enum, 63,        , %taskoffload_rx_tx_cksum%
+
+hkr, ndi\params\enable_8021p,      paramDesc, , %qos_8021p_desc%
+hkr, ndi\params\enable_8021p,      default,   , "0"
+hkr, ndi\params\enable_8021p,      type,      , "enum"
+hkr, ndi\params\enable_8021p\enum, 0,         , %qos_8021p_disable%
+hkr, ndi\params\enable_8021p\enum, 1,         , %qos_8021p_enable%
+
+hkr, ndi\params\networkaddress, paramdesc, 0, %network_address%
+hkr, ndi\params\networkaddress, default,   0, ""
+hkr, ndi\params\networkaddress, type,      0, "edit"
+hkr, ndi\params\networkaddress, limittext, 0, "12"
+hkr, ndi\params\networkaddress, uppercase, 0, "1"
+hkr, ndi\params\networkaddress, optional,  0, "1"
+
+[params_tx_bufs]
+hkr, ,*TransmitBuffers,                 2, "750"
+hkr, ndi\params\*TransmitBuffers, paramdesc, , %tx_bufs_desc%
+hkr, ndi\params\*TransmitBuffers, default,   , "750"
+hkr, ndi\params\*TransmitBuffers, type,      , "dword"
+hkr, ndi\params\*TransmitBuffers, min,       , "0"
+hkr, ndi\params\*TransmitBuffers, max,       , "5000"
+hkr, ndi\params\*TransmitBuffers, step,      , "1"
+hkr, ndi\params\*TransmitBuffers, base,      , "10"
+
+
+[params_flow]
+hkr, ndi\params\flow_ctrl_cap,      paramdesc,  , %flow_ctrl%
+hkr, ndi\params\flow_ctrl_cap,      type,       , "enum"
+hkr, ndi\params\flow_ctrl_cap\enum, 0,          , %flow_ctrl_disable%
+hkr, ndi\params\flow_ctrl_cap\enum, 1,          , %flow_ctrl_rx_pause%
+hkr, ndi\params\flow_ctrl_cap\enum, 2,          , %flow_ctrl_tx_pause%
+hkr, ndi\params\flow_ctrl_cap\enum, 3,          , %flow_ctrl_rx_tx_pause%
+
+[params_flow_auto]
+hkr, ndi\params\flow_ctrl_cap\enum, 2147483648, , %flow_ctrl_auto%
+hkr, ndi\params\flow_ctrl_cap,      default,    , "2147483648"
+
+[params_flow_auto_no_enum]
+hkr, , flow_ctrl_cap,             0, "2147483648"
+
+[params_flow_rx_tx_pause_no_enum]
+hkr, , flow_ctrl_cap,             0, "3"
+
+[params_flow_no_auto_default]
+hkr, ndi\params\flow_ctrl_cap,      default,    , "0"
+
+
+[params_rss]
+hkr, ndi\params\enable_rss,      paramDesc, , %rss_desc%
+hkr, ndi\params\enable_rss,      default,   , "1"
+hkr, ndi\params\enable_rss,      type,      , "enum"
+hkr, ndi\params\enable_rss\enum, 0,         , %rss_disable%
+hkr, ndi\params\enable_rss\enum, 1,         , %rss_enable%
+
+[params_rss_default_off]
+hkr, ndi\params\enable_rss,      paramDesc, , %rss_desc%
+hkr, ndi\params\enable_rss,      default,   , "0"
+hkr, ndi\params\enable_rss,      type,      , "enum"
+hkr, ndi\params\enable_rss\enum, 0,         , %rss_disable%
+hkr, ndi\params\enable_rss\enum, 1,         , %rss_enable%
+
+[params_tss_chain]
+hkr, , proc_num_to_txq,          2, "0"
+
+
+[params_speed_common]
+hkr, ndi\params\*SpeedDuplex,         paramDesc, , %speed_duplex_desc%
+hkr, ndi\params\*SpeedDuplex,         default,   , "0"
+hkr, ndi\params\*SpeedDuplex,         type,      , "enum"
+
+
+[params_speed_auto_no_enum]
+hkr, , *SpeedDuplex,              0, "0"
+
+
+[params_speed_all]
+hkr, , *SpeedDuplex,          2, "0"
+hkr, ndi\params\*SpeedDuplex\enum,    0,         , %speed_duplex_auto%
+hkr, ndi\params\*SpeedDuplex\enum,    1,         , %speed_duplex_10Mb_hd%
+hkr, ndi\params\*SpeedDuplex\enum,    2,         , %speed_duplex_10Mb_fd%
+hkr, ndi\params\*SpeedDuplex\enum,    3,         , %speed_duplex_100Mb_hd%
+hkr, ndi\params\*SpeedDuplex\enum,    4,         , %speed_duplex_100Mb_fd%
+hkr, ndi\params\*SpeedDuplex\enum,    6,         , %speed_duplex_1Gb_fd%
+hkr, ndi\params\*SpeedDuplex\enum,    2147484672,, %speed_duplex_2500Mb_fd%
+hkr, ndi\params\*SpeedDuplex\enum,    7,         , %speed_duplex_10Gb_fd%
+
+
+[params_speed_10G]
+hkr, ndi\params\*SpeedDuplex\enum,    7,         , %speed_duplex_10Gb_fd%
+
+
+[params_speed_1G]
+hkr, ndi\params\*SpeedDuplex\enum,    6,         , %speed_duplex_1Gb_fd%
+
+
+[params_speed_auto]
+hkr, , *SpeedDuplex,          2, "0"
+hkr, ndi\params\*SpeedDuplex\enum,    0,         , %speed_duplex_auto%
+
+[params_speed_10gb_auto]
+hkr, , *SpeedDuplex,          2, "0"
+hkr, ndi\params\*SpeedDuplex\enum,    0,         , %speed_duplex_10gb_auto%
+
+
+[params_speed_10MB_100MB]
+hkr, ndi\params\*SpeedDuplex\enum,    1,         , %speed_duplex_10Mb_hd%
+hkr, ndi\params\*SpeedDuplex\enum,    2,         , %speed_duplex_10Mb_fd%
+hkr, ndi\params\*SpeedDuplex\enum,    3,         , %speed_duplex_100Mb_hd%
+hkr, ndi\params\*SpeedDuplex\enum,    4,         , %speed_duplex_100Mb_fd%
+
+
+[params_speed_10G_default]
+hkr, , *SpeedDuplex,          2, "7"
+
+
+[params_utp]
+hkr, ndi\params\*SpeedDuplex,      paramDesc,  , %speed_duplex_desc%
+hkr, ndi\params\*SpeedDuplex,      default,    , "0"
+hkr, ndi\params\*SpeedDuplex,      type,       , "enum"
+hkr, ndi\params\*SpeedDuplex\enum, 0,          , %speed_duplex_auto%
+hkr, ndi\params\*SpeedDuplex\enum, 1,          , %speed_duplex_10Mb_hd%
+hkr, ndi\params\*SpeedDuplex\enum, 2,          , %speed_duplex_10Mb_fd%
+hkr, ndi\params\*SpeedDuplex\enum, 3,          , %speed_duplex_100Mb_hd%
+hkr, ndi\params\*SpeedDuplex\enum, 4,          , %speed_duplex_100Mb_fd%
+hkr, ndi\params\*SpeedDuplex\enum, 2164261634, , %speed_duplex_1Gb_fd_an%
+
+hkr, ndi\params\wire_speed,      paramdesc, , %wire_speed%
+hkr, ndi\params\wire_speed,      default,   , "1"
+hkr, ndi\params\wire_speed,      type,      , "enum"
+hkr, ndi\params\wire_speed\enum, 0,         , %wire_speed_disable%
+hkr, ndi\params\wire_speed\enum, 1,         , %wire_speed_enable%
+
+
+[params_fiber]
+hkr, , *SpeedDuplex,          2, "0"
+
+
+[params_lso]
+hkr, ndi\params\enable_lso,      paramDesc, , %lso_desc_ipv4%
+hkr, ndi\params\enable_lso,      default,   , "1"
+hkr, ndi\params\enable_lso,      type,      , "enum"
+hkr, ndi\params\enable_lso\enum, 0,         , %lso_disable%
+hkr, ndi\params\enable_lso\enum, 1,         , %lso_enable%
+
+[params_w2klso]
+hkr, , enable_lso, 0, "0"
+
+
+[params_tcp]
+hkr, , tcp_ack_freq,          2, "1"
+
+
+
+;*******************************************************************************
+; Delete old registry parameters.
+;*******************************************************************************
+
+[delreg.req_medium]
+hkr, , req_medium
+hkr, ndi\params\req_medium
+
+[delreg.enable_chimney]
+hkr, , enable_chimney
+
+[delreg.pre_allocate_ndis_pkts]
+hkr, , pre_allocate_ndis_pkts
+
+
+
+;*******************************************************************************
+; Destination directories
+;*******************************************************************************
+
+[destinationdirs]
+defaultdestdir       = 11
+x86w2k_sys_file      = 12
+x86ws3_sys_file      = 12
+
+[sourcedisksnames]
+1 = %disk_desc%,,,
+
+[sourcedisksfiles]
+bxnd50x.sys = 1
+bxnd52x.sys = 1
+
+[x86w2k_sys_file]
+bxnd50x.sys,,,1
+
+[x86ws3_sys_file]
+bxnd52x.sys,,,1
+
+
+
+;*******************************************************************************
+; Localizable strings
+;*******************************************************************************
+
+[strings]
+HPQ = "Hewlett-Packard Company"
+disk_desc = "HP NC370 Installation Media"
+mp_srv_desc = "HP NC370 Multifunction Gigabit Server Adapter"
+
+NC370T_desc = "HP NC370T Multifunction Gigabit Server Adapter"
+NC370F_desc = "HP NC370F Multifunction Gigabit Server Adapter"
+NC370i_desc = "HP NC370i Multifunction Gigabit Server Adapter"
+NC373i_desc = "HP NC373i Multifunction Gigabit Server Adapter"
+NC373Fi_desc = "HP NC373i Multifunction Gigabit Server Adapter"
+NC380T_desc = "HP NC380T PCIe DP Multifunc Gig Server Adapter"
+NC370Fi_desc = "HP NC370i Multifunction Gigabit Server Adapter"
+NC371i_desc = "HP NC371i Multifunction Gigabit Server Adapter"
+NC373m_desc = "HP NC373m Multifunction Gigabit Server Adapter"
+NC373F_desc = "HP NC373F PCIe Multifunc Gig Server Adapter"
+NC374m_desc = "HP NC374m PCIe Multifunction Adapter"
+NC373T_desc = "HP NC373T PCIe Multifunction Gig Server Adapter"
+NC382i_desc = "HP NC382i DP Multifunction Gigabit Server Adapter"
+NC382i_f_desc = "HP NC382i DP Multifunction Gigabit Server Adapter"
+NC382T_desc = "HP NC382T PCIe DP Multifunction Gigabit Server Adapter"
+NC382m_desc = "HP NC382m DP 1GbE Multifunction BL-c Adapter"
+NC532m_164e171c_desc = "HP NC532m Dual Port 10GbE Multifunction BL-c Adapter"
+NC532i_164e7058_desc = "HP NC532i Dual Port 10GbE Multifunction BL-c Adapter"
+NC532m_164f171c_desc = "HP NC532m Dual Port 10GbE Multifunction BL-c Adapter"
+NC532i_164f7058_desc = "HP NC532i Dual Port 10GbE Multifunction BL-c Adapter"
+NC532m_1650171c_desc = "HP NC532m Dual Port 10GbE Multifunction BL-c Adapter"
+NC532i_16507058_desc = "HP NC532i Dual Port 10GbE Multifunction BL-c Adapter"
+NC532i_16507105_desc = "HP NC532i Dual Port 10GbE Multifunction Adapter"
+NC_SFP_16507061_desc = "HP PCIe 2-P 10GbE-SFP+ adapter"
+NC532i_16503654_desc = "HP NC532i Dual Port 10GbE Multifunction BL-c WS Adapter"
+
+speed_duplex_desc       = "Speed & Duplex"
+speed_duplex_auto       = "Auto"
+speed_duplex_10gb_auto  = "10G Auto"
+speed_duplex_10Mb_hd    = "10 Mb Half"
+speed_duplex_10Mb_fd    = "10 Mb Full"
+speed_duplex_100Mb_hd   = "100 Mb Half"
+speed_duplex_100Mb_fd   = "100 Mb Full"
+speed_duplex_1Gb_fd_an  = "1 Gb Full Auto"
+speed_duplex_1Gb_fd     = "1 Gb Full"
+speed_duplex_2500Mb_fd  = "2.5 Gb Full"
+speed_duplex_10Gb_fd    = "10 Gb Full"
+speed_duplex_auto_1Gb_fd_fallback = "Auto With 1Gb Fallback Full"
+speed_nvram_default     = "Hardware Default"
+
+wire_speed              = "Ethernet@WireSpeed"
+wire_speed_disable      = "Disable"
+wire_speed_enable       = "Enable"
+
+qos_8021p_desc          = "802.1p QOS"
+qos_8021p_disable       = "Disable"
+qos_8021p_enable        = "Enable"
+
+taskoffload_desc_ipv4   = "IPv4 Checksum Offload"
+taskoffload_desc_ipv6   = "IPv6 Checksum Offload"
+taskoffload_none        = "None"
+taskoffload_tx_cksum    = "Tx enabled"
+taskoffload_rx_cksum    = "Rx enabled"
+taskoffload_rx_tx_cksum = "Tx/Rx enabled"
+
+lso_desc_ipv4           = "IPv4 Large Send Offload"
+lso_desc_ipv6           = "IPv6 Large Send Offload"
+lso_disable             = "Disable"
+lso_enable              = "Enable"
+
+toe_desc_ipv4           = "TCP Connection Offload (IPv4)"
+toe_desc_ipv6           = "TCP Connection Offload (IPv6)"
+toe_disable             = "Disable"
+toe_enable              = "Enable"
+
+flow_ctrl               = "Flow Control"
+flow_ctrl_disable       = "Disable"
+flow_ctrl_rx_pause      = "Tx Enabled"
+flow_ctrl_tx_pause      = "Rx Enabled"
+flow_ctrl_rx_tx_pause   = "Rx & Tx Enabled"
+flow_ctrl_auto          = "Auto"
+
+network_address         = "Locally Administered Address"
+
+rss_desc                = "Receive Side Scaling"
+rss_disable             = "Disable"
+rss_enable              = "Enable"
+tx_bufs_desc            = "Transmit Buffers"
+

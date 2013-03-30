@@ -1,0 +1,80 @@
+; AX88190.INF
+;
+; INF file for Windows NT 5.0
+;
+; ASIX AX88190 Based PCMCIA Fast Ethernet Adapter
+;
+; Copyright 1996-1997, ASIX Corporation
+;
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_ASIX%
+LayoutFile  = layout.inf
+
+[Manufacturer]
+%V_ASIX%=ASIX
+
+[ASIX]
+%AX88190.DeviceDesc%=AX88190.ndi,PCMCIA\ASIX-AX88190-A4F6
+
+[AX88190.ndi.NTX86]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = AX88190.reg
+CopyFiles       = AX88190.CopyFiles.Sys
+
+[AX88190.ndi.NTX86.Services]
+AddService = AX88190, 2, AX88190.Service, AX88190.EventLog
+
+[AX88190.ndi.LogConfigOverride]
+LogConfig = AX88190.LogConfigOverride
+
+[AX88190.LogConfigOverride]
+IRQConfig    = 3,4,5,7,9,10,11
+IOConfig     = 300,320,340,360,380,200,220,3A0,3C0
+PcCardConfig = 1:20000(W)
+
+;-------------------------------------------------------------------------------
+; AX88190 Drivers and Service
+;
+[AX88190.reg]
+HKR, Ndi,               Service,    0, "AX88190"
+HKR, Ndi\Interfaces,    DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,    DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+HKR,               ,    CardType,   0, "1"
+
+[AX88190.Service]
+DisplayName     = %AX88190.DeviceDesc%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\AX88190.sys
+LoadOrderGroup  = NDIS
+
+[AX88190.CopyFiles.Sys]
+AX88190.sys
+
+[DestinationDirs]
+AX88190.CopyFiles.Sys = 12
+AX88190.CopyFiles.Inf = 17
+
+[AX88190.EventLog]
+AddReg = AX88190.AddEventLog.reg
+
+[AX88190.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[strings]
+; Provider
+; Manufacturers
+V_ASIX="ASIX Electronics"
+; PNP Devices
+AX88190.DeviceDesc="ASIX AX88190 Based PCMCIA Fast Ethernet Adapter"
+

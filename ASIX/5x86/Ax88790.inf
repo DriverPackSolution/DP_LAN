@@ -1,0 +1,90 @@
+; AX88790.INF
+;
+; INF file for Windows NT 5.0
+;
+; ASIX AX88790 Based PCMCIA Fast Ethernet Adapter
+;
+; Copyright 1996-1997, ASIX Corporation
+;
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_ASIX%
+LayoutFile  = layout.inf
+
+[Manufacturer]
+%V_ASIX%=ASIX
+
+[ASIX]
+%AX88790.DeviceDesc%=AX88790.ndi,PCMCIA\ASIX-AX88790-09E3
+
+[AX88790.ndi.NTX86]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = AX88790.reg
+CopyFiles       = AX88790.CopyFiles.Sys
+
+[AX88790.ndi.NTX86.Services]
+AddService = AX88790, 2, AX88790.Service, AX88790.EventLog
+
+[AX88790.ndi.LogConfigOverride]
+LogConfig = AX88790.LogConfigOverride
+
+[AX88790.LogConfigOverride]
+IRQConfig    = 3,4,5,7,10,11
+IOConfig     = 300,320,340,360,380,200,220,3A0,3C0
+PcCardConfig = 1:20000(W)
+
+;-------------------------------------------------------------------------------
+; AX88790 Drivers and Service
+;
+[AX88790.reg]
+HKR, Ndi,               Service,    0, "AX88790"
+HKR, Ndi\Interfaces,    DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,    DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+HKR,               ,    CardType,   0, "1"
+
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,9,,"100BaseTx Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT (Twisted_Pair)"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+[AX88790.Service]
+DisplayName     = %AX88790.DeviceDesc%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\AX88790.sys
+LoadOrderGroup  = NDIS
+
+[AX88790.CopyFiles.Sys]
+AX88790.sys
+
+[DestinationDirs]
+AX88790.CopyFiles.Sys = 12
+AX88790.CopyFiles.Inf = 17
+
+[AX88790.EventLog]
+AddReg = AX88790.AddEventLog.reg
+
+[AX88790.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[strings]
+; Provider
+; Manufacturers
+V_ASIX="ASIX Electronics"
+; PNP Devices
+AX88790.DeviceDesc="ASIX AX88790 Based PCMCIA Fast Ethernet Adapter"
+

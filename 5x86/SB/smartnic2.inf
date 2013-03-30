@@ -1,0 +1,250 @@
+; /****************************************************************************
+; ** COPYRIGHT (C) 2000 smartBridges Pte. Ltd.
+; ** 
+; ** http://www.smartbridges.com
+; **
+; ** This INF is to be used only with smartNIC2 ( Product Code : SB1600 )
+; **
+; ** INF for Windows 98, Windows 98 SE, Windows ME and Windows 2000 (Ver 2.0 Dated 29th DEC 2000)
+; **
+; ** This INF is not meant for Windows 95
+; **
+; ** In Ver 2.0 Driver Update the following changes are made
+; **
+; ** 1. HKR,Ndi\Params\AlivePara,default,,"MODE"  The "MODE" is set to "0" instead of "2". 
+; ** 
+; ** 2. The IPAutoConfigurationEnabled entry is added with value "0" to disable the feature.
+; **
+; ****************************************************************************/
+
+[Version]
+Signature  = "$CHICAGO$"
+Compatible = 1
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %PROVIDER%
+;LayoutFile = layout.inf
+;CatalogFile = smartnic2.cat
+DriverVer   = 09/05/2000, 2.01.00.00
+
+[Manufacturer]
+%PROVIDER%   = smartBridges
+
+[ControlFlags]
+ExcludeFromSelect = USB\VID_08D1&PID_0003
+ 
+;*******************************************************************************
+
+[smartBridges]
+; DisplayName            Section       DeviceID
+; -----------            -------       --------
+%smartnic2.DeviceDesc%  = smartnic2.Ndi, USB\VID_08D1&PID_0003
+
+;*******************************************************************************
+; Win98 main sections
+
+[smartnic2.Ndi]
+CopyFiles = smartnic2.uninstall.CopyFiles, smartnic2.ndis.copyfiles,smartnic2.installer.CopyFiles 
+AddReg    = smartnic2.Reg, smartnic2.uninstall.reg, smartnic2.Params, smartnic2.Con.Reg 
+
+;*******************************************************************************
+; NT main sections
+
+[smartnic2.Ndi.NT]
+CopyFiles       = smartnic2.ndis.copyfiles.NT
+AddReg          = smartnic2.NT.Reg, smartnic2.Params,smartnic2.Con.Reg
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 1 ; ISA for pass InfCheck.exe
+
+[smartnic2.Ndi.NT.Services]
+AddService = smartnic2, 2, smartnic2.Service, Common.EventLog
+
+[smartnic2.ndis.copyfiles]
+sn2.sys,,,2
+
+[smartnic2.uninstall.copyfiles]
+remsn.exe
+
+[smartnic2.installer.CopyFiles]
+myndi.dll
+
+[smartnic2.ndis.copyfiles.NT]
+sn2.sys,,,2
+
+;*******************************************************************************
+; Windows 98 section
+;*******************************************************************************
+
+[smartnic2.Reg]
+HKR,Ndi,DeviceID,,USB\VID_08D1&PID_0003
+HKR,,AdapterName,,smartnic2
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,AdapterName,,smartnic2
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,sn2.sys
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,smartnic2
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,,,"smartnic2.Install"
+HKR,NDI,NdiInstaller,,"MyNdi.dll, MyNdiProc"
+
+HKR,Ndi,HelpText,,"smartNIC2 Plug and Play Network Adapter"
+
+[smartnic2.uninstall.reg]
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\smartnic2,DisplayName,,"smartNIC2 PnP Network Adapter"
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\smartnic2,UninstallString,,"remsn.exe /removekey /noreboot"
+HKLM,System\CurrentControlSet\Services\VxD\DHCP,IPAutoConfigurationEnabled,1,00,00,00,00
+
+;*******************************************************************************
+; Driver parameters
+;*******************************************************************************
+
+[smartnic2.Params]
+HKR, ,TxPacketDesc,    0, "40"   ; 0x28
+HKR, ,RxPacketDesc,    0, "20"   ; 0x14
+
+[smartnic2.Con.Reg]
+HKR,Ndi\Params\MediaType,ParamDesc,,"Media Type"
+HKR,Ndi\Params\MediaType,default,,"0"
+HKR,Ndi\Params\MediaType,type,,"enum"
+HKR,Ndi\Params\MediaType\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaType\enum,1,,"10BaseT"
+HKR,Ndi\Params\MediaType\enum,2,,"10BaseT Full_Duplex"
+HKR,Ndi\Params\MediaType\enum,3,,"100BaseTX"
+HKR,Ndi\Params\MediaType\enum,4,,"100BaseTX Full_Duplex"
+HKR,Ndi\Params\MediaType,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\MediaSel,ParamDesc,,"Select Media"
+HKR,Ndi\Params\MediaSel,default,,"0"
+HKR,Ndi\Params\MediaSel,type,,"enum"
+HKR,Ndi\Params\MediaSel\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaSel\enum,1,,"Ethernet"
+HKR,Ndi\Params\MediaSel\enum,2,,"Home Lan"
+HKR,Ndi\Params\MediaSel,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\MagicPkt,ParamDesc,,"Magic Packet"
+HKR,Ndi\Params\MagicPkt,default,,"0"
+HKR,Ndi\Params\MagicPkt,type,,"enum"
+HKR,Ndi\Params\MagicPkt\enum,0,,"Enable"
+HKR,Ndi\Params\MagicPkt\enum,1,,"Disable"
+HKR,Ndi\Params\MagicPkt,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\LinkWakeup,ParamDesc,,"Link Status Wakeup"
+HKR,Ndi\Params\LinkWakeup,default,,"0"
+HKR,Ndi\Params\LinkWakeup,type,,"enum"
+HKR,Ndi\Params\LinkWakeup\enum,0,,"Enable"
+HKR,Ndi\Params\LinkWakeup\enum,1,,"Disable"
+HKR,Ndi\Params\LinkWakeup,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl,ParamDesc,,"Flow Control"
+HKR,Ndi\Params\FlowControl,default,,"1"
+HKR,Ndi\Params\FlowControl,type,,"enum"
+HKR,Ndi\Params\FlowControl\enum,0,,"Enable"
+HKR,Ndi\Params\FlowControl\enum,1,,"Disable"
+HKR,Ndi\Params\FlowControl,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl_Tx,ParamDesc,,"Flow Control Base Tx Packets"
+HKR,Ndi\Params\FlowControl_Tx,default,,"0"
+HKR,Ndi\Params\FlowControl_Tx,type,,"enum"
+HKR,Ndi\Params\FlowControl_Tx\enum,0,,"Disable"
+HKR,Ndi\Params\FlowControl_Tx\enum,1,," 1 Packet"
+HKR,Ndi\Params\FlowControl_Tx\enum,2,," 2 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,3,," 4 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,4,," 8 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,5,,"16 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,6,,"32 Packets"
+HKR,Ndi\Params\FlowControl_Tx,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl_Rx,ParamDesc,,"Flow Control Base Rx Size"
+HKR,Ndi\Params\FlowControl_Rx,default,,"0"
+HKR,Ndi\Params\FlowControl_Rx,type,,"enum"
+HKR,Ndi\Params\FlowControl_Rx\enum,0,,"Disable"
+HKR,Ndi\Params\FlowControl_Rx\enum,1,," 1K"
+HKR,Ndi\Params\FlowControl_Rx\enum,2,," 2K"
+HKR,Ndi\Params\FlowControl_Rx\enum,3,," 4K"
+HKR,Ndi\Params\FlowControl_Rx\enum,4,," 8K"
+HKR,Ndi\Params\FlowControl_Rx\enum,5,,"16K"
+HKR,Ndi\Params\FlowControl_Rx\enum,6,,"32K"
+HKR,Ndi\Params\FlowControl_Rx,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\AlivePara,ParamDesc,,"Test Mode"
+HKR,Ndi\Params\AlivePara,default,,"0"
+HKR,Ndi\Params\AlivePara,type,,"enum"
+HKR,Ndi\Params\AlivePara\enum,0,,"Mode 0"
+HKR,Ndi\Params\AlivePara\enum,1,,"Mode 1"
+HKR,Ndi\Params\AlivePara\enum,2,,"Mode 2"
+HKR,Ndi\Params\AlivePara\enum,3,,"Mode 3"
+HKR,Ndi\Params\AlivePara\enum,4,,"Mode 4"
+HKR,Ndi\Params\AlivePara,flag,1,"20","00","00","00"
+
+;*******************************************************************************
+; Install section for Windows NT 5
+;*******************************************************************************
+
+[smartnic2.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "smartnic2"
+HKR,,                Platform,   0, "1"
+
+[smartnic2.Service]
+DisplayName    = %smartnic2.Service.DispName%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\sn2.sys
+LoadOrderGroup = NDIS,NTKERN,NDIS
+AddReg         = TextModeFlags.Reg
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR, , TypesSupported  , 0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;*******************************************************************************
+; Destination directories
+;*******************************************************************************
+
+[DestinationDirs]
+smartnic2.ndis.copyfiles    = 11
+smartnic2.uninstall.copyfiles = 10
+smartnic2.installer.CopyFiles = 10
+smartnic2.ndis.copyfiles.NT = 12
+DefaultDestDir           = 11
+
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+sn2.sys = 1
+smartnic2.INF = 1
+remsn.exe   = 1
+myndi.dll = 1
+
+;*******************************************************************************
+; Localizable strings
+;*******************************************************************************
+
+[Strings]
+Provider                 = "smartBridges"
+DISKNAME = "smartNIC2 PnP Network Adapter Driver Disk"
+smartnic2.DeviceDesc       = "smartNIC2 PnP Network Adapter"
+smartnic2.Service.DispName = "smartNIC2 PnP Network Adapter"

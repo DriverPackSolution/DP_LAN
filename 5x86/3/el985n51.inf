@@ -1,0 +1,230 @@
+;  NET3C985.INF
+;
+; Copyright (c) 3Com Corp.
+; All rights reserved
+;
+; Setup INF file for 3Com Corp. 3C985 Gigabit Ethernet Adapter
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %3Com%
+CatalogFile = el985nd5.cat
+DriverVer   = 04/24/2002,1.17.45
+
+[Manufacturer]
+%3Com%=3Com
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_10B7&DEV_0001,\
+ExcludeFromSelect = PCI\VEN_12AE&DEV_0001,\
+ExcludeFromSelect = PCI\VEN_12AE&DEV_0002,\
+ExcludeFromSelect = PCI\VEN_12AE&DEV_0001&SUBSYS_000112AE,\
+ExcludeFromSelect = PCI\VEN_12AE&DEV_0002&SUBSYS_000212AE
+
+[SourceDisksNames]
+50 = %Source_Disk_Name%,,,
+
+[SourceDisksFiles]
+el985nd5.sys = 50
+
+[3Com]
+%3c985.DeviceDesc% = 3c985.ndi, PCI\VEN_10B7&DEV_0001
+%GEN.DeviceDesc% = 3c985.ndi, PCI\VEN_12AE&DEV_0001
+%GenBaseT.DeviceDesc% = 3c985T.ndi, PCI\VEN_12AE&DEV_0002
+%3c986.DeviceDesc% = 3c985.ndi, PCI\VEN_12AE&DEV_0001&SUBSYS_000112AE
+%3c986T.DeviceDesc% = 3c985T.ndi, PCI\VEN_12AE&DEV_0002&SUBSYS_000212AE
+%3c985IBM.DeviceDesc% = 3c985.ndi, PCI\VEN_12AE&DEV_0001&SUBSYS_01041014
+
+;------------------------------------------------------------------------------
+; 3Com 3C985 Gigabit Ethernet Adapter
+;
+[3c985.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = tuning.reg, link.reg, jumbo.reg, debug.reg, 3c985.reg
+CopyFiles 	= 3c985.CopyFiles
+
+[3c985.ndi.NT.Services]
+AddService      = el985nd5, 2, 3c985.Service, common.Eventlog
+
+[3c985T.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = tuning.reg, link.reg, BaseT.reg, jumbo.reg, debug.reg, 3c985.reg
+CopyFiles 	= 3c985.CopyFiles
+
+[3c985T.ndi.NT.Services]
+AddService      = el985nd5, 2, 3c985.Service, common.Eventlog
+
+[tuning.reg]
+HKR, Ndi\params\AutoTuning,        ParamDesc,  0, %AutoTuning%
+HKR, Ndi\params\AutoTuning,        default,    0, "1"
+HKR, Ndi\params\AutoTuning,        type,       0, "enum"
+HKR, Ndi\params\AutoTuning\enum,   "0",        0, %off%
+HKR, Ndi\params\AutoTuning\enum,   "1",        0, %on%
+
+HKR, , StatTicks,                  0, "100000"
+HKR, , SendCoalTicks,              0, "1000"
+HKR, , RecvCoalTicks,              0, "1000"
+HKR, , SendCoalMax,                0, "20"
+HKR, , RecvCoalMax,                0, "20"
+HKR, , PciMemInvalidate,           0, "1"
+HKR, , PciReadMax,                 0, "ffffffff"
+HKR, , PciWriteMax,                0, "ffffffff"
+HKR, , PciLatencyTimer,            0, "40"
+HKR, , Fix450GX,                   0, "0"
+HKR, , IntCount,                   0, "1000"
+HKR, , CksumOffload,               0, "1"
+HKR, , LargeSend,                  0, "1"
+
+[link.reg]
+HKR, Ndi\params\LinkNegotiation,        ParamDesc,  0, %LinkNegotiation%
+HKR, Ndi\params\LinkNegotiation,        default,    0, "1"
+HKR, Ndi\params\LinkNegotiation,        type,       0, "enum"
+HKR, Ndi\params\LinkNegotiation\enum,   "0",        0, %off%
+HKR, Ndi\params\LinkNegotiation\enum,   "1",        0, %on%
+
+HKR, Ndi\params\TxFlowControl,          ParamDesc,  0, %TxFlowControl%
+HKR, Ndi\params\TxFlowControl,          default,    0, "0"
+HKR, Ndi\params\TxFlowControl,          type,       0, "enum"
+HKR, Ndi\params\TxFlowControl\enum,     "0",        0, %off%
+HKR, Ndi\params\TxFlowControl\enum,     "1",        0, %on%
+
+HKR, Ndi\params\RxFlowControl,          ParamDesc,  0, %RxFlowControl%
+HKR, Ndi\params\RxFlowControl,          default,    0, "1"
+HKR, Ndi\params\RxFlowControl,          type,       0, "enum"
+HKR, Ndi\params\RxFlowControl\enum,     "0",        0, %off%
+HKR, Ndi\params\RxFlowControl\enum,     "1",        0, %on%
+
+HKR, , FdrFilter,                  0, "0"
+
+[BaseT.reg]
+
+HKR, Ndi\params\FullDuplex,             ParamDesc,  0, %FullDuplex%
+HKR, Ndi\params\FullDuplex,             default,    0, "1"
+HKR, Ndi\params\FullDuplex,             type,       0, "enum"
+HKR, Ndi\params\FullDuplex\enum,        "0",        0, %off%
+HKR, Ndi\params\FullDuplex\enum,        "1",        0, %on%
+
+HKR, Ndi\params\LinkSpeed,              ParamDesc,  0, %LinkSpeed%
+HKR, Ndi\params\LinkSpeed,              default,    0, "1"
+HKR, Ndi\params\LinkSpeed,              type,       0, "enum"
+HKR, Ndi\params\LinkSpeed\enum,         "1000",     0, "1 Gbps"
+HKR, Ndi\params\LinkSpeed\enum,         "100",      0, "100 Mbps"
+HKR, Ndi\params\LinkSpeed\enum,         "10",       0, "10 Mbps"
+
+[jumbo.reg]
+HKR, Ndi\params\JumboFrames,            ParamDesc,  0, %JumboFrames%
+HKR, Ndi\params\JumboFrames,            default,    0, "0"
+HKR, Ndi\params\JumboFrames,            type,       0, "enum"
+HKR, Ndi\params\JumboFrames\enum,       "0",        0, %off%
+HKR, Ndi\params\JumboFrames\enum,       "1",        0, %on%
+
+HKR, Ndi\params\JumboMtu,               ParamDesc,  0, %JumboMtu%
+HKR, Ndi\params\JumboMtu,               default,    0, "1500"
+HKR, Ndi\params\JumboMtu,               type,       0, "dword"
+HKR, Ndi\params\JumboMtu,               min,        0, "1500"
+HKR, Ndi\params\JumboMtu,               max,        0, "9000"
+HKR, Ndi\params\JumboMtu,               step,       0, "100"
+HKR, Ndi\params\JumboMtu,               base,       0, "10"
+
+[debug.reg]
+HKR, Ndi\params\NetworkAddress,               ParamDesc,  0, %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,               default,    0, "0060CF000000"
+HKR, Ndi\params\NetworkAddress,               type,       0, "edit"
+HKR, Ndi\params\NetworkAddress,               optional,   0, "1"
+
+HKR, Ndi\params\SendBdArray,               ParamDesc,  0, %SendBdArray%
+HKR, Ndi\params\SendBdArray,               default,    0, "000200020002000200020002002000200020002000200020002000200020002000200020002000200060"
+HKR, Ndi\params\SendBdArray,               type,       0, "edit"
+
+HKR, Ndi\params\RecvBdArray,               ParamDesc,  0, %RecvBdArray%
+HKR, Ndi\params\RecvBdArray,               default,    0, "000100010001000100010001000100010001000100010001000100010001000100010001000300030015"
+HKR, Ndi\params\RecvBdArray,               type,       0, "edit"
+
+HKR, Ndi\params\SendTicksArray,               ParamDesc,  0, %SendTicksArray%
+HKR, Ndi\params\SendTicksArray,               default,    0, "100010001000100010001000100010001000100010001000100010001000100010001000100010001000"
+HKR, Ndi\params\SendTicksArray,               type,       0, "edit"
+
+HKR, Ndi\params\RecvTicksArray,               ParamDesc,  0, %RecvTicksArray%
+HKR, Ndi\params\RecvTicksArray,               default,    0, "100010001000100010001000100010001000100010001000100010001000100010001000100010001000"
+HKR, Ndi\params\RecvTicksArray,               type,       0, "edit"
+
+HKR, Ndi\params\IntCountArray,               ParamDesc,  0, %IntCountArray%
+HKR, Ndi\params\IntCountArray,               default,    0, "100010001000100010001000100010001000100010001000100010001000100010001000100010001000"
+HKR, Ndi\params\IntCountArray,               type,       0, "edit"
+
+HKR, , NicTracing,                 0, "0"
+HKR, , HostTracing,                0, "1"
+HKR, , DebugPci,                   0, "0"
+
+[3c985.reg]
+HKR, Ndi,               Service,    0, "el985nd5"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+[3c985.Service]
+DisplayName     = %3c985.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\el985n51.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR,, EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\drivers\el985n51.sys"
+HKR,, TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[3c985.CopyFiles]
+el985n51.sys,,,2
+
+;------------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+3c985.CopyFiles    = 12
+
+;------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+3Com             = "3Com"
+
+Source_Disk_Name = "NET3C985"
+AutoTuning       = "Auto Tuning"
+IntCountArray    = "Auto Tuning: IntCountArray"
+RecvBdArray      = "Auto Tuning: RecvBdArray"
+RecvTicksArray   = "Auto Tuning: RecvTicksArray"
+SendBdArray      = "Auto Tuning: SendBdArray"
+SendTicksArray   = "Auto Tuning: SendTicksArray"
+FullDuplex       = "Full Duplex"
+JumboFrames      = "Jumbo Frames"
+JumboMtu         = "Jumbo Frame MTU"
+LinkNegotiation  = "Link Negotiation"
+LinkSpeed        = "Link Speed"
+NetworkAddress   = "Network Address"
+RxFlowControl    = "Rx Flow Control"
+TxFlowControl    = "Tx Flow Control"
+
+On               = "On"
+Off              = "Off"
+
+3c985.DeviceDesc = "3Com Gigabit Ethernet Server NIC (SX/TX)"
+3c985IBM.DeviceDesc = "IBM eServer iSeries Gigabit Ethernet Adapter"
+
+3c985.Service.DispName  = "3Com Gigabit Ethernet Server NIC (SX/TX)"
+3c986.DeviceDesc = "3Com Gigabit Ethernet Server NIC (SX/TX)"
+3c986T.DeviceDesc = "3Com Gigabit Ethernet Server NIC (SX/TX)"
+GenBaseT.DeviceDesc = "3Com Gigabit Ethernet Server NIC (SX/TX)"
+GEN.DeviceDesc         = "3Com Gigabit Ethernet Server NIC (SX/TX)"
+
+;(%VER NET3C985.INF - Installation file for 985 - v1.0.0)

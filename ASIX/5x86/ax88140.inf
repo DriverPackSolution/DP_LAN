@@ -1,0 +1,92 @@
+; AX88140.INF
+;
+; INF file for Windows NT 5.0
+;
+; ASIX AX88140 Based PCI Fast Ethernet Adapter
+;
+; Copyright 1996-1997, ASIX Corporation
+;
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_ASIX%
+LayoutFile  = layout.inf
+
+[Manufacturer]
+%V_ASIX%=ASIX
+
+[ASIX]
+%AX88140.DeviceDesc%=AX88140.ndi, PCI\VEN_125B&DEV_1400
+%AX8814XA.DeviceDesc%=AX88140.ndi, PCI\VEN_125B&DEV_1400&SUBSYS_00000000
+%AX8814XB.DeviceDesc%=AX88140.ndi, PCI\VEN_125B&DEV_1400&SUBSYS_11001186
+%CNETPRO110C.DeviceDesc%=AX88140.ndi, PCI\VEN_125B&DEV_1400&SUBSYS_434E4554
+
+[AX88140.ndi.NTX86]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = AX88140.reg, AX88140.ndi.reg
+CopyFiles       = AX88140.CopyFiles
+
+[AX88140.ndi.NTX86.Services]
+AddService = AX88140, 2, AX88140.Service, AX88140.EventLog
+
+[AX88140.reg]
+;HKR, ,                                      AdapterCFID,    0, 1400125B
+HKR, ,                                      AdapterType,, 5
+HKR, ,                                      BusType,,5
+HKR, ,                                      MediaType,      0, "1"
+HKR, ,                                      BusNumber,, 0
+HKR, ,                                      SlotNumber,, 0
+
+[AX88140.ndi.reg]
+HKR, Ndi,                                   Service,        0, "AX88140"
+HKR, Ndi\Interfaces,                        DefLower,       0, "ethernet"
+HKR, Ndi\Interfaces,                        LowerRange,     0, "ethernet"
+HKR, Ndi\Interfaces,                        DefUpper,       0, "ndis5"
+HKR, Ndi\Interfaces,                        UpperRange,     0, "ndis5"
+HKR, Ndi\Install,                           ,               0, "AX88140.Install"
+
+HKR, Ndi\params\ConnectionType,             ParamDesc,  0, "Connection Type"
+HKR, Ndi\params\ConnectionType,             default,    0, "0"
+HKR, Ndi\params\ConnectionType,             type,       0, "enum"
+HKR, Ndi\params\ConnectionType\enum,        "0",        0, "AutoSense"
+HKR, Ndi\params\ConnectionType\enum,        "8",        0, "100BaseTx"
+HKR, Ndi\params\ConnectionType\enum,        "9",        0, "100BaseTx Full_Duplex"
+HKR, Ndi\params\ConnectionType\enum,        "0B",       0, "100BaseFx"
+HKR, Ndi\params\ConnectionType\enum,        "0C",       0, "100BaseFx Full_Duplex"
+HKR, Ndi\params\ConnectionType\enum,        "2",        0, "10BaseT (Twisted_Pair)"
+HKR, Ndi\params\ConnectionType\enum,        "3",        0, "10BaseT Full_Duplex"
+
+[AX88140.Service]
+DisplayName     = %AX88140.DeviceDesc%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\AX88140.sys
+LoadOrderGroup  = NDIS
+
+[AX88140.CopyFiles]
+AX88140.sys,,,2
+
+[DestinationDirs]
+AX88140.CopyFiles = 12
+
+[AX88140.EventLog]
+AddReg = AX88140.AddEventLog.reg
+
+[AX88140.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[strings]
+; Provider
+; Manufacturers
+V_ASIX="ASIX Electronics"
+; PNP Devices
+AX88140.DeviceDesc="ASIX AX88140 Based PCI Fast Ethernet Adapter"
+AX8814XA.DeviceDesc="ASIX AX8814X Based PCI Fast Ethernet Adapter"
+AX8814XB.DeviceDesc="ASIX AX8814X Based PCI Fast Ethernet Adapter"
+CNETPRO110C.DeviceDesc="CNet PRO110 PCI Fast Ethernet Adapter"
+

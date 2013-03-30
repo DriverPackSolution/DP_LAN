@@ -1,0 +1,98 @@
+; NET8041.INF
+;
+; INF file for Windows XP
+;
+; SMC 10/100 PC Card
+;
+; Copyright 2001, SMC Networks,Inc.
+
+[Version]
+signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_SMC%
+DriverVer   = 02/22/2001,1.00.0222.2001
+
+[Manufacturer]
+%V_SMC%=SMC
+
+[SMC]
+%*SMC8041.DeviceDesc%=SMC8041.ndi,PCMCIA\SMC-8041TX-10/100-PC-Card-3EF9
+
+[SMC8041.ndi.NT]
+Characteristics = 0x4
+BusType         = 8
+AddReg          = SMC8041.reg, common.reg
+CopyFiles       = SMC8041.CopyFiles.Sys
+
+[SMC8041.ndi.NT.Services]
+AddService = SMC8041, 2, SMC8041.Service, SMC8041.EventLog
+;,SMC8041.ndi.LogConfigOverride
+
+
+
+[Common.reg]
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,9,,"100BaseTx Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT (Twisted_Pair)"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+
+
+[SMC8041.ndi.LogConfigOverride]
+LogConfig = SMC8041.LogConfigOverride
+
+[SMC8041.LogConfigOverride]
+IRQConfig=3,4,5,7,9,10,11,12,13,15
+IOConfig=20@200-3FF%FFE0(3FF::)
+ConfigPriority = NORMAL
+
+;-------------------------------------------------------------------------------
+; SMC8041 Drivers and Service
+;
+[SMC8041.reg]
+HKR, Ndi,               Service,    0, "SMC8041"
+HKR, Ndi\Interfaces,    DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,    DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+;HKR,               ,    CardType,   0, "1"
+HKR,               ,    Pcmcia    , 0, "2"
+
+[SMC8041.Service]
+DisplayName     = %Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\SMC8041.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[SMC8041.CopyFiles.Sys]
+SMC8041.sys
+
+[DestinationDirs]
+DefaultDestDir=11
+SMC8041.CopyFiles.Sys = 12
+;SMC8041.CopyFiles.Inf = 17
+
+[SMC8041.EventLog]
+AddReg = SMC8041.AddEventLog.reg
+
+[SMC8041.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[strings]
+Service.DispName =   "SMC 10/100 PC Card Windows Driver"
+; Provider
+; Manufacturers
+V_SMC="SMC"
+; PNP Devices
+*SMC8041.DeviceDesc="SMC 10/100 PC Card"

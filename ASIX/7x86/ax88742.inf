@@ -1,0 +1,188 @@
+;****************************************************************
+; ASIX AX88742 1N2P PCI Ethernet Adapter
+;
+; Copyright 2007-2010, ASIX Electronics Corporation
+;
+; Version: 1.0.5.0 for windows 7 and Vista
+;****************************************************************
+[Version]
+Signature  = "$Windows NT$"
+CatalogFile = ax88742.cat
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %ASIX%
+DriverVer = 04/15/2010, 1.0.5.0
+
+[Manufacturer]
+%ASIX%   = NAPA
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_125B&DEV_7420
+
+[NAPA]
+%AX88742.DeviceDesc% = AX88742.Ndi,PCI\VEN_125B&DEV_7420
+
+;****************************************************************
+[AX88742.Ndi]
+AddReg          = AX88742.NT.Reg, AX88742.Con.Reg
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = CopyFile.Sys
+*IfType         = 6		; IF_TYPE_ETHERNET_CSMACD 
+*MediaType      = 0		; NdisMedium802_3
+*PhysicalMediaType = 14		; NdisPhysicalMedium802_3
+
+[AX88742.Ndi.Services]
+AddService = AX88742, 2, AX88742.Service, Common.EventLog
+
+;****************************************************************
+; Driver parameters
+;****************************************************************
+[AX88742.Con.Reg]
+HKR,Ndi\params\NetworkAddress,ParamDesc,0,"NetworkAddress"
+HKR,Ndi\params\NetworkAddress,type,0,"edit"
+HKR,Ndi\params\NetworkAddress,default,0, "000000000000"
+HKR,Ndi\params\NetworkAddress,LimitText,0,"12"
+HKR,Ndi\params\NetworkAddress,UpperCase,0,"1"
+HKR,Ndi\params\NetworkAddress,Optional,0,"1"
+
+; CheckSum - CheckSum Offload
+HKR,Ndi\params\CheckSum,ParamDesc,0,"TCP/IP CheckSum Offload"
+HKR,Ndi\params\CheckSum,type,,enum
+HKR,Ndi\params\CheckSum,default,,1
+HKR,Ndi\params\CheckSum\enum,1,,"Disable"
+HKR,Ndi\params\CheckSum\enum,2,,"Enable"
+
+; Wake Up
+HKR,Ndi\params\WakeUp,ParamDesc,0,"Wake Up"
+HKR,Ndi\params\WakeUp,type,,enum
+HKR,Ndi\params\WakeUp,default,,1
+HKR,Ndi\params\WakeUp\enum,1,,"Disable"
+HKR,Ndi\params\WakeUp\enum,2,,"Link Change"
+HKR,Ndi\params\WakeUp\enum,3,,"Magic Packet"
+HKR,Ndi\params\WakeUp\enum,4,,"Wake-Up Frame"
+HKR,Ndi\params\WakeUp\enum,5,,"Link Change/Magic Packet"
+HKR,Ndi\params\WakeUp\enum,6,,"Link Change/Wake-Up Frame"
+HKR,Ndi\params\WakeUp\enum,7,,"Magic Packet/Wake-Up Frame"
+HKR,Ndi\params\WakeUp\enum,8,,"All"
+
+;WakeFromPowOff
+HKR,Ndi\params\WakeFromPowOff,ParamDesc,0,"Wake Up from Power Off State"
+HKR,Ndi\params\WakeFromPowOff,type,,enum
+HKR,Ndi\params\WakeFromPowOff,default,,1
+HKR,Ndi\params\WakeFromPowOff\enum,1,,"Disable"
+HKR,Ndi\params\WakeFromPowOff\enum,2,,"Link Change"
+HKR,Ndi\params\WakeFromPowOff\enum,3,,"Magic Packet"
+HKR,Ndi\params\WakeFromPowOff\enum,4,,"Both"
+
+; NumTcb
+HKR, Ndi\params\NumTcb,ParamDesc,  0, "TransmitControlBlocks"
+HKR, Ndi\params\NumTcb,default,    0, "256"
+HKR, Ndi\params\NumTcb,min,        0, "128"
+HKR, Ndi\params\NumTcb,max,        0, "0000001024"
+HKR, Ndi\params\NumTcb,step,       0, "16"
+HKR, Ndi\params\NumTcb,Base,       0, "10"
+HKR, Ndi\params\NumTcb,type,       0, "int"
+
+; NumRfd
+HKR, Ndi\params\NumRfd,ParamDesc,  0, "ReceiveFrameDescriptors"
+HKR, Ndi\params\NumRfd,default,    0, "512"
+HKR, Ndi\params\NumRfd,min,        0, "128"
+HKR, Ndi\params\NumRfd,max,        0, "00001024"
+HKR, Ndi\params\NumRfd,step,       0, "16"
+HKR, Ndi\params\NumRfd,Base,       0, "10"
+HKR, Ndi\params\NumRfd,type,       0, "int"
+
+; Port0 Link mode
+HKR,Ndi\params\Port0LinkMode,ParamDesc,0,"Port0 Link Speed/Duplex Mode"
+HKR,Ndi\params\Port0LinkMode,type,0,enum
+HKR,Ndi\params\Port0LinkMode,default,,1
+HKR,Ndi\params\Port0LinkMode\enum,1,,"AutoNegotiate 10/100"
+HKR,Ndi\params\Port0LinkMode\enum,2,,"100 Full Duplex"
+HKR,Ndi\params\Port0LinkMode\enum,3,,"100 Half Duplex"
+HKR,Ndi\params\Port0LinkMode\enum,4,,"10 Full Duplex"
+HKR,Ndi\params\Port0LinkMode\enum,5,,"10 Half Duplex"
+
+; Port1 Link mode
+HKR,Ndi\params\Port1LinkMode,ParamDesc,0,"Port1 Link Speed/Duplex Mode"
+HKR,Ndi\params\Port1LinkMode,type,0,enum
+HKR,Ndi\params\Port1LinkMode,default,,1
+HKR,Ndi\params\Port1LinkMode\enum,1,,"AutoNegotiate 10/100"
+HKR,Ndi\params\Port1LinkMode\enum,2,,"100 Full Duplex"
+HKR,Ndi\params\Port1LinkMode\enum,3,,"100 Half Duplex"
+HKR,Ndi\params\Port1LinkMode\enum,4,,"10 Full Duplex"
+HKR,Ndi\params\Port1LinkMode\enum,5,,"10 Half Duplex"
+
+; VlanID
+HKR,Ndi\params\VlanID,ParamDesc,0,"VlanID"
+HKR,Ndi\params\VlanID,default,0,"1"
+HKR,Ndi\params\VlanID,type,0,"long"
+HKR,Ndi\params\VlanID,min,0,"0"
+HKR,Ndi\params\VlanID,max,0,"4095"
+HKR,Ndi\params\VlanID,step,0,"1"
+HKR,Ndi\params\VlanID,base,0,"10"
+HKR,Ndi\params\VlanID,base,0,"10"
+HKR,Ndi\params\VlanID,Optional,0,"1"
+
+; Port0 Flow Control
+HKR,Ndi\params\P0FlowCtrl,ParamDesc,0,"Port0 Flow Control"
+HKR,Ndi\params\P0FlowCtrl,type,,enum
+HKR,Ndi\params\P0FlowCtrl,default,,2
+HKR,Ndi\params\P0FlowCtrl\enum,1,,"Disable"
+HKR,Ndi\params\P0FlowCtrl\enum,2,,"Enable"
+
+; Port1 Flow Control
+HKR,Ndi\params\P1FlowCtrl,ParamDesc,0,"Port1 Flow Control"
+HKR,Ndi\params\P1FlowCtrl,type,,enum
+HKR,Ndi\params\P1FlowCtrl,default,,2
+HKR,Ndi\params\P1FlowCtrl\enum,1,,"Disable"
+HKR,Ndi\params\P1FlowCtrl\enum,2,,"Enable"
+
+;****************************************************************
+; Install section for Windows NT 5
+;****************************************************************
+[AX88742.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "AX88742"
+
+HKR,,LogErrorMessages, 0, "1"
+
+[AX88742.Service]
+DisplayName    = %AX88742.DeviceDesc%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\ax88742.sys
+LoadOrderGroup = NDIS
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000,"%%SystemRoot%%\System32\netevent.dll;%%SystemRoot%%\system32\drivers\ax88742.sys"
+HKR, , TypesSupported  , 0x00010001, 7
+
+[CopyFile.Sys]
+ax88742.sys,,,2
+
+;**********************************************************************
+; Destination directories
+;**********************************************************************
+[DestinationDirs]
+CopyFile.Sys	= 12
+
+[SourceDisksNames]
+1=%AX88742.DiskName%,,
+
+[SourceDisksFiles]
+ax88742.sys=1,,ax88742.sys,10000
+
+;**********************************************************************
+; Localizable strings
+;**********************************************************************
+[Strings]
+ASIX = "ASIX"
+AX88742.DiskName = "ASIX AX88742 1N2P PCI Ethernet Driver Diskette"
+AX88742.DeviceDesc = "ASIX AX88742 1N2P PCI Ethernet Adapter"

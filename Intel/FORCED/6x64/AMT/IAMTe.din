@@ -1,0 +1,70 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 1999-2005 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+;*******************************************************************************
+; IAMTe.Din
+; $Revision: 1.0.0.0 $
+;
+;   Version 1.0.0.0
+;
+
+[version]
+Signature   = "$Windows NT$"
+SetupClass  = BASE
+Provider    = %Intel%
+
+[Manufacturer]
+%Intel%     = Intel
+
+[ControlFlags]
+
+[Intel]
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir          = 11
+IAMTe.DelFiles          = 12
+UnInstall.DelFiles      = 11
+
+;----------------------------------------------------------------------------
+; Uninstall
+[IAMTe.Uninstall]
+DelFiles=IAMTe.DelFiles, UnInstall.DelFiles
+DelReg=IAMTe.DelReg
+
+[IAMTe.DelFiles]
+IAMTXPe.sys,,,1
+IAMTVe.sys,,,1
+
+[UnInstall.DelFiles]
+IAMTe.din,,,1
+
+[IAMTe.DelReg]
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\PROSet
+HKLM,Software\INTEL\Prounstl
+HKLM,Software\INTEL\NIC
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Intel                    = "Intel"
+				 

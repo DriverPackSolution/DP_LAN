@@ -1,0 +1,109 @@
+;/*++
+;*******************************************************************************
+; Copyright 2009 Broadcom Corporation.
+;
+; INF for PID_160A - Simple serial communications device
+; INF for PID_16A3 - Broadcom Simple Communications Device
+;
+; This device is a Simple Communications Controller intended for use by
+; BIOS code to allow remote access to the BIOS setup functions from a
+; telnet connection running over the Ethernet port.  It will not be active
+; when an operating system is running, but the function might remain exposed
+; until the chip undergoes a power off reset or the telnet connection requests
+; it be deactivated.
+;
+; InfVersion   1.0.0.1B
+;
+;*******************************************************************************
+;--*/
+;
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+CatalogFile = B57Ports.cat
+Provider    = %BRCM%
+DriverVer   = 06/16/2009,1.0.0.1
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Device Install section =====================
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[Manufacturer]
+%BRCM%=BRCM,NTx86, NTamd64
+
+; For Win2K
+[BRCM]
+; DisplayName           Section             DeviceId
+; -----------           -------             --------
+%B57ports.DRVDESC%  =   B57ports_Inst,      PCI\VEN_14e4&DEV_160A
+%B57nic.DRVDESC%    =   B57ports_Inst,      PCI\VEN_14e4&DEV_16A3
+
+; For XP and later
+[BRCM.NTx86]
+; DisplayName           Section             DeviceId
+; -----------           -------             --------
+%B57ports.DRVDESC%  =   B57ports_Inst,      PCI\VEN_14e4&DEV_160A
+%B57nic.DRVDESC%    =   B57ports_Inst,      PCI\VEN_14e4&DEV_16A3
+
+[BRCM.NTamd64]
+; DisplayName           Section             DeviceId
+; -----------           -------             --------
+%B57ports.DRVDESC%  =   B57ports_Inst,      PCI\VEN_14e4&DEV_160A
+%B57nic.DRVDESC%    =   B57ports_Inst,      PCI\VEN_14e4&DEV_16A3
+
+[B57ports_Inst.NT]
+Characteristics     = 0x0C ; NCF_PHYSICAL | NCF_HIDDEN
+DelReg              = BCM160A.delreg
+AddReg              = BCM160A.reg
+BusType             = 5
+*IfType             = 6          ; IF_TYPE_ETHERNET_CSMACD
+*MediaType          = 0          ; NdisMedium802_3
+*PhysicalMediaType  = 0          ; NdisPhysicalMediumUnspecified
+CopyFiles           = B57ports.CopyFiles
+
+[B57ports.CopyFiles]
+B57Ports.sys,,,1
+
+[SourceDisksFiles]
+B57Ports.sys=1
+
+[SourceDisksNames.x86]
+1 = %DISK_NAME%,,,\i386
+
+[SourceDisksNames.amd64]
+1 = %DISK_NAME%,,,\amd64
+
+[BCM160A.reg]
+HKR,    Ndi,    Service,        0,      ""
+HKR,    ,       UpperRange,     0,      "noupper"
+HKR,    ,       LowerRange,     0,      "nolower"
+
+[BCM160A.delreg]
+HKR,    Ndi,    Service
+HKR,    ,       UpperRange
+HKR,    ,       LowerRange
+
+[B57ports_Inst.NT.Services]
+AddService=B57ports,%SPSVCINST_ASSOCSERVICE%,B57ports_Service
+
+[B57ports_Service]
+DisplayName    = %B57ports.SVCDESC%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\b57ports.sys
+
+[Strings]
+B57ports.SVCDESC        = "Broadcom Simple Communications Device"
+B57ports.DRVDESC        = "Broadcom Simple Communications Device"
+DISK_NAME               = "Broadcom NetXtreme Install Disk"
+BRCM                    = "Broadcom"
+BCM160A                 = "Broadcom Simple Communications Device"
+B57nic.DRVDESC          = "Broadcom Simple Communications Device"
+SPSVCINST_ASSOCSERVICE  = 0x00000002
+

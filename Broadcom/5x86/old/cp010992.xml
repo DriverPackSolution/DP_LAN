@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cpq_package version="2.0.1.0">
+  <filename>cp010992.exe</filename>
+  <divisions>
+    <division key="65">
+      <division_xlate lang="en">Networking</division_xlate>
+      <division_xlate lang="ja">ネットワーク</division_xlate>
+    </division>
+    <division key="6">
+      <division_xlate lang="en">Server</division_xlate>
+      <division_xlate lang="ja">サーバ</division_xlate>
+    </division>
+  </divisions>
+  <operating_systems>
+    <operating_system key="69">
+      <operating_system_xlate>Microsoft Windows Server 2003</operating_system_xlate>
+    </operating_system>
+    <operating_system key="1098">
+      <operating_system_xlate>Microsoft Windows Storage Server 2003</operating_system_xlate>
+    </operating_system>
+  </operating_systems>
+  <category key="11300095">
+    <category_xlate lang="en">Driver - Network</category_xlate>
+    <category_xlate lang="ja">ドライバ - ネットワーク</category_xlate>
+  </category>
+  <id product="8357" version="64aadf41b8b44edbb5ec5d3f3028f0e8"/>
+  <name>
+    <name_xlate lang="en">HP NC-Series Broadcom 1Gb Multifunction Driver for Windows Server 2003</name_xlate>
+    <name_xlate lang="ja">HP NCシリーズBroadcom 1Gbマルチファンクション ドライバー for Windows Server 2003</name_xlate>
+  </name>
+  <alt_name>
+    <alt_name_xlate lang="en">HP NC-Series Broadcom 1Gb Multifunction Driver for Windows Server 2003</alt_name_xlate>
+    <alt_name_xlate lang="ja">HP NCシリーズBroadcom 1Gbマルチファンクション ドライバー for Windows Server 2003</alt_name_xlate>
+  </alt_name>
+  <version value="5.0.16.0" revision="" type_of_change="0"/>
+  <manufacturer_name>
+    <manufacturer_name_xlate lang="en">Hewlett-Packard Development Company, L.P.</manufacturer_name_xlate>
+    <manufacturer_name_xlate lang="ja">Hewlett-Packard Development Company, L.P.</manufacturer_name_xlate>
+  </manufacturer_name>
+  <languages langlist="en, ja">
+    <languages_xlate lang="en">English (US), Japanese</languages_xlate>
+    <languages_xlate lang="ja">英語（US）, 日本語</languages_xlate>
+  </languages>
+  <release_date year="2009" month="8" day="12" hour="7" minute="47" second="29"/>
+  <description>
+    <description_xlate lang="en">
+<![CDATA[This Component Package contains the drivers for the HP NC-Series Broadcom 1Gb Multifunction Server Adapters for Windows Server 2003.  This package contains VBD driver version 5.0.16.0, NDIS 5.2 driver version 5.0.13.0, iSCSI offload driver version 5.0.9.0, diagnostic driver version 5.0.3.0 and crash dump driver version 5.0.8.0.]]>
+</description_xlate>
+    <description_xlate lang="ja">
+<![CDATA[This Component Package contains the drivers for the HP NC-Series Broadcom 1Gb Multifunction Server Adapters for Windows Server 2003.  This package contains VBD driver version 5.0.16.0, NDIS 5.2 driver version 5.0.13.0, iSCSI offload driver version 5.0.9.0, diagnostic driver version 5.0.3.0 and crash dump driver version 5.0.8.0.]]>
+</description_xlate>
+  </description>
+  <prerequisite_notes>
+    <prerequisite_notes_xlate lang="en">
+      <prerequisite_notes_xlate_part>
+<![CDATA[<P>See HP advisory <A href="http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?lang=en&amp;cc=us&amp;objectID=c01684544&amp;jumpid=reg_R1002_USEN">http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?lang=en&amp;amp;amp;cc=us&amp;amp;amp;objectID=c01684544&amp;amp;amp;jumpid=reg_R1002_USEN</A>.</P>
+<P>On a ProLiant server running Windows Server 2003 or Windows Server 2008, if a version of the HP NC-Series Broadcom 1GbE Multifunction Driver for Windows Server earlier than version 4.6.16.0 is installed and an attempt to upgrade the driver to a version later than version 4.6.16.0 is made, the following message is displayed and is written to the cpqsetup.log:</P>
+<P><EM>HP Virtual Bus Device installation requires a newer version. Version 4.6.16.0 is required.</EM></P>]]>
+</prerequisite_notes_xlate_part>
+    </prerequisite_notes_xlate>
+    <prerequisite_notes_xlate lang="ja">
+      <prerequisite_notes_xlate_part>
+<![CDATA[<P>HPアドバイザリ<A href="http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?lang=en&amp;cc=us&amp;objectID=c01684544&amp;jumpid=reg_R1002_USEN">http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?lang=en&amp;cc=us&amp;objectID=c01684544&amp;jumpid=reg_R1002_USEN</A>（英語）を参照してください。</P>
+<P>Windows Server 2003またはWindows Server 2008を実行しているProLiantサーバーで、バージョン4.6.16.0以前のHP NCシリーズBroadcom 1GbEマルチファンクション ドライバー for Windows Serverがインストールされている場合、バージョン4.6.16.0以降のバージョンにアップグレードをして、以下のようなメッセージが表示されて、cpqsetup.logに記録されます。</P>
+<P><EM>「HP Virtual Bus Device installation requires a newer version. Version 4.6.16.0 is required.」</EM></P>]]>
+</prerequisite_notes_xlate_part>
+    </prerequisite_notes_xlate>
+  </prerequisite_notes>
+  <installation_notes>
+    <installation_notes_xlate lang="en">
+      <installation_notes_xlate_part>
+<![CDATA[Download the Smart Component to a directory on your hard drive and change to that directory.<p>From that drive and directory, execute the downloaded file.<p>Click the Install button to proceed with the installation.<br>]]>
+</installation_notes_xlate_part>
+    </installation_notes_xlate>
+    <installation_notes_xlate lang="ja">
+      <installation_notes_xlate_part>
+<![CDATA[スマート コンポーネントをハードディスク ドライブにダウンロードし、そのディレクトリに移動します。<p>そのドライブ、ディレクトリから、ダウンロードしたファイルを実行します。<p>インストール ボタンをクリックして、インストールを開始します。]]>
+</installation_notes_xlate_part>
+    </installation_notes_xlate>
+  </installation_notes>
+  <availability_notes/>
+  <documentation_notes>
+    <documentation_notes_xlate lang="en">
+      <documentation_notes_xlate_part>
+<![CDATA[This component contains the following drivers: 
+<UL>
+<LI>VBD driver version&nbsp;5.0.16.0 
+<LI>NDIS 5.2 driver version 5.0.13.0 
+<LI>iSCSI offload driver version 5.0.9.0 
+<LI>Diagnostic driver version&nbsp; 5.0.3.0 
+<LI>Crash dump driver version 5.0.8.0 </LI></UL>]]>
+</documentation_notes_xlate_part>
+    </documentation_notes_xlate>
+    <documentation_notes_xlate lang="ja">
+      <documentation_notes_xlate_part>
+<![CDATA[This component contains the following drivers: 
+<UL>
+<LI>VBD driver version&nbsp;5.0.16.0 
+<LI>NDIS 5.2 driver version 5.0.13.0 
+<LI>iSCSI offload driver version 5.0.9.0 
+<LI>Diagnostic driver version&nbsp; 5.0.3.0 
+<LI>Crash dump driver version 5.0.8.0 </LI></UL>]]>
+</documentation_notes_xlate_part>
+    </documentation_notes_xlate>
+  </documentation_notes>
+  <revision_history>
+    <revision>
+      <version value="5.0.16.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[Enhanced component-level logging has been implemented in the smart component installer. The generated log file will be located on the target system in %SYSTEMROOT%\cpqsystem\log directory under the name CPQSETUP.LOG.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[Smart Componentインストーラーに拡張コンポーネント レベル ログが実装されました。 生成されるログ ファイルは、ターゲット システムの%SYSTEMROOT%\cpqsystem\logディレクトリのCPQSETUP.LOGという名前です。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="4.6.112.0" revision="" type_of_change="1"/>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>Corrected an issue with iSCSI boot where crashdump would fail to create a dump file when connected through a second port. </P>
+<P>Corrected an issue with TOE that could result in an NMI during shutdown. </P>
+<P>Corrected an issue that would prevent proper linking at 2.5Gb.</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>2番目のポートから接続したときに、ファイル ダンプを作成するためのcrashdumpに失敗する、iSCSIブートの問題を修正しました。 </P>
+<P>シャットダウン中にNMIになるTOEの問題を修正しました。 </P>
+<P>2.5Gbでの正常なリンクを妨げる問題を修正しました。</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="4.6.17.0" revision="C" type_of_change="1"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>The component installer has been updated to recognize if it is running within a virtualized guest environment.</P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>コンポーネント インストーラは、仮想化されたゲスト環境で実行されているかを認識するためにアップデートされました。</P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[The iSCSI Offload driver in this component no longer produces buffer overflows and BSODs in some high stress situations.]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[このコンポーネント内のiSCSIオフロード ドライバは、高負荷の状況でもバッファ オーバーフローおよびBSODを起こさなくなりました。]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="4.6.17.0" revision="B" type_of_change="1"/>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[This component eliminates a pop-up seen during installation of the previous component version.]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[このコンポーネントは、以前のコンポーネント バージョンのインストール中に表示されていたポップアップをなくします。]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="4.6.16.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This component contains the latest available drivers from Broadcom.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このコンポーネントには、Broadcomから利用可能な最新のドライバが含まれています。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="4.4.24.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This software now enables 2.5Gb support on c-class LOMs and mezzanine network adapters.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このソフトウェアは、c-class LOMおよびメザニン ネットワーク アダプタで2.5Gbのサポートを有効にします。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="4.4.23.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>These drivers are the latest available from Broadcom.</P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>これらは、Broadcomから利用可能な最新のドライバです。</P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="4.4.21.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>This component has been renamed to more accurately describe the type of network adapters that it supports. </P>
+<P>This software now supports the HP NC382i, NC382m and HP NC382T network adapters. </P>
+<P>The software now supports booting Windows from an iSCSI target, so you can boot diskless systems from iSCSI devices. </P>
+<P>This software can now create a Windows Crash Dump file from a diskless system and write it to an iSCSI target, so you can provide critical information for problem resolution.</P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>このコンポーネントは、サポートするネットワーク アダプタの種類を正確に表す名前に変更しました。 </P>
+<P>このソフトウェアは、NC382i、NC382m、およびNC382Tネットワーク アダプタをサポートします。 </P>
+<P>このソフトウェアは、iSCSIターゲットからのWindowsの起動をサポートし、iSCSIデバイスからディスク無しでシステム起動できるようになりました。 </P>
+<P>このソフトウェアは、ディスク無しのシステムでWindows Crash Dumpファイルを作成し、iSCSIターゲットに書き込みできるようになり、問題解決のための重要な情報を提供できるようになりました。</P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="4.1.5.0" revision="" type_of_change="1"/>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[This driver no longer remains un-enumerated with valid CAT files when deployed in an iSCSI F6 installation which eliminates Windows BSOD on initial boot of the OS.]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[このドライバは、iSCSI F6インストールでデプロイしたときに、OSの初期ブート時にWindows BSODを除外する、有効なCATファイルに列挙されないままになります。]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="3.7.23.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This driver now supports fully off-loaded iSCSI processing performed by the adapter or LOM, which increases data throughput and improves CPU efficiency.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このドライバは、アダプタまたはデータ スループットを増やしてCPU効率を増加させるLOMで実行されるフル オフロードiSCSI処理をサポートします。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="3.4.10.0" revision="B" type_of_change="1"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>The multifunction driver set has been updated as a KMDF (Kernel Mode Driver Family) for future compatibility with Windows 2008. KMDF drivers require additional co-installer files WUDFUpdate_01005.dll and WdfCoInstaller01005.dll to be present. These files are included in the distribution and landed in Windows System32 folder during the Smart Start Installer execution. </P>
+<P>The RIS drivers for WinPE have been updated. </P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>マルチファンクション ドライバ セットは、Windows 2008との将来の互換性のためにKMDF（カーネル モード ドライバ ファミリ）としてアップデートされました。 KMDFドライバは、共通のインストーラ ファイルWUDFUpdate_01005.dllおよびWdfCoInstaller01005.dllが必要です。 これらのファイルは、ディストリビューションに含まれていて、Smart Startのインストール中にWindows System32フォルダにコピーされます。 </P>
+<P>WinPE用RISドライバをアップデートしました。 </P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>1. This driver fixes a problem where a Windows F6 installation halts when multiple Multifunction Adapters were present in a system. </P>
+<P>2. The NC-Series Multifunction NDIS 5.2 RSS feature now operates with systems with more than 8 processor cores, which eliminates failures. </P>
+<P>3. A data corruption issue has been resolved where SNP, TOE, and Microsoft WinTarget iSCSI components are enabled on a server, which eliminates data failures.</P>
+<P>4. This&nbsp;software longer displays a digital signature pop-up warning when iSCSI is enabled.</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>1. このドライバは、システムに複数のNC370xマルチファンクション アダプタが搭載されている場合、Windows F6インストールが停止する問題を修正します。 </P>
+<P>2. NCシリーズ マルチファンクションNDIS 5.2 RSS機能は、8プロセッサ コアを持つシステムで障害なく動作するようになりました。 </P>
+<P>3. SNP、TOE、およびMicrosoft WinTarget iSCSIコンポーネントが有効にされているサーバで、データ障害無くし、データ損失の問題を解決しました。</P>
+<P>4. このソフトウェアは、iSCSIが有効な場合でもデジタル署名ポップアップ警告が表示されなくなりました。</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="3.4.10.0" revision="" type_of_change="1"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>The multifunction driver set has been updated as a KMDF (Kernel Mode Driver Family) for future compatibility with Windows 2008. KMDF drivers require additional co-installer files WUDFUpdate_01005.dll and WdfCoInstaller01005.dll to be present. These files are included in the distribution and landed in Windows System32 folder during the Smart Start Installer execution. </P>
+<P>The RIS drivers for WinPE have been updated. </P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[<P>マルチファンクション ドライバ セットは、Windows 2008との将来の互換性のためにKMDF（カーネル モード ドライバ ファミリ）としてアップデートされました。 KMDFドライバは、共通のインストーラ ファイルWUDFUpdate_01005.dllおよびWdfCoInstaller01005.dllが必要です。 これらのファイルは、ディストリビューションに含まれていて、Smart Startのインストール中にWindows System32フォルダにコピーされます。 </P>
+<P>WinPE用RISドライバをアップデートしました。 </P>]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>1. This driver fixes a problem where a Windows F6 installation halts when multiple Multifunction Adapters were present in a system. </P>
+<P>2. The NC-Series Multifunction NDIS 5.2 RSS feature now operates with systems with more than 8 processor cores, which eliminates failures. </P>
+<P>3. A data corruption issue has been resolved where SNP, TOE, and Microsoft WinTarget iSCSI components are enabled on a server, which eliminates data failures.</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>1. このドライバは、システムに複数のNC370xマルチファンクション アダプタが搭載されている場合、Windows F6インストールが停止する問題を修正します。 </P>
+<P>2. NCシリーズ マルチファンクションNDIS 5.2 RSS機能は、8プロセッサ コアを持つシステムで障害なく動作するようになりました。 </P>
+<P>3. SNP、TOE、およびMicrosoft WinTarget iSCSIコンポーネントが有効にされているサーバで、データ障害無くし、データ損失の問題を解決しました。</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="3.0.7.0" revision="" type_of_change="1"/>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>Customer cable diagnostics no longer fail when NICs are configured for offline diagnostics which prevents false failures and unnecessary replacement. </P>
+<P>This driver has a fix for a problem where SMB could erroneously be dropped if offloaded, which will prevent session drops and maintain client connectivity. </P>
+<P>NCU now reports session details of an iSCSI booted adapter which allows for easier configuration and use of iSCSI.</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>カスタマ ケーブル診断は、NICがオフラインDiagnosticsで設定されているときでも障害および不必要な置き換えを回避し、失敗しなくなりました。 </P>
+<P>このドライバは、セッションの切断を回避し、クライアントの接続を維持されるように、SMBがオフロードの時にエラーで切断される問題を修正します。 </P>
+<P>NCUは、容易に設定してiSCSIを使用できるようにするために、iSCSIで起動したアダプタのセッションの詳細を報告するようになりました。</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="2.8.22.0" revision="" type_of_change="1"/>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>This driver corrects a problem where data validation could fail or a driver lockup could occur between two HP Servers running Windows Server 2003 when TOE is enabled and disabled continuously.</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[<P>このドライバは、Windows Server 2003を実行している2台のHPサーバの間でTOEの有効無効を繰り返したときに、データのバリデーションに失敗またはドライバがロックする問題を修正します。</P>]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="2.8.18.0" revision="" type_of_change="1"/>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[The Txtsetup files now include catalog files to prevent popup prompts during an F6 installation, which minimizes user input.<BR><BR>The Virtual Bus Driver (bxvbd.sys) has been updated to correct a client-side data corruption problem that occurs when Microsoft Scalable Networking Pack (SNP) is enabled, which allows users to take advantage of advanced networking capabilities, such as TCP/IP Offload Engine (TOE).]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[ユーザ入力を少なくして、F6インストール中のポップアップを省略するために、Txtsetupファイルがカタログ ファイルに含まれるようになりました。
+<BR><BR>TCP/IPオフロード エンジン（TOE）などのアドバンスト ネットワーク機能を使用するためのMicrosoft Scalable Networking Pack（SNP）が有効の場合、クライアント側のデータが破損する問題を修正するように仮想バス ドライバ（bxvbd.sys）をアップデートしました。 ]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="2.8.15.0" revision="B" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This component has been renamed to provide more clarity about which NICs it supports.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このコンポーネントはサポートするNICについてより分かりやすくするために名称を変更しました。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="2.8.15.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This driver now supports the NC373T.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このドライバは、NC373Tをサポートします。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="2.6.17.0" revision="" type_of_change="1"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This driver now provides support for the Microsoft Scalable Networking Pack (SNP) so you can enable TOE and RSS on Multifunction adapters to improve network performance.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このドライバは、Microsoft Scalable Networking Pack（SNP）のサポートを提供します。そのためマルチファンクション アダプタのネットワーク パフォーマンスを向上させるTOEおよびRSSを有効にすることができます。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[This driver now correctly receives packets on any of the alternate MAC addresses, which eliminates incorrect port failures in the Active Path Failover feature.]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[このドライバは、アクティブ パス フェールオーバ機能で誤ったポート障害を排除した、代替MACアドレス上のパケットでも正常に受信するようになりました。]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="2.6.2.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This software now supports the NC373i LOM.<br><p>This software now supports the NC373m and NC374m mezzanine cards.<br><p>This software now supports the NC373F and NC380T NICs.<br><p>Component installer was enhanced to leave the component XML file (cpxxxxxx.xml) in a known location (%SystemDrive%\CPQSYSTEM\) so the HP Management and Version Control agents can retrieve information about the installed components on the server.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このソフトウェアは、NC373i LOMをサポートします。<br><p>このソフトウェアは、NC373m、およびNC374mメザニン カードをサポートします。<br><p>このソフトウェアは、NC373FおよびNC380T NICをサポートします。<br><p>コンポーネント インストーラは、既知の場所（%SystemDrive%\CPQSYSTEM）の中にコンポーネントXMLファイルを残しておくように改善されました。したがってHPマネジメントおよびバージョン コントロール エージェントはサーバにインストールされたコンポーネントについての情報を取得することができます。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="2.5.18.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This driver now supports the NC371i LOM.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このドライバは、NC371i LOMをサポートします。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="2.2.0.0" revision="B" type_of_change="1"/>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[This component resolves an issue where a Microsoft error pop up indicating a issue with advapi32.dll occurred during a reboot after component installation.]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[このコンポーネントは、コンポーネントのインストールの後の再起動の間にMicrosoftのエラーポップアップがadvapi32.dllの問題を示す問題を解決したものです。]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="2.2.0.0" revision="" type_of_change="1"/>
+      <revision_fixes_xlate lang="en">
+        <revision_fixes_xlate_part>
+<![CDATA[This driver no longer divides by zero in certain situations, which previously resulted in a system crash.]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+      <revision_fixes_xlate lang="ja">
+        <revision_fixes_xlate_part>
+<![CDATA[このドライバは、システムがクラッシュするような、特定の状況において0除算がなくなりました。]]>
+</revision_fixes_xlate_part>
+      </revision_fixes_xlate>
+    </revision>
+    <revision>
+      <version value="2.1.3.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[This driver has been updated to provide better performance.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[このドライバは、パフォーマンスを向上させるためにアップデートされました。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+    <revision>
+      <version value="2.0.7.0" revision="" type_of_change="0"/>
+      <revision_enhancements_xlate lang="en">
+        <revision_enhancements_xlate_part>
+<![CDATA[Initial release.]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+      <revision_enhancements_xlate lang="ja">
+        <revision_enhancements_xlate_part>
+<![CDATA[最初のリリースです。]]>
+</revision_enhancements_xlate_part>
+      </revision_enhancements_xlate>
+    </revision>
+  </revision_history>
+  <sw_keys>
+    <sw_keys_and>
+      <sw_key name="bxvbdx.sys">
+        <sw_key_expectedpath>%systemroot%\system32\drivers</sw_key_expectedpath>
+      </sw_key>
+    </sw_keys_and>
+  </sw_keys>
+  <prerequisites>
+    <supported_operating_systems>
+      <supported_operating_system platform="nt" major="5" minor="2" sr="OEM" name="Microsoft Windows Server 2003"/>
+      <supported_operating_system platform="nt" major="5" minor="2" sr="OEM" name="Microsoft Windows Storage Server 2003"/>
+    </supported_operating_systems>
+    <supported_devices>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">164A</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">3106</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">164C</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">7038</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">164A</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">3101</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">16AA</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">3102</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">16AA</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">310C</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">164A</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">3070</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">16AC</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">703B</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">164A</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">1709</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">16AC</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">1706</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">16AC</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">703D</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">164C</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">7045</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">164C</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">7037</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">1639</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">7055</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">1639</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">7059</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+      <supported_devices_and>
+        <supported_device type="pci">
+          <supported_device_data name="ven">14E4</supported_device_data>
+          <supported_device_data name="dev">163A</supported_device_data>
+          <supported_device_data name="subven">103C</supported_device_data>
+          <supported_device_data name="subdev">171D</supported_device_data>
+        </supported_device>
+      </supported_devices_and>
+    </supported_devices>
+    <required_diskspace size_kb="100"/>
+  </prerequisites>
+  <installation>
+    <install>
+      <install_caps silent="yes" needuseracct="no"/>
+      <command>cpqsetup.exe</command>
+      <command_params></command_params>
+      <reboot_required value="no"/>
+    </install>
+    <uninstall>
+      <uninstall_caps silent="no"/>
+      <command></command>
+      <command_params></command_params>
+      <reboot_required value="no"/>
+    </uninstall>
+  </installation>
+</cpq_package>

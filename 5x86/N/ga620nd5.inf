@@ -1,0 +1,175 @@
+;  NETGA620.INF
+;
+; Copyright (c) Alteon Networks, Inc. 1996-2000
+;
+; Setup INF file for NETGEAR GA620 Gigabit Ethernet Card
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Netgear%
+DriverVer   = 04/10/2000
+
+[SourceDiskNames]
+1="NetGear Gigabit Ethernet Adapter Disk","",0
+
+[SourceDiskFiles]
+ga620nd5.sys = 1,,
+netga620.inf = 1,,
+
+[Manufacturer]
+%Netgear%=Netgear
+
+[ControlFlags]
+;ExcludeFromSelect = PCI\VEN_1385&DEV_620A 
+
+[Netgear]
+%ga620.DeviceDesc% = ga620.ndi, PCI\VEN_1385&DEV_620A   
+%ga630.DeviceDesc% = ga630.ndi, PCI\VEN_1385&DEV_630A   
+
+;------------------------------------------------------------------------------
+; NETGEAR GA620 Gigabit Ethernet Card
+;
+[ga620.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = tuning.reg, link.reg, debug.reg, ga620.reg 
+CopyFiles 	= ga620.CopyFiles
+
+[ga620.ndi.NT.Services]
+AddService      = ga620nd5, 2, ga620.Service, common.Eventlog
+
+[ga630.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = tuning.reg, link.reg, ga620.reg, debug.reg, BaseT.reg 
+CopyFiles 	= ga620.CopyFiles
+
+[ga630.ndi.NT.Services]
+AddService      = ga620nd5, 2, ga620.Service, common.Eventlog
+
+[BaseT.reg]
+
+HKR, Ndi\params\FullDuplex,             ParamDesc,  0, %FullDuplex%
+HKR, Ndi\params\FullDuplex,             default,    0, "1"
+HKR, Ndi\params\FullDuplex,             type,       0, "enum"
+HKR, Ndi\params\FullDuplex\enum,        "0",        0, %off%
+HKR, Ndi\params\FullDuplex\enum,        "1",        0, %on%
+
+HKR, Ndi\params\LinkSpeed,              ParamDesc,  0, %LinkSpeed%
+HKR, Ndi\params\LinkSpeed,              default,    0, "1"
+HKR, Ndi\params\LinkSpeed,              type,       0, "enum"
+HKR, Ndi\params\LinkSpeed\enum,         "1000",     0, "1 Gbps"
+HKR, Ndi\params\LinkSpeed\enum,         "100",      0, "100 Mbps"
+HKR, Ndi\params\LinkSpeed\enum,         "10",       0, "10 Mbps"
+
+[tuning.reg]
+HKR, , StatTicks,                  0, "100000"
+HKR, , SendCoalTicks,              0, "1000"
+HKR, , RecvCoalTicks,              0, "1000"
+HKR, , SendCoalMax,                0, "20"
+HKR, , RecvCoalMax,                0, "20"
+HKR, , PciMemInvalidate,           0, "1"
+HKR, , PciReadMax,                 0, "ffffffff"
+HKR, , PciWriteMax,                0, "ffffffff"
+HKR, , PciLatencyTimer,            0, "40"
+HKR, , Fix450GX,                   0, "0"
+HKR, , IntCount,                   0, "1000"
+
+[link.reg]
+HKR, Ndi\params\LinkNegotiation,        ParamDesc,  0, %LinkNegotiation%
+HKR, Ndi\params\LinkNegotiation,        default,    0, "1"
+HKR, Ndi\params\LinkNegotiation,        type,       0, "enum"
+HKR, Ndi\params\LinkNegotiation\enum,   "0",        0, %off%
+HKR, Ndi\params\LinkNegotiation\enum,   "1",        0, %on%
+
+HKR, Ndi\params\TxFlowControl,          ParamDesc,  0, %TxFlowControl%
+HKR, Ndi\params\TxFlowControl,          default,    0, "0"
+HKR, Ndi\params\TxFlowControl,          type,       0, "enum"
+HKR, Ndi\params\TxFlowControl\enum,     "0",        0, %off%
+HKR, Ndi\params\TxFlowControl\enum,     "1",        0, %on%
+
+HKR, Ndi\params\RxFlowControl,          ParamDesc,  0, %RxFlowControl%
+HKR, Ndi\params\RxFlowControl,          default,    0, "1"
+HKR, Ndi\params\RxFlowControl,          type,       0, "enum"
+HKR, Ndi\params\RxFlowControl\enum,     "0",        0, %off%
+HKR, Ndi\params\RxFlowControl\enum,     "1",        0, %on%
+
+HKR, Ndi\params\NetworkAddress,         ParamDesc,  0, %NetworkAddress% 
+HKR, Ndi\params\NetworkAddress,         default,    0, ""0060CF000000""
+HKR, Ndi\params\NetworkAddress,         type,       0, "edit"
+HKR, Ndi\params\NetworkAddress,         optional,   0, "1"
+
+[debug.reg]
+HKR, , NicTracing,                 0, "0"
+HKR, , HostTracing,                0, "1"
+HKR, , DebugPci,                   0, "0"
+
+[ga620.reg]
+HKR, Ndi,               Service,    0, "ga620nd5"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+[ga620.Service]
+DisplayName     = %ga620.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ga620nd5.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR,, EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\drivers\ga620nd5.sys"
+HKR,, TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[ga620.CopyFiles]
+ga620nd5.sys,,,2
+
+;------------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+ga620.CopyFiles    = 12
+
+;------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Netgear          = "Netgear"
+MSFT             = "Microsoft"
+
+StatTicks        = "StatTicks"
+SendCoalTicks    = "SendCoalTicks"
+RecvCoalTicks    = "RecvCoalTicks"
+SendCoalMax      = "SendCoalMax"
+RecvCoalMax      = "RecvCoalMax"
+PciMemInvalidate = "PciMemInvalidate"
+PciReadMax       = "PciReadMax"
+PciWriteMax      = "PciWriteMax"
+PciLatencyTimer  = "PciLatencyTimer"
+Fix450GX         = "Fix450GX"
+LinkNegotiation  = "LinkNegotiation"
+TxFlowControl    = "TxFlowControl"
+RxFlowControl    = "RxFlowControl"
+NicTracing       = "NicTracing"
+HostTracing      = "HostTracing"
+DebugPci         = "DebugPci"
+FullDuplex       = "FullDuplex"
+LinkSpeed        = "LinkSpeed"
+NetworkAddress   = "NetworkAddress"
+
+On               = "On"
+Off              = "Off"
+
+ga620.DeviceDesc = "NETGEAR GA620 Gigabit Ethernet Card"
+ga630.DeviceDesc = "NETGEAR GA620T 10/100/1000 Ethernet Card"
+
+ga620.Service.DispName  = "NETGEAR GA620 Gigabit Ethernet Card"

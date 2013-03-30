@@ -1,0 +1,1 @@
+winsetupx64 -s -p -i

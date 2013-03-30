@@ -1,0 +1,145 @@
+; NETCOKK.INF
+;
+; corega FEtherII PCC-TXD LAN Card INF file for Windows 98/Me/2000
+;
+; Copyright (C) corega K.K. 2000
+
+[Version]
+Signature  ="$Windows NT$"
+Class      =Net
+ClassGUID  ={4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   =%corega%
+LayoutFile =layout.inf
+DriverVer  =2/10/2002,1.1.0.0
+
+;
+; Table of Contents
+;
+[Manufacturer]
+%V_corega%=corega
+
+; sections for Win98/Me
+;-------------------------------------------------------------
+[corega]
+%CO2DPCX5%=CO2DPCX5.ndi,PCMCIA\corega_K.K.-corega_FEtherII_PCC-TXD-BC50
+
+[CO2DPCX5.ndi]
+AddReg=CO2DPCX5.ndi.reg,CO2DPCX5.params.reg
+CopyFiles=CO2DPCX5.CopyFiles,Inf.CopyFiles
+
+
+[CO2DPCX5.ndi.reg]
+HKR,,DevLoader,0,*ndis
+HKR,,DeviceVxDs,0,CO2DPCX5.sys
+HKR,,EnumPropPages,0,netdi.dll
+HKR,Ndi,DeviceID,0,PCMCIA\corega_K.K.-corega_FEtherII_PCC-TXD-BC50
+HKR,Ndi,CardType,0,PCMCIA
+HKR,NDIS,LogDriverName,0,CO2DPCX5
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0a
+HKR,Ndi\Interfaces,DefUpper,0,ndis3
+HKR,Ndi\Interfaces,DefLower,0,ethernet
+HKR,Ndi\Interfaces,UpperRange,0,ndis3
+HKR,Ndi\Interfaces,LowerRange,0,ethernet
+; Install sections
+HKR,Ndi\Install,ndis3,,"CO2DPCX5.ndis3"
+
+[CO2DPCX5.ndis3]
+CopyFiles=CO2DPCX5.CopyFiles
+
+[CO2DPCX5.CopyFiles]
+CO2DPCX5.SYS
+
+[CO2DPCX5.params.reg]
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,,NDI\params\InterruptNumber,0,1
+HKR,,Ndi\params\interruptNumber,0,
+HKR,,NDI\params\InterruptNumber,0,1
+HKR,,NDI\params\IOBaseAddress,0,1
+HKR,,NDI\params\IOBaseAddress,0,
+HKR,,NDI\params\IOBaseAddress,0,1
+
+[CO2DPCX5.Common.reg]
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"Auto-Negotiation"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,9,,"100BaseTx Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT (Twisted_Pair)"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+; sections for Win2000
+;--------------------------------------------------------------
+[CO2DPCX5.ndi.NT]
+Characteristics = 0x84
+BusType         = 8      ; PCMCIA Bus
+AddReg          = CO2DPCX5.Common.reg,CO2DPCX5.ndi.NT.reg
+CopyFiles       = CO2DPCX5.NT.CopyFiles
+
+[CO2DPCX5.ndi.NT.Services]
+AddService = CO2DPCX5, 2, CO2DPCX5.Service, CO2DPCX5.AddEventLog
+
+;-------------------------------------------------------------------------------
+; Service and Driver
+;
+[CO2DPCX5.ndi.NT.reg]
+HKR, Ndi, Service, 0, "CO2DPCX5"
+HKR,Ndi\Interfaces,DefUpper,,"ndis5"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,0,"ndis5"
+HKR,Ndi\Interfaces,LowerRange,0,"ethernet"
+
+[CO2DPCX5.NT.CopyFiles]
+CO2DPCX5.sys,,,2
+
+[CO2DPCX5.Service]
+DisplayName         =   %Service.DispName%
+ServiceType         =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType           =   3 ;%SERVICE_AUTO_START%
+ErrorControl        =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary       =   %12%\CO2DPCX5.sys
+LoadOrderGroup      =   NDIS
+
+[CO2DPCX5.AddEventLog]
+AddReg = CO2DPCX5.AddEventLog.reg
+
+[CO2DPCX5.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000,"%%SystemRoot%%\System32\netevent.dll,%%SystemRoot%%\System32\drivers\CO2DPCX5.sys"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+HKR,    ,   TextModeFlags,      0x00010001,0x0001
+
+[Inf.CopyFiles]
+;CO2DPCX5.INF
+
+[DestinationDirs]
+DefaultDestDir=11
+CO2DPCX5.CopyFiles=11
+CO2DPCX5.NT.CopyFiles=12
+Inf.CopyFiles=17        ; Windows Inf Directory
+
+[SourceDisksNames]
+1=%Disk_Desc%,,,
+
+[SourceDisksFiles]
+CO2DPCX5.SYS=1
+
+;
+; Translatable strings
+;
+[Strings]
+
+; Manufacturer names
+;
+corega="corega K.K."
+
+; Adapter names
+;
+V_corega="corega K.K."
+CO2DPCX5="corega FEtherII PCC-TXD LAN Card"
+Disk_Desc="corega FEtherII PCC-TXD Driver Disk"
+Service.DispName    =   "corega FEtherII PCC-TXD LAN Card"
+

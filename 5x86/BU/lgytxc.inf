@@ -1,0 +1,118 @@
+; BUFFALO LGY-PCI-TXC Fast Ethernet Adapter
+; INF file for Windows2000
+;
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[Version]
+Signature   = "$Chicago$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_MELCOINC%
+
+[Manufacturer]
+%V_MELCOINC%=MELCOINC
+
+;----------------------------------------------------------------------------
+; Device section
+;
+[MELCOINC]
+%sis0900.DeviceDesc%=sis0900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_030E1154
+
+;----------------------------------------------------------------------------
+; Install sections
+;
+; Windows NT specific
+
+[sis0900.ndi.NT]
+Characteristics = 0x4; NCF_PHYSICAL
+CopyFiles = sisnic.CopyFiles.NT
+AddReg    = sis0900.reg, nt5.reg
+BusType   = 5
+
+[sis0900.ndi.NT.Services]
+AddService = SISNIC, 2, sisnic.Service, common.EventLog
+
+;----------------------------------------------------------------------------
+; Device registration; not needed by NT
+;
+
+[sis0900.id.reg]
+HKR,Ndi,DeviceID,0,"PCI\VEN_1039&DEV_0900"
+
+;----------------------------------------------------------------------------
+; Common driver parameters
+;
+
+[sis0900.reg]
+HKR,Ndi\params\MediaType,ParamDesc,,"ConnectionType"
+HKR,Ndi\params\MediaType,default,,000
+HKR,Ndi\params\MediaType,type,,enum
+HKR,Ndi\params\MediaType\enum,000,,"Auto Negotiation"
+HKR,Ndi\params\MediaType\enum,008,,"10BASE-T Half_Duplex"
+HKR,Ndi\params\MediaType\enum,010,,"10BASE-T Full_Duplex"
+HKR,Ndi\params\MediaType\enum,020,,"100BASE-TX Half_Duplex"
+HKR,Ndi\params\MediaType\enum,040,,"100BASE-TX Full_Duplex"
+HKR,Ndi\params\MediaType,flag,1,20,00,00,00
+
+
+;-----------------------------------------------------------------------------
+; Ndi object registration
+;
+;NT specific
+[nt5.reg]
+HKR, Ndi,                       Service,    0, "SISNIC"
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+
+;----------------------------------------------------------------------------
+; Services Sections for NT
+;
+
+[sisnic.Service]
+DisplayName     = %sisnic.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\lgytxc.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;----------------------------------------------------------------------------
+; Copy files
+;
+[DestinationDirs]
+DefaultDestDir=11
+sisnic.CopyFiles.NT = 12
+inf.CopyFiles=17
+
+[SourceDisksNames]
+1="LGY-PCI-TXC Driver Disk",,0000-0000
+
+[SourceDisksFiles]
+netltxc.inf=1
+lgytxc.sys=1
+
+[inf.CopyFiles]
+
+[sisnic.CopyFiles.NT]
+lgytxc.sys
+
+;----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+V_MELCOINC="MELCO INC."
+sis0900.DeviceDesc    = "BUFFALO LGY-PCI-TXC Fast Ethernet Adapter"
+sisnic.Service.DispName = "BUFFALO LGY-PCI-TXC Fast Ethernet Adapter"
+

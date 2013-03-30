@@ -1,0 +1,1896 @@
+                          ============================
+                           R E L E A S E    N O T E S
+                          ============================
+
+                       Broadcom NetLink (TM) Gigabit Ethernet Driver
+                For Windows 2003  32/64 bit versions, Windows XP 32/64 bit,
+                          Windows 2000, Windows ME, Win98/SE.
+
+                  Copyright (c) 2000-2011 Broadcom Corporation
+                               All rights reserved.
+
+
+Version 14.8.0.6B  April 27, 2012
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ62839 - Please disable flow control for all OEM SSIDs for 15.0 gold drivers
+      Change:
+        disable flow control based on SSIDs
+      Impact:
+        None.
+
+Version 14.8.0.6A  Dec 16, 2011
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ59925 - disable flow control by default for OEM system.
+      Change:
+        Make inf changes to disable flow control for OEM system.
+      Impact:
+        None.
+
+  2.  Request:
+        CQ59926,CQ59997 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+
+Version 14.8.0.6  Nov 24, 2011
+----------------------------------------
+  1.  Problem:
+        CQ55935 - OEM reports that NMI will happen after manually crash the system.
+      Cause:
+        The API RtlCopyMemory() driver uses to copy the data from device's internal memory to host memory
+        (allocated for crash dump) is generating illegal memory read cycle that makes system get NMI.
+      Change:
+        Use alternative way to copy the data from device's internal memory to the buffer for crash dump.
+      Impact:
+        None.
+
+  2.  Problem:
+        CQ59900 - System hang observed on boot-up progrssion bar in Win XP when sharing IRQ with other WiFi NIC.
+      Change:
+        Implement the workaround that makes driver not to access device interrupt mailbox register 
+        before interrupt is enabled during initialization.
+      Impact:
+        None.
+
+
+Version 14.8.0.5B  Jun 07, 2011
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ55662 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+
+Version 14.8.0.5A  May 17, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request
+        CQ55635 - Update Product_Version String to 16.8.0 for Release 14.8
+      Change:
+        Change the product version as required.
+      Impact:
+        None.
+
+
+Version 14.8.0.5  May 10, 2011
+----------------------------------------
+  1.  Problem:
+        CQ54056 - BSOD 0xD1 or traffic stop observed when running copy compare test on OEM's platform               
+      Change:
+        1. Set FTS to 44 for 57761/57765/57781/57785 B0 family devices only.
+        2. Apply CQ55444 workaround on 57761/57765/57781/57785 B0 family devices as well.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ55444 - Tx small fragments (less than 8 bytes) coalesce workaround should be applied for all effect controllers. 
+      Change:
+        For all affected devices, coalesce SBDs if there is a SBD with length less or equal than 8 bytes.
+      Impact:
+        None.
+
+
+Version 14.8.0.4  April 19, 2011
+----------------------------------------
+  1.  Problem:
+        The link flap happened on a third party EEE capable switch.
+      Cause:
+        A software workaround for EEE PHY interoperability issue is not right.
+      Change:
+        Modified the software workaround for EEE PHY interoperability issue.		 
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Replace EEE registry key from "EeePhyEnable" to MSFT standardized keyword "*EEE".
+      Impact:
+        None.
+
+
+Version 14.8.0.3  Apr 01, 2011
+----------------------------------------
+  1.  Problem:
+        CQ54056 - BSOD 0xD1 or traffic stop observed when running copy compare test on OEM's platform               
+      Change:
+        Driver needs to set FTS to 44 as steps indicated below
+        1. Setbit 0x3668[18]=1
+        2. Setbit 0x6800[22]=0, 0x6800[29]=1, 0x6800[31]=0
+        3. Set 0x7c0c[7:0] = 0x2C
+      Impact:
+        The change applies to 57761/57765/57781/57785 family devices only.
+
+
+Version 14.8.0.2  Mar 04, 2011
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ53246 - Add reg key to disable gig for specific OEM platform.
+      Change:
+        Make inf changes as requested.
+      Impact:
+        None.
+
+
+Version 14.8.0.1  Feb 15, 2011
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        Disable CQ35234 workaround when WOL is disabled.
+      Change:
+        The workaround is only needed when WOL is enabled.
+      Impact:
+        The change is for 5761/5764/5784 family devices.
+
+  2.  Request:
+        Change the Copyright information to include 2011 for all SW modules
+      Change:
+        Change the Copyright information to include 2011 in related files.
+
+  3.  Request:
+        Disable EEE LPI bit when the link partner is not EEE capable.
+      Change:
+        Disable EEE LPI bit when the link partner is not EEE capable.
+
+Version 14.8.0.0  Feb 03, 2011
+----------------------------------------
+  1.  Problem:
+        CQ52098 - Certain switches causes connectivity loss during protocol bringup.
+      Cause:
+        Issue is related to iscsi interaction with vlan tag. Driver was trying to read VLAN setting
+        from Nvram for iscsi block, but the device uses OTP. Because of this, wrong VLAN info is used.               
+      Change:
+        For self boot and OTP, driver needs to skip the code which is only for legacy boot code.
+      Impact:
+        None
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ52310 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+
+Version 14.6.0.2  Jan 11, 2011
+----------------------------------------
+  1.  Problem:
+        CQ51828 - 57781 A0 copy compare test traffic stop/D1 BSOD when running in 10M half mode.        
+      Change:
+        OTP patch does not set up FTS, device needs driver to set FTS to 44.
+      Impact:
+        None
+
+  2.  Problem:
+        CQ51705 - 57781A0:USB3.0 device will be removed on resuming from S3/S4 if our driver is enabled 
+      Cause:
+        When driver is doing a GRC Reset, device will lose connection temporarily and run into LAP 
+        (Link Aware Power) mode which makes device run at slower clock. This makes bootcode take longer
+        time to finish the initilization. While driver is waiting bootcode to deposit the ~KevT signature, 
+        it will halt the CPU for waiting and then keep checking the signature from shared memory, the loop 
+        may last up to about 500ms, this may cause time-out of other driver.
+      Change:
+        Change CPMU Clock Policy Registers to increase the Core Clock Speed before issue
+        a GRC reset and restore these registers after boot code has completed initialization.
+      Impact:
+        None.
+
+  3.  Problem:
+		EEE PHY interoperability issue.
+      Change:
+		Implement a software workaround.		 
+      Impact:
+        None.
+
+  4.  Problem:
+        CQ51828 - 57781 A0 copy compare test traffic stop/D1 BSOD when running in 10M half mode.        
+      Cause:
+        The receive return produce index in MSI-X status block is incorrect and it makes driver
+        to access wrong memory access while indicating received packets to OS then cause system to 
+        run into BSOD with bugcheck D1.
+      Change:
+        Set "Link Idle Power Mode Clock Policy" to 6.25Mhz to make device core clock run faster in 
+        Link Idle Power Mode. The original default setting is 3.125 Mhz.
+      Impact:
+        None
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ51229 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request:
+        Adding support for new private OID "T3_OID_ASPEN_AHB_RESET".
+      Change:	
+        When xD driver detects a global CR reset is necessary, it will send an OID to LAN driver if lan is enabled.
+        Upon reception of the OID, the LAN driver CLEAR bit_23 of 0x36e4 (AHB Reset), then SET BIT_23 of 0x3e64.
+      Impact:
+        None.
+
+  3.  Request:
+        CQ52135 - Disable gigabit capability for specific OEM platform.
+      Change:
+        Make inf changes as requested.
+      Impact:
+        None.
+
+
+Version 14.6.0.1  Nov 19, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+  	    Add EEE Control Policies.
+      Impact:
+        None.
+
+  2.  Request:
+        CQ51119 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.  
+
+
+Version 14.6.0.0  Nov 12, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ50864 - Aspen Inf update for OEM system's EEE setting.
+      Change:
+        Add EEE support for OEM systems with 57781 B0.
+      Impact:
+        None.
+
+  2.  Request:
+        Restore EEE support for 14.4b driver release.
+      Change:
+        Make changes as requested.
+
+
+Version 14.4.0.3  Nov 01, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        LAN Driver needs to force the Core Clock to 6.25MHz when the Ethernet Link is in 10Mb mode.
+      Change:
+        Apply the workaround on 57765/57785 B0 family devies.
+      Impact:
+        None.
+
+  2.  Request:
+        Remove EEE support for 14.4a driver release.
+      Change:
+        Make changes as requested.
+      Impact:
+        None.
+
+
+Version 14.4.0.2  Oct 13, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ50172,CQ50342 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request:
+        Modified EEE code for 57785/57765 B0.
+      Impact:
+        None.
+
+  3.  Request
+        CQ50288 - Update Product_Version String to 16.4.0 for Release 14.4
+      Change:
+        Change the product version as required.
+      Impact:
+        None.
+
+
+Version 14.4.0.1  Sep 29, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ49623 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request:
+        CQ50047 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+        
+Version 14.4.0.0 Jul 28, 2010
+----------------------------------------
+  1. Problem:
+       CQ48805 - 5785 cannot wake from Magic Packet when WOL Speed is set to "Lowest Advertised Speed".	
+     Cause:
+       GPHY RXC clock is running at incorrect speed (25 MHz instead of 2.5 MHz) 
+       when GPHY Inband function is enabled and device is linked at 10Mbps.
+     Change:
+       Forced RXC to 2.5MHz when WOL speed is linked at "Lowest Advertised Speed" (10Mbps).
+     Note:
+       This workaround is for 50612E A0 PHY only.
+  
+  2. Problem:
+       CQ48806 - 5785 got the error code 10 when run load/unload device and plug/unplug the cable.   
+     Cause:
+       50612E A0 PHY enables APD by default after resetting. APD caused PHY locked so that PHY IDs were missed. 
+     Change:
+       Avoid resetting when running load/unload device.
+     Note:
+       This workaround is for 50612E A0 PHY only. 
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ48376, CQ48755, CQ48939, CQ49048 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request
+        CQ48518 - Update Product_Version String to 16.0.0 for Release 14.2
+      Change:
+        Change the product version as required.
+      Impact:
+        None.
+
+  3.  Request:
+        Restore EEE from driver advanced properties for the 14.4 driver release
+      Change:
+        Make inf change as request to restore EEE from driver advanced properties.
+      Impact:
+        For 57765/57785 family devices only.
+
+  4.  Request:
+        Driver doesn¡¦t clear reg 0x6c [9:7] for 57765/57785 family devices
+        and let bootcode have control for it.
+      Change:
+        Make change as requested.
+      Impact:
+        None.
+
+
+Version 14.2.0.7  Jun 08, 2010
+----------------------------------------
+  1.  Problem:
+        CQ47938 - 5785: fail to pass traffic at 10M speed 
+      Cause:
+        GPHY RXC clock is running at incorrect speed (25 MHz instead of 2.5 MHz) 
+        when GPHY Inband function is enabled and device is linked at 10Mbps.
+      Change:
+        Forced RXC to 2.5 MHz when device is linked at 10Mbps.
+      Note:
+        The workaround is for 50612E A0 phy.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ48204 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+
+Version 14.2.0.6  Jun 06, 2010
+----------------------------------------
+  1.  Problem:
+        CQ48141 - 5785:EEE, Link Flap while setting the speed to 100M.
+      Change:
+        Disable EEE advertisement and autogreen mode when speed is forced at 100F/100H.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Remove EEE from driver advanced properties for the 14.2 driver release
+      Change:
+        Make inf change as request to remove EEE from driver advanced properties.
+      Impact:
+        For 57765/57785 family devices only.
+
+
+Version 14.2.0.5  May 21, 2010
+----------------------------------------
+  1.  Problem:
+        1c_oidswmi test in NDISTest6.0 fails with v14.2.0.4 under XP-x86 and 2k3-x64.
+      Cause:
+        Test is unable to query the data for GUID added for Broadcom APE WMI Event.
+      Change:
+        Add flag in NDIS_GUID structure to map a GUID to a customized OID and add the customized OID
+        support in MiniportQueryInformation() so that test can query the data successfully.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ47753 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request:
+        CQ45004 - Add B50612 EEE PHY support on 5785.
+      Change:
+        Make code change to let device work with 50612 PHY.
+      Impact:
+        None.
+
+
+Version 14.2.0.4  Apr 30, 2010
+----------------------------------------
+  1.  Problem:
+        Driver's crash dump function doesn't work with Windows XP SP2.
+      Cause:
+        Driver uses the function KeTestSpinLock() to determine if it's the OS that driver should support for 
+        crash dump function. However, KeTestSpinLock() is available on Windows 2003 or later version, but 
+        it's not exported in Windows XP, this makes driver fail to register the BugCheckCallback routine.
+      Change:
+        Change the method to make crash dump function work for the OS that driver supports.
+      Impact:
+        None.
+
+  2.  Problem:
+        CQ46602 - 57765 traffic broken when running chariot TX at 100M with jumbo enabled
+      Cause:
+        A control bit to enable/disable the Hw fix for CQ12429 is unexpectedly cleared by driver.        
+      Change:
+        Enable the control bit back for fixing TxMBUF Lockup issue.
+      Impact:
+        None.
+
+
+Version 14.2.0.3  Apr 09, 2010
+----------------------------------------
+  1.  Problem:
+        The "Last Driver State" (shared memory 0xC04) is incorrect when driver is unloaded with no WOL.
+      Change:
+        Fix the code error to make driver report correct state when it's unloaded.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Add the following changes in driver in order to support customer who uses OTP implementation.
+        1) Driver needs to set bit 31 in register PCIE Physical Layer Register 0x1814 to disable clkreq in L2 to 
+           workaround a chipset bug.
+        2) Driver needs to clear bits [9:7] of PCIE Configuration Space in Function 0 Register 0x6C.  
+           This is needed to ensure the SD Host Controller does not lock up.
+        3) LAN Driver needs to force the Core Clock to 6.25MHz when the Ethernet Link is in 10Mb mode.  
+           This is needed in order to workaround a Hardware synchronization issue in the DMA Read Engine to 
+           prevent Fatal Error from stopping the transmitting logic.
+      Note: the changes are for 57765/57785 family devices only
+
+
+Version 14.2.0.2  Apr 02, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ44978 - Use *ReceiveBuffers registry key for NDIS6.x and NDIS5.x driver. 
+      Change:
+        replace the registry keys with MSFT definition keys.
+      Impact:
+        None.
+
+  2.  Request:
+        CQ46609,CQ45766 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  3.  Request:
+        CQ46736 - remove fix for CQ39683, CQ40054 from Windows drivers (ndis5, Ndis6)
+      Change:
+        Make changes as request. These fixes may cause PCIE Serdes corruptions that result in 
+        device disappearances when the system resumes from S4 (CQ46606). These fixes are 
+        removed from driver and added into OTP selfboot.
+      Impact:
+        It's for 57780/57760 family devices only.
+
+
+Version 14.2.0.1  Mar 10, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        Enable Sawtooth bit16, 17, 18 in reg 0x70 for bmapi diag tests.
+      Impact:
+        None.
+
+
+Version 14.2.0.0  Feb 25, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        Restore CQ45685, CQ45686 changes for 14.2 driver release
+      Change:
+        Make inf change as request.
+      Note:  
+        CQ45685 - Remove EEE from driver advanced properties for the 14.0 Gold driver
+        CQ45686 - Remove driver support for Aspen CR SKU's 57765x, 57785, 57785x, 57795, 57795x
+
+
+Version 14.0.0.7  Feb 09, 2010
+----------------------------------------
+  1.  Problem:
+        CQ45796 - 57781/57765 no link after system resume from S1/S3 mode with SB code.
+      Change:
+        We have an issue in the SB ROM code which require a 10ms delay after seeing the 
+        reset signature (~KevT) in Shared Memory 0xB50 to workaround the issue.
+      Impact:
+        None.
+
+
+Version 14.0.0.6  Feb 05, 2010
+----------------------------------------
+  1.  Problem:
+        CQ45666 - 57765x-system hanged when run Diagnostic test at 100MF/100MH with ASF enabled
+      Cause:
+        During MAC loopback test in BACS diagnostic testing, there is a racing condition which causes
+        driver to free a spin lock which is not acquired yet. The deadlock makes system hang.
+      Change:
+        Make code change to prevent driver running into the racing condition.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ45364 - update INF file to change default for "ReverseLinkNegotiation" = 0 for specific OEM systems.
+      Change:
+        Make inf change as request and also make driver to check the value read back from registry, 
+        if they are invalid, driver will use default value for them (same as inf file assigned)
+      Impact:
+        None.
+
+  2.  Request:
+        CQ45461 - ASPEN: Please remove Jumbo Mtu from advanced properties page with ASPEN non-G devices
+      Change:
+        Remove Jumbo Mtu from advanced properties page for ASPEN non-G devices.
+      Impact:
+        None.
+
+  3.  Request:
+        CQ45685 - Remove EEE from driver advanced properties for the 14.0 Gold driver
+      Change:
+        Make inf change as request to remove EEE from driver advanced properties.
+      Impact:
+        None.
+        
+  4.  Request:
+        CQ45686 - Remove driver support for Aspen CR SKU's 57765x, 57785, 57785x, 57795, 57795x
+      Change:
+        Make change in inf files to remove 2 part IDs support for these devices.
+      Impact:
+        None.
+
+
+Version 14.0.0.5  Jan 15, 2010
+----------------------------------------
+  1. Problem:
+       When upgrading to the EEE enabled driver. Going from version 14.0.0.4 to version 14.0.04A.
+       We could see the EEE property, however both the disable and enable values were missing.
+       After a system reboot, we could see them.
+     Cause:
+       OS can't stick on the default value of EEE property right after driver upgrade.
+     Change:
+       Add a workaround to force OS to stick with EEE default value after driver upgrade.
+
+  2.  Problem:
+        Driver failed on DTM 1c_kernelcalls test
+      Cause:
+        Driver has incorrectly made a call to DbgBreakPoint() with free version driver.
+      Change:
+        Remove DbgBreakPoint() from free version driver.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ45264,CQ45289 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request
+        CQ45290 - Update Product_Version String to 15.0.0 for Release 14.0.
+      Change:
+        Change the product version as required.
+      Impact:
+        None.
+
+  3.  Request
+        57765/57785 "DMA Read/Write Control Register" access (offset 0x6C)
+      Change:
+        Make change for driver to program bit 21:19 for "DMA Write WaterMark" only.
+        For other bits, let bootcode to control it.
+      Impact:
+        None.
+
+  4.  Request:
+        Change the Copyright information to include 2010 for all SW modules
+      Change:
+        Change the Copyright information to include 2010 in related files.
+
+
+Version 14.0.0.4A  Jan 11, 2010
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        Add an advanced property entry to enable EEE for 5717/5718/57765/57785 family devices, 
+        and have the setting default to disabled.
+      Impact:
+        None.
+
+
+Version 14.0.0.4  Jan 08, 2010
+----------------------------------------
+  1. Problem:
+       CQ45051 - 5718/57765: Running 1 session cc32 is sluggish.
+     Change:
+       Adjust default interrupt coalescing setting to improve the performance.
+     Impact:
+       None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Add GPHY Green Mode support for 5717/5718/57765/57785 family devices.
+      Change:
+        Whenever link is at 1G and cable length is less than 10m, driver
+        will enable device GPHY Green Mode for saving power.
+
+
+Version 14.0.0.3  Dec 18, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ44824 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request:
+        Enhanced change for EEE function to prevent link drop during heavy traffic.     
+      Impact:
+        The change is for 57765/57785 and 5717/5718 family devices only.
+
+
+Version 14.0.0.2  Dec 05, 2009
+------------------------------
+  1. Problem:
+       CQ44702 - The link speed is 100M after system entering S1/S3/S4 mode while Power Management is disabled.
+     Cause:
+       The bootcode set the link speed at 100M when Vmain goes away is due to the wol enable bit is set in 
+       the NVRAM. The bootcode will honor the wol enable bit in nvram is due to no wol_signature in shared 
+       memory offset 0xd30.
+     Change: 
+       Make driver to setup wol signature correctly when wol function is enabled.
+     Impact:
+       None
+
+  2. Problem:
+       CQ42316 - During Factory X64 download, Active directory scripts are not downloading.
+     Cause:
+       The Netlongon service starts before network is ready. The reason why netowrk is not ready is due to 
+       an additional GPHY reset added during code merge for 5785, this extra GPHY reset makes device take 
+       longer time to link up while driver is loaded. 
+     Change: 
+       Make the GPHY reset for 5785 only, not for other devices.
+     Impact:
+       None
+
+  Enhancements:
+  =============
+  1.  Request:
+        Adding support for 57765/57785 ASIC GPHY ID.
+      Change:
+        GPHY MII reg 0x2 = 0x0362, GPHY MII reg 0x3 = 0x5e40.
+      Impact:
+        None.
+
+
+Version 14.0.0.1  Nov 27, 2009
+------------------------------
+  1. Problem:
+       CQ44524 - iSCSI boot might fail or boot very slow in Win2K3 when latest iSCSI ROM is used.
+     Cause:
+       Newer iSCSI ROM runs in polling mode.  It masks out PCI interrupt
+       by setting bit 10 in PCI Command register. In Win2k8 or newer, OS
+       clears this bit when it runs in non MSI-X mode. However, Win2K3
+       doesn't do this.  This bit is new in PCI v2.3.  
+     Change: 
+       Clear PCI masking bit if it runs in legacy PCI mode.
+     Impact:
+       None
+
+  2. Problem:
+       CQ44649 - 57765: Ping time out while jumbo frame enable
+     Cause:
+       The code for setting NIC Ring Address in Jumbo Receive RCB (Ring Control Block)
+       is missing during code merging from branch.
+     Change: 
+       Add the missing code back to set up Jumbo Receive RCB correctly.
+     Impact:
+       None
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ44632 - add registry keys to enable Battery Mode for specific OEM systems.
+      Change:
+        Make inf change to add registry keys as requested.
+      Impact:
+        None.
+
+
+Version 14.0.0.0 Nov 19, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ44256, CQ44325, CQ44580 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request:
+        Add support for 57785 family devices.
+      Change:     
+        Merge code from the branch for 57785 family devices.
+
+
+Version 12.4.0.3 Oct 16, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ44113 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+  2.  Request:
+        Due to a GPHY setting change, driver needs to add a patch for 5785 GPHY devices.
+      Change:
+        After global reset or GPHY reset, driver will set 50610 (M or non-M) RGMII MODE to 0.
+      Impact:
+        It's for 5785 with 50610(M or non-M) GPHY revision.
+
+
+Version 12.4.0.2 Oct 11, 2009
+----------------------------------------
+  1.  Problem:
+        57760/57780 fails on FwCfg 1G loopback test.
+      Cause:
+        The GPHY Green Mode is enabled when device is linked at 1G speed and it causes
+        FwCfg unable to receiving packets during loopback test.
+      Change:
+        Make driver not to enable GPHY Green Mode while making external loopback test.
+      Note:
+        None
+ 
+   2.  Problem:
+        CQ43851- Device disappears after multiple iterations of copy/compare test on specific OEM system.
+      Cause:
+        Due to design limitations, sometimes L1 exit transition does not cause the serdes pll to resume
+        normal operation.  When this happens the LOM will not be able to response to PCIE transaction 
+        and may be removed from the PCIE enumeration tree.
+      Change:
+        Implement the workaround to disable Pll Powerdown in L1 by writting 0x7080 to register offset 
+        0x7d54 afer every chip reset. 
+      Note:
+        It's for 57760/57780 family devices only.
+       
+  Enhancements:
+  =============
+  1.  Request:
+        CQ43971 - Add 4 part ID support for specific OEM.
+      Change:
+        Added IDs
+      Impact:
+        None.
+
+
+Version 12.4.0.1  Sep 28, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request
+        CQ43619 - Update Product_Version String to 14.2.0 for Release 12.4.
+      Change:
+        Change the product version as required.
+      Impact:
+
+  2.  Request:
+        Apply two new power saving enhancements for BCM5785: 
+      Change:
+        1. disable Rx/Tx clock to save more power when APD is on for BCM5785.
+        2. Force to MII interface when the link is down to save more power.
+      Impact:
+        None.
+
+
+Version 12.4.0.0  Sep 10, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ43147, CQ43374 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 12.2.2.1  Aug 04, 2009
+----------------------------------------
+  1. Problem:
+       CQ42561 - Changing speed to 10mbps results in black screen under Windows on 5785.
+     Change:
+       Set 10MB Speed Policy to 12.5MHz.
+     Impact:
+       None.  
+
+
+Version 12.2.2.0  Jul 31, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request
+        CQ42903 - Update Product_Version String to 14.1.1 for Release 12.2a.
+      Change:
+        Change the product version as required.
+      Impact:
+        None
+
+  2.  Request:
+        CQ42910 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 12.2.0.8  Jul 26, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        To address the DMA writes broken up into small chunks.
+      Change:
+        Set the bit 31 and 30 of Write DMA Control Register.
+      Impact:
+        It's only for 5785 family devices.
+
+
+Version 12.2.0.7  Jul 19, 2009
+----------------------------------------
+  1.  Problem:
+        CQ42593 - Mazama(5785) Ethernet@Wirespeed Feature does not work.
+      Cause:
+        GPHY Ethernet@Wirespeed function is disabled by driver.
+      Change:
+        Enable the function for 5785.
+      Impact:
+        None.
+
+  2.  Problem:
+        CQ42095 - Windows XP 64 failed NDIS Test 6.0 with 2c_recvmulticast test.
+      Cause:
+        Device is using hash algorithm (with 128 bits - four 32-bit hash registers) for multicast filter, 
+        when there are lots of multicast addresses added to device, it becomes that several multicast addresses
+        are mapping to the same bit in hash table. The makes device still able to receive multicast packets with
+        the destination address is not in the multicast list during 2c_recemulticast negative test.
+      Change:
+        Make driver to examine multicast packet's destination address, if it's not in driver's mulicast list,
+        driver will filter out the packet.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ42236 workaround - Driver needs to implement the following procedures before any GRC or CPU reset
+        1. write 0x7d54 with 0x7080 (to disable l1 pll pwrdwn), then
+        2. do a dummy read of 0x7d54 to flush the write, then
+        3. issue GRC or CPU reset.
+      Change:
+        Make driver change as requested.
+      Impact:
+        It's for 57760/57780/57790 family devices only.
+
+
+Version 12.2.0.6  Jul 13, 2009
+----------------------------------------
+  1.  Problem:
+        CQ42324 - 57780A1:LOM disappear after resuming from S4, only happend withSelfboot/OTP boot 
+        and LED mode = shared traffic/link LED mode
+      Cause:
+        Driver is trying to write Ethernet PHY with incorrect PHY address (should be 1 instead of 0) 
+        during initializatin. This causes driver to write to PCI-E Serdes PHY by accident and 
+        corrupt PCI-E Serdes PHY content.
+      Change:
+        Make sure PhyAddr is assigned with valid value before accessing Ethernet PHY.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ42432, CQ42543 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 12.2.0.5  Jul 07, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ39683: Cilai detects Receiver Error when the Link Transition between L0s/L0
+      Change:
+        workaround: shorten the delay of the electrical idle signal from serdes
+        a. write register 0x7e70 bit [4:0] with 0x0c during device initialization or device reset
+        b. write all ones to register 0x110 (correctable error status). 
+
+  2.  Request:
+        CQ40054: PLL power down common mode voltage glitch on Tx
+      Change:        
+        workaround: use low-power transmitter mode during device initialization or device reset 
+        changed PCIe SerDes register values to the following 
+        a. Register 0x15 in block 0x8610 = 0x47b.
+        b. Register 0x1A in block 0x8010 = 0x4038.
+
+  3.  Request:
+        CQ41810, CQ41839, CQ42217 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  4.  Request:
+        CQ42092 - Add 57788 support (VID: 14e4, DID: 1691)
+      Change:
+        Added 2 part IDs support for 57788
+        
+  5. Request:
+        CQ41510 - Remove third-party PHY support from 12.2a Gold Driver.
+     Change:
+        Change code as expected.      
+
+
+Version 12.2.0.4  Jun 04, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ41649 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  2.  Request:
+        Restore Mazama (5785) support for 12.2a release
+      Change:
+        Make inf change to add 5785 2 part IDs.
+      Impact:
+        None.
+
+  3.  Request:
+        Support the new GPHY ID of BCM50610M P31
+      Change:
+        Add new PHY Identifer.
+      Impact:
+        None.   
+
+
+
+Version 12.2.0.3A  May 31, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ41522 - Remove Mazama (5785) support from 12.2 Gold drivers
+      Change:
+        Make inf change to remove 5785 2 part IDs.
+      Impact:
+        None.
+
+
+Version 12.2.0.3  May 29, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ41508 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 12.2.0.2  May 14, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ40985, CQ41039, CQ41120 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  2.  Request:
+        Driver needs to disables L1 PLL power down when Ethernet link is 10 half duplex or 100 half duplex,
+        in additional to disabling CLKREQ.
+      Change:
+        Set bit 7 (L1 PLL Powerdown Disable) of MAC register 0x7d54 for 10H and 100H.
+
+
+Version 12.2.0.1  May 04, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ40363 - Disable Greenmode in driver INF in Release 12.0 for all OEM systems
+      Change:
+        Make inf changes as request to disable GreenMode for specific OEM systems.
+      Impact:
+        None.
+
+  2.  Request:
+        CQ40246, CQ40529, CQ40557, CQ40728, CQ40866 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  3.  Request
+        CQ40377 - For Release 12.2, Please Update Product_Version String for NDIS 5.1 and later Drivers to 14.1.0
+      Change:
+        Change the product version as required.
+      Impact:
+        None
+
+  4.  Request:
+        CQ40446 - Support new PNP IDs for 10/100 and 1G 5785 devices
+      Change:
+        Added new IDs
+
+  5.  Request:
+        Enhance OTP programming reliability.
+      Change:
+        Driver needs to implement the following steps whild doing OTP program.
+        1) To use external clock for the programming.
+        2) Try to reprogram OTP bit up to 16 times if the OTP is stuck at 0.
+        3) Do OTP init command immediately after a OTP write.
+
+
+Version 12.2.0.0  Apr 02, 2009
+----------------------------------------
+  1.  Problem:
+        CQ39724 - WLK 1.3 NdisTest 6.5 BSOD on WinXP 64-bit Platform.
+      Cause:
+        Driver doesn't wait/collect for all RX packet desciptors during handling reset routine,
+        in NDISTest "reset" test, this leads to the NULL pointer reference during freeing
+        resource when driver is unloaded in the beginning of NdisTest "Addresschange" test.
+      Change:
+        Make driver to wait/collect for all Rx packet descriptors in UM_Reset().
+      Impact:
+        None.
+
+  2.  Problem:
+        CQ40046 - (5785) AC131: No link up while disable/enable using cable unplug/plug.
+        CQ39903 - (5785) AC131: AUT set to auto-speed does not negotiate link with forced switch.
+      Cause:
+        Driver is unable to access certains register (especial the rx block after 0x400)
+        while PHY APD (Auto Power Down) is enabled.
+      Change:
+        Enable device auto clock switching feature to get the MAC clock running when PHY APD is enabled.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Add 5785 support for 12.2 release.
+      Change:
+        Make inf change to add 5785 2 part IDs.
+      Impact:
+        None.
+
+  2.  Request:
+        Remove driver workaround for 50610 Rev C PHY.
+      Change:
+        The workaround was added for 50610 A0 only, make code change to remove it.
+      Impact:
+        None.
+
+  3.  Request:
+        Enable APD + PLL setup for 50610 GPHY (with 5785)
+      Change:
+        Extend APD (Auto Power Down) + PLL clock support for 50610 GPHY.
+      Impact:
+        None.
+
+  4.  Request:
+        CQ40160 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  5.  Request:
+        Remove CQ39763 changes in Windows XP driver.
+      Change:
+        There is no API for BPowMon to detect LCD off event in Windows XP.
+        Driver needs to remove changes added for CQ39763.
+
+  6.  Request:
+        CQ40197 - Driver needs to remove the support of Test Chip in the final SW release
+      Change:
+        Make driver not to load with the test chip.
+      Impact:
+        With test chip, device will show "yellow bang" in device manager which is expected.
+
+
+Version 12.0.0.5  Mar 20, 2009
+----------------------------------------
+  1.  Problem:
+        CQ39191 - (5785) Link fail while device is connected back to back with force speed.
+      Cause:
+        When link speed is forced, auto MDIX is not enabled.
+      Change:
+        Modified code to enable PHY "Force auto MDIX mode"
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Remove 5785 support for 12.0 release.
+      Change:
+        Make inf change to remove 5785 2 part IDs.
+      Impact:
+        None.
+
+
+Version 12.0.0.4A  Mar 17, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ39994 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 12.0.0.4  Mar 16, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ39864 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  2.  Request:
+        CQ39763 - OEM request a LCD state trigger Link transition feature for Cilai and Taishan
+      Change:
+        Create a registry key in INF to let service (BPowMon) know if the OEM system has the feature
+        enabled or not. When the service detects LCD OFF event, it will tell driver to start
+        reverse-nway to make link at lowest speed (10 Mbps) when network is idle.
+      Impact:
+        None
+
+
+Version 12.0.0.3  Mar 09, 2009
+----------------------------------------
+  1.  Problem:
+        CQ39796 - doing boot code program in WinFWUpg will show error message.
+      Cause:
+        Driver has incorrect configuration values for EEPROM which makes driver treat EEPROM as a flash device.
+        This make driver can't write correct data into EEPROM and cause checksum error.
+      Change:
+        Correct code error to make driver use correct configuration when EEPROM is used.
+      Impact:
+        None
+
+  Enhancements:
+  =============
+  1.  Request:
+        Do not write OTP bits if the bits have been set already.
+      Change:
+        Read data from OTP first and then compare the "orignal data" and "data to write",
+        if the bits in "data to write" have set already, driver will skip the OTP write.
+      Impact:
+        None.
+
+  2.  Request:
+        CQ39716, CQ39575 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  3.  Request:
+        CQ39595 - Disable CQ35234 GPHY workaround for specific OEM systems.
+      Change:
+        Make driver to skip CQ35234 workaround for specific OEM systems.
+      Impact:
+        Without CQ35234 workaround, 5784M/5764M may not assert Wake signal one the first Wake
+        packet received. This happens when device is connected to some particular switches.
+
+
+Version 12.0.0.2  Feb 23, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        Apply CQ37120 workaround "Extended L1 entry time to 4ms" for specific test chip.
+      Chnage:
+        Program reg 0x7d28 with 0x182FFFA for the device.
+      Impact:
+        None
+
+  2.  Request:
+        Driver needs to do register read at CPMU block (0x36xx) to return the same value
+        twice before returning the read value.
+      Change:
+        Follow the request while handling register read at CPMU block.
+      Impact:
+        The workaround is applied on 57760/57780/57790 only.
+
+  3.  Request:
+        Set bit 0 in the GPHY Expansion Register 75 to address the Template issue.
+      Change:
+        Make sure bit_0 of expansion register 75 is set during GPHY setup.
+      Impact:
+        This change applys to 57760/57780/57790 only.
+
+
+Version 12.0.0.1  Feb 13, 2009
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request
+        CQ39443 - Ndis 5.x and 6.0 driver should have product version key set to 14.0.0 in 12.0
+      Change:
+        Change the product version as required.
+      Impact:
+        None
+
+  2.  Request:
+        CQ39522 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  3.  Request:
+        CQ38522 - Enable OTP programming capbility for 57760/57780/57790
+      Change:
+        Implement private OIDs so that application can get access to OTP through BMAPI.
+      Impact:
+        None
+
+
+Version 12.0.0.0  Feb 02, 2009
+----------------------------------------
+  1.  Problem:
+        CQ38940 - 5785: BACS LoopBack-MAC and LoopBack-PHY fails in WinXP and Vista at 10H and 100H.
+      Cause:
+        Device should work at full duplex mode while doing loopback test and driver doesn't configure
+        Ethernet MAC mode register correctly.
+      Change:
+        Make sure Half-duplex bit in EMAC mode register is cleared while doing loopback test.
+      Impact:
+        None
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ39188,CQ39189 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 11.23 Dec 17, 2008
+----------------------------------------
+  1.  Problem:
+        CQ36053 - Windiag shows "Device failed to negotiate link after 15sec" during PHY reset test
+      Cause:
+        Some device may generate "Link Status Change" interrupt immediately after powering down GPHY.
+        This causes driver to run LM_SetupPhy() in UM_DPC() for servicing GPHY interrupt, while the
+        application may send another T3_OID_PHY_ON to driver for powering on GPHY. This causes two
+        driver threads to access GPHY at the same time, and it may cause GPHY content programmed
+        with incorrect value.
+      Change:
+        Disable interrupt before powering down GPHY.
+      Impact:
+        None
+
+  2.  Problem:
+        CQ38997 - 57780 MAC loopback will fail without connection.
+      Cause:
+        When ethernet cable is dettached & GPHY auto-power-down w/pll power down is enabled, GPHY
+        pll would power down to save power (link aware apd mode) and stop providing clock to MAC.
+        When mac loopback mode is enabled under this condition mac cannot switch to fast clock to
+        complete packet transfers and therefore causes packet to drop.
+      Change:
+        The workaround is to disable GPHY PLL APD during MAC loopback test.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ38677,CQ38861,CQ38863 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 11.22 Dec 05, 2008
+----------------------------------------
+  Enhancements:
+  =============
+ 1. Request:
+      Add support B50610m GPHY for BCM5785.
+    Change:
+      Added code to support B50610m GPHY for BCM5785.
+
+
+Version 11.21 Nov 27, 2008
+----------------------------------------
+  1.  Problem:
+        CQ38651 - 5784M laptop show a yellow bang in Device Manger
+            after 300-400 iteration of S4 tests.
+      Change:
+        Apply CQ29902 workaround for this issue.
+      Impact:
+        Fixed a yellow bang issue.
+
+  2.  Problem:
+        CQ38740 - 5785 system:  "Driver Load and Unload " failed on WinXP.
+      Cause:
+        Driver had access to PHY registers right after doing GRC reset without
+        waiting for bootcode finishing it's job. Driver may get PHY registers
+        corrupted or get incorrect PHY registers value.
+      Change:
+        Do not get access to PHY registers before bootcode finishes it job.
+
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ38185,CQ38351,CQ38491,CQ38505 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  2.  Request:
+        Add support for 57780 / 57790 A1 devices.
+      Change:
+        Make driver to keep all SW A0 workarounds for A1.
+
+  3.  Request:
+        Add GPHY Green Mode support for 57780.
+      Change:
+        Whenever link is at 1G and cable length is less than 10m, driver
+        will enable device GPHY Green Mode for saving power.
+
+
+Version 11.20  Oct 24, 2008
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ38029- Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+      Impact:
+        None.
+
+  2.  Request:
+        Adding support for 57780 / 57790
+      Change:
+        Modify code to add support for 57780 / 57790.
+      Impact:
+        None.
+
+
+Version 11.19  Oct 15, 2008
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Reguest:
+        Adding support for BCM5785.
+      Change:
+        Added two-part ID into INF file.
+      Impact:
+        None.
+
+
+Version 11.18B  Sep 11, 2008
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request
+        CQ37293 - Ndis 5.x and 6.0 driver should have product version key set to 12.8.0 in 11.7
+      Change:
+        Change the product version as required.
+      Impact:
+        None
+
+
+Version 11.18  Sep 03, 2008
+----------------------------------------
+  1.  Problem:
+        CQ37154 - OEM 5784M platform observes the same S5 WOL issue as CQ35234
+      Cause:
+        CQ35234 GPHY workaround was applied when system is going into S1/S3/S4, not for S5.
+      Change:
+        Apply CQ35234 GPHY workaround for S5 as well.
+      Impact:
+        None.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ36843 - Add registry key to common mini-port driver in order to allow NDIS to discard VLAN tagged packets
+      Changes:
+        Added "DropVlanPkt" registry key to drop vlan packets when vlan is disable.
+      Impact:
+        None.
+
+
+Version 11.17B  July 23, 2008
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ36056 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  2.  Request:
+        CQ36166 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  3.  Request:
+        CQ36432 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  4.  Request:
+        CQ36447 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 11.17  June 19, 2008
+----------------------------------------
+  1.  Problem:
+        CQ35947 - B5764/B5761/B5784-When setting  WOL speed to 10mb system will be come unresponsive and lose link.
+      Cause:
+        The CQ35234 workaround is incorrectly executed when driver is loaded with WOL speed setting as 10mb.
+        There is no problem when WOL speed is set to Lowest, Auto or 100mb.
+      Change:
+        Correct driver's abnormal behavior and make driver to apply the CQ35234 workaround precisely.
+      Impact:
+        None.
+
+
+Version 11.16  June 9, 2008
+----------------------------------------
+  1.  Problem:
+        CQ35239 - 5784m stops passing traffic when running copy compare at 10 Mb half duplex and ASPM L1 w/ clkreq.
+      Cause:
+        The clock glitch that occurring with L0->L1->L0 transitions causes device RDMA doesn't work normally.
+      Change:
+        Make driver to disable device's clkreq when linked at 10H or 100H as a workaround.
+      Impact:
+        Resolve CQ35239.
+
+  2.  Problem:
+        CQ35234 - 5784M/5764M will not assert Wake signal one the first Wake magic packet received.
+      Cause:
+        When device is connected to particular switch with specific PHY at 1G bps, with wol speed
+        set to lowest speed, driver will program GPHY to advertise 10M bps support and restart
+        auto-negotiation while system is going from S0 to S3/S4/S5. In the meantime, 100tx or 1000t
+        idle sent from the link partner can confuse the local 10M bps polarity state machine, which
+        in turn can corrupt the first 10Mbps packet received.
+      Change:
+        Make driver workaround to reset link porlarity state machine and restart auto negotiation.
+      Impact:
+        Resolve CQ35234.
+
+
+Version 11.15  May 12, 2008
+----------------------------------------
+  1.  Problem:
+        CQ34962 - 5784/5764/5761 system compatibility issue on particular OEM system.
+      Cause:
+        When BIOS sets root-complex's and device's Max Payload Size (MPS) to 256 bytes,
+        device's MPS will be incorrectly set to 128 by driver, then device will report
+        ERROR_FATAL and stop DMA when it makes Memory Read and receives completion
+        packets larger than 128 bytes.
+      Change:
+        Make driver to keep device MPS setting during initialization.
+      Impact:
+        Resolve CQ34962.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ34973 - OEM requests to enable log options for sysetms w/ 5784M
+      Change:
+        Make inf changes to enable log options for OEM systems.
+      Impact:
+        Resolve CQ34973.
+
+
+Version 11.14  April 22, 2008
+----------------------------------------
+  1.  Problem:
+        Ensure private OID buffer is not touched until signature
+        is validated.
+      Cause:
+        Could cause DTM failure if buffer is modified
+        when signature is invalid.
+      Change:
+        Move setting status until after signature is validated.
+      Impact:
+        None
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ34699 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  2.  Request:
+        Enable constant 500Khz MDIO interface speed regardless core clock frequency.
+      Change:
+        Change driver to set the enable bit in MII Mode register.
+      Impact:
+        The change applies to devices 5764M/5784M/5723/5761/5761E.
+
+
+Version 11.13  March 16, 2008
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ34254 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 11.12  March 12, 2008
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        CQ34135 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 11.11  February 28, 2008
+----------------------------------------
+  Enhancements:
+  =============
+  1.  Request:
+        Enhance the fix for CQ33858.
+      Change:
+         Change CPMU Clock Policy Registers to increase the Core Clock Speed before issue
+         a GRC reset and restore these registers after boot code has completed initialization.
+      Impact:
+        Resolve CQ33858.
+
+
+Version 11.10  February 24, 2008
+----------------------------------------
+  1.  Problem:
+        CQ33858 - Device loses connection while doing load/unload test.
+      Cause:
+        When driver is unloaded, driver does a GRC Reset. When the link doesn't come back
+        immediately, CPMU will put MAC core clock into slower speed. This makes boot code
+        to be reloaed and executed slower. This also makes driver exceed waiting loop.
+        Finally, GPHY register corrupted because of driver and boot-code racing condition.
+      Change:
+        Extend driver waiting time to make sure boot-code 2nd phase is finished.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Add driver support back for Windows 2000.
+      Change:
+        Modify inf files for installing driver on Windows 2000.
+
+  2.  Request:
+        Remove CQ33808 driver workaround for 5784M/5764M/5723.
+      Change:
+        Remove driver workaround added in previous release.
+      Impact:
+        Bootcode v3.31 & slefboot patch v2.18 have the workaround to fix CQ33808.
+
+  3.  Request:
+        CQ33892 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs.
+
+  4.  Request:
+        CQ25155 - 5784M/5764M/5723/5761/5761E implementation of this CQ is
+        done in hardware instead of the software implementation.
+      Change:
+        Activate hardware fix for this CQ in driver and not with code in
+        the receive packet processing logic.
+      Impact:
+        New devices have hardware support for this fix that must be
+        activated in the driver.
+
+
+Version 11.9  February 11, 2008
+----------------------------------------
+  1.  Problem:
+          CQ33808 - BCM5784M: System hangs when user changes Device Property with clkreq enabled.
+      Cause:
+          Issuing a GRC reset with clkreq enabled is causing a global chip reset and PCI-E
+          completion timer timeout.
+      Change:
+          When ClkReq and L0s/L1 ASPM are enabled, driver will clear ClkReq enable bit before doing
+          GRC reset and restore it after GRC reset.
+      Impact:
+          Resolve C33808.
+
+  Enhancements:
+  =============
+  1.  Request:
+          Remove CQ33752 driver workaround.
+      Change:
+          Remove driver workaround added in v11.8
+
+
+Version 11.8  February 7, 2008
+----------------------------------------
+  1.  Problem:
+        CQ33752 - Small fragments of less than 8 bytes cause transmit DMA failure.
+      Cause:
+        Under investigation.
+      Change:
+        Coalesce transmit buffers before submitting to the chip.
+      Impact:
+        Resolve issue for 5764M/5784M/5723/5761/5761E.
+
+
+Version 11.7 January 29, 2008
+----------------------------------------
+  1.  Problem:
+        CQ33564 - BACS MAC loopback test fails when test is running without cable.
+      Cause:
+        Bootcode version after v3.23 has enabled GPHY DLL Auto Power Down by default.
+        When there is no cable, GPHY DLL Auto Power Down starts to work and makes test fail.
+      Change:
+        Change driver to disable GPHY DLL Auto-Power Down when running MAC loopback test
+        and then retore GPHY DLL Auto-Power Down Bit to original value.
+      Impact:
+        Resolve issue and this is for 5764M/5784M/5723 B0 only.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Add GPHY APD and GPHY DLL Auto-Power Down for 5764M/5784M/5723 B0.
+      Change:
+        Driver needs to read the share memory to determine how the GPHY Auto Power Down
+        feature is enabled/disabled by the user.
+
+  2.  Request:
+        The GPHY workaround needs to be applied with the GPHY DLL Auto-Power Down Bit set.
+      Change:
+        Set GPHY DLL Auto-Power Down Bit before applying GPHY workaround and then restore
+        GPHY DLL Auto-Power Down Bit to original value.
+      Impact:
+        This is for 5764M/5784M/5723 B0 only.
+
+
+Version 11.6  January 24, 2008
+----------------------------------------
+  1.  Problem:
+        CQ33519 - 5784M fails at external loopback test fail.
+      Cause:
+        Device doesn't get linked and test application can't receive enough packets during the test.
+      Change:
+        Disable Link Speed/Link Aware/Airplane Power Mode and avoid setting PHY trim registers
+        during external loopback test.
+      Impact:
+        Resolve CQ33519.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Disable Link Speed/Link Aware/Airplane Power Mode while running MAC Loopback Test for 5784M B0.
+      Change:
+        Make driver to disable Link Speed/Link Aware/Airplane Power Mode while running MAC loopback Test.
+
+  2.  Request:
+        Implement CQ31680/CQ32765 ClkREQ workaround for 5784M Ax revision.
+      Change:
+        Clear bit_16 of register 0x7d00 and clear bit_29 of register 0x68A4.
+
+  3.  Request:
+        GPHY earl-wake-dac mode must be enabled before MAC 10mb rx only mode is enabled.
+      Change:
+        Whenever driver issues a reset to the GPHY, GPHY early-dac-dac mode will be disabled.
+        Driver needs to disable CPMU 10mb rx only mode before resetting GPHY. Then later
+        driver can re-enable the 10mb rx only mode. It's for 5764M/5784M/5723 B0 only.
+
+  4.  Request:
+        Implement new GPHY Workaround for 5784M/5764M/5723 B0.
+      Change:
+        Driver reads workaround parameters from OTP Memory and then configures GPHY accordingly.
+
+
+Version 11.5  January 11, 2008
+----------------------------------------
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ33252 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+  2.  Request:
+        Change the Copyright information to include 2008 for all SW modules
+      Change:
+        Change the Copyright information to include 2008 in related files.
+
+  3.  Request:
+        Implement driver workaround for 5784M GPHY related issues.
+      Change:
+        Add code changes for the workaround.
+
+  4.  Request:
+        Remove driver support for Windows 2000.
+      Change:
+        Modify k57win32.inf to remove the ability for installing driver on Windows 2000.
+
+
+Version 11.4  December 10, 2007
+----------------------------------------
+  1.  Problem:
+        CQ32573 - Failed to resume normal speedlink after power saving mode.
+      Cause:
+        Device has a problem with logic that handles the automatic switching of the burst mode
+        to non-burst mode when the core clock is switching from 62.5MHz to slow clock modes.
+      Change:
+        Disable WDMA Rx Accel mode to workaround this issue.
+      Impact:
+        Resolve CQ32573 issue.
+
+  Enhancements:
+  =============
+  1.  Request:
+        Add support for 5784M A2 devices.
+      Change:
+        Make driver to keep all SW A0/A1 workarounds for A2
+
+  2.  Request:
+        CQ32683,CQ32780 - Add 4 part IDs for specific OEM
+      Change:
+        Added new IDs
+
+
+Version 11.3  November 08, 2007
+----------------------------------------
+
+  Enhancements:
+  =============
+  1.  Request:
+        Add support for 5784M A1 devices.
+      Change:
+        Make driver to keep all SW A0 workarounds for A1
+
+  2.  Request:
+        Disable Link Speed Mode and Link Aware Mode while running MAC Loopback Test for 5784M A0 & A1.
+      Change:
+        Make driver to disable Link Speed and Link Aware mode while running MAC loopback Test.
+
+  3.  Request:
+        For CQ31702 - SW needs to Configure LED Mode default to MAC Mode instead of GPHY Mode
+      Change:
+        Configure LED Mode default to MAC Mode for 5784M A0 & A1.
+
+
+Version 11.2  October 24, 2007
+----------------------------------------
+  1.  Problem:
+        CQ31830 - System hangs when put it into S3 and S4 or disable the adapter with WOL disabled.
+      Cause:
+        When WOL is not needed, driver will power down GPHY for saving power. When GPHY powers down,
+        GPHY DLL stops provinding clock to mac core and this causes memory read completion timeout.
+      Change:
+        Make mac core clock switching before powering down GPHY.
+      Impact:
+        Resolve CQ31830 issue.
+
+  Enhancements:
+  =============
+  1.  Request:
+        CQ31815 - Blue screen on boot if no network cable attached.
+
+      Change:
+        Remove codes that enables GPHY APD (Auto Powerdown) in driver. The GPHY APD is now handled by
+        the CPMU when Link Aware is enabled.
+
+  2.  Request:
+        CQ31619 - 5784M A0 failed DMA Write Engine Lock Up when Link Speed Mode Enabled with
+                  10Mb Traffic and Core clock is 1.5MHz
+      Change:
+        Slow down the core clock to 6.25Mhz in 10mb, Link Aware Mode or 10mb Link Speed Mode for 5784M A0.
+
+
+Version 11.01  October 17, 2007
+----------------------------------------
+  1.  Enhancement request
+      Merged 5784M code from branch to mainline.
+
+
+Version 11.00  October 9, 2007
+----------------------------------------
+  1.  Initial release for 5784M

@@ -1,0 +1,92 @@
+*******************************************************************************
+*                             SMC Networks, Inc                               *
+*                             SMC TigerCard 1000                              *
+*                     NDIS5.1 MINIPORT DRIVER INSTALLATION                    *
+*                            (32-bit x86 Platform)                            *
+*                                                                             *
+*                   Copyright (C) 2000-02 SMC Networks, Inc.                  *
+*                             All Rights Reserved.                            *
+*******************************************************************************
+
+
+The driver (SMC95X2.SYS) contained in the directory WINXP32 is for the following
+SMC PCI Ethernet Adapter:
+
+                 SMC TigerCard 1000
+
+The driver (SMC95X2.SYS) conforms to the Network Driver Interface Specification
+NDIS 5.1, and is used with Microsoft and Windows XP.
+
+Contents :
+===============================================================================
+(A) Installing the NDIS5.1 Miniport driver on Microsoft Windows XP
+(B) Configuring the NDIS5.1 Miniport driver on Microsoft Windows XP
+
+
+(A) Installing the NDIS5 Miniport driver on Microsoft Windows XP
+-------------------------------------------------------------------------------
+
+    1. Turn off your computer.   Insert the SMC9562TX/SMC9552TX in one of the
+       PCI slots that support the PCI "Bus Master" mode in your machine.
+    2. Connecting the RJ45 port of SMC9562TX/SMC9552TX to the network using a UTP cable
+       (CAT5 cable for 100/1000Mbps,   CAT3/5 cable for 10Mbps network).
+    3. Power on your computer.   Boot from Windows XP.   Windows XP
+       will find a new 'PCI Ethernet Controller' and display the dialog box.
+       Click the "Next" button.
+    4. Select "Search for the best driver for your device (Recommended)" in the
+       'Add New Hardware Wizard' dialog box.  Click the "Next" button.
+    5. Insert the SMC9562TX/SMC9552TX Driver Diskette in your floppy drive (e.g. A:).
+    6. Select "Specify a location".   Set driver Path to "A:\WINXP32" in the
+       'Add New Hardware Wizard' dialog box.   Click the "Next" button.
+    7. Click the "Next" button in the 'Add New Hardware Wizard' dialog box.
+    8. Windows XP will display
+       "SMC TigerCard 1000"
+       in the 'Add New Hardware Wizard' dialog box.
+    9. Click the "Next" button in the 'Add New Hardware Wizard' dialog box.
+       Windows XP will copy the driver SMC95X2.SYS from A:\WINXP32
+       to the C:\WINDOWS\SYSTEM32\DRIVERS directory.
+   10. When Windows displays
+       "SMC TigerCard 1000"
+       in the 'Add New Hardware Wizard' dialog box.   Click the "Finish" button.
+   11. Remove the SMC9562TX/SMC9552TX driver diskette from your floppy drive.
+   12. Restart your computer to activate the network function.
+
+       NOTICE!! C:\WINDOWS is the directory where your Windows XP
+                O.S. is located.
+
+(B) Configuring the NDIS5.1 Miniport driver on Microsoft Windows XP
+-------------------------------------------------------------------------------
+
+    1. Left click the 'Start Menu' button then select 'Control Panel' item.
+    2. Right click the 'Network Connections' icon in the Control Panel window.
+    3. Double click the 'Local Area Connection' icon.
+    4. Click the "Configure" button.
+    5. Click the "Advanced" tab in the
+       'SMC TigerCard 1000 Properties'
+       dialog box.
+       1). Select "802.1p QOS".
+           Select a item (Disable, Enable)
+           in the "Value" field (default value is Disable).
+       2). Select "Checksum Offload".
+           Select a item (None, Rx TCP/IP Checksum, Tx TCP/IP Checksum, Tx/Rx TCP/IP Checksum)
+           in the "Value" field (default value is Tx TCP/IP Checksum).
+       3). Select "Jumbo Mtu".
+           Write a value (1500 - 4000) in the "Value" field (default value is 1500, step value is 500).
+       4). Select "Speed & Duplex".
+           Select a item (Auto, 10 Mb Half, 10 Mb Full, 100 Mb Half, 100 Mb Full)
+           in the "Value" field (default value is Auto).
+       5). Select "Wake Up Capabilities".
+           Select a item (None, Magic Packet, Wake Up Frame, Both)
+           in the "Value" field (default value is Both).
+    6. Click the "OK" button in the
+       'SMC TigerCard 1000 Properties'
+       dialog box.
+    7. Close the 'Network Connections' Window.
+    8. Restart your computer to activate the new configuration.
+
+
+Trademarks :
+===============================================================================
+Microsoft Windows XP is a trademark of Microsoft Corporation.
+
+===End of File===

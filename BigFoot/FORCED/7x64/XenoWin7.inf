@@ -1,0 +1,128 @@
+;/*++
+;
+;Copyright (c) 2006 - 2011 Bigfoot Networks Corporation.  All rights reserved.
+;
+;
+;Module Name:
+;
+;    XenoWin7.INF
+;
+;Abstract:
+;    INF file for a Bigfoot Killer Xeno Gaming PCI device
+;        Running Windows 7 x32 and x64 
+;
+;--*/
+
+[Version]
+Signature="$WINDOWS NT$"
+Provider=%BFOOT%
+;4D36E97D-E325-11CE-BFC1-08002BE10318 is the system class GUID
+class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+DriverVer=05/18/2011,6.0.0.23
+CatalogFile.NTx86   = Xeno7x86.cat
+CatalogFile.NTAMD64 = Xeno7x64.cat
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=XenoClassReg     
+
+[XenoClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+HKR,,DeviceCharacteristics,0x10001,0x100     ;Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)" ;Allow generic all access to system and built-in Admin. 
+; ================= Device Install section =====================
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+
+[Manufacturer]
+%BFOOT%=BFOOT,NTx86.6.0,NTamd64.6.0
+
+[SourceDisksFiles.x86]
+Xeno7x86.sys=1
+
+[SourceDisksFiles.amd64]
+Xeno7x64.sys=1
+
+[SourceDisksNames]
+1=%DISK_NAME%,
+
+[BFOOT.NTx86.6.0]
+;                                       Win_7 32
+; DisplayName        Section        DeviceId
+; -----------        -------        --------
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B4         ;MPC8315E
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B5         ;MPC8315
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B6         ;MPC8314E
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B7         ;MPC8314
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_C006         ;MPC8308
+
+
+
+[BFOOT.NTamd64.6.0]
+;                                       Win_7 64
+; DisplayName        Section        DeviceId
+; -----------        -------        --------
+%Xeno831x.DRVDESC%=Xeno7x64_Inst, PCI\VEN_1957&DEV_00B4
+%Xeno831x.DRVDESC%=Xeno7x64_Inst, PCI\VEN_1957&DEV_00B5
+%Xeno831x.DRVDESC%=Xeno7x64_Inst, PCI\VEN_1957&DEV_00B6
+%Xeno831x.DRVDESC%=Xeno7x64_Inst, PCI\VEN_1957&DEV_00B7
+%Xeno831x.DRVDESC%=Xeno7x64_Inst, PCI\VEN_1957&DEV_C006
+
+[Xeno831x_Inst]
+CopyFiles=Xeno831x.CopyFiles
+
+[Xeno7x64_Inst]
+CopyFiles=Xeno7x64.CopyFiles
+
+;[Xeno831x_Inst.HW]
+;AddReg = xeno_device.nt.hw
+
+;[Xeno7x64_Inst.HW]
+;AddReg = xeno_device.nt.hw
+
+;[xeno_device.nt.hw]
+;HKR, Interrupt Management, 0x00000010       
+;HKR, Interrupt Management\MessageSignaledInterruptProperties,0x00000010
+;HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported, 0x00010001, 1
+
+[Xeno831x.CopyFiles]
+Xeno7x86.sys
+
+[Xeno7x64.CopyFiles]
+Xeno7x64.sys
+
+[DestinationDirs]
+Xeno831x.CopyFiles = 12        ; Windows 7
+Xeno7x64.CopyFiles = 12        ; Windows 7 Amd64
+
+[Xeno831x_Inst.Services]
+AddService=BFN7x86,0x00000002,Xeno7x86_Service 
+
+[Xeno7x64_Inst.Services]
+AddService=BFN7x64,0x00000002,Xeno7x64_Service 
+
+[Xeno7x86_Service]
+DisplayName    = %Xeno831x.SVCDESC%                            
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\Xeno7x86.sys
+                           
+[Xeno7x64_Service]
+DisplayName    = %Xeno831x.SVCDESC%                            
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\Xeno7x64.sys
+                           
+[Strings]
+BFOOT = "Bigfoot Networks, Inc."
+ClassName = "Killer NIC Gaming Adapter"
+Xeno831x.SVCDESC = "Bigfoot Networks Killer Gaming Service"
+Xeno831x.DRVDESC = "Bigfoot Networks Killer Gaming Adapter"
+DISK_NAME = "Killer WDM Install Disk"

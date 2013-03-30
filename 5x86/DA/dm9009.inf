@@ -1,0 +1,319 @@
+; /****************************************************************************
+; ** Name: NETDM9.INF                                                        **
+; ** THIS FILE IS Installation file for the DM9009                           **
+; ** Fast PCI Ethernet Adapter.                                              **
+; ** V1.00                                                                   **
+; ** V1.01 - 10/05/2001 Spenser                                              **
+; **       1. Add "DAVICOM 10/100 Low Power PCI Fast Ethernet Adapter "      **
+; **       2. Add "DAVICOM Fiber PCI Fast Ethernet Adapter "                 **
+; ** V1.02 - 11/02/2001 Spenser                                              **
+; **       1. Add ArchTek's "10/100 PCI Ethernet Adapter " Adapter           **
+; ****************************************************************************/
+
+[Version]
+Signature   = "$Chicago$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_DSI%
+DriverVer   = 12/06/2001, 1.39.01.1206
+CatalogFile = dm9009.cat
+
+[Manufacturer]
+%V_DSI% = DAVICOM
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_1282&DEV_9102, \
+                    PCI\VEN_1282&DEV_9009&SUBSYS_82129161, \
+                    PCI\VEN_1282&DEV_9009&SUBSYS_82126391, \
+                    PCI\VEN_1282&DEV_9009&SUBSYS_82126291, \
+                    PCI\VEN_1282&DEV_9009&SUBSYS_000814FE
+
+[DAVICOM]
+; DisplayName           Section       DeviceID
+; -----------           -------       --------
+%DM9161.DeviceDesc%  = DM9161.ndi,   PCI\VEN_1282&DEV_9009&SUBSYS_82129161
+%DM9162.DeviceDesc%  = DM9162.ndi,   PCI\VEN_1282&DEV_9009&SUBSYS_82126291
+%DM9163.DeviceDesc%  = DM9163.ndi,   PCI\VEN_1282&DEV_9009&SUBSYS_82126391
+%ArchTek.DeviceDesc% = DM9161.ndi,   PCI\VEN_1282&DEV_9009&SUBSYS_000814FE
+%DM9009.DeviceDesc%  = DM9009.ndi,   PCI\VEN_1282&DEV_9102
+;=============================================================================
+;
+; WIN9x
+;
+;=============================================================================
+[DM9161.ndi]
+AddReg    = DM9009.id.reg, DM9102.pci.reg, DM9102.con.reg, DM9102.confe.reg, DM9102.win.reg, DM9102.con.win.reg
+CopyFiles = dm9pci.win.CopyFiles, dm9ndi.dll.CopyFiles
+
+[DM9162.ndi]
+AddReg    = DM9009.id.reg, DM9102.pci.reg, DM9162.con.reg, DM9102.win.reg, DM9102.con.win.reg
+CopyFiles = dm9pci.win.CopyFiles, dm9ndi.dll.CopyFiles
+
+[DM9163.ndi]
+AddReg    = DM9009.id.reg, DM9102.pci.reg, DM9102.con.reg, DM9102.confe.reg, DM9102.win.reg, DM9102.con.win.reg
+CopyFiles = dm9pci.win.CopyFiles, dm9ndi.dll.CopyFiles
+
+[DM9009.ndi]
+AddReg    = DM9009.id.reg, DM9102.pci.reg, DM9102.con.reg, DM9102.win.reg, DM9102.con.win.reg
+CopyFiles = dm9pci.win.CopyFiles, dm9ndi.dll.CopyFiles
+
+;=============================================================================
+;
+; WINNT specific entry
+;
+;=============================================================================
+[DM9161.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = DM9009.id.reg, DM9PCI.reg, DM9102.pci.reg, DM9102.con.reg, DM9102.confe.reg
+CopyFIles       = DM9PCI.CopyFiles, DM9PCI.DLL.CopyFiles
+
+[DM9161.ndi.NT.Services]
+AddService = DM9102, 2, DM9102.Service, common.EventLog
+;----------------------------------------------------------------------------------------------
+
+[DM9162.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = DM9009.id.reg, DM9PCI.reg, DM9102.pci.reg, DM9162.con.reg
+CopyFIles       = DM9PCI.CopyFiles, DM9PCI.DLL.CopyFiles
+
+[DM9162.ndi.NT.Services]
+AddService = DM9102, 2, DM9102.Service, common.EventLog
+;----------------------------------------------------------------------------------------------
+
+[DM9163.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = DM9009.id.reg, DM9PCI.reg, DM9102.pci.reg, DM9102.con.reg, DM9102.confe.reg
+CopyFIles       = DM9PCI.CopyFiles, DM9PCI.DLL.CopyFiles
+
+[DM9163.ndi.NT.Services]
+AddService = DM9102, 2, DM9102.Service, common.EventLog
+;----------------------------------------------------------------------------------------------
+
+[DM9009.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = DM9009.id.reg, DM9PCI.reg, DM9102.pci.reg, DM9102.con.reg
+CopyFIles       = DM9PCI.CopyFiles, DM9PCI.DLL.CopyFiles
+
+[DM9009.ndi.NT.Services]
+AddService = DM9102, 2, DM9102.Service, common.EventLog
+;----------------------------------------------------------------------------------------------
+
+[DM9PCI.CopyFiles]
+DM9eth5.SYS,,,2
+
+[DM9PCI.DLL.CopyFiles]
+DM9Inst.DLL,,,2
+
+;=============================================================================
+;
+; Win9x id registry sections
+; These are not needed by NT
+;
+;=============================================================================
+
+[DM9009.id.reg]
+HKR, Ndi, DeviceID, 0, "PCI\VEN_1282&DEV_9009"
+HKR,,AdapterPCIID,0,"90091282"
+
+;=============================================================================
+;
+; Win9x flags section
+; Flags are not needed by NT
+;
+;=============================================================================
+;****************************************************************************
+; PCI common parameters
+;****************************************************************************
+
+[DM9102.pci.reg]
+;params
+HKR,                            , AdapterType, 0,"5"
+HKR,                            , BusType,     0,"5"            ;; PCI
+
+;StoreAndForward
+HKR, Ndi\params\StoreAndForward,     ParamDesc, 0,"Store And Forward"
+HKR, Ndi\params\StoreAndForward,       default, 0,"1"
+HKR, Ndi\params\StoreAndForward,          type, 0,"enum"
+HKR, Ndi\params\StoreAndForward\enum,        0, 0,"Disabled"
+HKR, Ndi\params\StoreAndForward\enum,        1, 0,"Enabled"
+
+;Transmit Threshold
+HKR, Ndi\params\TransmitThreshold,   ParamDesc,,"Transmit Threshold"
+HKR, Ndi\params\TransmitThreshold,     default, 0,"400"
+HKR, Ndi\params\TransmitThreshold,        type, 0,"enum"
+HKR, Ndi\params\TransmitThreshold\enum,     48, 0,"  72 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     60, 0,"  96 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     80, 0," 128 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,     A0, 0," 160 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    100, 0," 256 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    200, 0," 512 bytes"
+HKR, Ndi\params\TransmitThreshold\enum,    400, 0,"1024 bytes"
+
+;ACPI Enable/Disable
+HKR,Ndi\params\ACPIEnable,ParamDesc,,"PME"
+HKR,Ndi\params\ACPIEnable,default,,"5"
+HKR,Ndi\params\ACPIEnable,type,,"enum"
+HKR,Ndi\params\ACPIEnable\enum,0,,"Disabled"
+HKR,Ndi\params\ACPIEnable\enum,1,,"Link Change" 
+HKR,Ndi\params\ACPIEnable\enum,2,,"Magic Packet"
+HKR,Ndi\params\ACPIEnable\enum,3,,"Pattern Match"
+HKR,Ndi\params\ACPIEnable\enum,4,,"ALL"
+HKR,Ndi\params\ACPIEnable\enum,5,,"Magic&Match Packet"
+
+;VLAN
+;HKR, Ndi\params\VLan,     ParamDesc, 0,"VLAN"
+;HKR, Ndi\params\VLan,       default, 0,"0"
+;HKR, Ndi\params\VLan,          type, 0,"enum"
+;HKR, Ndi\params\VLan\enum,        0, 0,"Disabled"
+;HKR, Ndi\params\VLan\enum,        1, 0,"Enabled"
+HKR, , VLan,0,"0"
+
+;Tx Flow Control
+HKR, Ndi\params\TxFlowCtrl,     ParamDesc, 0,"Transmit Flow Control"
+HKR, Ndi\params\TxFlowCtrl,       default, 0,"0"
+HKR, Ndi\params\TxFlowCtrl,          type, 0,"enum"
+HKR, Ndi\params\TxFlowCtrl\enum,        0, 0,"Disabled"
+HKR, Ndi\params\TxFlowCtrl\enum,        1, 0,"Enabled"
+
+;Rx Flow Control
+HKR, Ndi\params\RxFlowCtrl,     ParamDesc, 0,"Receive Flow Control"
+HKR, Ndi\params\RxFlowCtrl,       default, 0,"0"
+HKR, Ndi\params\RxFlowCtrl,          type, 0,"enum"
+HKR, Ndi\params\RxFlowCtrl\enum,        0, 0,"Disabled"
+HKR, Ndi\params\RxFlowCtrl\enum,        1, 0,"Enabled"
+
+[DM9102.con.reg]
+;ConnectionType
+HKR, Ndi\params\ConnectionType,      ParamDesc,  0,"Connection Type"
+HKR, Ndi\params\ConnectionType,      default,    0,"0"
+HKR, Ndi\params\ConnectionType,      type,       0,"enum"
+HKR, Ndi\params\ConnectionType\enum, 0,          0,"AutoSense"
+HKR, Ndi\params\ConnectionType\enum, 1,          0,"10Mbps"
+HKR, Ndi\params\ConnectionType\enum, 3,          0,"10Mbps Full_Duplex"
+
+[DM9102.confe.reg]
+HKR, Ndi\params\ConnectionType\enum, 2,          0,"100Mbps"
+HKR, Ndi\params\ConnectionType\enum, 4,          0,"100Mbps Full_Duplex"
+
+[DM9162.con.reg]
+;ConnectionType
+HKR, Ndi\params\ConnectionType,      ParamDesc,  0,"Connection Type"
+HKR, Ndi\params\ConnectionType,      default,    0,"0"
+HKR, Ndi\params\ConnectionType,      type,       0,"enum"
+HKR, Ndi\params\ConnectionType\enum, 0,          0,"AutoSense"
+HKR, Ndi\params\ConnectionType\enum, 2,          0,"100Mbps"
+HKR, Ndi\params\ConnectionType\enum, 4,          0,"100Mbps Full_Duplex"
+
+
+
+[DM9102.con.win.reg]
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+;=============================================================================
+;
+; DM9102 NT specific
+;
+;=============================================================================
+
+[DM9PCI.reg]
+HKR, Ndi,                       Service,    0, "DM9102"
+; use ndis5 as the upper bound because NT supports it
+HKR, Ndi\Interfaces,            DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,            DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+HKR, ,  CoInstallers32, 0x00010000, "DM9Inst.dll, DM9InstProc"
+
+[DM9102.Service]
+DisplayName     = %DM9PCI.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\DM9eth5.SYS
+LoadOrderGroup  = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+;=============================================================================
+;
+; DM9102 Win9x specific
+;
+;=============================================================================
+[DM9102.win.reg]
+HKR, ,              DevLoader,          0, "*ndis"
+HKR, NDIS,          LogDriverName,      0, "DM9PCI"
+HKR, NDIS,          MajorNdisVersion,   1, 03
+HKR, NDIS,          MinorNdisVersion,   1, 0A
+
+HKR, ,              EnumPropPages,      0, "netdi.dll,EnumPropPages"
+HKR,Ndi,NdiInstaller,                    , "9009ndi.dll,DM9NdiProc"
+HKR, Ndi\Interfaces,DefUpper,           0, "ndis3"
+HKR, Ndi\Interfaces,DefLower,           0, "ethernet"
+HKR, Ndi\Interfaces,UpperRange,         0, "ndis3"
+HKR, Ndi\Interfaces,LowerRange,         0, "ethernet"
+HKR,NDI\params\StoreAndForward,flag,1,20,00,00,00
+HKR,NDI\params\TransmitThreshold,flag,1,20,00,00,00
+HKR,NDI\params\ACPIEnable,flag,1,20,00,00,00
+
+;=============================================================================
+;
+;Ndis driver selection
+;
+;=============================================================================
+HKR,Ndi\params\NdisVersion,ParamDesc,,"NDIS Version"
+HKR,Ndi\params\NdisVersion,default,,0
+HKR,Ndi\params\NdisVersion,type,,enum
+HKR,Ndi\params\NdisVersion\enum,0,,"Auto Selection"
+HKR,NDI\params\NdisVersion,flag,1,20,00,00,00
+
+;=============================================================================
+;
+; DestinationDirs
+;
+;=============================================================================
+[dm9pci.win.CopyFiles]
+dm9eth5.sys
+DM9eth4.SYS
+DM9eth3.SYS
+
+[dm9ndi.dll.CopyFiles]
+9009ndi.dll
+
+[DestinationDirs]
+DefaultDestDir       =          12
+DM9PCI.CopyFiles     =          12
+DM9PCI.DLL.CopyFiles =          11
+dm9pci.win.CopyFiles =          11
+dm9ndi.dll.CopyFiles =          11
+
+[SourceDisksNames]
+50="DAVICOM PCI Based Network Drivers Disk",,
+
+[SourceDisksFiles]
+DM9eth5.sys = 50,,10000
+DM9Inst.dll = 50,,10000
+DM9eth4.sys = 50,,10000
+DM9eth3.sys = 50,,10000
+9009NDI.dll  = 50,,10000
+
+[Strings]
+V_DSI    = "DAVICOM Semiconductor, Inc."
+DM9161.DeviceDesc   = "DAVICOM 10/100 Low Power PCI Fast Ethernet Adapter "
+DM9162.DeviceDesc   = "DAVICOM Fiber PCI Fast Ethernet Adapter            "
+DM9163.DeviceDesc   = "DAVICOM Fiber/TP PCI Fast Ethernet Adapter         "
+ArchTek.DeviceDesc  = "10/100 PCI Ethernet Adapter                        "
+DM9009.DeviceDesc   = "DAVICOM 9009 PCI Fast Ethernet Adapter             "
+DM9PCI.Service.DispName = "DAVICOM PCI Based Network Adapter NT Driver"
+
+
+

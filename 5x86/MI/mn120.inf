@@ -1,0 +1,210 @@
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %VENDOR_120%   
+CatalogFile = MN120.CAT                              
+DriverVer   = 05/29/2002, 2.18.0529.2002
+
+[Manufacturer]
+%VENDOR_120%   = DeviceMN120,NTx86.5.1     
+
+[ControlFlags]
+ExcludeFromSelect =   PCI\VEN_1414&DEV_0001&SUBSYS_00011414  
+		
+[DeviceMN120]  
+%MN120.DeviceDesc%     = MN120,            PCI\VEN_1414&DEV_0001&SUBSYS_00011414   
+
+[DeviceMN120.NTx86.5.1]  
+%MN120.DeviceDesc%     = MN120.NT.5.1,     PCI\VEN_1414&DEV_0001&SUBSYS_00011414   
+
+[MN120]   
+AddReg          = MN120.Reg, MN120.com.Reg, MN120.pci.reg, MN120.con.reg        
+CopyFiles       = MN120.ndis.copyfiles   
+
+[MN120.NT]  
+Characteristics = 0x84
+BusType         = 5
+AddReg          = MN120.NT.reg, MN120.NT.com.reg, MN120.pci.reg, MN120.con.reg     
+CopyFiles       = MN120.ndis.copyfiles.NT  
+
+[MN120.NT.5.1]  
+Characteristics = 0x84
+BusType         = 5
+AddReg          = MN120.NT.reg, MN120.NT.com.reg, MN120.pci.reg, MN120.con.reg 
+CopyFiles       = MN120.ndis.copyfiles.XP
+ 
+[MN120.NT.Services]  
+AddService      = MN120, 2, MN120.Service.NT, MN120.EventLog   
+
+[MN120.NT.5.1.Services]  
+AddService      = MN120, 2, MN120.Service.XP, MN120.EventLog   
+
+[MN120.ndis.copyfiles]  
+MN120-50.sys,,,2  
+
+[MN120.ndis.copyfiles.NT]  
+MN120-50.sys,,,2  
+
+[MN120.ndis.copyfiles.XP]  
+MN120-51.sys,,,2  
+
+[MN120.Reg]  
+HKR, NDI,            DeviceID,          , "PCI\VEN_1414&DEV_0001&SUBSYS_00011414"
+HKR,               , AdapterCFID,       , 00011414
+
+[MN120.com.Reg]  
+HKR,               , DevLoader,         , *ndis
+HKR,               , DeviceVxDs,        , MN120-50.sys  
+
+HKR,               , AdapterType,       , 5
+HKR,               , BusType,           , 5
+
+HKR, NDIS,           MajorNdisVersion, 1, 04
+HKR, NDIS,           MinorNdisVersion, 1, 00
+HKR, NDIS,           LogDriverName,     , "MN120"  
+
+HKR, Ndi\Interfaces, DefUpper,          , "ndis3"
+HKR, Ndi\Interfaces, DefLower,          , "ethernet"
+HKR, Ndi\Interfaces, UpperRange,        , "ndis3"
+HKR, Ndi\Interfaces, LowerRange,        , "ethernet"
+
+HKR, Ndi\Install,    ndis3,            0, "MN120.Install"  
+
+[MN120.NT.reg]  
+HKR,               , AdapterCFID,      0, "00011414"
+
+[MN120.NT.com.reg]  
+HKR, Ndi,            Service,          0, "MN120"  
+HKR, Ndi\Interfaces, LowerRange,       0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange,       0, "ndis5"
+HKR,               , MediaType,        0, "0"
+
+[MN120.pci.reg]  
+HKR, , AdapterType,    0, "5"
+HKR, , TxPacketDesc,    , "600"
+HKR, , RxPacketDesc,    , "120"      
+HKR, , TxDmaDesc,       , "600"      
+HKR, , RxDmaDesc,       , "40"       
+HKR, , PacketsPerTxInt, , "10"       
+HKR, , PacketsPerRxInd, , "10"       
+HKR, , BurstLength,     , "0"        
+
+[MN120.con.reg]  
+HKR, Ndi\Params\MediaType,            ParamDesc,  , "Media Type"
+HKR, Ndi\Params\MediaType,            default,    , "0"
+HKR, Ndi\Params\MediaType,            type,       , "enum"
+HKR, Ndi\Params\MediaType\enum,       0,          , "AutoSense"
+HKR, Ndi\Params\MediaType\enum,       1,          , "10BaseT"
+HKR, Ndi\Params\MediaType\enum,       2,          , "10BaseT Full_Duplex"
+HKR, Ndi\Params\MediaType\enum,       3,          , "100BaseTX"
+HKR, Ndi\Params\MediaType\enum,       4,          , "100BaseTX Full_Duplex"
+HKR, Ndi\Params\MediaType,            flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\PowerManagement,      ParamDesc,  , "PME Enable"
+HKR, Ndi\Params\PowerManagement,      default,    , "1"
+HKR, Ndi\Params\PowerManagement,      type,       , "enum"
+HKR, Ndi\Params\PowerManagement\enum, 0,          , "Disabled"
+HKR, Ndi\Params\PowerManagement\enum, 1,          , "Enabled"
+HKR, Ndi\Params\PowerManagement,      flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\WakeupFrame,          ParamDesc,  , "Pattern Match Wakeup"
+HKR, Ndi\Params\WakeupFrame,          default,    , "1"
+HKR, Ndi\Params\WakeupFrame,          type,       , "enum"
+HKR, Ndi\Params\WakeupFrame\enum,     0,          , "Disabled"
+HKR, Ndi\Params\WakeupFrame\enum,     1,          , "Enabled"
+HKR, Ndi\Params\WakeupFrame,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\LinkOnChange,         ParamDesc,  , "Link Wakeup(Off->On)"
+HKR, Ndi\Params\LinkOnChange,         default,    , "0"
+HKR, Ndi\Params\LinkOnChange,         type,       , "enum"
+HKR, Ndi\Params\LinkOnChange\enum,    0,          , "Disabled"
+HKR, Ndi\Params\LinkOnChange\enum,    1,          , "Enabled"
+HKR, Ndi\Params\LinkOnChange,         flag,      1, "20","00","00","00"
+ 
+HKR, Ndi\Params\LinkOffChange,        ParamDesc,  , "Link Wakeup(On->Off)"
+HKR, Ndi\Params\LinkOffChange,        default,    , "0"
+HKR, Ndi\Params\LinkOffChange,        type,       , "enum"
+HKR, Ndi\Params\LinkOffChange\enum,   0,          , "Disabled"
+HKR, Ndi\Params\LinkOffChange\enum,   1,          , "Enabled"
+HKR, Ndi\Params\LinkOffChange,        flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\MagicPacket,          ParamDesc,  , "Magic Packet Wakeup"
+HKR, Ndi\Params\MagicPacket,          default,    , "1"
+HKR, Ndi\Params\MagicPacket,          type,       , "enum"
+HKR, Ndi\Params\MagicPacket\enum,     0,          , "Disabled"
+HKR, Ndi\Params\MagicPacket\enum,     1,          , "Enabled"
+HKR, Ndi\Params\MagicPacket,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\FlowControl,          ParamDesc,  , "Flow Control"
+HKR, Ndi\Params\FlowControl,          default,    , "1"
+HKR, Ndi\Params\FlowControl,          type,       , "enum"
+HKR, Ndi\Params\FlowControl\enum,     0,          , "Disabled"
+HKR, Ndi\Params\FlowControl\enum,     1,          , "Enabled"
+HKR, Ndi\Params\FlowControl,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\PriorityPacket,       ParamDesc,  , "Priority Packet"
+HKR, Ndi\Params\PriorityPacket,       default,    , "0"
+HKR, Ndi\Params\PriorityPacket,       type,       , "enum"
+HKR, Ndi\Params\PriorityPacket\enum,  0,          , "Disabled"
+HKR, Ndi\Params\PriorityPacket\enum,  1,          , "Enabled"
+HKR, Ndi\Params\PriorityPacket,       flag,      1, "20","00","00","00"
+
+HKR,Ndi\params\VlanId,                ParamDesc, 0, "VLAN ID"
+HKR,Ndi\params\VlanId,                type,      0, "edit"
+HKR,Ndi\params\VlanId,                default,   0, "0"
+HKR,Ndi\params\VlanId,                LimitText, 0, "4"
+HKR,Ndi\params\VlanId,                UpperCase, 0, "1"
+HKR,Ndi\params\VlanId,                Optional,  0, "1"
+
+[MN120.Service.NT]  
+DisplayName     = %MN120.Service.DispName%   
+ServiceType     = 1                                
+StartType       = 3                                
+ErrorControl    = 1                                
+ServiceBinary   = %12%\MN120-50.sys   
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[MN120.Service.XP]  
+DisplayName     = %MN120.Service.DispName%   
+ServiceType     = 1                                
+StartType       = 3                                
+ErrorControl    = 1                                
+ServiceBinary   = %12%\MN120-51.sys   
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[MN120.EventLog]  
+AddReg = MN120.AddEventLog.reg  
+
+[MN120.AddEventLog.reg]  
+HKR, , EventMessageFile, 0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[DestinationDirs]
+MN120.ndis.copyfiles       = 11  
+MN120.ndis.copyfiles.NT    = 12
+MN120.ndis.copyfiles.XP    = 12  
+DefaultDestDir             = 11                               
+
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+MN120-50.sys  = 1
+MN120-51.sys  = 1
+
+[Strings]
+VENDOR_120  ="Microsoft"       
+
+DISKNAME = "Microsoft(R) Broadband Network driver diskette"                       
+
+MN120.DeviceDesc       = "Microsoft(R) Notebook Adapter MN-120"                    
+
+MN120.Service.DispName = "Microsoft(R) Notebook Adapter MN-120"                        
+

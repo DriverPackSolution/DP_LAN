@@ -1,0 +1,147 @@
+;/******************************************************************************
+;**                                                                           **
+;** INTEL CONFIDENTIAL                                                        **
+;**                                                                           **
+;** Copyright 2012-2012 Intel Corporation All Rights Reserved.                **
+;**                                                                           **
+;** The source code contained or described herein and all documents related   **
+;** to the source code ("Material") are owned by Intel Corporation or its     **
+;** suppliers or licensors.  Title to the Material remains with Intel         **
+;** Corporation or its suppliers and licensors.  The Material contains trade  **
+;** secrets and proprietary and confidential information of Intel or its      **
+;** suppliers and licensors.  The Material is protected by worldwide          **
+;** copyright and trade secret laws and treaty provisions.  No part of the    **
+;** Material may be used, copied, reproduced, modified, published, uploaded,  **
+;** posted, transmitted, distributed, or disclosed in any way without Intel's **
+;** prior express written permission.                                         **
+;**                                                                           **
+;** No license under any patent, copyright, trade secret or other             **
+;** intellectual property right is granted to or conferred upon you by        **
+;** disclosure or delivery of the Materials, either expressly, by             **
+;** implication, inducement, estoppel or otherwise.  Any license under such   **
+;** intellectual property rights must be express and approved by Intel in     **
+;** writing.                                                                  **
+;**                                                                           **
+;/*****************************************************************************/
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = SCSIAdapter
+ClassGuid   = {4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider    = %Intel%
+DriverVer=11/16/2012,1.14.12.0
+CatalogFile = ifcoes.cat
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+IFP60X64.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%Intel% = Intel, NTamd64.6.1, NTamd64.6.2
+
+; Install on 2008 R2.
+
+[Intel.NTamd64.6.1]
+;
+; These are the pnp ids
+;
+
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_7B11108E
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1507&SUBSYS_7B10108E
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_00038086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_000C8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_7A128086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_152D8975
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1529
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_154A&SUBSYS_011A8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_154A&SUBSYS_011B8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_154A&SUBSYS_011C8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_000A8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_00068086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1557
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_7A118086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_154D&SUBSYS_7B118086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_11A91734
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10F7&SUBSYS_7B12108E
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10F7
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1517&SUBSYS_006A1137
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10F9
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FB&SUBSYS_00028086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10FC
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1558&SUBSYS_011A8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1558&SUBSYS_011B8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_151C&SUBSYS_A02C8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_151C&SUBSYS_A21C8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_151C&SUBSYS_A03C8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_151C&SUBSYS_7B13108E
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_151C
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10F7&SUBSYS_000D8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10F8&SUBSYS_1F631028
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1514&SUBSYS_000B8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10F8&SUBSYS_000C8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_10F8
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_152A
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528&SUBSYS_00018086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528&SUBSYS_001A8086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528&SUBSYS_7B15108E
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528&SUBSYS_7B14108E
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528&SUBSYS_00028086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528&SUBSYS_00A28086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528&SUBSYS_50038086
+%IntelFCoESetup.DeviceDesc%=Install_2k8x64, PCI\VEN_8086&DEV_1528&SUBSYS_1F611028
+
+; Block on 2012.
+
+[Intel.NTamd64.6.2]
+
+
+[Install_2k8x64.NT]
+CopyFiles=Drivers_Dir
+
+[Install_2k8x64.NT.HW]
+AddReg=Install_2k8x64.NT.AddReg
+
+[Install_2k8x64.NT.AddReg]                            
+HKR,,DeviceCharacteristics,0x10001,0x0100         ; Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;BA)(A;;GA;;;SY)"      ; Allow generic-all access to Built-in administrators and Local system 
+
+[Drivers_Dir]
+IFP60X64.sys
+
+
+;-------------- Service installation
+[Install_2k8x64.NT.Services]
+AddService = IFCoES,%SPSVCINST_ASSOCSERVICE%, Install_2k8x64.Service
+
+; -------------- IFCoES driver install sections
+[Install_2k8x64.Service]
+DisplayName    = %IntelFCoESetup.DeviceDesc%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 0               ; SERVICE_BOOT_START 
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\IFP60X64.sys
+LoadOrderGroup = PNP_TDI
+AddReg         = devtype_addreg, fcoe_parms_addreg
+
+[devtype_addreg]
+HKR,, "DevType", 0x00010001, 0x00000001
+
+[fcoe_parms_addreg]
+HKR, "Parameters", "HwResourceOwner", 0x00010001, 0x00000001
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+Intel = "Intel"
+DiskId1 = "Intel(R) FCoE Installation Disk"
+IntelFCoESetup.DeviceDesc = "Intel(R) Ethernet Setup Driver for FCoE"

@@ -1,0 +1,288 @@
+;-------------------------------------------------------------------------------
+; atl01v32.INF
+;
+; Attansic L1 Gigabit Ethernet 10/100/1000Base-T Adapter
+;
+; Copyright (c) 2000-2006 Attansic Technology corporation.  All rights reserved.
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %ATTANSIC%
+CatalogFile = atl01v32.cat
+DriverVer   = 04/12/2007, 2.2.6000.0
+
+
+[Manufacturer]
+%ATTANSIC% = Attansic, NTx86.6.0, NTamd64.6.0
+
+[ControlFlags]
+; Make this device not listed in the <the Select Component for Installation> dialog
+; during manual installation
+ExcludeFromSelect = PCI\VEN_1969&DEV_1048
+
+
+[Attansic.NTx86.6.0]
+; DisplayName		Section		DeviceID
+; -----------		-------		--------
+%Attansic.AtcL001% = 	AtcL001.ndi,	PCI\VEN_1969&DEV_1048
+%Attansic.AtcL001% = 	ASUS.ndi,	PCI\VEN_1969&DEV_1048&SUBSYS_826B1043&REV_B0
+
+[Attansic.NTamd64.6.0]
+; DisplayName		Section		DeviceID
+; -----------		-------		--------
+%Attansic.AtcL001% = 	AtcL001.ndi,	PCI\VEN_1969&DEV_1048
+%Attansic.AtcL001% = 	ASUS.ndi,	PCI\VEN_1969&DEV_1048&SUBSYS_826B1043&REV_B0
+
+
+[AtcL001.ndi]
+Characteristics	= 0x84	; (NCF_PHYSICAL + NCF_HAS_UI)
+BusType		= 5	; PCI BUS
+AddReg		= AtcL001.reg, AtcL001.params, AtcL001.WOL.params
+CopyFiles	= AtcL001.CopyFiles
+; for NDIS 6
+*IfType		= 6		; IF_TYPE_ETHERNET_CSMACD 
+*MediaType	= 0		; NdisMedium802_3
+*PhysicalMediaType = 14		; NdisPhysicalMedium802_3
+
+[AtcL001.ndi.Services]
+AddService = AtcL001, 2, AtcL001.Service, Common.EventLog
+
+
+[ASUS.ndi]
+Characteristics	= 0x84	; (NCF_PHYSICAL + NCF_HAS_UI)
+BusType		= 5	; PCI BUS
+AddReg		= AtcL001.reg, AtcL001.params, ASUS.EFI.WOL.params
+CopyFiles	= AtcL001.CopyFiles
+; for NDIS 6
+*IfType		= 6		; IF_TYPE_ETHERNET_CSMACD 
+*MediaType	= 0		; NdisMedium802_3
+*PhysicalMediaType = 14		; NdisPhysicalMedium802_3
+
+[ASUS.ndi.Services]
+AddService = AtcL001, 2, AtcL001.Service, Common.EventLog
+
+;-----------------------------------------------------------------------------
+
+[AtcL001.reg]
+HKR, Ndi\Interfaces,	UpperRange,		0, "ndis5"
+HKR, Ndi\Interfaces,	LowerRange,		0, "ethernet"
+HKR, Ndi,		Service,		0, "AtcL001"
+HKR, Ndi,		HelpText,		, %HelpText%
+HKR, Ndi,		CustomerSetting,	, "0"
+
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{6E19F210-3813-4002-B561-94D66AA182B6}","DisplayName",,"%Uninstall%"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{6E19F210-3813-4002-B561-94D66AA182B6}","UninstallString",,"rundll32.exe %10%%UninstFunc% %10%%DestPath% %UninstCmd%"
+
+
+[AtcL001.Service]
+DisplayName     = %AtcL001.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\atl01v32.sys
+LoadOrderGroup  = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR,, EventMessageFile,	0x00020000, "%%SystemRoot%%\System32\Drivers\atl01v32.sys"
+HKR,, TypesSupported,	0x00010001, 7
+
+
+[AtcL001.params]
+HKR, Ndi\Params\NetworkAddress,	ParamDesc,	0,	%NetAddr%
+HKR, Ndi\Params\NetworkAddress,	Type,		0,	"edit"
+HKR, Ndi\Params\NetworkAddress,	LimitText,	0,	"18"
+HKR, Ndi\Params\NetworkAddress,	UpperCase,	0,	"1"
+HKR, Ndi\Params\NetworkAddress,	Default,	0,	""
+HKR, Ndi\Params\NetworkAddress,	Optional,	0,	"1"
+
+HKR, Ndi\Params\MaxFrameSize,	ParamDesc,	0,	%MTU%
+HKR, Ndi\Params\MaxFrameSize,	Type,		0,	"int"
+HKR, Ndi\Params\MaxFrameSize,	Base,		0,	"10"
+HKR, Ndi\Params\MaxFrameSize,	Min,		0,	"16"
+HKR, Ndi\Params\MaxFrameSize,	Max,		0,	"10240"
+HKR, Ndi\Params\MaxFrameSize,	Step,		0,	"1"
+HKR, Ndi\Params\MaxFrameSize,	Default,	0,	"1514"
+
+HKR, Ndi\Params\Moderate,	ParamDesc,	0,	%IntMod%
+HKR, Ndi\Params\Moderate,	Type,		0,	"enum"
+HKR, Ndi\Params\Moderate\enum,	1,		0,	%On%
+HKR, Ndi\Params\Moderate\enum,	0,		0,	%Off%
+HKR, Ndi\Params\Moderate,	Default,	0,	"1"
+
+HKR, Ndi\Params\MaxInterrupt,	ParamDesc,	0,	%MaxIrq%
+HKR, Ndi\Params\MaxInterrupt,	Type,		0,	"int"
+HKR, Ndi\Params\MaxInterrupt,	Base,		0,	"10"
+HKR, Ndi\Params\MaxInterrupt,	Min,		0,	"1000"
+HKR, Ndi\Params\MaxInterrupt,	Max,		0,	"30000"
+HKR, Ndi\Params\MaxInterrupt,	Step,		0,	"500"
+HKR, Ndi\Params\MaxInterrupt,	Default,	0,	"5000"
+
+HKR, Ndi\Params\MediaType,	ParamDesc,	0,	%MediaType%
+HKR, Ndi\Params\MediaType,	Type,		0,	"enum"
+HKR, Ndi\Params\MediaType,	Default,	0,	"0"
+HKR, Ndi\Params\MediaType\enum,	"0",		0,	%Auto%
+HKR, Ndi\Params\MediaType\enum, "1",		0,	%10MHD%
+HKR, Ndi\Params\MediaType\enum, "2",		0,	%10MFD%
+HKR, Ndi\Params\MediaType\enum, "3",		0,	%100MHD%
+HKR, Ndi\Params\MediaType\enum, "4",		0,	%100MFD%
+HKR, Ndi\Params\MediaType\enum, "6",		0,	%1000MFD%
+
+HKR, Ndi\params\BundleId,	ParamDesc,	0,	%BundleStr%
+HKR, Ndi\Params\BundleId,	Type,		0,	"edit"
+HKR, Ndi\Params\BundleId,	LimitText,	0,	"10"
+HKR, Ndi\Params\BundleId,	UpperCase,	0,	"1"
+HKR, Ndi\Params\BundleId,	Default,	0,	""
+HKR, Ndi\Params\BundleId,	Optional,	0,	"1"
+
+HKR, Ndi\Params\MaxRxBuffer,	ParamDesc,	0,	%NumRx%
+HKR, Ndi\Params\MaxRxBuffer,	Type,		0,	"int"
+HKR, Ndi\Params\MaxRxBuffer,	Base,		0,	"10"
+HKR, Ndi\Params\MaxRxBuffer,	Min,		0,	"16"
+HKR, Ndi\Params\MaxRxBuffer,	Max,		0,	"2048"
+HKR, Ndi\Params\MaxRxBuffer,	Step,		0,	"16"
+HKR, Ndi\Params\MaxRxBuffer,	Default,	0,	"256"
+
+HKR, Ndi\Params\MaxTxBuffer,	ParamDesc,	0,	%NumTx%
+HKR, Ndi\Params\MaxTxBuffer,	Type,		0,	"int"
+HKR, Ndi\Params\MaxTxBuffer,	Base,		0,	"10"
+HKR, Ndi\Params\MaxTxBuffer,	Min,		0,	"16"
+HKR, Ndi\Params\MaxTxBuffer,	Max,		0,	"1024"
+HKR, Ndi\Params\MaxTxBuffer,	Step,		0,	"16"
+HKR, Ndi\Params\MaxTxBuffer,	Default,	0,	"256"
+
+HKR, Ndi\Params\TaskOffload,		ParamDesc,	0,	%TOff%
+HKR, Ndi\Params\TaskOffload,		Type,		0,	"enum"
+HKR, Ndi\Params\TaskOffload\enum,	1,		0,	%On%
+HKR, Ndi\Params\TaskOffload\enum,	0,		0,	%Off%
+HKR, Ndi\Params\TaskOffload,		Default,	0,	"1"
+
+HKR, Ndi\Params\FlowControl,		ParamDesc,	0,	%FlowCtrl%
+HKR, Ndi\Params\FlowControl,		Type,		0,	"enum"
+HKR, Ndi\Params\FlowControl,		Default,	0,	"1"
+HKR, Ndi\Params\FlowControl\enum,	"1",		0,	%On%
+HKR, Ndi\Params\FlowControl\enum,	"0",		0,	%Off%
+
+[AtcL001.WOL.params]
+HKR, Ndi\Params\ShutdownWake,		ParamDesc,	0,	%ShutDW%
+HKR, Ndi\Params\ShutdownWake,		Type,		0,	"enum"
+HKR, Ndi\Params\ShutdownWake\enum,	1,		0,	%On%
+HKR, Ndi\Params\ShutdownWake\enum,	0,		0,	%Off%
+HKR, Ndi\Params\ShutdownWake,		Default,	0,	"0"
+
+HKR, Ndi\Params\WakeUpCapabilities,	ParamDesc,	,	%WakeUpCapabilities%
+HKR, Ndi\Params\WakeUpCapabilities,	Type,		,	"enum"
+HKR, Ndi\Params\WakeUpCapabilities,	Default,	, 	"6"
+HKR, Ndi\Params\WakeUpCapabilities\enum, "0",		,	%None%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "1",		,	%LinkChange%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "2",		,	%MagicPacket%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "4",		,	%PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "6",		,	%MagicPacket_PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "7",		,	%All%
+
+
+[ASUS.EFI.WOL.params]
+HKR, Ndi\Params\ShutdownWake,		ParamDesc,	0,	%ShutDW%
+HKR, Ndi\Params\ShutdownWake,		Type,		0,	"enum"
+HKR, Ndi\Params\ShutdownWake\enum,	1,		0,	%On%
+HKR, Ndi\Params\ShutdownWake\enum,	0,		0,	%Off%
+HKR, Ndi\Params\ShutdownWake,		Default,	0,	"1"
+
+HKR, Ndi\Params\WakeUpCapabilities,	ParamDesc,	,	%WakeUpCapabilities%
+HKR, Ndi\Params\WakeUpCapabilities,	Type,		,	"enum"
+HKR, Ndi\Params\WakeUpCapabilities,	Default,	, 	"2"
+HKR, Ndi\Params\WakeUpCapabilities\enum, "0",		,	%None%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "1",		,	%LinkChange%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "2",		,	%MagicPacket%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "4",		,	%PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "6",		,	%MagicPacket_PatternMatch%
+HKR, Ndi\Params\WakeUpCapabilities\enum, "7",		,	%All%
+
+
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[AtcL001.CopyFiles]
+atl01v32.sys,,,2
+
+[SourceDisksNames]
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+1 = %DriverDisk%,,,
+
+[SourceDisksFiles]
+; filename_on_source = diskID[, [subdir][, size]]
+atl01v32.sys = 1
+atcInst.dll = 1
+
+[DestinationDirs]
+AtcL001.CopyFiles     = 12
+DefaultDestDir        = 11
+CoInstaller_CopyFiles = 10,"system32\Attansic\L1"
+
+;-------------- Coinstaller installation
+
+[AtcL001.ndi.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+atcInst.dll
+
+[CoInstaller_AddReg]
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce","Attansic",,"rundll32.exe %10%%CustomFunc% %10%%DestPath%*%CustomCmd%"
+
+[Attansic_CoInfo]
+; Used by the attansic co-installer to figure out where the original media is
+; located (so it can launch value-added setup programs).
+OriginalInfSourcePath = %1%
+
+[Strings]
+Attansic	= "Attansic"
+NetAddr		= "Network Address"
+MTU		= "Maximum Frame Size"
+TOff		= "Task Offload"
+IntMod		= "Interrupt Moderation"
+VLanID		= "VLAN ID"
+MaxIrq		= "Max IRQ per Second"
+NumRx		= "Number of Receive Buffers"
+NumTx		= "Number of Transmit Buffers"
+Auto		= "Auto"
+On		= "On"
+Off		= "Off"
+MediaType	= "MediaType"
+10MHD		= "10Mbps Half Duplex"
+10MFD		= "10Mbps Full Duplex"
+100MHD		= "100Mbps Half Duplex"
+100MFD		= "100Mbps Full Duplex"
+1000MHD		= "1000Mbps Half Duplex"
+1000MFD		= "1000Mbps Full Duplex"
+FlowCtrl	= "Flow Control"
+BundleStr	= "Bundle ID"
+ShutDW		= "Shutdown wake up"
+
+Attansic.AtcL001 		= "Attansic L1 Gigabit Ethernet 10/100/1000Base-T Controller"
+AtcL001.Service.DispName 	= "NDIS Miniport Driver for Attansic L1 Gigabit Ethernet Controller"
+DriverDisk			= "Attansic Gigabit Ethernet Controller Installation Disk"
+HelpText			= "This Attansic network controller connects you to the network."
+
+Uninstall			= "Attansic L1 Gigabit Ethernet Driver"
+UninstFunc			= "\system32\Attansic\L1\atcInst.dll,VisUninst"
+CustomFunc			= "\system32\Attansic\L1\atcInst.dll,CustomerSetting"
+DestPath			= "\system32\Attansic\L1"
+UninstCmd			= "x86 pci\ven_1969&dev_1048"
+CustomCmd			= "L1*x86"
+
+; String for Wake On Lan property
+WakeUpCapabilities		= "Wake Up Capabilities"
+None				= "None"
+LinkChange			= "Link Change"
+MagicPacket			= "Magic Packet"
+PatternMatch			= "Pattern Match"
+MagicPacket_PatternMatch	= "MagicPacket & PatternMatch"
+All				= "All"
+

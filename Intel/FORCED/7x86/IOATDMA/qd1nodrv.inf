@@ -1,0 +1,73 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 2003-2009 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+; INF for the Intel(R) QuickData Technology device
+;
+
+[Version]
+Signature="$Windows NT$"
+Class=System
+ClassGUID={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%INTC%
+CatalogFile=qd1nodrv.cat
+DriverVer=11/16/2009,1.3.22.0
+
+[Manufacturer]
+%MfgName% = Intel, NTx86.6.1.1
+
+[Intel]
+
+; Windows 7 Client not supported
+[Intel.NTx86.6.1.1]
+%PCI\VEN_8086&DEV_1A38.DeviceDesc%=NO_DRV, PCI\VEN_8086&DEV_1A38
+%PCI\VEN_8086&DEV_360B.DeviceDesc%=NO_DRV, PCI\VEN_8086&DEV_360B
+%PCI\VEN_8086&DEV_65FF.DeviceDesc%=NO_DRV, PCI\VEN_8086&DEV_65FF
+
+;---------------------------------------------------------------;
+;-------------- NO_DRV installation
+;---------------------------------------------------------------;
+
+[NO_DRV]
+AddReg=NoDrv.reg
+Include=machine.inf
+Needs=NO_DRV
+
+[NO_DRV.Services]
+Include=machine.inf
+Needs=NO_DRV.Services
+
+[NoDrv.reg]
+HKR,,Version,,"%DriverVer%"
+
+;---------------------------------------------------------------;
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+
+[Strings]
+INTC="Intel"
+Disk_Description="Intel(R) QuickData Technology device"
+MfgName="Intel"
+PCI\VEN_8086&DEV_1A38.DeviceDesc="Intel(R) 5000 Series Chipsets Integrated Device - 1A38"
+PCI\VEN_8086&DEV_360B.DeviceDesc="Intel(R) 7300 Chipset QuickData Technology Device - 360B"
+PCI\VEN_8086&DEV_65FF.DeviceDesc="Intel(R) 5100 Chipset QuickData Technology Device – 65FF"
+
+;---------------------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,247 @@
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %VENDOR_910%   
+CatalogFile = EL910.CAT                                  
+DriverVer   = 05/29/2002, 2.18.0529.2002
+
+[Manufacturer]
+%VENDOR_910%   = DeviceEL910,NTx86.5.1            
+
+[ControlFlags]
+ExcludeFromSelect =  \
+					 PCI\VEN_10B7&DEV_9300&SUBSYS_100010B7, \
+                     PCI\VEN_10B7&DEV_9300&SUBSYS_930010B7
+		
+[DeviceEL910]
+
+%EL910.DeviceDesc%     	= EL910,            PCI\VEN_10B7&DEV_9300
+%EL910.DeviceDesc%     	= EL910,            PCI\VEN_10B7&DEV_9300&SUBSYS_100010B7
+%EL910.DeviceDesc%     	= EL910,            PCI\VEN_10B7&DEV_9300&SUBSYS_05411014
+%EL910.DeviceDesc%     	= EL910,            PCI\VEN_10B7&DEV_9300&SUBSYS_2C0217F2
+%EL910.DeviceDesc%     	= EL910,            PCI\VEN_10B7&DEV_9300&SUBSYS_2C0217F2&REV_31\4&1F7DBC9F&0&00F0
+%EL910.DeviceDesc%     	= EL910,            PCI\VEN_10B7&DEV_9300&SUBSYS_05411014
+%EL910.DeviceDesc%     	= EL910,            PCI\VEN_10B7&DEV_9300&SUBSYS_318A109F
+%EL910.DeviceDesc%	= EL910,            PCI\VEN_10B7&DEV_9300&SUBSYS_318B109F
+%EL910_NIC.DeviceDesc%  = EL910_NIC,        PCI\VEN_10B7&DEV_9300&SUBSYS_930010B7
+
+[DeviceEL910.NTx86.5.1]
+%EL910.DeviceDesc%      = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300
+%EL910.DeviceDesc%      = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300&SUBSYS_100010B7
+%EL910.DeviceDesc%      = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300&SUBSYS_05411014
+%EL910.DeviceDesc%      = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300&SUBSYS_2C0217F2
+%EL910.DeviceDesc%      = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300&SUBSYS_2C0217F2&REV_31\4&1F7DBC9F&0&00F0
+%EL910.DeviceDesc%      = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300&SUBSYS_05411014
+%EL910.DeviceDesc%      = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300&SUBSYS_318A109F
+%EL910.DeviceDesc%      = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300&SUBSYS_318B109F
+%EL910_NIC.DeviceDesc%  = EL910.NT.5.1,     PCI\VEN_10B7&DEV_9300&SUBSYS_930010B7
+
+[EL910]   
+AddReg          = EL910.Reg, EL910.com.Reg, EL910.pci.reg, EL910.con.reg        
+CopyFiles       = EL910.ndis.copyfiles   
+
+[EL910_NIC]   
+AddReg          = EL910_NIC.Reg, EL910.com.Reg, EL910.pci.reg, EL910.con.reg        
+CopyFiles       = EL910.ndis.copyfiles
+
+[EL910.NT]  
+Characteristics = 0x84
+BusType         = 5
+AddReg          = EL910.NT.reg, EL910.NT.com.reg, EL910.pci.reg, EL910.con.reg     
+CopyFiles       = EL910.ndis.copyfiles.NT  
+
+[EL910.NT.Services]  
+AddService      = EL910, 2, EL910.Service.NT, EL910.EventLog   
+
+[EL910_NIC.NT]  
+Characteristics = 0x84
+BusType         = 5
+AddReg          = EL910.NT.reg, EL910.NT.com.reg, EL910.pci.reg, EL910.con.reg     
+CopyFiles       = EL910.ndis.copyfiles.NT  
+
+[EL910_NIC.NT.Services]  
+AddService      = EL910, 2, EL910.Service.NT, EL910.EventLog
+
+[EL910.NT.5.1]  
+Characteristics = 0x84
+BusType         = 5
+AddReg          = EL910.NT.reg, EL910.NT.com.reg, EL910.pci.reg, EL910.con.reg 
+CopyFiles       = EL910.ndis.copyfiles.XP
+
+[EL910.NT.5.1.Services]  
+AddService      = EL910, 2, EL910.Service.XP, EL910.EventLog   
+
+[EL910.ndis.copyfiles]  
+EL910ND5.sys,,,2  
+
+[EL910.ndis.copyfiles.NT]  
+EL910ND5.sys,,,2  
+
+[EL910.ndis.copyfiles.XP]  
+EL910N51.sys,,,2  
+
+[EL910.Reg]  
+HKR, NDI,            DeviceID,          , "PCI\VEN_10B7&DEV_9300&SUBSYS_100010B7"
+HKR,               , AdapterCFID,       , 00021414
+
+[EL910_NIC.Reg]  
+HKR, NDI,            DeviceID,          , "PCI\VEN_10B7&DEV_9300&SUBSYS_930010B7"
+HKR,               , AdapterCFID,       , 00021414
+
+[EL910.com.Reg]  
+HKR,               , DevLoader,         , *ndis
+HKR,               , DeviceVxDs,        , EL910ND5.sys  
+
+HKR,               , AdapterType,       , 5
+HKR,               , BusType,           , 5
+
+HKR, NDIS,           MajorNdisVersion, 1, 04
+HKR, NDIS,           MinorNdisVersion, 1, 00
+HKR, NDIS,           LogDriverName,     , "EL910"  
+
+HKR, Ndi\Interfaces, DefUpper,          , "ndis3"
+HKR, Ndi\Interfaces, DefLower,          , "ethernet"
+HKR, Ndi\Interfaces, UpperRange,        , "ndis3"
+HKR, Ndi\Interfaces, LowerRange,        , "ethernet"
+
+HKR, Ndi\Install,    ndis3,            0, "EL910.Install"  
+
+[EL910.NT.reg]  
+HKR,               , AdapterCFID,      0, "00021414"
+
+[EL910.NT.com.reg]  
+HKR, Ndi,            Service,          0, "EL910"  
+HKR, Ndi\Interfaces, LowerRange,       0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange,       0, "ndis5"
+HKR,               , MediaType,        0, "0"
+
+[EL910.pci.reg]  
+HKR, , AdapterType,    0, "5"
+HKR, , TxPacketDesc,    , "600"
+HKR, , RxPacketDesc,    , "120"      
+HKR, , TxDmaDesc,       , "600"      
+HKR, , RxDmaDesc,       , "40"       
+HKR, , PacketsPerTxInt, , "10"       
+HKR, , PacketsPerRxInd, , "10"       
+HKR, , BurstLength,     , "0"        
+
+[EL910.con.reg]  
+HKR, Ndi\Params\MediaType,            ParamDesc,  , "Media Type"
+HKR, Ndi\Params\MediaType,            default,    , "0"
+HKR, Ndi\Params\MediaType,            type,       , "enum"
+HKR, Ndi\Params\MediaType\enum,       0,          , "AutoSense"
+HKR, Ndi\Params\MediaType\enum,       1,          , "10BaseT"
+HKR, Ndi\Params\MediaType\enum,       2,          , "10BaseT Full_Duplex"
+HKR, Ndi\Params\MediaType\enum,       3,          , "100BaseTX"
+HKR, Ndi\Params\MediaType\enum,       4,          , "100BaseTX Full_Duplex"
+HKR, Ndi\Params\MediaType,            flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\PowerManagement,      ParamDesc,  , "PME Enable"
+HKR, Ndi\Params\PowerManagement,      default,    , "1"
+HKR, Ndi\Params\PowerManagement,      type,       , "enum"
+HKR, Ndi\Params\PowerManagement\enum, 0,          , "Disabled"
+HKR, Ndi\Params\PowerManagement\enum, 1,          , "Enabled"
+HKR, Ndi\Params\PowerManagement,      flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\WakeupFrame,          ParamDesc,  , "Pattern Match Wakeup"
+HKR, Ndi\Params\WakeupFrame,          default,    , "1"
+HKR, Ndi\Params\WakeupFrame,          type,       , "enum"
+HKR, Ndi\Params\WakeupFrame\enum,     0,          , "Disabled"
+HKR, Ndi\Params\WakeupFrame\enum,     1,          , "Enabled"
+HKR, Ndi\Params\WakeupFrame,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\LinkOnChange,         ParamDesc,  , "Link Wakeup(Off->On)"
+HKR, Ndi\Params\LinkOnChange,         default,    , "0"
+HKR, Ndi\Params\LinkOnChange,         type,       , "enum"
+HKR, Ndi\Params\LinkOnChange\enum,    0,          , "Disabled"
+HKR, Ndi\Params\LinkOnChange\enum,    1,          , "Enabled"
+HKR, Ndi\Params\LinkOnChange,         flag,      1, "20","00","00","00"
+ 
+HKR, Ndi\Params\LinkOffChange,        ParamDesc,  , "Link Wakeup(On->Off)"
+HKR, Ndi\Params\LinkOffChange,        default,    , "0"
+HKR, Ndi\Params\LinkOffChange,        type,       , "enum"
+HKR, Ndi\Params\LinkOffChange\enum,   0,          , "Disabled"
+HKR, Ndi\Params\LinkOffChange\enum,   1,          , "Enabled"
+HKR, Ndi\Params\LinkOffChange,        flag,      1, "20","00","00","00" 
+
+HKR, Ndi\Params\MagicPacket,          ParamDesc,  , "Magic Packet Wakeup"
+HKR, Ndi\Params\MagicPacket,          default,    , "1"
+HKR, Ndi\Params\MagicPacket,          type,       , "enum"
+HKR, Ndi\Params\MagicPacket\enum,     0,          , "Disabled"
+HKR, Ndi\Params\MagicPacket\enum,     1,          , "Enabled"
+HKR, Ndi\Params\MagicPacket,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\FlowControl,          ParamDesc,  , "Flow Control"
+HKR, Ndi\Params\FlowControl,          default,    , "1"
+HKR, Ndi\Params\FlowControl,          type,       , "enum"
+HKR, Ndi\Params\FlowControl\enum,     0,          , "Disabled"
+HKR, Ndi\Params\FlowControl\enum,     1,          , "Enabled"
+HKR, Ndi\Params\FlowControl,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\PriorityPacket,       ParamDesc,  , "Priority Packet"
+HKR, Ndi\Params\PriorityPacket,       default,    , "0"
+HKR, Ndi\Params\PriorityPacket,       type,       , "enum"
+HKR, Ndi\Params\PriorityPacket\enum,  0,          , "Disabled"
+HKR, Ndi\Params\PriorityPacket\enum,  1,          , "Enabled"
+HKR, Ndi\Params\PriorityPacket,       flag,      1, "20","00","00","00"
+
+HKR,Ndi\params\VlanId,                ParamDesc, 0, "VLAN ID"
+HKR,Ndi\params\VlanId,                type,      0, "edit"
+HKR,Ndi\params\VlanId,                default,   0, "0"
+HKR,Ndi\params\VlanId,                LimitText, 0, "4"
+HKR,Ndi\params\VlanId,                UpperCase, 0, "1"
+HKR,Ndi\params\VlanId,                Optional,  0, "1"
+
+[EL910.Service.NT]  
+DisplayName     = %EL910.Service.DispName%   
+ServiceType     = 1                                
+StartType       = 3                                
+ErrorControl    = 1                                
+ServiceBinary   = %12%\EL910ND5.sys   
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[EL910.Service.XP]  
+DisplayName     = %EL910.Service.DispName%   
+ServiceType     = 1                                
+StartType       = 3                                
+ErrorControl    = 1                                
+ServiceBinary   = %12%\EL910N51.sys   
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[EL910.EventLog]  
+AddReg = EL910.AddEventLog.reg  
+
+[EL910.AddEventLog.reg]  
+HKR, , EventMessageFile, 0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[DestinationDirs]
+EL910.ndis.copyfiles       = 11  
+EL910.ndis.copyfiles.NT    = 12
+EL910.ndis.copyfiles.XP    = 12  
+DefaultDestDir             = 11                               
+
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+EL910ND5.sys  = 1
+EL910N51.sys  = 1
+
+[Strings]
+VENDOR_910  ="3Com Corporation."
+
+DISKNAME = "3Com 3CSOHO100B-TX PCI driver diskette"
+
+EL910.DeviceDesc       = "3Com 3C910 Integrated Fast Ethernet Controller (3CSOHO100B-TX Compatible)"
+EL910_NIC.DeviceDesc   = "3Com OfficeConnect 10/100 Network Interface Card (3CSOHO100B-TX)"
+
+EL910.Service.DispName = "3Com 3CSOHO100B-TX PCI"                       
+

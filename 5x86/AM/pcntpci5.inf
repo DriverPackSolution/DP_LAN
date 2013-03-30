@@ -1,0 +1,706 @@
+; NETAMD.INF
+;
+; NDIS5 Driver installation file for AMD PCnet Based Ethernet Adapters.
+;
+; Copyright 2004-2005, Advanced Micro Devices, Inc.
+
+[version]
+CatalogFile = PCNTPCI5.cat
+Signature   = "$Windows NT$"
+Compatible  = 1 ; added
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %AMD%
+;LayoutFile  = layout.inf
+DriverVer   = 07/07/2004,4.51.0.0 
+
+[Manufacturer]
+;%AMD%    = AMD
+%AMD.NT.5.1% = AMD.NT.5.1 ;added
+;%Allied% = Allied;, NT.5.1 ; added
+%Allied.NT.5.1% = Allied.NT.5.1
+;%HP%     = HP;
+%HP.NT.5.1% = HP.NT.5.1 ;added
+;%IBM%    = IBM 
+%IBM.NT.5.1%    = IBM.NT.5.1 
+
+[SourceDisksNames]
+;
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+;
+1 = "AMD Driver Disk 1",,,
+
+[SourceDisksFiles]
+;
+; filename_on_source = diskID[, [subdir][, size]]
+;
+PCNTPCI5.sys = 1,, ; on distribution disk 1
+
+
+[AMD]
+
+%PCIGENERIC.DeviceDesc% =PCIpcnet.ndi, PCI\VEN_1022&DEV_2000   ;AMD PCnet PCI
+;%PCIGENERIC.DeviceDesc% =PCIpcnet.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_20001022    ;AMD PCnet PCI
+
+;added for xp
+[AMD.NT.5.1]
+%PCIGENERICXP.DeviceDesc% =PCIpcnetxp.ndi, PCI\VEN_1022&DEV_2000   ;AMD PCnet PCI
+
+
+[Allied]
+%*AT2700TX.DeviceDesc%=AT2700TX.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_27001259
+%*AT2700FX.DeviceDesc%=AT2700FX.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_27011259
+%*AT2450V3.DeviceDesc%=AT2450V3.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_24531259
+
+; added for xp
+[Allied.NT.5.1]
+%*AT2700TXXP.DeviceDesc%=AT2700TXXP.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_27001259
+%*AT2700FXXP.DeviceDesc%=AT2700FXXP.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_27011259
+%*AT2450V3XP.DeviceDesc%=AT2450V3XP.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_24531259
+
+[IBM]
+%*IBM.DeviceDesc% =  IBM.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_20001014
+%*IBM1.DeviceDesc% = IBM1.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_01331014
+
+; added for XP
+[IBM.NT.5.1]
+%*IBMXP.DeviceDesc% =  IBMXP.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_20001014
+%*IBM1XP.DeviceDesc% = IBM1XP.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_01331014
+
+
+[HP]
+%*HPTWEETY.DeviceDesc%  = HPTWEETY.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_104C103C, ; HP Ethernet with LAN remote power adapter
+%*HPWOODY.DeviceDesc%   = HPWOODY.ndi,  PCI\VEN_1022&DEV_2000&SUBSYS_1064103C, ; HP Ethernet with LAN remote power adapter
+%*HPSQUEEZY.DeviceDesc% = HPSQUEEZY.ndi,PCI\VEN_1022&DEV_2000&SUBSYS_1065103C, ; HP Ethernet with LAN remote power adapter              
+%*HPCASPER.DeviceDesc%  = HPCASPER.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_106C103C, ; HP Ethernet with LAN remote power adapter
+%*HPPONGO.DeviceDesc%   = HPPONGO.ndi,  PCI\VEN_1022&DEV_2000&SUBSYS_106E103C, ; HP Ethernet with LAN remote power adapter              
+%*HPSATAN.DeviceDesc%   = HPSATAN.ndi,  PCI\VEN_1022&DEV_2000&SUBSYS_10EA103C, ; HP Ethernet with LAN remote power adapter              
+
+; added for xp
+[HP.NT.5.1]
+%*HPTWEETYXP.DeviceDesc%  = HPTWEETYXP.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_104C103C, ; HP Ethernet with LAN remote power adapter
+%*HPWOODYXP.DeviceDesc%   = HPWOODYXP.ndi,  PCI\VEN_1022&DEV_2000&SUBSYS_1064103C, ; HP Ethernet with LAN remote power adapter
+%*HPSQUEEZYXP.DeviceDesc% = HPSQUEEZYXP.ndi,PCI\VEN_1022&DEV_2000&SUBSYS_1065103C, ; HP Ethernet with LAN remote power adapter              
+%*HPCASPERXP.DeviceDesc%  = HPCASPERXP.ndi, PCI\VEN_1022&DEV_2000&SUBSYS_106C103C, ; HP Ethernet with LAN remote power adapter
+%*HPPONGOXP.DeviceDesc%   = HPPONGOXP.ndi,  PCI\VEN_1022&DEV_2000&SUBSYS_106E103C, ; HP Ethernet with LAN remote power adapter              
+%*HPSATANXP.DeviceDesc%   = HPSATANXP.ndi,  PCI\VEN_1022&DEV_2000&SUBSYS_10EA103C, ; HP Ethernet with LAN remote power adapter              
+
+[CoNTrolFlags]
+ExcludeFromSelect=PCI\VEN_1022&DEV_2000, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_20001014, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_104C103C, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_1064103C, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_1065103C, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_106C103C, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_106E103C, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_10EA103C, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_27001259, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_01331014, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_27011259, \
+		    PCI\VEN_1022&DEV_2000&SUBSYS_24531259
+
+;****************************************************************************
+; ATI AT-2700TX 10/100 PCI Ethernet Adapter
+;****************************************************************************
+; NT 5.0 section
+[AT2700TX.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[AT2700TX.ndi.NTx86.Services]
+DelService	= PCnet ; added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for XP
+[AT2700TXXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[AT2700TXXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section
+[AT2700TXXP.ndi]
+AddReg=AT2700TX.ndi.reg,PCnet.Win.reg, DefaultP.reg, DefaultF.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[AT2700TX.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_27001259"
+;****************************************************************************
+; ATI AT-2700FX 100Mb PCI Ethernet Adapter
+;****************************************************************************
+[AT2700FX.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[AT2700FX.ndi.NTx86.Services]
+DelService	= PCnet ; added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; added for xp
+[AT2700FXXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[AT2700FXXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section
+[AT2700FXXP.ndi]
+AddReg=AT2700FX.ndi.reg,PCnet.Win.reg, DefaultP.reg, DefaultF.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[AT2700FX.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_27011259"
+
+;****************************************************************************
+; ATI AT-2450v3 PCI Ethernet Adapter
+;****************************************************************************
+[AT2450V3.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[AT2450V3.ndi.NTx86.Services]
+DelService	= PCnet ; added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for XP
+[AT2450V3XP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[AT2450V3XP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section
+[AT2450V3XP.ndi]
+AddReg=AT2450V3.ndi.reg,PCnet.Win.reg, DefaultP.reg, DefaultF.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[AT2450V3.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_24531259"
+;****************************************************************************
+; IBMPCI   ;IBM
+;****************************************************************************
+; NT 5.0 section
+[IBM.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[IBM.ndi.NTx86.Services]
+DelService	= PCnet ;added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for xp
+[IBMXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[IBMXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section
+[IBMXP.ndi]
+AddReg = IBM.ndi.reg,PCnet.Win.reg, DefaultP.reg, DefaultF.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[IBM.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_20001014"
+;****************************************************************************
+; IBMPCI   ;IBM iSeries 10/100 adapter
+;****************************************************************************
+; NT 5.0 section
+[IBM1.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[IBM1.ndi.NTx86.Services]
+DelService      = PCnet ; added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for XP
+[IBM1XP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[IBM1XP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section
+[IBM1XP.ndi]
+AddReg = IBM1.ndi.reg,PCnet.Win.reg, DefaultP.reg, DefaultF.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[IBM1.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_01331014"
+;****************************************************************************
+; HP Pcnet PCI      ;AMD pcNET PCI
+;****************************************************************************
+; NT5.0 section for Tweety
+[HPTWEETY.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPTWEETY.ndi.NTx86.Services]
+DelService	= PCnet ; aded for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; added for XP
+[HPTWEETYXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPTWEETYXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section for Tweety
+[HPTWEETYXP.ndi]
+AddReg = HPTWEETY.ndi.reg,PCnet.Win.reg, HPDefaultP.reg, DefaultF.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[HPTWEETY.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_104C103C"
+
+; NT5.0 section for Woody
+[HPWOODY.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPWOODY.ndi.NTx86.Services]
+DelService	= PCnet ; aded for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for XP
+[HPWOODYXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPWOODYXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section for Woody
+[HPWOODYXP.ndi]
+AddReg = HPWOODY.ndi.reg,PCnet.Win.reg, HPDefaultP.reg, DefaultF.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[HPWOODY.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_1064103C"
+
+; NT5.0 section for Squeezy
+[HPSQUEEZY.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPSQUEEZY.ndi.NTx86.Services]
+DelService	= PCnet ; added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for xp
+[HPSQUEEZYXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPSQUEEZYXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section for Squeezy
+[HPSQUEEZYXP.ndi]
+AddReg = HPSQUEEZY.ndi.reg,PCnet.Win.reg, HPDefaultP.reg, DefaultF.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[HPSQUEEZY.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_1065103C"
+
+; NT5.0 section for Casper
+[HPCASPER.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPCASPER.ndi.NTx86.Services]
+DelService	= PCnet ;added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for xp
+[HPCASPERXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPCASPERXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section for Casper
+[HPCASPERXP.ndi]
+AddReg = HPCASPER.ndi.reg,PCnet.Win.reg, HPDefaultP.reg, DefaultF.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[HPCASPER.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_106C103C"
+
+; NT5.0 section for Pongo
+[HPPONGO.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPPONGO.ndi.NTx86.Services]
+DelService	= PCnet ; added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; added for xp
+[HPPONGOXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPPONGOXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section for Pongo
+[HPPONGOXP.ndi]
+AddReg = HPPONGO.ndi.reg,PCnet.Win.reg, HPDefaultP.reg, DefaultF.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[HPPONGO.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_106E103C"
+
+; NT5.0 section for SATANAS
+[HPSATAN.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPSATAN.ndi.NTx86.Services]
+DelService	= PCnet ; added for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for xp
+[HPSATANXP.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, HPDefaultP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[HPSATANXP.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x section for SATAN
+[HPSATANXP.ndi]
+AddReg = HPSATAN.ndi.reg,PCnet.Win.reg, HPDefaultP.reg, DefaultF.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles
+
+[HPSATAN.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000&SUBSYS_106E103C"
+;****************************************************************************
+; PCIpcnet       ;AMD pcNET PCI
+;****************************************************************************
+; NT5.0 Section
+[PCIpcnet.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[PCIpcnet.ndi.NTx86.Services]
+DelService	= PCnet ; added  for IBM
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+;added for xp
+[PCIpcnetxp.ndi.NTx86]
+Characteristics = 0x84 ; NCF_PHYSICAL | NCF_HAS_UI
+BusType         = 5
+AddReg          = PCnet.NT.reg, DefaultP.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.CopyFiles
+
+[PCIpcnetxp.ndi.NTx86.Services]
+AddService      = PCnet, 2, PCnet.Service, PCnet.AddEveNTLog
+
+; Win9x Section
+[PCIpcnetxp.ndi]
+AddReg = PCIpcnet.ndi.reg,PCnet.Win.reg, DefaultP.reg, DefaultF.reg, BasicP.reg, MIIP.reg
+CopyFiles       = PCnet.ndis3.CopyFiles 
+
+[PCIpcnet.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1022&DEV_2000"
+
+;-------------------------------------------------------------------------------
+; Common Section for NT5.0 and Win9x.
+;-------------------------------------------------------------------------------
+;
+; AMD common params section
+;
+[DefaultP.reg]
+HKR, ,                              BUS_TO_SCAN,        0, "ALL"
+HKR, ,                              BUSTIMER,           0, "0"
+HKR, ,                              LED0,                       0, "10000"
+HKR, ,                              LED1,                       0, "10000"
+HKR, ,                              LED2,                       0, "10000"
+HKR, ,                              LED3,                       0, "10000"
+HKR, ,                              TP,                         0, "0"
+HKR, ,                              FDUP,                     0, "0"
+HKR, ,                              MPMODE,                     0, "0"
+HKR, ,                              Priority8021p,      0, "0"
+HKR, ,                              TcpipOffload,      0, "0"
+HKR, ,                              EXTPHY,                     0, "0"
+
+[BasicP.reg]
+HKR, Ndi\params\TP,                 ParamDesc,   0, %TP%
+HKR, Ndi\params\TP,                 default,     0, "0"
+HKR, Ndi\params\TP,                 type,        0, "enum"
+HKR, Ndi\params\TP\enum,            "0",         0, %OFF%
+HKR, Ndi\params\TP\enum,            "1",         0, %(Default)ON%
+
+HKR, Ndi\params\FDUP,               ParamDesc,   0, %FDUP% 
+HKR, Ndi\params\FDUP,               default,     0, "0"
+HKR, Ndi\params\FDUP,               type,        0, "enum"
+HKR, Ndi\params\FDUP\enum,          "0",         0, %Default%
+HKR, Ndi\params\FDUP\enum,          "1",         0, %OFF%
+HKR, Ndi\params\FDUP\enum,          "2",         0, %AUIFD%
+HKR, Ndi\params\FDUP\enum,          "3",         0, %UTPFD%
+HKR, Ndi\params\FDUP\enum,          "4",         0, %FIBER%
+
+
+HKR, Ndi\params\MPMODE,             ParamDesc,   0, %MPMODE%
+HKR, Ndi\params\MPMODE,             default,     0, "0"
+HKR, Ndi\params\MPMODE,             type,        0, "enum"
+HKR, Ndi\params\MPMODE\enum,        "0",         0, %Default(OFF)%
+HKR, Ndi\params\MPMODE\enum,        "1",         0, %ON%
+
+HKR, Ndi\params\Priority8021p,             ParamDesc,   0, %Priority8021p%
+HKR, Ndi\params\Priority8021p,             default,     0, "0"
+HKR, Ndi\params\Priority8021p,             type,        0, "enum"
+HKR, Ndi\params\Priority8021p\enum,        "0",         0, %Default(OFF)%
+HKR, Ndi\params\Priority8021p\enum,        "1",         0, %ON%
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,        ParamDesc,  0, %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,        Default,    0, ""
+HKR, Ndi\params\NetworkAddress,        type,       0, "edit"
+HKR, NDI\params\NetworkAddress,        LimitText,  0, "12"
+HKR, NDI\params\NetworkAddress,        UpperCase,  0, "1"
+HKR, NDI\params\NetworkAddress,        optional,   0, "1"
+
+HKR, Ndi\params\TcpipOffload,             ParamDesc,   0, %TcpipOffload%
+HKR, Ndi\params\TcpipOffload,             default,     0, "0"
+HKR, Ndi\params\TcpipOffload,             type,        0, "enum"
+HKR, Ndi\params\TcpipOffload\enum,        "0",         0, %Default(OFF)%
+HKR, Ndi\params\TcpipOffload\enum,        "1",         0, %ON%
+
+[MIIP.reg]
+HKR, Ndi\params\EXTPHY,             ParamDesc,   0, %EXTPHY%
+HKR, Ndi\params\EXTPHY,             default,     0, "0"
+HKR, Ndi\params\EXTPHY,             type,        0, "enum"
+HKR, Ndi\params\EXTPHY\enum,        "0",         0, %Auto%
+HKR, Ndi\params\EXTPHY\enum,        "1",         0, %100HD%
+HKR, Ndi\params\EXTPHY\enum,        "2",         0, %100FD%
+HKR, Ndi\params\EXTPHY\enum,        "3",         0, %10HD%
+HKR, Ndi\params\EXTPHY\enum,        "4",         0, %10FD%
+
+;
+; HP only params section
+;
+[HPDefaultP.reg]
+HKR, ,                              BUS_TO_SCAN, 0, "ALL"
+HKR, ,                              BUSTIMER,    0, "0"
+HKR, ,                              LED0,        0, "10000"
+HKR, ,                              LED1,        0, "10000"
+HKR, ,                              LED2,        0, "90"
+HKR, ,                              LED3,        0, "10000"
+HKR, ,                              TP,          0, "1"
+HKR, ,                              MPMODE,      0, "0"
+HKR, ,                              Priority8021p,      0, "0"
+HKR, ,                              TcpipOffload,      0, "0"
+HKR, ,                              EXTPHY,      0, "0"
+
+[PCnet.CopyFiles]
+PCNTPCI5.sys,,,2
+
+;-------------------------------------------------------------------------------
+; NT 5.0 only sections
+;-------------------------------------------------------------------------------
+
+[PCnet.NT.reg]
+HKR, Ndi,            Service,    0, "PCnet"
+;HKR, Ndi\INTerfaces, DefUpper,   0, "ndis5"
+;HKR, Ndi\INTerfaces, DefLower,   0, "ethernet"
+HKR, Ndi\INTerfaces, UpperRange, 0, "ndis5"
+HKR, Ndi\INTerfaces, LowerRange, 0, "ethernet"
+
+[PCnet.Service]
+DisplayName     = %PCnet.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorCoNTrol    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\PCNTPCI5.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[PCnet.AddEveNTLog]
+AddReg = PCnet.AddEveNTLog.reg
+
+[PCnet.AddEveNTLog.reg]
+HKR, , EveNTMessageFile, 0x00020000, "%%SystemRoot%%\System32\neteveNT.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+
+[TextModeFlags.reg]
+HKR,  , TextModeFlags, 0x00010001, 0x0001
+
+;-------------------------------------------------------------------------------
+; Win9x only sections
+;-------------------------------------------------------------------------------
+[DefaultF.reg]
+;HKR,NDI\params\BUS_TO_SCAN,flag,1,30,00,00,00
+;HKR,NDI\params\BUSTIMER,flag,1,30,00,00,00
+HKR,NDI\params\FDUP,flag,1,20,00,00,00
+;HKR,NDI\params\LED0,flag,1,30,00,00,00
+;HKR,NDI\params\LED1,flag,1,30,00,00,00
+;HKR,NDI\params\LED2,flag,1,30,00,00,00
+;HKR,NDI\params\LED3,flag,1,30,00,00,00
+HKR,NDI\params\MPMODE,flag,1,20,00,00,00
+HKR,NDI\params\Priority8021p,flag,1,20,00,00,00
+HKR,NDI\params\TcpipOffload,flag,1,20,00,00,00
+HKR,NDI\params\TP,flag,1,20,00,00,00
+HKR,NDI\params\EXTPHY,flag,1,20,00,00,00
+
+[PCnet.Win.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,PCNTPCI5.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+
+; NDIS Info
+HKR,NDIS,LogDriverName,,"PCnet"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0a
+
+; INTerfaces
+HKR,Ndi\INTerfaces,DefUpper,,"ndis3"
+HKR,Ndi\INTerfaces,DefLower,,"ethernet"
+HKR,Ndi\INTerfaces,UpperRange,,"ndis3"
+HKR,Ndi\INTerfaces,LowerRange,,"ethernet"
+
+; Install
+HKR,Ndi\Install,ndis3,,"PCnet.ndis3"
+
+[PCnet.ndis3.CopyFiles]
+PCNTPCI5.sys,,,2
+
+;-------------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+PCnet.CopyFiles = 12
+PCnet.ndis3.CopyFiles = 11
+;PCnet.inf.CopyFiles = 17
+
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+;Msft			 + "Microsoft"
+AMD                      = "AMD Inc."
+Allied                   = "Allied Telesyn"
+HP                       = "HP"
+IBM                      = "IBM"
+AMD.NT.5.1		 = "AMD Inc."
+Allied.NT.5.1            = "Allied"
+HP.NT.5.1 		 = "HP" ;added
+IBM.NT.5.1    		 = "IBM"
+TP                       = "TP Mode"
+Default                  = "Use Adapter Setting"
+OFF                      = "Off"
+(Default)ON              = "On (Default)"
+Default(OFF)             = "Off (Default)"
+ON                       = "On"
+MPMODE                   = "MP Mode"
+Priority8021p            = "IEEE 802.1p Tagging"
+NetworkAddress           = "Locally Administered Address"
+TcpipOffload             = "TCP/IP Offload"
+FDUP                     = "Full Duplex"
+EXTPHY                   = "External PHY"
+Auto                     = "Auto Detect"
+AUIFD                    = "AUI - Full Duplex"
+UTPFD                    = "UTP - Full Duplex"
+FIBER                    = "Fiber NIC"
+100HD                    = "100Mbps Half Duplex"
+100FD                    = "100Mbps Full Duplex"
+10HD                     = "10Mbps Half Duplex"
+10FD                     = "10Mbps Full Duplex"
+
+PCIGENERIC.DeviceDesc    = "AMD PCNET Family Ethernet Adapter (PCI)"
+
+;added for XP
+PCIGENERICXP.DeviceDesc    = "AMD PCNET Family Ethernet Adapter (PCI)"
+
+
+*AT2700TX.DeviceDesc     = "Allied Telesyn AT-2700TX PCI 10/100 Ethernet Adapter"
+*AT2700FX.DeviceDesc     = "Allied Telesyn AT-2700FX PCI 100Mb Ethernet Adapter"
+*AT2450V3.DeviceDesc     = "Allied Telesyn AT-2450v3 PCI Ethernet Adapter"
+
+;added for xp
+*AT2700TXXP.DeviceDesc     = "Allied Telesyn AT-2700TX PCI 10/100 Ethernet Adapter"
+*AT2700FXXP.DeviceDesc     = "Allied Telesyn AT-2700FX PCI 100Mb Ethernet Adapter"
+*AT2450V3XP.DeviceDesc     = "Allied Telesyn AT-2450v3 PCI Ethernet Adapter"
+
+*IBM.DeviceDesc          = "IBM 10/100 NetFinity Fault ToleraNT Adapter"
+*IBM1.DeviceDesc         = "IBM iSeries 10/100 adapter"
+
+;added for XP
+*IBMXP.DeviceDesc          = "IBM 10/100 NetFinity Fault ToleraNT Adapter"
+*IBM1XP.DeviceDesc         = "IBM iSeries 10/100 adapter"
+
+*HPTWEETY.DeviceDesc     = "HP Ethernet with LAN remote power adapter"
+*HPWOODY.DeviceDesc      = "HP Ethernet with LAN remote power adapter"
+*HPSQUEEZY.DeviceDesc    = "HP Ethernet with LAN remote power adapter"
+*HPCASPER.DeviceDesc     = "HP Ethernet with LAN remote power adapter"
+*HPPONGO.DeviceDesc      = "HP Ethernet with LAN remote power adapter"
+*HPSATAN.DeviceDesc      = "HP Ethernet with LAN remote power adapter"
+
+;added for xp
+*HPTWEETYXP.DeviceDesc     = "HP Ethernet with LAN remote power adapter"
+*HPWOODYXP.DeviceDesc      = "HP Ethernet with LAN remote power adapter"
+*HPSQUEEZYXP.DeviceDesc    = "HP Ethernet with LAN remote power adapter"
+*HPCASPERXP.DeviceDesc     = "HP Ethernet with LAN remote power adapter"
+*HPPONGOXP.DeviceDesc      = "HP Ethernet with LAN remote power adapter"
+*HPSATANXP.DeviceDesc      = "HP Ethernet with LAN remote power adapter"
+
+PCnet.Service.DispName   = "PCNET Adapter Driver"

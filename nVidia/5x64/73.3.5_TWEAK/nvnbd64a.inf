@@ -1,0 +1,138 @@
+;/***************************************************************************\
+;|*                                                                           *|
+;|*         Copyright 2001-2010 NVIDIA, Corporation.  All rights reserved.    *|
+;|*                                                                           *|
+;|*     THE INFORMATION CONTAINED HEREIN  IS PROPRIETARY AND CONFIDENTIAL     *|
+;|*     TO NVIDIA, CORPORATION.   USE,  REPRODUCTION OR DISCLOSURE TO ANY     *|
+;|*     THIRD PARTY IS SUBJECT TO WRITTEN PRE-APPROVAL BY NVIDIA, CORP.       *|
+;|*                                                                           *|
+;|*     THE INFORMATION CONTAINED HEREIN IS PROVIDED  "AS IS" WITHOUT         *|
+;|*     EXPRESS OR IMPLIED WARRANTY OF ANY KIND, INCLUDING ALL IMPLIED        *|
+;|*     WARRANTIES OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A     *|
+;|*     PARTICULAR PURPOSE.                                                   *|
+;|*                                                                           *|
+;\***************************************************************************/
+
+[Version]
+Signature="$WINDOWS NT$"
+;Class=System
+;ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Class=%Vendor_ClassName%
+ClassGuid={1a3e09be-1e45-494b-9174-d7385b45bbf5}
+Provider=%NVDA%
+DriverVer = 07/01/2007, 73.3.5
+CatalogFile=nvnetbus.cat
+
+[ClassInstall32]
+Addreg=Vendor_BusName_ClassReg
+
+[Vendor_BusName_ClassReg]
+HKR,,,,%Vendor_ClassName%
+HKR,,Icon,,-19
+HKR,,NoInstallClass,,1
+HKLM,SYSTEM\CurrentControlSet\Control\SafeBoot\Network\{1a3e09be-1e45-494b-9174-d7385b45bbf5},,,
+
+[DestinationDirs]
+
+; Dest Dir is \winnt\system32\drivers
+DefaultDestDir = 12
+
+; Dest dir for co-installer files is \winnt\system32
+nvnetBus_Device_CoInstaller_CopyFiles = 11
+nvnetBus_Device_UnInstaller_CopyFiles = 16422,NVIDIA Corporation\Uninstall
+
+[SourceDisksNames]
+1 = %DiskId1%, nvnetbus.tag,,""
+
+[SourceDisksFiles]
+nvnetbus.sys  = 1,,
+nvnrm.sys = 1,,
+bdco1.dll = 1,,
+nvconrm.dll = 1,,
+nvunrm.exe = 1,,
+nvnrm.nvu = 1,,
+
+;*****************************************
+; NVNETBus  Install Section
+;*****************************************
+
+[Manufacturer]
+%StdMfg%=Standard, ntamd64.5.1
+
+[Standard.ntamd64.5.1]
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0057
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0268
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0269
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0372
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0373
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_03EE
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_03EF
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0450
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_054C
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_07DC
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0760
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0AB0
+%nvnetbus.DeviceDesc%=nvnetBus_Device, PCI\VEN_10DE&DEV_0D7D
+
+
+[nvnetBus_Device.ntamd64]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+nvnetbus.sys
+nvnrm.sys
+
+
+;-------------- Service installation
+[nvnetBus_Device.ntamd64.Services]
+AddService = nvnetbus,%SPSVCINST_ASSOCSERVICE%, nvnetbus_Service_Inst
+
+; -------------- nvnetbus driver install sections
+[nvnetbus_Service_Inst]
+DisplayName    = %nvnetbus.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START 
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\nvnetbus.sys
+LoadOrderGroup = Extended Base
+
+
+;-------------- Coinstaller installation
+
+[nvnetBus_Device.ntamd64.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=nvnetBus_Device_CoInstaller_CopyFiles
+CopyFiles=nvnetBus_Device_UnInstaller_CopyFiles
+
+[nvnetBus_Device_CoInstaller_CopyFiles]
+;COPYFLG_NO_OVERWRITE = 0x00000010
+bdco1.dll,,,0x00000010
+bdco1ins.dll,bdco1.dll
+nvconrm.dll
+
+[nvnetBus_Device_UnInstaller_CopyFiles]
+nvunrm.exe
+nvnrm.nvu
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000,		\
+	"bdco1ins.dll,BDCoInstaller",	\
+	"nvconrm.dll,NVCoInstaller"
+
+HKR, Uninstall, Script,0,"nvnrm.nvu"
+HKR, Uninstall, Name,0,"NVIDIA Ethernet Driver Components"
+HKR, Uninstall, INFSrcDir, 0, %1% 
+HKR, Uninstall, Uninstaller,0,"nvunrm.exe"
+
+[BDCoInfo]
+OriginalInfSourcePath = %1%
+
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+NVDA = "NVIDIA"
+StdMfg = "NVIDIA"
+DiskId1 = "NVIDIA Network Bus Installation Disk #1"
+nvnetbus.DeviceDesc = "NVIDIA Network Bus Enumerator"
+nvnetbus.SVCDESC = "NVIDIA Network Bus Enumerator"
+Vendor_ClassName="NVIDIA Network Bus Enumerator"

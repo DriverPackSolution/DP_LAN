@@ -1,0 +1,178 @@
+;-------------------------------------------------------------------------------
+; XEdgeVis.INF
+;
+; Killer Xeno NDIS_EDGE Upper Filter Driver Install for Windows 7
+;
+; Copyright (c) 2006 - 2011 Bigfoot Networks, Inc.  All rights reserved.
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Msft%
+DriverVer   = 05/18/2011,6.0.0.23
+CatalogFile.NTx86   = Edge7x86.cat
+CatalogFile.NTAMD64 = Edge7x64.cat
+
+[ControlFlags]
+ExcludeFromSelect={E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\Xeno7x86
+ExcludeFromSelect={E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\Xeno7x64
+
+[Manufacturer]
+%Msft% = Msft,NTx86.6.0,NTamd64.6.0
+
+[Msft.NTx86.6.0]
+; DisplayName                   Section    DeviceId
+; -----------                   -------    --------
+%XenoEdge.DeviceDesc%    = Edge7x86.ndi, root\XenoEdge ; Root enumerated 
+%XenoEdge.DeviceDesc%    = Edge7x86.ndi, {E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\Xeno831x ; Xeno Bus enumerated
+
+[Msft.NTamd64.6.0]
+; DisplayName                   Section    DeviceId
+; -----------                   -------    --------
+%XenoEdge.DeviceDesc%    = Edge7x64.ndi, root\XenoEdge ; Root enumerated 
+%XenoEdge.DeviceDesc%    = Edge7x64.ndi, {E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\Xeno831x ; Xeno Bus enumerated
+
+;-------------------------------------------------------------------------------
+; Microsoft Windows 7 Ethernet Adapter 32-bit
+;
+[Edge7x86.ndi]
+Characteristics = 0x4 ; NCF_PHYSICAL
+BusType         = 15 ; if you specify NCF_PHYSICAL, you must specify bustype, 15 = PNPBus see wdm.h
+AddReg          = Edge7x86.Reg, ParamsPromiscuous
+CopyFiles       = Edge7x86.CopyFiles
+
+[Edge7x86.ndi.Services]
+AddService      = BfEdge7x86, 2, Edge7x86.Service, Edge7x86.EventLog
+
+;-----------------------------------------------------------------------------
+; Microsoft Virtual Miniport Common
+;
+[Edge7x86.Reg]
+HKR,    ,                         BusNumber,           0, "0" 
+HKR, Ndi,                         Service,             0, "BfEdge7x86"
+HKR, Ndi\Interfaces,              UpperRange,          0, "ndis5"
+HKR, Ndi\Interfaces,              LowerRange,          0, "ethernet"
+
+[ParamsPromiscuous]
+;
+;    Should the physical NIC be set to Promiscuous mode 
+;
+HKR, Ndi\Params\Promiscuous,     ParamDesc, , %Promiscuous%
+HKR, Ndi\Params\Promiscuous,     Default,  ,"0"
+HKR, Ndi\Params\Promiscuous,     type, ,      enum
+HKR, Ndi\Params\Promiscuous\enum,"1",  ,     %Promiscuous_Enable%
+HKR, Ndi\Params\Promiscuous\enum,"0",  ,     %Promiscuous_Disable%
+
+;-----------------------------------------------------------------------------
+; Driver and Service Section Windows 7 32
+;
+[Edge7x86.CopyFiles]
+Edge7x86.sys,,,2
+
+[Edge7x86.Service]
+DisplayName     = %XenoEdge.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\Edge7x86.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.Reg
+
+[Edge7x86.EventLog]
+AddReg = Edge7x86.AddEventLog.Reg
+
+[Edge7x86.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+Edge7x86.sys  = 1,,
+
+;-------------------------------------------------------------------------------
+; Microsoft Virtual Ethernet Adapter XP 64 bit
+;
+[Edge7x64.ndi]
+Characteristics = 0x4 ; NCF_PHYSICAL
+BusType         = 15 ; if you specify NCF_PHYSICAL, you must specify bustype, 15 = PNPBus see wdm.h
+AddReg          = Edge7x64.Reg, ParamsPromiscuous
+CopyFiles       = Edge7x64.CopyFiles
+
+[Edge7x64.ndi.Services]
+AddService      = BfEdge7x64, 2, Edge7x64.Service, Edge7x64.EventLog
+
+;-----------------------------------------------------------------------------
+; Microsoft Virtual Miniport Common
+;
+[Edge7x64.Reg]
+HKR,    ,                         BusNumber,           0, "0" 
+HKR, Ndi,                         Service,             0, "BfEdge7x64"
+HKR, Ndi\Interfaces,              UpperRange,          0, "ndis5"
+HKR, Ndi\Interfaces,              LowerRange,          0, "ethernet"
+
+[ParamsPromiscuous]
+;
+;    Should the physical NIC be set to Promiscuous mode 
+;
+HKR, Ndi\Params\Promiscuous,     ParamDesc, , %Promiscuous%
+HKR, Ndi\Params\Promiscuous,     Default,  ,"0"
+HKR, Ndi\Params\Promiscuous,     type, ,      enum
+HKR, Ndi\Params\Promiscuous\enum,"1",  ,     %Promiscuous_Enable%
+HKR, Ndi\Params\Promiscuous\enum,"0",  ,     %Promiscuous_Disable%
+
+;-----------------------------------------------------------------------------
+; Driver and Service Section
+;
+[Edge7x64.CopyFiles]
+Edge7x64.sys,,,2
+
+[Edge7x64.Service]
+DisplayName     = %XenoEdge.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\Edge7x64.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.Reg
+
+[Edge7x64.EventLog]
+AddReg = Edge7x64.AddEventLog.Reg
+
+[Edge7x64.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+Edge7x64.sys  = 1,,
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+Edge7x86.CopyFiles = 12
+Edge7x64.CopyFiles = 12
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Msft                       = "Bigfoot Networks, Inc."                      
+XenoEdge.DeviceDesc        = "Bigfoot Networks Killer Ethernet Controller"
+XenoEdge.Service.DispName  = "Bigfoot Networks Killer Ethernet Service"
+DiskId1 = "Killer NDIS EDGE gaming installation Windows 7"
+Promiscuous        = "Set the physical NIC to promiscuous mode"
+Promiscuous_Disable = "Disable"
+Promiscuous_Enable  = "Enable"

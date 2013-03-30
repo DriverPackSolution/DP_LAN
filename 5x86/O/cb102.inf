@@ -1,0 +1,212 @@
+;*******************************************************************************
+; Copyright 2001
+;
+; INF for Win95 OSR2, Win98, Winme, Win2k & Winxp
+;
+; 04.12.2001
+
+[Version]
+LayoutFile=Layout.inf
+Signature="$Chicago$"
+Compatible=1
+ClassGUID={4d36e972-e325-11ce-bfc1-08002be10318}
+Class=Net
+Provider=%V_CARDBUS%
+DriverVer=11/30/2001, 2.25.0.0
+
+[Manufacturer]
+%V_CARDBUS%=CARDBUS
+
+; All enumerated adapters must be excluded from select
+[ControlFlags]
+
+[CARDBUS]
+%CB102%=CB102.Ndi,PCI\VEN_13D1&DEV_AB02&SUBSYS_AB0213D1
+%CB102%=CB102B.Ndi,PCI\VEN_13D1&DEV_AB08&SUBSYS_AB0813D1
+
+;*******************************************************************************
+
+[CB102.Ndi]
+AddReg=CB102.Reg,CB102.Params
+
+[CB102B.Ndi]
+AddReg=CB102B.Reg,CB102.Params
+
+[CB102.Ndi.NT]
+AddReg=CB102.Reg.NDIS5, CB102.Params
+;Characteristics=0xA4               ; NCF_REMOVABLE | NCF_HAS_UI |NCF_PHYSICAL
+Characteristics=0x04                ; NCF_REMOVABLE
+BusType=5
+CopyFiles=CopyFile.Sys.NDIS5, CopyFile.Inf
+
+[CB102.Ndi.NT.Services]
+AddService=CB102, 2, CB102.Service, Common.EventLog
+
+[CB102B.Ndi.NT]
+AddReg=CB102.Reg.NDIS5, CB102.Params
+;Characteristics=0xA4               ; NCF_REMOVABLE | NCF_HAS_UI |NCF_PHYSICAL
+Characteristics=0x04                ; NCF_REMOVABLE
+BusType=5
+CopyFiles=CopyFile.Sys.NDIS5, CopyFile.Inf
+
+[CB102B.Ndi.NT.Services]
+AddService=CB102, 2, CB102.Service, Common.EventLog
+
+;*******************************************************************************
+; OSR2 and Windows 98 section
+;*******************************************************************************
+
+[CB102.Reg]
+HKR,NDI,DeviceID,,"PCI\VEN_13D1&DEV_AB02"
+
+HKR,,AdapterCFID,,AB0213D1
+HKR,,AdapterType,,5
+HKR,,BusType,,5
+
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,cb102.sys
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,04
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,"CB102"
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,ndis3,,"CB102.Install"
+HKR,,PlatformType,,1
+
+[CB102B.Reg]
+HKR,NDI,DeviceID,,"PCI\VEN_13D1&DEV_AB08"
+
+HKR,,AdapterCFID,,AB0813D1
+HKR,,AdapterType,,5
+HKR,,BusType,,5
+
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,cb102.sys
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,04
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,"CB102"
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,ndis3,,"CB102.Install"
+HKR,,PlatformType,,1
+
+;*******************************************************************************
+; Windows 2000 section
+;*******************************************************************************
+
+[CB102.Reg.NDIS5]
+; Interfaces
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+HKR,Ndi\Interfaces,DefUpper,,"ndis5"
+HKR,Ndi\Interfaces,UpperRange,,"ndis5"
+
+HKR,Ndi,Service,0,"CB102"
+HKR,Ndi\Install,,0,"CB102.Install.NDIS5"
+
+HKR,,PlatformType,,1
+
+;*******************************************************************************
+; Driver parameters
+;*******************************************************************************
+
+[CB102.Params]
+HKR,,TxPacketDesc,,75       ; 0x32
+HKR,,RxPacketDesc,,120      ; 0x78
+HKR,,TxDmaDesc,,150         ; 0x1d
+HKR,,RxDmaDesc,,40          ; 0x28
+HKR,,PacketsPerTxInt,,10    ; 0x0a
+HKR,,PacketsPerRxInd,,10    ; 0x0a
+HKR,,BurstLength,,0         ; 0 (Unlimited), 1 DW, 2 DW, 3 DW, ...
+
+HKR,Ndi\Params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\Params\ConnectionType,default,,0
+HKR,Ndi\Params\ConnectionType,type,,enum
+HKR,Ndi\Params\ConnectionType\enum,0,,"AutoNegotiate"
+HKR,Ndi\Params\ConnectionType\enum,1,,"10BaseT"
+HKR,Ndi\Params\ConnectionType\enum,2,,"10BaseT Full_Duplex"
+HKR,Ndi\Params\ConnectionType\enum,3,,"100BaseTx"
+HKR,Ndi\Params\ConnectionType\enum,4,,"100BaseTx Full_Duplex"
+HKR,Ndi\Params\ConnectionType,flag,1,20,00,00,00
+
+
+;*******************************************************************************
+; Install section for OSR2 and Windows 98
+;*******************************************************************************
+
+[CB102.Install]
+CopyFiles=CopyFile.Inf,CopyFile.Sys
+
+[CopyFile.Inf]
+netcb102.inf
+
+[CopyFile.Sys]
+cb102.sys
+
+
+;*******************************************************************************
+; Install section for Windows 2000
+;*******************************************************************************
+
+[CB102.Install.NDIS5]
+
+[CB102.Service]
+DisplayName=%CB102%
+ServiceType=1 
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\cb102.sys
+LoadOrderGroup=NDIS
+
+[Common.EventLog]
+AddReg=Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\netevent.dll"
+HKR,,TypesSupported,0x00010001,7
+
+[CopyFile.Sys.NDIS5]
+cb102.sys,,,2
+
+
+;*******************************************************************************
+; Destination directories
+;*******************************************************************************
+
+[DestinationDirs]
+CopyFile.Sys        = 11
+CopyFile.Inf        = 17
+CopyFile.Sys.NDIS5  = 12
+
+[SourceDisksNames]
+50 = "CardBus 10/100 Fast Ethernet PC Card Driver Diskette", "", 0
+
+[SourceDisksFiles]
+cb102.sys   = 50,,10000
+netcb102.inf= 50,,10000
+
+
+;*******************************************************************************
+; Localizable strings
+;*******************************************************************************
+
+[Strings]
+V_CARDBUS   = "CARDBUSs"
+CB102       = "CardBus 10/100 Fast Ethernet PC Card"
+

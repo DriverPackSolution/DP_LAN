@@ -1,0 +1,158 @@
+; Copyright NETGEAR Inc, 2000-2001, All Rights Reserved */
+;
+; NETFA411.INF
+;
+; NETGEAR FA411 Fast Ethernet PC Card
+
+[Version]
+Signature  = "$Windows NT$"
+Compatible = 1
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %V_MS%
+Catalogfile = Netfa411.cat
+;LayoutFile = layout.inf
+DriverVer  = 10/03/2001,5.00.200.1
+
+[ControlFlags]
+;;ExcludeFromSelect = PCMCIA\NETGEAR-FA411-A365
+
+;
+; Table of Contents
+;
+[Manufacturer]
+%V_NETGEAR%=NETGEAR
+
+[NETGEAR]
+%FA411.DeviceDesc%=FA411.ndi,PCMCIA\NETGEAR-FA411-A365
+
+;
+; Windows 2000 section
+;
+[FA411.ndi.NT]
+Characteristics = 0x84
+BusType         = 8
+AddReg          = FA411.NT.reg, FA411.params.reg
+CopyFiles       = FA411.NT.CopyFiles
+
+[FA411.ndi.NT.Services]
+AddService      = FA411, 2, FA411.Service, FA411.AddEventLog
+
+[FA411.NT.reg]
+HKR, Ndi,               Service,    0, "FA411"
+HKR, Ndi\Interfaces,    DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,    DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+[FA411.NT.CopyFiles]
+FA411ND5.sys,,,2
+
+[FA411.Service]
+DisplayName     =   %Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\FA411ND5.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+
+[FA411.AddEventLog]
+AddReg = FA411.AddEventLog.reg
+
+[FA411.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+
+;
+; Common Params
+;
+[FA411.params.reg]
+;Connection Type
+HKR,Ndi\params\ConnectionType,          ParamDesc,      0, %ConnectionType%
+HKR,Ndi\params\ConnectionType,          type,           0, enum
+HKR,Ndi\params\ConnectionType,          default,        0, 0
+HKR,Ndi\params\ConnectionType\enum,     0,              0, %AutoSense%
+HKR,Ndi\params\ConnectionType\enum,     8,              0, %100HD%
+HKR,Ndi\params\ConnectionType\enum,     9,              0, %100FD%
+HKR,Ndi\params\ConnectionType\enum,     2,              0, %10HD%
+HKR,Ndi\params\ConnectionType\enum,     3,              0, %10FD%
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+
+;
+; Windows 9x section
+;
+[FA411.ndi]
+AddReg=PCMCIA.ndi.reg, FA411.ndi.reg, Clone.params.reg, FA411.params.reg
+CopyFiles=FA411.ndis3.CopyFiles
+
+[PCMCIA.ndi.reg]
+HKR,Ndi,DeviceID,,"PCMCIA\NETGEAR-FA411-A365"
+HKR,Ndi,CardType,,"PCMCIA"
+
+[FA411.ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,FA411ND3.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"FA411"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install NDIS3
+[FA411.ndis3.CopyFiles]
+FA411ND3.sys
+
+[Clone.params.reg]
+; Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,NDI\params\InterruptNumber,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,60,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+
+
+[DestinationDirs]
+DefaultDestDir          = 11    ; LDID_SYS
+FA411.ndis3.CopyFiles    = 11
+FA411.NT.CopyFiles 	   = 12
+
+[SourceDisksNames]
+1=%FA411DiskName%,,,
+
+[SourceDisksFiles]
+FA411ND5.sys = 1
+FA411ND3.sys = 1
+
+;****************************************************************************
+; Translatable strings
+;****************************************************************************
+[Strings]
+V_MS = "NETGEAR"
+V_NETGEAR = "NETGEAR"
+
+ConnectionType  = "Connection Type"
+AutoSense       = "AutoSense"
+100HD           = "100BaseTx"
+100FD           = "100BaseTx Full_Duplex"
+10HD            = "10BaseT (Twisted_Pair)"
+10FD            = "10BaseT Full_Duplex"
+
+FA411.DeviceDesc = "NETGEAR FA411 PCMCIA Mobile Adapter"
+Service.DispName = "NETGEAR FA411 PCMCIA Mobile Adapter"
+FA411DiskName    = "NETGEAR FA411 PCMCIA Mobile Adapter Driver Disk"

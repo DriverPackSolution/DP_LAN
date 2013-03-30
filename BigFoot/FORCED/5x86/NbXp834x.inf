@@ -1,0 +1,81 @@
+;/*++
+;
+;Copyright (c) 2006 - 2010 Bigfoot Networks Corporation.  All rights reserved.
+;
+;
+;Module Name:
+;
+;    NbXp834x.INF
+;
+;Abstract:
+;    INF file for a Bigfoot Killer NIC Gaming PCI device.
+;    Running XP 32.  XP 64 is no longer supported.
+;
+;--*/
+
+[Version]
+Signature="$WINDOWS NT$"
+Provider=%BFOOT%
+;4D36E97D-E325-11CE-BFC1-08002BE10318 is the system class GUID
+class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+DriverVer=01/11/2010,4.1.0.15
+CatalogFile.NTx86   = NbXpx86.cat
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=NetbClassReg     
+
+[NetbClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+HKR,,DeviceCharacteristics,0x10001,0x100     ;Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)" ;Allow generic all access to system and built-in Admin. 
+
+; ================= Device Install section =====================
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+
+[Manufacturer]
+%BFOOT%=BFOOT
+
+[SourceDisksFiles.x86]
+Netb834x.sys=1
+
+[SourceDisksNames]
+1=%DISK_NAME%,
+
+[BFOOT]
+; DisplayName        Section        DeviceId
+; -----------        -------        --------
+%NetB834x.DRVDESC%=NetB834x_Inst, PCI\VEN_1957&DEV_0080
+%NetB834x.DRVDESC%=NetB834x_Inst, PCI\VEN_1957&DEV_0086
+
+[NetB834x_Inst]
+CopyFiles=NetB834x.CopyFiles
+
+[NetB834x.CopyFiles]
+NetB834x.sys
+
+[DestinationDirs]
+NetB834x.CopyFiles = 12         ; XP 32-bit
+
+[NetB834x_Inst.Services]
+AddService=NetB834x,0x00000002,NetB834x_Service 
+
+[NetB834x_Service]
+DisplayName    = %NetB834x.SVCDESC%                            
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\netb834x.sys
+                           
+[Strings]
+BFOOT = "Bigfoot"
+ClassName = "Killer NIC Gaming Adapter"
+NetB834x.SVCDESC = "Killer NIC Gaming Adapter Service"
+NetB834x.DRVDESC = "Killer NIC Gaming Adapter"
+DISK_NAME = "Killer NIC WDM Install Disk"

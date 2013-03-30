@@ -1,0 +1,471 @@
+;******************************************************************************
+; HP Ethernet & Fast Ethernet NICs.
+; Version 1.0
+; INF for 32-bit Windows 2000 and Windows server 2003
+;
+; Copyright 2002, 2003 Hewlett-Packard Development Company, L.P.
+;******************************************************************************
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %HP%
+CatalogFile = n100w32.cat
+DriverVer       = 01/13/2006,8.0.27.0
+
+[Manufacturer]
+%HP%    = HP, NTx86
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[HP]
+%N1001.DeviceDesc%  = N100.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B01E0E11  ; HP NC3120 Fast Ethernet NIC
+%N1004.DeviceDesc%  = N100.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B0C60E11  ; HP NC3161 Fast Ethernet NIC
+%N1005.DeviceDesc%  = N100.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B0C70E11  ; HP NC3160 Fast Ethernet NIC
+%N1007.DeviceDesc%  = multiport.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B01F0E11  ; HP NC3122 Fast Ethernet NIC
+%N1008.DeviceDesc%  = multiport.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B0DD0E11  ; HP NC3131 Fast Ethernet NIC
+%N1009.DeviceDesc%  = multiport.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B0DE0E11  ; HP NC3132 Fast Ethernet Module
+%N100A.DeviceDesc%  = N103.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B0E10E11  ; HP NC3133 Fast Ethernet Module
+%N100B.DeviceDesc%  = N100.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B1340E11  ; HP NC3163 Fast Ethernet NIC
+%N100C.DeviceDesc%  = N100.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B13C0E11  ; HP NC3162 Fast Ethernet NIC
+%N100D.DeviceDesc%  = N100.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B1440E11  ; HP NC3123 Fast Ethernet NIC
+%N100E.DeviceDesc%  = multiport.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B1630E11  ; HP NC3134 Fast Ethernet NIC
+%N100F.DeviceDesc%  = multiport.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B1640E11  ; HP NC3135 Fast Ethernet Upgrade Module
+
+
+
+[HP.NTx86]
+; Server
+%N1001.DeviceDesc%               = D101.ndi,     PCI\VEN_8086&DEV_1229&SUBSYS_B01E0E11       ; HP NC3120 Fast Ethernet NIC (82558)
+%N1004.DeviceDesc%               = D101.ndi,     PCI\VEN_8086&DEV_1229&SUBSYS_B0C60E11       ; HP NC3161 Fast Ethernet NIC (82558)
+%N1005.DeviceDesc%               = D101.ndi,     PCI\VEN_8086&DEV_1229&SUBSYS_B0C70E11       ; HP NC3160 Fast Ethernet NIC (82558)
+%N1007.DeviceDesc%               = multiport_NTx86.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B01F0E11 ; HP NC3122 Fast Ethernet NIC (82558)
+%N1008.DeviceDesc%               = multiport_NTx86.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B0DD0E11 ; HP NC3131 Fast Ethernet NIC (82558)
+%N1009.DeviceDesc%               = multiport_NTx86.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B0DE0E11 ; HP NC3132 Fast Ethernet Module (82558)
+%N100A.DeviceDesc%               = D101FX.ndi,   PCI\VEN_8086&DEV_1229&SUBSYS_B0E10E11       ; HP NC3133 Fast Ethernet Module (82558)
+%N100B.DeviceDesc%               = D101M.ndi,    PCI\VEN_8086&DEV_1229&SUBSYS_B1340E11       ; HP NC3163 Fast Ethernet NIC (82559)
+%N100C.DeviceDesc%               = D101M.ndi,    PCI\VEN_8086&DEV_1229&SUBSYS_B13C0E11       ; HP NC3162 Fast Ethernet NIC (82559)
+%N100D.DeviceDesc%               = D101M.ndi,    PCI\VEN_8086&DEV_1229&SUBSYS_B1440E11       ; HP NC3123 Fast Ethernet NIC (82559)
+%N100E.DeviceDesc%               = multiport_NTx86.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B1630E11 ; HP NC3134 Fast Ethernet NIC (82559)
+%N100F.DeviceDesc%               = multiport_NTx86.ndi,PCI\VEN_8086&DEV_1229&SUBSYS_B1640E11 ; HP NC3135 Fast Ethernet Upgrade Module (82559)
+
+;*******************************************************************************
+; Win2000 Install sections.
+;*******************************************************************************
+;----------------------------------------------------------------------------
+; N100 Section: Fast Ethernet
+;
+[N100.ndi.NT]
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5    ; PCI
+DelReg          = SpeedDpx.DelReg
+AddReg          = Speed100.reg, 82557.reg, n100.ndi.NT.reg
+CopyFiles       = n100_NT.CopyFiles
+DriverVer       = 01/13/2006,8.0.27.0
+
+[N100.ndi.NT.Services]
+AddService      = N100, 2, n100.Service, common.EventLog
+
+;----------------------------------------------------------------------------
+; multiport N100 Section: Fast Ethernet
+	;
+[multiport.ndi.NT]
+Characteristics   = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType           = 5    ; PCI
+DelReg          = SpeedDpx.DelReg
+AddReg            = Speed100.reg, 82557.reg, n100.ndi.NT.reg
+CopyFiles         = n100_NT.CopyFiles
+DriverVer       = 01/13/2006,8.0.27.0
+Port1DeviceNumber = 4
+
+[multiport.ndi.NT.Services]
+AddService      = N100, 2, n100.Service, common.EventLog
+
+;----------------------------------------------------------------------------
+; N103 Secion: NC3133 100Fx
+;
+[N103.ndi.NT]
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5    ; PCI
+DelReg          = SpeedDpx.DelReg, SpeedDpx.3133.DelReg
+AddReg          = Speed103.reg, 82557.reg, n100.ndi.NT.reg
+CopyFiles       = n100_NT.CopyFiles
+DriverVer       = 01/13/2006,8.0.27.0
+Port1DeviceNumber = 4
+
+[N103.ndi.NT.Services]
+AddService = N100, 2, n100.Service, common.EventLog
+
+;*******************************************************************************
+; Windows 2003 Install sections.
+;*******************************************************************************
+
+;---------------
+; 82558 Rev 4, 5
+;
+[D101.ndi.NTx86]
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5    ; PCI
+DelReg          = SpeedDpx.DelReg
+AddReg          = Speed100.reg, 82557_NTx86.reg, 82558.reg, n100.ndi.NT.reg
+CopyFiles       = N100_NT.ndis5.CopyFiles
+DriverVer       = 01/13/2006,8.0.27.0
+
+[D101.ndi.NTx86.Services]
+AddService = N100, 2, n100_NTx86.Service, common.EventLog_NTx86
+
+;----------------------------------------------------------------------------
+; 82558 Dual Port (HP)
+;
+[multiport_NTx86.ndi.NTx86]
+Characteristics   = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType           = 5    ; PCI
+DelReg            = SpeedDpx.DelReg
+AddReg            = Speed100.reg, 82557_NTx86.reg, 82558.reg, n100.ndi.NT.reg
+CopyFiles         = N100_NT.ndis5.CopyFiles
+DriverVer       = 01/13/2006,8.0.27.0
+Port1DeviceNumber = 4
+
+[multiport_NTx86.ndi.NTx86.Services]
+AddService = N100, 2, n100_NTx86.Service, common.EventLog_NTx86
+
+;----------------------------------------------------------------------------
+; 82558 FX (HP)
+;
+[D101FX.ndi.NTx86]
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5    ; PCI
+DelReg          = SpeedDpx.DelReg, SpeedDpx.3133.DelReg
+AddReg          = Speed103.reg, 82557_NTx86.reg, 82558.reg, n100.ndi.NT.reg
+CopyFiles       = N100_NT.ndis5.CopyFiles
+DriverVer       = 01/13/2006,8.0.27.0
+Port1DeviceNumber = 4
+
+[D101FX.ndi.NTx86.Services]
+AddService = N100, 2, n100_NTx86.Service, common.EventLog_NTx86
+
+;------------
+; 82559 Rev 8
+;
+[D101M.ndi.NTx86]
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5    ; PCI
+DelReg          = SpeedDpx.DelReg
+AddReg          = Speed100.reg, 82557_NTx86.reg, 82558.reg, n100.ndi.NT.reg
+CopyFiles       = N100_NT.ndis5.CopyFiles
+DriverVer       = 01/13/2006,8.0.27.0
+
+[D101M.ndi.NTx86.Services]
+AddService = N100, 2, n100_NTx86.Service, common.EventLog_NTx86
+
+;---------------------
+; common base 10/100Mb
+;
+[Speed100.reg]
+; Speed Duplex Mode
+HKR, Ndi\params\SpeedDuplex,       ParamDesc,  0, %SpeedDuplex%
+HKR, Ndi\params\SpeedDuplex,       default,    0, "0"
+HKR, Ndi\params\SpeedDuplex,       type,       0, "enum"
+HKR, Ndi\params\SpeedDuplex\enum,  "0",        0, %AutoDetect%
+HKR, Ndi\params\SpeedDuplex\enum,  "1",        0, %10Mb-Half-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,  "2",        0, %10Mb-Full-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,  "3",        0, %100Mb-Half-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,  "4",        0, %100Mb-Full-Duplex%
+
+;----------------------------------------------------------------------------
+; common base 100Mb only
+;
+[Speed103.reg]
+HKR, Ndi\params\SpeedDuplex,       ParamDesc,  0, %SpeedDuplex%
+HKR, Ndi\params\SpeedDuplex,       default,    0, "4"
+HKR, Ndi\params\SpeedDuplex,       type,       0, "enum"
+HKR, Ndi\params\SpeedDuplex\enum,  "4",        0, %100Mb-Full-Duplex%
+
+; Common 82557 NDI parameters
+;
+; 
+[82557.reg]
+; Rx Frame Descriptors
+HKR, Ndi\params\NumRfd,                ParamDesc,  0, %NumRfd% 
+HKR, Ndi\params\NumRfd,                default,    0, "48"
+HKR, Ndi\params\NumRfd,                min,        0, "1"
+HKR, Ndi\params\NumRfd,                max,        0, "1024"
+HKR, Ndi\params\NumRfd,                step,       0, "1"
+HKR, Ndi\params\NumRfd,                Base,       0, "10"
+HKR, Ndi\params\NumRfd,                type,       0, "int"
+
+; Tx Control Blocks
+HKR, Ndi\params\NumTcb,                ParamDesc,  0, %NumTcb% 
+HKR, Ndi\params\NumTcb,                default,    0, "32"
+HKR, Ndi\params\NumTcb,                min,        0, "1"
+HKR, Ndi\params\NumTcb,                max,        0, "64"
+HKR, Ndi\params\NumTcb,                step,       0, "1"
+HKR, Ndi\params\NumTcb,                Base,       0, "10"
+HKR, Ndi\params\NumTcb,                type,       0, "int"
+
+; Threshold
+HKR, Ndi\params\Threshold,	       ParamDesc,  0, %Threshold%
+HKR, Ndi\params\Threshold, 	       default,    0, "200"
+HKR, Ndi\params\Threshold,             min,	   0, "0"
+HKR, Ndi\params\Threshold,             max,	   0, "200"
+HKR, Ndi\params\Threshold,             step,       0, "1"
+HKR, Ndi\params\Threshold,             Base,	   0, "10"
+HKR, Ndi\params\Threshold,             type,       0, "int"
+
+; Coalesce Buffers
+HKR, Ndi\params\NumCoalesce,           ParamDesc,  0, %NumCoalesce% 
+HKR, Ndi\params\NumCoalesce,           default,    0, "8"
+HKR, Ndi\params\NumCoalesce,           min,        0, "1"
+HKR, Ndi\params\NumCoalesce,           max,        0, "32"
+HKR, Ndi\params\NumCoalesce,           step,       0, "1"
+HKR, Ndi\params\NumCoalesce,           Base,       0, "10"
+HKR, Ndi\params\NumCoalesce,           type,       0, "int"
+
+; 802.1p/802.1q Tagging
+HKR, Ndi\Params\TaggingMode,         ParamDesc,  0, %TaggingMode%
+HKR, Ndi\Params\TaggingMode,         default,    0, "0"
+HKR, Ndi\Params\TaggingMode\Enum,    "1",        0, %On%
+HKR, Ndi\Params\TaggingMode\Enum,    "0",        0, %Off%
+HKR, Ndi\Params\TaggingMode,         type,       0, "enum"
+
+
+HKR, Ndi\params\CPUSaver,           ParamDesc,  0, %CPUSAVER% 
+HKR, Ndi\params\CPUSaver,           default,    0, "1536"
+HKR, Ndi\params\CPUSaver,           min,        0, "0"
+HKR, Ndi\params\CPUSaver,           max,        0, "4096"
+HKR, Ndi\params\CPUSaver,           step,       0, "32"
+HKR, Ndi\params\CPUSaver,           Base,       0, "10"
+HKR, Ndi\params\CPUSaver,           type,       0, "int"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,        ParamDesc,  0, %LAA%
+HKR, Ndi\params\NetworkAddress,        Default,    0, ""
+HKR, Ndi\params\NetworkAddress,        type,       0, "edit"
+HKR, NDI\params\NetworkAddress,        LimitText,  0, "12"
+HKR, NDI\params\NetworkAddress,        UpperCase,  0, "1"
+HKR, NDI\params\NetworkAddress,        optional,   0, "1"
+
+; Hardwired defaults
+HKR,,                                  PcNic,      0, "0"
+HKR,,                                  Adaptive_IFS,0, "1"
+HKR,,                                  UcodeSW,    0, "1"
+HKR,,                                  Coalesce,   0, "0"
+;HKR,,                                  CPUSaver,   0, "1536"
+HKR,,                                  MWIEnable,  0, "1"
+HKR,,                                  LogErrorMessages,  0, "1"
+HKR,,                                  AdvancedMapRegisterMechanism,  0, "1"
+HKR,,                                  UseScatterGather,  0, "0"
+
+[82557_NTx86.reg]
+HKR,Ndi\Params\NumRfd,                ParamDesc,  0, %NumRfd%
+HKR,Ndi\Params\NumRfd,                Type,       0, "int"
+HKR,Ndi\Params\NumRfd,                Default,    0, "48"
+HKR,Ndi\Params\NumRfd,                Min,        0, "8"
+HKR,Ndi\Params\NumRfd,                Max,        0, "1024"
+HKR,Ndi\Params\NumRfd,                Step,       0, "1"
+HKR,Ndi\Params\NumRfd,                Base,       0, "10"
+
+HKR,Ndi\Params\NumTcb,                ParamDesc,  0, %NumTcb%
+HKR,Ndi\Params\NumTcb,                Type,       0, "int"
+HKR,Ndi\Params\NumTcb,                Default,    0, "16"
+HKR,Ndi\Params\NumTcb,                Min,        0, "8"
+HKR,Ndi\Params\NumTcb,                Max,        0, "64"
+HKR,Ndi\Params\NumTcb,                Step,       0, "1"
+HKR,Ndi\Params\NumTcb,                Base,       0, "10"
+
+HKR,Ndi\Params\NumCoalesce,           ParamDesc,  0, %NumCoalesce%
+HKR,Ndi\Params\NumCoalesce,           Type,       0, "int"
+HKR,Ndi\Params\NumCoalesce,           Default,    0, "8"
+HKR,Ndi\Params\NumCoalesce,           Min,        0, "1"
+HKR,Ndi\Params\NumCoalesce,           Max,        0, "32"
+HKR,Ndi\Params\NumCoalesce,           Step,       0, "1"
+HKR,Ndi\Params\NumCoalesce,           Base,       0, "10"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,        ParamDesc,  0, %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,        Default,    0, ""
+HKR, Ndi\params\NetworkAddress,        type,       0, "edit"
+HKR, NDI\params\NetworkAddress,        LimitText,  0, "12"
+HKR, NDI\params\NetworkAddress,        UpperCase,  0, "1"
+HKR, NDI\params\NetworkAddress,        optional,   0, "1"
+
+; Hardwired defaults
+HKR,,                                  Threshold,  0, "200"
+HKR,,                                  PcNic,      0, "0"
+HKR,,                                  Adaptive_IFS,0, "1"
+HKR,,                                  UcodeSW,    0, "1"
+HKR,,                                  Coalesce,   0, "0"
+HKR,,                                  CPUSaver,   0, "1536"
+HKR,,                                  MWIEnable,  0, "1"
+HKR,,                                  IPSecEnabled,0, "0"
+HKR,,                                  LargeSendEnabled,0, "0"
+HKR,,                                  ChecksumEnabled,0, "0"
+HKR,,                                  EnablePME,  0, "2"
+HKR,,                                  AutoPowerSaveModeEnabled, 0, "0"
+HKR,,                                  NetVlanEnable,  0, "0"
+HKR,,				       LogErrorMessages, 0, "1"
+
+
+;----------------
+; 82558 specifics
+;
+[82558.reg]
+; 802.1p/802.1q Packet Tagging
+HKR,Ndi\Params\TaggingMode,         ParamDesc,  0, %TaggingMode%
+HKR,Ndi\Params\TaggingMode,         Type,       0, "enum"
+HKR,Ndi\Params\TaggingMode,         Default,    0, "0"
+HKR,Ndi\Params\TaggingMode\Enum,    "1",        0, %Enabled%
+HKR,Ndi\Params\TaggingMode\Enum,    "0",        0, %Disabled%
+
+HKR,Ndi\Params\FlowControl,              ParamDesc,  0, %FlowControl%
+HKR,Ndi\Params\FlowControl,              Type,       0, "enum"
+HKR,Ndi\Params\FlowControl,              Default,    0, "0"
+HKR,Ndi\Params\FlowControl\Enum,         "3",        0, %Both_On%
+HKR,Ndi\Params\FlowControl\Enum,         "2",        0, %Respond%
+HKR,Ndi\Params\FlowControl\Enum,         "1",        0, %Generate%
+HKR,Ndi\Params\FlowControl\Enum,         "0",        0, %Off%
+
+
+;---------------------------
+; NT NDI object registration
+;
+[N100.ndi.NT.reg]
+HKR,Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR,Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR,Ndi,            Service,    0, "N100"
+
+;----------------------------------------------------------------------------
+; NT Service registration W2k
+; 
+[n100.Service]
+DisplayName     = %n100nt.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\n100nt5.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+;-----------
+; NT Service Server 2003
+;
+[n100_NTx86.Service]
+DisplayName     = %n100nt.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\n100325.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+;---------------
+; NT Common base
+;
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll;%%SystemRoot%%\System32\drivers\n100nt5.sys"
+HKR, , TypesSupported,   0x00010001, 7
+
+[common.EventLog_NTx86]
+AddReg = common.AddEventLog_NTx86.reg
+
+[common.AddEventLog_NTx86.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll;%%SystemRoot%%\system32\drivers\n100325.sys"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+
+;------------
+; Copy files
+;
+[DestinationDirs]
+DefaultDestDir          =12
+n100_NT.CopyFiles       =12
+N100_NT.ndis5.CopyFiles      = 12
+
+[SourceDisksNames]
+1=%DriverDiskName%,,,
+
+[SourceDisksFiles]
+n100nt5.sys=1
+n100325.sys=1
+
+[N100_NT.CopyFiles]
+n100nt5.sys,,,2
+
+[N100_NT.ndis5.CopyFiles]
+n100325.sys,,,2
+
+
+[SpeedDpx.DelReg]
+HKR,Ndi\Params\Speed
+HKR,Ndi\Params\ForceDpx
+HKR,Ndi\Params\PacketTagging
+HKR,Ndi\Params\TaskOffload
+HKR,,Speed
+HKR,,ForceDpx
+HKR,,PacketTagging
+HKR,,TaskOffload
+
+[SpeedDpx.3133.DelReg]
+HKR,Ndi\params\SpeedDuplex\enum
+HKR,,"3"
+
+
+;--------------------
+; Localizable Strings
+;
+[Strings]
+; Vendors
+Msft                     = "Microsoft"
+HP                   = "Hewlett-Packard Company"
+
+; Parameters
+AutoDetect               = "Auto Detect"
+SpeedDuplex              = "Link Speed & Duplex"
+10Mb-Half-Duplex         = "10Mbps/Half Duplex"
+10Mb-Full-Duplex         = "10Mbps/Full Duplex"
+100Mb-Half-Duplex        = "100Mbps/Half Duplex"
+100Mb-Full-Duplex        = "100Mbps/Full Duplex"
+NetworkAddress           = "Locally Administered Address"
+NumRfd                   = "Receive Buffers"
+NumTcb                   = "Transmit Control Blocks"
+NumCoalesce              = "Coalesce Buffers"
+TaggingMode              = "802.1p QoS Packet Tagging"
+Enabled                  = "Enabled"
+Disabled                 = "Disabled"
+FlowControl              = "Flow Control Settings"
+Both_On                  = "Respond and Generate"
+Respond                  = "Respond"
+Generate                 = "Generate"
+Off                      = "Off"
+On                       = "On"
+Threshold		 = "Adaptive Transmit Threshold"
+LAA                      = "Locally Administered Address"
+CPUSAVER                 = "Adaptive Performance Tuning"
+
+DriverDiskName           = "Network Server Adapters and Upgrade Modules CD"
+
+
+; Device descriptions
+N1001.DeviceDesc         = "HP NC3120 Fast Ethernet NIC"
+N1004.DeviceDesc         = "HP NC3161 Fast Ethernet NIC"
+N1005.DeviceDesc         = "HP NC3160 Fast Ethernet NIC"
+N1007.DeviceDesc         = "HP NC3122 Fast Ethernet NIC"
+N1008.DeviceDesc         = "HP NC3131 Fast Ethernet NIC"
+N1009.DeviceDesc         = "HP NC3132 Fast Ethernet Module"
+N100A.DeviceDesc         = "HP NC3133 Fast Ethernet Module"
+N100B.DeviceDesc         = "HP NC3163 Fast Ethernet NIC"
+N100C.DeviceDesc         = "HP NC3162 Fast Ethernet NIC"
+N100D.DeviceDesc         = "HP NC3123 Fast Ethernet NIC"
+N100E.DeviceDesc         = "HP NC3134 Fast Ethernet NIC"
+N100F.DeviceDesc         = "HP NC3135 Fast Ethernet Upgrade Module"
+
+n100nt.Service.DispName  = "HP Ethernet or Fast Ethernet NIC Driver"

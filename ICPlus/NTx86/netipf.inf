@@ -1,0 +1,154 @@
+;(c) Copyright 2009 IC Plus Corp. All rights reserved.                         
+
+[version]
+Signature   = "$Chicago$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %ICPlus%
+CatalogFile    = ip100Asn.cat
+DriverVer   = 03/18/2009,5.02.9.318
+
+[Manufacturer]
+%ICPlus%  = ICPlus, NT.5.1
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_13f0&DEV_0200
+
+;[ICPlus]
+;%IP100A.DeviceDesc%      = ip100A.ndi, PCI\VEN_13f0&DEV_0200
+;%IP100A.DeviceDesc%      = ip100A.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020013F0
+;%IP100A.DeviceDesc%      = ip100A.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020113F0
+[ICPlus.NT.5.1]
+%IP100AVista.DeviceDesc%    = ip100Avista.ndi, PCI\VEN_13F0&DEV_0200
+%IP100AVista.DeviceDesc%    = ip100Avista.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020013F0
+%IP100AVista.DeviceDesc%    = ip100Avista.ndi, PCI\VEN_13F0&DEV_0200&SUBSYS_020113F0
+;-----------------------------------------------------------------------------
+;   W i n d o w s
+;-----------------------------------------------------------------------------
+[ip100Avista.ndi.nt]
+Characteristics = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5     ; PCI
+AddReg          = ip100Avista.nt.reg, ip100A.common.reg
+CopyFiles       = ip100Avista.nt.CopyFiles
+
+[ip100Avista.ndi.nt.Services]
+AddService = ip100Avista, 2, ip100Avista.Service, ip100Avista.EventLog
+
+[ip100Avista.nt.reg]
+HKR, Ndi,                           Service,            ,   "ip100Avista"
+HKR, Ndi\Interfaces,                LowerRange,         ,   "ethernet"
+HKR, Ndi\Interfaces,                UpperRange,         ,   "ndis5"
+
+[ip100Avista.Service]
+DisplayName     = %IP100Avista.Service.DispName%
+ServiceType     = 1 ; %SERVICE_KERNEL_DRIVER%
+StartType       = 3 ; %SERVICE_AUTO_START%
+ErrorControl    = 1 ; %SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ipfnd51.sys
+LoadOrderGroup  = NDIS
+
+[ip100Avista.EventLog]
+AddReg = ip100Avista.AddEventLog.reg
+
+[ip100Avista.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystenRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[ip100Avista.nt.CopyFiles]
+ipfnd51.sys,,,2
+
+;-----------------------------------------------------------------------------
+;Both Windows
+;-----------------------------------------------------------------------------
+[ip100A.common.reg]
+HKR, ,                              AdapterCFID,        0,  "020013f0"
+HKR, ,                              AdapterType,        0,  "5"
+HKR, ,                              MediaType,          0,  "1"
+
+; Connection Type
+HKR, Ndi\params\ConnectionType,             ParamDesc,  ,   %ConnectionType%
+HKR, Ndi\params\ConnectionType,             default,    ,   "0"
+HKR, Ndi\params\ConnectionType,             type,       ,   "enum"
+HKR, Ndi\params\ConnectionType\enum,        0,          ,   %Autosense%
+HKR, Ndi\params\ConnectionType\enum,        6,          ,   %N10BaseT%
+HKR, Ndi\params\ConnectionType\enum,        7,          ,   %N10BaseTFD%
+HKR, Ndi\params\ConnectionType\enum,        8,          ,   %N100BaseTx%
+HKR, Ndi\params\ConnectionType\enum,        9,          ,   %N100BaseTxFD%
+
+; Receive Buffers
+HKR, Ndi\params\RxBuffer,                   ParamDesc,  ,   %RxBuffer%
+HKR, Ndi\params\RxBuffer,                   default,    ,   "96"
+HKR, Ndi\params\RxBuffer,                   type,       ,   "enum"
+HKR, Ndi\params\RxBuffer\enum,              16,         ,   "16"
+HKR, Ndi\params\RxBuffer\enum,              32,         ,   "32"
+HKR, Ndi\params\RxBuffer\enum,              48,         ,   "48"
+HKR, Ndi\params\RxBuffer\enum,              64,         ,   "64"
+HKR, Ndi\params\RxBuffer\enum,              80,         ,   "80"
+HKR, Ndi\params\RxBuffer\enum,              96,         ,   "96"
+HKR, Ndi\params\RxBuffer\enum,              112,         ,   "112"
+HKR, Ndi\params\RxBuffer\enum,              128,         ,   "128"
+
+; Transmit Buffers
+HKR, Ndi\params\TxBuffer,                   ParamDesc,  ,   %TxBuffer%
+HKR, Ndi\params\TxBuffer,                   default,    ,   "96"
+HKR, Ndi\params\TxBuffer,                   type,       ,   "enum"
+HKR, Ndi\params\TxBuffer\enum,              16,         ,   "16"
+HKR, Ndi\params\TxBuffer\enum,              32,         ,   "32"
+HKR, Ndi\params\TxBuffer\enum,              48,         ,   "48"
+HKR, Ndi\params\TxBuffer\enum,              64,         ,   "64"
+HKR, Ndi\params\TxBuffer\enum,              80,         ,   "80"
+HKR, Ndi\params\TxBuffer\enum,              96,         ,   "96"
+HKR, Ndi\params\TxBuffer\enum,              112,         ,   "112"
+HKR, Ndi\params\TxBuffer\enum,              128,         ,   "128"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,             ParamDesc,  ,   %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,             type,       ,   "edit"
+HKR, Ndi\params\NetworkAddress,             LimitText,  ,   "12"
+HKR, Ndi\params\NetworkAddress,             UpperCase,  ,   "1"
+HKR, Ndi\params\NetworkAddress,             default,    ,   ""
+HKR, Ndi\params\NetworkAddress,             optional,   ,   "1"
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir 	= 11
+ip100Avista.inf.CopyFiles = 17
+ip100Avista.nt.CopyFiles = 12
+;-----------------------------------------------------------------------------
+; Source Disk layout
+;
+[SourceDisksNames]
+3=%DriverDisketteName%,"netipf.inf",		
+
+[SourceDisksFiles]
+ipfnd51.sys = 3
+netipf.inf = 3
+
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+ICPlus              = "IC Plus Corp."
+
+RxBuffer            = "Receive Buffers"
+TxBuffer            = "Transmit Buffers"
+NetworkAddress      = "Network Address"
+ConnectionType      = "Connection Type"
+Disabled            = "Disabled"
+Enabled             = "Enabled"
+Autosense           = "AutoSense"
+N10BaseT             = "10Half (AutoNego)"
+N10BaseTFD           = "10Full (AutoNego)"
+N100BaseTx           = "100Half(AutoNego)"
+N100BaseTxFD         = "100Full(AutoNego)"
+
+IP100.DeviceDesc	 = "IC Plus IP100A 10/100 Fast Ethernet Adapter"
+IP100.Service.DispName   = "IC Plus IP100A 10/100 Fast Ethernet Adapter NT Driver"
+IP100Avista.DeviceDesc	 = "IC Plus IP100A 10/100 Fast Ethernet Adapter"
+IP100Avista.Service.DispName   = "IC Plus IP100A 10/100 Fast Ethernet Adapter NT Driver"
+
+DriverDisketteName	 = "IC Plus IP100A 10/100 Fast Ethernet Adapter Driver Diskette"

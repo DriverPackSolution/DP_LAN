@@ -1,0 +1,85 @@
+Set ForceNoReboot=yes
+killapp nvNetUtils.exe
+call Uninstall
+del {Current Script}
+del {Current Parser Path}
+
+
+
+; Uninstall network management and network utilities
+[Uninstall]
+Set NAM_GUID={7CFA46E3-CC2F-4355-82AE-6012DC3633FD}
+Call UninstallNAM
+Call UninstallNetDiag
+
+; echo Checking for Network device
+enumregcmd HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002BE10318}\{*},call CheckNVIDIAKeys
+Del {windir}\Inf\{InfPath}
+
+Set Display Name=Nvidia Network Bus Enumerator 
+; Remove any NVIDIA device driver if present
+RemoveDevice pci,VEN_10DE&DEV_008C, any
+RemoveDevice pci,VEN_10DE&DEV_00DF, any
+RemoveDevice pci,VEN_10DE&DEV_0038, any
+RemoveDevice pci,VEN_10DE&DEV_0057, any
+RemoveDevice pci,VEN_10DE&DEV_0269, any
+RemoveDevice pci,VEN_10DE&DEV_0373, any
+RemoveDevice pci,VEN_10DE&DEV_0389, any
+RemoveDevice pci,VEN_10DE&DEV_03EF, any
+RemoveDevice pci,VEN_10DE&DEV_03E6, any
+RemoveDevice pci,VEN_10DE&DEV_0452, any
+RemoveDevice pci,VEN_10DE&DEV_0453, any
+RemoveDevice pci,VEN_10DE&DEV_054E, any
+RemoveDevice pci,VEN_10DE&DEV_054F, any
+RemoveDevice pci,VEN_10DE&DEV_0086, any
+RemoveDevice pci,VEN_10DE&DEV_00E6, any
+RemoveDevice pci,VEN_10DE&DEV_0037, any
+RemoveDevice pci,VEN_10DE&DEV_0056, any
+RemoveDevice pci,VEN_10DE&DEV_0268, any
+RemoveDevice pci,VEN_10DE&DEV_0372, any
+RemoveDevice pci,VEN_10DE&DEV_03E5, any
+RemoveDevice pci,VEN_10DE&DEV_03EE, any
+RemoveDevice pci,VEN_10DE&DEV_0450, any
+RemoveDevice pci,VEN_10DE&DEV_0451, any
+RemoveDevice pci,VEN_10DE&DEV_054C, any
+RemoveDevice pci,VEN_10DE&DEV_054D, any
+RemoveDevice pci,VEN_10DE&DEV_07DC, any
+RemoveDevice pci,VEN_10DE&DEV_07DE, any
+RemoveDevice pci,VEN_10DE&DEV_07DD, any
+RemoveDevice pci,VEN_10DE&DEV_07DF, any
+RemoveDevice pci,VEN_10DE&DEV_0760, any
+RemoveDevice pci,VEN_10DE&DEV_0761, any
+RemoveDevice pci,VEN_10DE&DEV_0762, any
+RemoveDevice pci,VEN_10DE&DEV_0763, any
+RemoveDevice pci,VEN_10DE&DEV_0AB0, any
+RemoveDevice pci,VEN_10DE&DEV_0AB1, any
+RemoveDevice pci,VEN_10DE&DEV_0AB2, any
+RemoveDevice pci,VEN_10DE&DEV_0AB3, any
+RemoveDevice pci,VEN_10DE, Net
+
+[EnumNetworkKeys]
+set MyBaseKey={Current Root Key}\{Current Reg Key}
+enumregcmd {MyBaseKey}\{*},call CheckNVIDIAKeys
+
+[CheckNVIDIAKeys]
+set DriverDesc=FOOBAR
+; echo Current Root Key : {Current Root Key}
+GetReg DriverDesc={Current Root Key}\{Current Reg Key}\DriverDesc
+if {DriverDesc}%NVIDIA then set NVIDIADriverFound=TRUE
+if {DriverDesc}%NVIDIA then if {DriverDesc}%Microsoft then set InBoxDriverFound=TRUE
+if {DriverDesc}%NVIDIA then GetReg InfPath={Current Root Key}\{Current Reg Key}\InfPath
+
+
+[UninstallNAM]
+; Uninstall network management
+getreg UninstallCommand={uninstregkey}\InstallShield_{NAM_GUID}\UninstallString
+if {UninstallCommand}%.exe then syscallandwait "C:\Program Files\InstallShield Installation Information\{NAM_GUID}\setup.exe" -l0x0409 -removeonly /z"noreboot" -s
+set UninstallCommand
+; Also check this regkey for Win64 systems
+getreg UninstallCommand=HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\InstallShield_{NAM_GUID}\UninstallString
+if {UninstallCommand}%.exe then syscallandwait "C:\Program Files (x86)\InstallShield Installation Information\{NAM_GUID}\setup.exe" -l0x0409 -removeonly /z"noreboot" -s
+set UninstallCommand
+
+[UninstallNetDiag]
+; Uninstall network diagnostics
+RunOnce {sysdir}\nvnetdiag.nvu

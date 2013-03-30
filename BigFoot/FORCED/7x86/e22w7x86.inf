@@ -1,0 +1,421 @@
+﻿;*****************************************************************************
+;*
+;*  E22w7x64.INF  -   Bigfoot llama e2200 Series PCI-E Ethernet Controller
+;*  Copyright 2011 - Bigfoot Networks, Inc.
+;*
+;*  Created on 01/04/2008 by Yu Hao
+;*  INF File for NDIS6.2 Miniport Driver for Windows7 x86 
+;*  Modified on 08/15/2011 for Bigfoot Networks C. Musta 
+;*    Bigfoot drivers only attache to DevID 1091
+;*****************************************************************************
+[Version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %BFTN%
+CatalogFile = E22W7x86.cat
+DriverVer=12/12/2012,8.0.2.40
+
+[Manufacturer]
+%BFTN% = Killer, NTx86
+
+[ControlFlags]
+
+ExcludeFromSelect       = *
+
+
+[Killer.NTx86]
+; DisplayName           Section                DeviceID
+; -----------           -------                --------
+%BFTN.L1F%  =           L1F.ndi,               PCI\VEN_1969&DEV_E091 				    ; e2201/e2205
+
+;-----------------------------------------------------------------------------
+; l1f supports new pm offload and rss, msi-x
+;-----------------------------------------------------------------------------
+[L1F.ndi]
+Characteristics = 0x84
+BusType         = 5             ;PCI
+AddReg          = L1C.reg, L1C.params, Common.params, ShutOff.params, WOLDefault.params, PM.params, RSS.params, Intr.params, EEELPI.params, Ecma.params
+CopyFiles       = L1C.CopyFiles
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD 
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 14         ; NdisPhysicalMedium802_3
+
+[L1F.ndi.HW]
+Include = machine.inf
+Needs = PciASPMOptOut
+Addreg = MsiX.Addreg
+
+[L1F.ndi.Services]
+AddService = Ke2200, 2, L1C.Service, L1C.EventLog
+
+
+;-----------------------------------------------------------------------------
+; L1C  specific
+;
+[L1C.reg]
+HKR, Ndi, HelpText,, %HelpText%
+HKR, Ndi, Service,    0, "Ke2200"
+; use ndis5 as the upper bound because NT supports it
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+
+[Msi.Addreg]
+HKR, "Interrupt Management", 0x00000010 
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 0
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 1
+
+[MsiX.Addreg]
+HKR, "Interrupt Management", 0x00000010 
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 0
+
+[L1C.Service]
+DisplayName     = %L1C.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\e22w7x86.sys
+LoadOrderGroup  = NDIS
+
+[L1C.EventLog]
+AddReg = L1C.AddEventLog.reg
+
+[L1C.AddEventLog.reg]
+HKR,, EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\Drivers\e22w7x86.sys"
+HKR,, TypesSupported,   0x00010001, 7
+
+[Intr.params]
+HKR,, MSIX,             0x00010001, 1
+
+[L1C.params]
+HKR, Ndi\Params\*JumboPacket,                   ParamDesc,      0,      %JumboFrame%
+HKR, Ndi\Params\*JumboPacket,                   default,        0,      "1514"
+HKR, Ndi\Params\*JumboPacket,                   type,           0,      "enum"
+HKR, Ndi\Params\*JumboPacket\enum,              "1514",         0,      %Disabled%
+HKR, Ndi\Params\*JumboPacket\enum,              "2048",         0,      %2KBMTU%
+HKR, Ndi\Params\*JumboPacket\enum,              "3072",         0,      %3KBMTU%
+HKR, Ndi\Params\*JumboPacket\enum,              "4096",         0,      %4KBMTU%
+HKR, Ndi\Params\*JumboPacket\enum,              "5120",         0,      %5KBMTU%
+HKR, Ndi\Params\*JumboPacket\enum,              "6144",         0,      %6KBMTU%
+HKR, Ndi\Params\*JumboPacket\enum,              "7168",         0,      %7KBMTU%
+HKR, Ndi\params\*JumboPacket\enum,              "8192",         0,      %8KBMTU%
+HKR, Ndi\params\*JumboPacket\enum,              "9216",         0,      %9KBMTU%
+
+[RSS.params]
+HKR, Ndi\Params\RSS,                            ParamDesc,      0,      %RSS%
+HKR, Ndi\Params\RSS,                            Type,           0,      "enum"
+HKR, Ndi\Params\RSS\enum,                       1,              0,      %Enabled%
+HKR, Ndi\Params\RSS\enum,                       0,              0,      %Disabled%
+HKR, Ndi\Params\RSS,                            Default,        0,      "0"
+
+HKR, Ndi\Params\*NumRssQueues,                  ParamDesc,      0,      %RssQs%
+HKR, Ndi\Params\*NumRssQueues,                  Type,           0,      "enum"
+HKR, Ndi\Params\*NumRssQueues\enum,             "8",            0,      "8 RSS Queues"
+HKR, Ndi\Params\*NumRssQueues\enum,             "6",            0,      "6 RSS Queues"
+HKR, Ndi\Params\*NumRssQueues\enum,             "4",            0,      "4 RSS Queues"
+HKR, Ndi\Params\*NumRssQueues\enum,             "2",            0,      "2 RSS Queues"
+HKR, Ndi\Params\*NumRssQueues\enum,             "1",            0,      "1 RSS Queues"
+HKR, Ndi\Params\*NumRssQueues,                  Default,        0,      "4"
+
+[L2CB.params]
+HKR, Ndi\Params\APSmode,                        ParamDesc,      0,      %APSmode%
+HKR, Ndi\Params\APSmode,                        Type,           0,      "enum"
+HKR, Ndi\Params\APSmode\enum,                   "1",            0,      %Enabled%
+HKR, Ndi\Params\APSmode\enum,                   "0",            0,      %Disabled%
+HKR, Ndi\Params\APSmode,                        Default,        0,      "0"
+
+[EEELPI.params]
+HKR, Ndi\Params\*EEE,                           ParamDesc,      0,      %EEE%
+HKR, Ndi\Params\*EEE,                           Type,           0,      "enum"
+HKR, Ndi\Params\*EEE\enum,                      "1",            0,      %Enabled%
+HKR, Ndi\Params\*EEE\enum,                      "0",            0,      %Disabled%
+HKR, Ndi\Params\*EEE,                           Default,        0,      "0"
+
+[EEELPIEn.params]
+HKR, Ndi\Params\*EEE,                           ParamDesc,      0,      %EEE%
+HKR, Ndi\Params\*EEE,                           Type,           0,      "enum"
+HKR, Ndi\Params\*EEE\enum,                      "1",            0,      %Enabled%
+HKR, Ndi\Params\*EEE\enum,                      "0",            0,      %Disabled%
+HKR, Ndi\Params\*EEE,                           Default,        0,      "1"
+
+[Ecma.params]
+HKR, Ndi\Params\Ecma,                           ParamDesc,      0,      %ECMA%
+HKR, Ndi\Params\Ecma,                           Type,           0,      "enum"
+HKR, Ndi\Params\Ecma\enum,                      "1",            0,      %Enabled%
+HKR, Ndi\Params\Ecma\enum,                      "0",            0,      %Disabled%
+HKR, Ndi\Params\Ecma,                           Default,        0,      "0"
+
+;-----------------------------------------------------------------------------
+
+[Common.params]
+HKR, Ndi\Params\MaxInterrupt,                   ParamDesc,      0,      %MaxIrq%
+HKR, Ndi\Params\MaxInterrupt,                   Type,           0,      "int"
+HKR, Ndi\Params\MaxInterrupt,                   Base,           0,      "10"
+HKR, Ndi\Params\MaxInterrupt,                   Min,            0,      "1000"
+HKR, Ndi\Params\MaxInterrupt,                   Max,            0,      "30000"
+HKR, Ndi\Params\MaxInterrupt,                   Step,           0,      "500"
+HKR, Ndi\Params\MaxInterrupt,                   Default,        0,      "10000"
+
+HKR, Ndi\Params\*SpeedDuplex,                   ParamDesc,      0,      %SpeedDuplex%
+HKR, Ndi\Params\*SpeedDuplex,                   Type,           0,      "enum"
+HKR, Ndi\Params\*SpeedDuplex,                   Default,        0,      "0"
+HKR, Ndi\Params\*SpeedDuplex\enum,              "0",            0,      %Auto%
+HKR, Ndi\Params\*SpeedDuplex\enum,              "1",            0,      %10MHD%
+HKR, Ndi\Params\*SpeedDuplex\enum,              "2",            0,      %10MFD%
+HKR, Ndi\Params\*SpeedDuplex\enum,              "3",            0,      %100MHD%
+HKR, Ndi\Params\*SpeedDuplex\enum,              "4",            0,      %100MFD%
+
+HKR, Ndi\Params\*ReceiveBuffers,                ParamDesc,      0,      %ReceiveBuffers%
+HKR, Ndi\Params\*ReceiveBuffers,                Type,           0,      "int"
+HKR, Ndi\Params\*ReceiveBuffers,                Base,           0,      "10"
+HKR, Ndi\Params\*ReceiveBuffers,                Min,            0,      "16"
+HKR, Ndi\Params\*ReceiveBuffers,                Max,            0,      "2048"
+HKR, Ndi\Params\*ReceiveBuffers,                Step,           0,      "16"
+HKR, Ndi\Params\*ReceiveBuffers,                Default,        0,      "512"
+
+HKR, Ndi\Params\*TransmitBuffers,               ParamDesc,      0,      %TransmitBuffers%
+HKR, Ndi\Params\*TransmitBuffers,               Type,           0,      "int"
+HKR, Ndi\Params\*TransmitBuffers,               Base,           0,      "10"
+HKR, Ndi\Params\*TransmitBuffers,               Min,            0,      "16"
+HKR, Ndi\Params\*TransmitBuffers,               Max,            0,      "1024"
+HKR, Ndi\Params\*TransmitBuffers,               Step,           0,      "16"
+HKR, Ndi\Params\*TransmitBuffers,               Default,        0,      "512"
+
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        ParamDesc,      0,      %TCPChksumOffv4%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        Type,           0,      "enum"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\enum,   "3",            0,      %TXRXEna%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\enum,   "2",            0,      %RXEna%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\enum,   "1",            0,      %TXEna%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\enum,   "0",            0,      %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        Default,        0,      "3"
+
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         ParamDesc,      0,      %IPChksumOffv4%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         Type,           0,      "enum"
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\enum,    "3",            0,      %TXRXEna%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\enum,    "2",            0,      %RXEna%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\enum,    "1",            0,      %TXEna%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\enum,    "0",            0,      %Disabled%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         Default,        0,      "3"
+
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        ParamDesc,      0,      %UDPChksumOffv4%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        Type,           0,      "enum"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\enum,   "3",            0,      %TXRXEna%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\enum,   "2",            0,      %RXEna%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\enum,   "1",            0,      %TXEna%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\enum,   "0",            0,      %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        Default,        0,      "3"
+
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        ParamDesc,      0,      %TCPChksumOffv6%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        Type,           0,      "enum"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\enum,   "3",            0,      %TXRXEna%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\enum,   "2",            0,      %RXEna%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\enum,   "1",            0,      %TXEna%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\enum,   "0",            0,      %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        Default,        0,      "3"
+
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        ParamDesc,      0,      %UDPChksumOffv6%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        Type,           0,      "enum"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\enum,   "3",            0,      %TXRXEna%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\enum,   "2",            0,      %RXEna%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\enum,   "1",            0,      %TXEna%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\enum,   "0",            0,      %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        Default,        0,      "3"
+
+HKR, Ndi\Params\*LsoV1IPv4,                     ParamDesc,      0,      %LSOv1IPv4%
+HKR, Ndi\Params\*LsoV1IPv4,                     Type,           0,      "enum"
+HKR, Ndi\Params\*LsoV1IPv4\enum,                "1",            0,      %Enabled%
+HKR, Ndi\Params\*LsoV1IPv4\enum,                "0",            0,      %Disabled%
+HKR, Ndi\Params\*LsoV1IPv4,                     Default,        0,      "1"
+
+HKR, Ndi\Params\*LsoV2IPv4,                     ParamDesc,      0,      %LSOv2IPv4%
+HKR, Ndi\Params\*LsoV2IPv4,                     Type,           0,      "enum"
+HKR, Ndi\Params\*LsoV2IPv4\enum,                "1",            0,      %Enabled%
+HKR, Ndi\Params\*LsoV2IPv4\enum,                "0",            0,      %Disabled%
+HKR, Ndi\Params\*LsoV2IPv4,                     Default,        0,      "0"
+
+HKR, Ndi\Params\*LsoV2IPv6,                     ParamDesc,      0,      %LSOv2IPv6%
+HKR, Ndi\Params\*LsoV2IPv6,                     Type,           0,      "enum"
+HKR, Ndi\Params\*LsoV2IPv6\enum,                "1",            0,      %Enabled%
+HKR, Ndi\Params\*LsoV2IPv6\enum,                "0",            0,      %Disabled%
+HKR, Ndi\Params\*LsoV2IPv6,                     Default,        0,      "0"
+
+HKR, Ndi\Params\NetworkAddress,                 ParamDesc,      0,      %NetAddress%
+HKR, Ndi\Params\NetworkAddress,                 Type,           0,      "edit"
+HKR, Ndi\Params\NetworkAddress,                 LimitText,      0,      "12"
+HKR, Ndi\Params\NetworkAddress,                 UpperCase,      0,      "1"
+HKR, Ndi\Params\NetworkAddress,                 Default,        0,      ""
+HKR, Ndi\Params\NetworkAddress,                 Optional,       0,      "1"
+
+HKR, Ndi\Params\*InterruptModeration,           ParamDesc,      0,      %IntMod%
+HKR, Ndi\Params\*InterruptModeration,           Type,           0,      "enum"
+HKR, Ndi\Params\*InterruptModeration\enum,      "1",            0,      %Enabled%
+HKR, Ndi\Params\*InterruptModeration\enum,      "0",            0,      %Disabled%
+HKR, Ndi\Params\*InterruptModeration,           Default,        0,      "0"
+
+HKR, Ndi\Params\*FlowControl,                   ParamDesc,      0,      %FlowCtrl%
+HKR, Ndi\Params\*FlowControl,                   Type,           0,      "enum"
+HKR, Ndi\Params\*FlowControl\enum,              "3",            0,      %TXRXEna%
+HKR, Ndi\Params\*FlowControl\enum,              "0",            0,      %Disabled%
+HKR, Ndi\Params\*FlowControl,                   Default,        0,      "3"
+
+HKR, Ndi\Params\VLanID,                         ParamDesc,      0,      %VLanID%
+HKR, Ndi\Params\VLanID,                         Type,           0,      "long"
+HKR, Ndi\Params\VLanID,                         Base,           0,      "10"
+HKR, Ndi\Params\VLanID,                         Min,            0,      "0"
+HKR, Ndi\Params\VLanID,                         Max,            0,      "4094"
+HKR, Ndi\Params\VLanID,                         Step,           0,      "1"
+HKR, Ndi\Params\VLanID,                         Default,        0,      "0"
+
+[WOLDefault.params]
+HKR, Ndi\Params\*WakeOnMagicPacket,             ParamDesc,      0,      %WakeOnMagic%
+HKR, Ndi\Params\*WakeOnMagicPacket,             Type,           0,      "enum"
+HKR, Ndi\Params\*WakeOnMagicPacket\enum,        "1",            0,      %Enabled%
+HKR, Ndi\Params\*WakeOnMagicPacket\enum,        "0",            0,      %Disabled%
+HKR, Ndi\Params\*WakeOnMagicPacket,             Default,        0,      "1"
+
+HKR, Ndi\Params\*WakeOnPattern,                 ParamDesc,      0,      %WakeOnPattern%
+HKR, Ndi\Params\*WakeOnPattern,                 Type,           0,      "enum"
+HKR, Ndi\Params\*WakeOnPattern\enum,            "1",            0,      %Enabled%
+HKR, Ndi\Params\*WakeOnPattern\enum,            "0",            0,      %Disabled%
+HKR, Ndi\Params\*WakeOnPattern,                 Default,        0,      "1"
+
+;HKR, Ndi\Params\*DeviceSleepOnDisconnect,      ParamDesc,      0,      %SleepOnDisconnect%
+;HKR, Ndi\Params\*DeviceSleepOnDisconnect,      Type,           0,      "enum"
+;HKR, Ndi\Params\*DeviceSleepOnDisconnect\enum, "1",            0,      %Enabled%
+;HKR, Ndi\Params\*DeviceSleepOnDisconnect\enum, "0",            0,      %Disabled%
+;HKR, Ndi\Params\*DeviceSleepOnDisconnect,      Default,        0,      "1"
+
+[WOLMagic.params]
+HKR, Ndi\Params\*WakeOnMagicPacket,             ParamDesc,      0,      %WakeOnMagic%
+HKR, Ndi\Params\*WakeOnMagicPacket,             Type,           0,      "enum"
+HKR, Ndi\Params\*WakeOnMagicPacket\enum,        "1",            0,      %Enabled%
+HKR, Ndi\Params\*WakeOnMagicPacket\enum,        "0",            0,      %Disabled%
+HKR, Ndi\Params\*WakeOnMagicPacket,             Default,        0,      "1"
+
+HKR, Ndi\Params\*WakeOnPattern,                 ParamDesc,      0,      %WakeOnPattern%
+HKR, Ndi\Params\*WakeOnPattern,                 Type,           0,      "enum"
+HKR, Ndi\Params\*WakeOnPattern\enum,            "1",            0,      %Enabled%
+HKR, Ndi\Params\*WakeOnPattern\enum,            "0",            0,      %Disabled%
+HKR, Ndi\Params\*WakeOnPattern,                 Default,        0,      "0"
+
+[WOLNone.params]
+HKR, Ndi\Params\*WakeOnMagicPacket,             ParamDesc,      0,      %WakeOnMagic%
+HKR, Ndi\Params\*WakeOnMagicPacket,             Type,           0,      "enum"
+HKR, Ndi\Params\*WakeOnMagicPacket\enum,        "1",            0,      %Enabled%
+HKR, Ndi\Params\*WakeOnMagicPacket\enum,        "0",            0,      %Disabled%
+HKR, Ndi\Params\*WakeOnMagicPacket,             Default,        0,      "0"
+
+HKR, Ndi\Params\*WakeOnPattern,                 ParamDesc,      0,      %WakeOnPattern%
+HKR, Ndi\Params\*WakeOnPattern,                 Type,           0,      "enum"
+HKR, Ndi\Params\*WakeOnPattern\enum,            "1",            0,      %Enabled%
+HKR, Ndi\Params\*WakeOnPattern\enum,            "0",            0,      %Disabled%
+HKR, Ndi\Params\*WakeOnPattern,                 Default,        0,      "0"
+
+[PM.params]
+HKR, Ndi\Params\*PMARPOffload,                  ParamDesc,      0,      %ARPOffload%
+HKR, Ndi\Params\*PMARPOffload,                  Type,           0,      "enum"
+HKR, Ndi\Params\*PMARPOffload\enum,             "1",            0,      %Enabled%
+HKR, Ndi\Params\*PMARPOffload\enum,             "0",            0,      %Disabled%
+HKR, Ndi\Params\*PMARPOffload,                  Default,        0,      "1"
+
+HKR, Ndi\Params\*PMNSOffload,                   ParamDesc,      0,      %NSOffload%
+HKR, Ndi\Params\*PMNSOffload,                   Type,           0,      "enum"
+HKR, Ndi\Params\*PMNSOffload\enum,              "1",            0,      %Enabled%
+HKR, Ndi\Params\*PMNSOffload\enum,              "0",            0,      %Disabled%
+HKR, Ndi\Params\*PMNSOffload,                   Default,        0,      "1"
+
+[ShutOn.params]
+HKR, Ndi\Params\ShutdownWake,                   ParamDesc,      0,       %ShutDW%
+HKR, Ndi\Params\ShutdownWake,                   Type,           0,       "enum"
+HKR, Ndi\Params\ShutdownWake\enum,              1,              0,       %Enabled%
+HKR, Ndi\Params\ShutdownWake\enum,              0,              0,       %Disabled%
+HKR, Ndi\Params\ShutdownWake,                   Default,        0,       "1"
+
+[ShutOff.params]
+HKR, Ndi\Params\ShutdownWake,                   ParamDesc,      0,       %ShutDW%
+HKR, Ndi\Params\ShutdownWake,                   Type,           0,       "enum"
+HKR, Ndi\Params\ShutdownWake\enum,              1,              0,       %Enabled%
+HKR, Ndi\Params\ShutdownWake\enum,              0,              0,       %Disabled%
+HKR, Ndi\Params\ShutdownWake,                   Default,        0,       "0"
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[L1C.CopyFiles]
+e22w7x86.sys,,,2
+
+[SourceDisksNames]
+;
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+;
+1 = %DriverDisk%,,,
+
+[SourceDisksFiles]
+;
+; filename_on_source = diskID[, [subdir][, size]]
+;
+e22w7x86.sys = 1
+
+[DestinationDirs]
+L1C.CopyFiles           = 12
+DefaultDestDir          = 11
+
+[Strings]
+BFTN                     = "Killer"
+JumboFrame               = "Jumbo Frame"
+2KBMTU                   = "2KB MTU"
+3KBMTU                   = "3KB MTU"
+4KBMTU                   = "4KB MTU"
+5KBMTU                   = "5KB MTU"
+6KBMTU                   = "6KB MTU"
+7KBMTU                   = "7KB MTU"
+8KBMTU                   = "8KB MTU"
+9KBMTU                   = "9KB MTU"
+IntMod                   = "Interrupt Moderation"
+L0sL1Threshold           = "L0sL1 Gateway"
+MaxIrq                   = "Max IRQ per Second"
+Enabled                  = "Enabled"
+Disabled                 = "Disabled"
+SpeedDuplex              = "Speed & Duplex"
+Auto                     = "Auto Negotiation"
+1GFD                     = "1.0 Gbps Full Duplex"
+10MHD                    = "10 Mbps Half Duplex"
+10MFD                    = "10 Mbps Full Duplex"
+100MHD                   = "100 Mbps Half Duplex"
+100MFD                   = "100 Mbps Full Duplex"
+FlowCtrl                 = "FlowControl"
+ShutDW                   = "Shutdown Wake Up"
+RSS                      = "Receive Side Scaling"
+TXEna                    = "Tx Enabled"
+RXEna                    = "Rx Enabled"
+TXRXEna                  = "Tx & Rx Enabled"
+ReceiveBuffers           = "Receive Buffers"
+TransmitBuffers          = "Transmit Buffers"
+IPChksumOffv4            = "IPv4 Checksum Offload"
+TCPChksumOffv4           = "TCP Checksum Offload (IPv4)"
+TCPChksumOffv6           = "TCP Checksum Offload (IPv6)"
+UDPChksumOffv4           = "UDP Checksum Offload (IPv4)"
+UDPChksumOffv6           = "UDP Checksum Offload (IPv6)"
+LSOv1IPv4                = "Large Send Offload (IPv4)"
+LSOv2IPv4                = "Large Send Offload v2 (IPv4)"
+LSOv2IPv6                = "Large Send Offload v2 (IPv6)"
+NetAddress               = "Network Address"
+APSmode                  = "APS mode"
+EEE                      = "Energy Efficient Ethernet "
+None                     = "None"
+VLanID                   = "VLAN ID"
+WakeOnPattern            = "Wake on pattern match"
+WakeOnMagic              = "Wake on magic packet"
+SleepOnDisconnect        = "Device sleep on disconnect"
+ARPOffload               = "ARP offload"
+NSOffload                = "NS offload"
+ECMA                     = "ECMA"
+RssQs                    = "RSS Queues"
+
+BFTN.L1F                 = "Killer e2200 PCI-E Gigabit Ethernet Controller (NDIS 6.20)"
+L1C.Service.DispName     = "NDIS Miniport Driver for the Killer e2200 PCI-E Ethernet Controller"
+DriverDisk               = "Killer e2200 Series PCI-E Ethernet Controller Installation Disk"
+HelpText                 = "This Killer e2200 Network Controller connects you to the network."
+

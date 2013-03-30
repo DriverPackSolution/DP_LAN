@@ -1,0 +1,158 @@
+;;;-------------------------------------------------------------------------
+;;; BfLwf.INF -- QCA Bandwidth Control NDIS LWF Driver
+;;;              install configuration.
+;;;
+;;; Copyright (c) Qualcomm Atheros, Inc.  All rights reserved.
+;;;-------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------
+; Version Section
+;-------------------------------------------------------------------------
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = NetService
+ClassGUID   = {4D36E974-E325-11CE-BFC1-08002BE10318}
+Provider    = %Bigfoot%
+CatalogFile.NTx86  = bflwfx86.cat
+CatalogFile.NTamd64 = bflwfx64.cat
+DriverVer=06/14/2012,2.0.1.41
+
+;-------------------------------------------------------------------------
+; Sources Section
+;-------------------------------------------------------------------------
+
+[SourceDisksNames]
+1=%BfLwf_Desc%,"",,
+
+[SourceDisksFiles.x86]
+bflwfx86.sys=1
+
+[SourceDisksFiles.amd64]
+bflwfx64.sys=1
+
+;-------------------------------------------------------------------------
+; Manufacturer Section
+;-------------------------------------------------------------------------
+
+; Win7 is OS version 6.1
+[Manufacturer]
+%Bigfoot%=BF, NTx86.6.1, NTamd64.6.1
+
+;-------------------------------------------------------------------------
+; Models Section
+;-------------------------------------------------------------------------
+
+; Models section for Win7 32-bit
+[BF.NTx86.6.1]
+%BfLwf_Desc%=Install32, BF_NdisLwf
+
+; Models section for Win7 64-bit
+[BF.NTamd64.6.1]
+%BfLwf_Desc%=Install64, BF_NdisLwf
+
+; Models section for pre-Win7
+; This section is empty so that the INF
+; does not support Vista or older.
+[BF]
+
+;-------------------------------------------------------------------------
+; Install Sections
+;-------------------------------------------------------------------------
+[DestinationDirs]
+DefaultDestDir=12 ;%windir%\system32\drivers
+
+[Install32]
+Copyfiles=Bflwf_Files_x86
+AddReg=Inst_Ndi
+Characteristics=0x40000
+NetCfgInstanceId="{6264FB1A-C831-4c6e-AC45-0BFB3495FE45}"
+
+[Install64]
+Copyfiles=Bflwf_Files_x64
+AddReg=Inst_Ndi
+Characteristics=0x40000
+NetCfgInstanceId="{6264FB1A-C831-4c6e-AC45-0BFB3495FE45}"
+
+[Bflwf_Files_x86]
+bflwfx86.sys,,,2 ; flag 2 is COPYFLG_NOSKIP
+
+[Bflwf_Files_x64]
+bflwfx64.sys,,,2 ; flag 2 is COPYFLG_NOSKIP
+
+;-------------------------------------------------------------------------
+; Ndi installation support
+;-------------------------------------------------------------------------
+[Inst_Ndi]
+HKR, Ndi,Service,,"BfLwf"
+HKR, Ndi,CoServices,0x00010000,"BfLwf"
+HKR, Ndi,HelpText,,%BfLwf_HelpText%
+HKR, Ndi,FilterClass,, compression
+HKR, Ndi,FilterType,0x00010001,0x00000002
+HKR, Ndi\Interfaces,UpperRange,,"noupper"
+HKR, Ndi\Interfaces,LowerRange,,"nolower"
+HKR, Ndi\Interfaces, FilterMediaTypes,,"ethernet"
+HKR, Ndi,FilterRunType, 0x00010001, 1 ;this filter must run before any protocol can bind to the below miniport 
+
+;-------------------------------------------------------------------------
+; Service installation support
+;-------------------------------------------------------------------------
+[Install32.Services]
+AddService=BfLwf,,BfLwf_Service_Inst_x86
+
+[Install32.Remove.Services]
+DelService=BfLwf,0x200
+
+[Install64.Services]
+AddService=BfLwf,,BfLwf_Service_Inst_x64
+
+[Install64.Remove.Services]
+DelService=BfLwf,0x200
+
+[BfLwf_Service_Inst_x86]
+DisplayName     = %BfLwf_Desc%
+ServiceType     = 1 ;SERVICE_KERNEL_DRIVER
+StartType       = 1 ;SERVICE_SYSTEM_START ; Note: 3 is ON_DEMAND
+ErrorControl    = 1 ;SERVICE_ERROR_NORMAL
+ServiceBinary   = %12%\bflwfx86.sys
+LoadOrderGroup  = NDIS
+Description     = %BfLwf_Desc%
+AddReg          = Common.Params.reg
+
+[BfLwf_Service_Inst_x64]
+DisplayName     = %BfLwf_Desc%
+ServiceType     = 1 ;SERVICE_KERNEL_DRIVER
+StartType       = 1 ;SERVICE_SYSTEM_START ; Note: 3 is ON_DEMAND
+ErrorControl    = 1 ;SERVICE_ERROR_NORMAL
+ServiceBinary   = %12%\bflwfx64.sys
+LoadOrderGroup  = NDIS
+Description     = %BfLwf_Desc%
+AddReg          = Common.Params.reg
+
+[Common.Params.reg]
+HKR, FilterDriverParams\DriverParam, 		ParamDesc, 	, "Driverparam for bflwf"
+HKR, FilterDriverParams\DriverParam, 		default, 	, "5"
+HKR, FilterDriverParams\DriverParam, 		type, 		, "int"
+
+HKR, FilterDriverParams, dscp_highest, 0x00010001, 0x00000026
+HKR, FilterDriverParams, dscp_high,    0x00010001, 0x0000001c
+HKR, FilterDriverParams, dscp_medium,  0x00010001, 0x00000000
+HKR, FilterDriverParams, dscp_low,     0x00010001, 0x00000008
+
+HKR, FilterAdapterParams\AdapterParam, 		ParamDesc, 	, "Adapterparam for bflwf"
+HKR, FilterAdapterParams\AdapterParam, 		default, 	, "10"
+HKR, FilterAdapterParams\AdapterParam, 		type, 		, "int"
+
+HKR, FilterInstanceParams\InstanceParam, ParamDesc, , "Instance param for bflwf"
+HKR, FilterInstanceParams\InstanceParam, default, , "15"
+HKR, FilterInstanceParams\InstanceParam, type,  , "int"
+
+[Strings]
+Bigfoot = "Qualcomm Atheros"
+BfLwf_Desc = "Qualcomm Atheros Bandwidth Control"
+BfLwf_HelpText = "Bandwidth Control filter driver provided by Qualcomm Atheros, Inc."
+
+
+
+
+

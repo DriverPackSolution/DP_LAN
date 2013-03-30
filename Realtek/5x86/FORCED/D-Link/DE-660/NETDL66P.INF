@@ -1,0 +1,241 @@
+; NETDL66P.INF
+;
+; D-Link DE-660+ Ethernet PC Card
+;
+
+[Version]
+LayoutFile=layout.inf
+Signature="$Windows NT$"
+Provider=%V_MS%
+Class=Net
+
+;
+; Table of Contents
+;
+[Manufacturer]
+%D-Link%=D-Link
+
+[SourceDisksNames]
+;NOTE: USE ONLY DISK NUMBERS 55-59
+55="D-Link DE-660+ Ethernet PC Card Driver Disk","disk1",0
+
+[SourceDisksFiles]
+NETDL66P.inf = 55
+DE660P.sys = 55
+DE660P.sys = 55
+
+;
+; The various flavors of D-Link DE-660+ Ethernet PC Card
+;
+
+[D-Link]
+%DE660P%=DE660P.ndi,PCMCIA\D-Link-DE-660+-4108
+%DE660%=DE660.ndi,PCMCIA\D-Link-DE-660-FF54
+
+
+; NT5.0 section
+[DE660P.ndi.NT]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = DE660P.NT.reg
+CopyFiles       = DE660P.NT.CopyFiles, DE660P.inf.CopyFiles
+;;LogConfig       = DE660P.LogConfig
+
+
+[DE660P.ndi.NT.services]
+AddService      = DE660P, 2, DE660P.Service, DE660P.AddEventLog
+
+[DE660.ndi.NT]
+Characteristics = 0x04
+BusType         = 8
+AddReg          = DE660.NT.reg
+CopyFiles       = DE660.NT.CopyFiles, DE660P.inf.CopyFiles
+;;LogConfig       = DE660.LogConfig
+
+
+[DE660.ndi.NT.services]
+AddService      = DE660, 2, DE660.Service, DE660.AddEventLog
+
+
+
+;;Win9x section
+
+[DE660P.ndi]
+AddReg=DE660P.ndi.reg,ne2000.ndi.reg,Clone.params.reg
+CopyFiles=ne2000.ndis3.CopyFiles, DE660P.inf.CopyFiles
+;;LogConfig=DE660P.LogConfig
+
+[DE660.ndi]
+AddReg=DE660.ndi.reg,ne2000.ndi.reg,Clone.params.reg
+CopyFiles=ne2000.ndis3.CopyFiles, DE660P.inf.CopyFiles
+;;LogConfig=DE660.LogConfig
+
+
+;****************************************************************************
+;    D-Link DE-660+ Ethernet PC Card series
+;****************************************************************************
+
+[DE660P.ndi.reg]
+HKR,Ndi,DeviceID,,"PCMCIA\D-Link-DE-660+"
+HKR,Ndi,CardType,,"PCMCIA"
+HKR,Ndi,MatchAndMoveID,,"*pnp80d6,*pnp80d4"
+
+[DE660P.LogConfig]
+IRQConfig=3,4,5,6,7,8,9,10,11,12,13,14,15
+IOConfig=20@200-3FF%FFE0(3FF::)
+ConfigPriority=HARDRECONFIG
+
+[DE660.ndi.reg]
+HKR,Ndi,DeviceID,,"PCMCIA\D-Link-DE-660"
+HKR,Ndi,CardType,,"PCMCIA"
+HKR,Ndi,MatchAndMoveID,,"*pnp80d6,*pnp80d4"
+
+[DE660P.LogConfig]
+IRQConfig=3,4,5,6,7,8,9,10,11,12,13,14,15
+IOConfig=20@200-3FF%FFE0(3FF::)
+ConfigPriority=HARDRECONFIG
+
+;;****************************************************************************
+;; NT5.0 Only Section
+;;****************************************************************************
+
+[DE660P.NT.reg]
+HKR, Ndi,               Service,    0, "DE660P"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+
+[DE660P.Service]
+DisplayName     =   %DE660P.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\DE660P.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+[DE660P.AddEventLog]
+AddReg = DE660P.AddEventLog.reg
+
+[DE660P.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+[DE660P.NT.CopyFiles]
+DE660P.sys,,,2
+
+[DE660.NT.reg]
+HKR, Ndi,               Service,    0, "DE660"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+
+[DE660.Service]
+DisplayName     =   %DE660.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\DE660P.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+[DE660.AddEventLog]
+AddReg = DE660.AddEventLog.reg
+
+[DE660.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+[DE660.NT.CopyFiles]
+DE660P.sys,,,2
+
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;****************************************************************************
+; NE2000 Drivers, Win9x Only
+;****************************************************************************
+; Base section for ne2000 users
+[ne2000.ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,DE660P.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"DE660P"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+;;HKR,NDIS\NDIS2,DriverName,,"MS2000$"
+;;HKR,NDIS\NDIS2,FileName,,"ne2000.dos"
+;;HKR,NDIS\ODI,DriverName,,"NE2000"
+;;HKR,NDIS\ODI,FileName,,"ne2000.com"
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+; Install sectioins
+HKR,Ndi\Install,ndis3,,"ne2000.ndis3"
+;;HKR,Ndi\Install,ndis2,,"ne2000.ndis2"
+
+; Install NDIS3
+[ne2000.ndis3]
+;CopyFiles=ne2000.ndis3.CopyFiles, DE660P.inf.CopyFiles
+[ne2000.ndis3.CopyFiles]
+DE660P.sys
+
+; Install NDIS2
+[NE2000.ndis2]
+;CopyFiles=ne2000.ndis2.CopyFiles, DE660P.inf.CopyFiles
+[ne2000.ndis2.CopyFiles]
+ne2000.dos
+
+[DE660P.inf.CopyFiles]
+NETDL66P.inf
+
+; extra params for clones
+[Clone.params.reg]
+; Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,60,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+;ndis2
+;;HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+;;HKR,Ndi\params\interrupt,ParamDesc,,"Interrupt Level"
+;;HKR,NDI\params\Interrupt,flag,1,10,00,00,00
+;;HKR,NDI\params\IOBase,resc,1,02,00,00,00
+;;HKR,NDI\params\IOBase,ParamDesc,,"I/O Base Address"
+;;HKR,NDI\params\IOBase,flag,1,10,00,00,00
+
+
+[DestinationDirs]
+DefaultDestDir              =11 ; LDID_SYS
+ne2000.ndis3.CopyFiles      =11
+ne2000.ndis2.CopyFiles      =26 ; LDID_WINBOOT
+ne2000.odi.CopyFiles        =26
+DE660P.inf.CopyFiles       =17 ; LDID_INF
+DE660P.NT.CopyFiles 	    = 12
+DE660.NT.CopyFiles 	    = 12
+
+;****************************************************************************
+; Translatable strings
+;****************************************************************************
+
+[Strings]
+V_MS="D-Link"
+; Manufacturer names
+D-Link = "D-Link"
+; Adapter names
+DE660P = "D-Link DE-660+ Ethernet PC Card"
+DE660 = "D-Link DE-660 Ethernet PC Card"
+
+
+DE660P.Service.DispName = "D-Link DE-660+ Ethernet PC Card"
+
+DE660.Service.DispName = "D-Link DE-660 Ethernet PC Card"

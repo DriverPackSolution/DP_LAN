@@ -1,0 +1,171 @@
+; NET80412.INF
+;
+; INF file for NDIS5 driver
+;
+; SMC 10/100 PC Card (SMC8041 V.2)
+;
+; Copyright 2002, SMC Networks,inc.
+
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_SMC%
+Catalogfile = NET80412.cat
+DriverVer   = 03/19/2002, 1.00.0319.2002
+
+[Manufacturer]
+%V_SMC% = SMC
+ 
+[ControlFlags]
+ExcludeFromSelect = PCMCIA\SMC-8041TX-10/100-PC-Card-V2-2548
+
+[SMC]
+%SMC80412.DeviceDesc%    = *SMC80412.ndi,  PCMCIA\SMC-8041TX-10/100-PC-Card-V2-2548
+;----------------------------------------------------------------------------
+; SMC80412 compatible PCMCIA Adapter
+;-----------------------------------------------------------------
+;;for 98
+[*SMC80412.ndi]
+DriverVer   = 03/19/2002, 1.00.0319.2002
+AddReg      = SMC80412.ndi.reg,ne2k98.ndi.reg,Clone.params.reg,speed100.reg
+CopyFiles   = SMC80412.CopyFiles.98
+
+;;for 2000
+[*SMC80412.ndi.NT]
+DriverVer       = 03/19/2002, 1.00.0319.2002
+Characteristics = 0x84
+BusType         = 8
+AddReg          = SMC80412.ndi.NT.reg,speed100.reg
+CopyFiles       = SMC80412.CopyFiles.NT
+
+[*SMC80412.ndi.NT.Services]
+AddService = SMC80412, 2, SMC80412.Service, SMC80412.AddEventLog
+
+;;--------------------------------------------------------------------
+;;for win98
+
+[SMC80412.ndi.reg]
+HKR,Ndi,DeviceID,,"PCMCIA\SMC-8041TX-10/100-PC-Card-V2-2548"
+HKR,Ndi,CardType,,"PCMCIA"
+
+[ne2k98.ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,SMC80412.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"SMC80412"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+; Install sectioins
+HKR,Ndi\Install,ndis3,,"SMC80412.ndis3"
+
+[Clone.params.reg]
+; Resources
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+HKR,Ndi\params\interruptNumber,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\InterruptNumber,flag,1,60,00,00,00
+HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+HKR,NDI\params\IOBaseAddress,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+;ndis2
+HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+HKR,Ndi\params\interrupt,ParamDesc,,"Interrupt Level"
+HKR,NDI\params\Interrupt,flag,1,10,00,00,00
+HKR,NDI\params\IOBase,resc,1,02,00,00,00
+HKR,NDI\params\IOBase,ParamDesc,,"I/O Base Address"
+HKR,NDI\params\IOBase,flag,1,10,00,00,00
+
+;----------------------------------------------------------------------------
+; SMC80412 Common
+;
+[SMC80412.ndi.NT.reg]
+HKR, Ndi,               Service,    0, "SMC80412"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+[speed100.reg]
+;Speed Duplex Mode
+HKR,Ndi\params\ConnectionType,          ParamDesc,      0, %ConnectionType%
+HKR,Ndi\params\ConnectionType,          default,        0, "0"
+HKR,Ndi\params\ConnectionType,          type,           0, "enum"
+HKR,Ndi\params\ConnectionType\enum,     0,              0, %AutoSense%
+HKR,Ndi\params\ConnectionType\enum,     1,              0, %10HD%
+HKR,Ndi\params\ConnectionType\enum,     2,              0, %10FD%
+HKR,Ndi\params\ConnectionType\enum,     3,              0, %100HD%
+HKR,Ndi\params\ConnectionType\enum,     4,              0, %100FD%
+
+HKR,                              ,     ConnectionType, 0, "0"
+
+[SMC80412.CopyFiles.NT]
+SMC80412.sys,,,2
+
+[SMC80412.CopyFiles.98]
+SMC80412.sys
+
+[SMC80412.Service]
+DisplayName     =   %SMC80412.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\SMC80412.sys
+LoadOrderGroup  =   NDIS
+AddReg          =   TextModeFlags.reg
+
+[SMC80412.AddEventLog]
+AddReg = SMC80412.AddEventLog.reg
+
+[SMC80412.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+;---------------------------------------------------------------------------
+; Common TextMode Flags Section
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+;----------------------------------------------------------------------------
+; Destination Directories
+
+[DestinationDirs]
+SMC80412.CopyFiles.NT = 12
+SMC80412.CopyFiles.98 = 11
+DefaultDestDir        = 11
+
+;;============================================================================
+;; Source Files
+;;============================================================================
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+SMC80412.SYS  = 1
+NET80412.INF  = 1
+
+;----------------------------------------------------------------------------
+; Localizable Strings
+
+[Strings]
+V_SMC    = "SMC"
+DISKNAME = "SMC 10/100 PC Card (SMC8041 V.2) Diskette" 
+
+ConnectionType          = "Connection Type"
+AutoSense               = "Auto Sense"
+100FD                   = "100Mbps Full Duplex"
+100HD                   = "100Mbps Half Duplex"
+10HD                    = "10Mbps Half Duplex"
+10FD                    = "10Mbps Full Duplex"
+
+SMC80412.DeviceDesc       = "SMC 10/100 PC Card (SMC8041 V.2)"
+SMC80412.Service.DispName = "SMC 10/100 PC Card (SMC8041 V.2) Driver"

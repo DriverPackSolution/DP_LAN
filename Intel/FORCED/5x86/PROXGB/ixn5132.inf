@@ -1,0 +1,1761 @@
+;*******************************************************************************
+;**                                                                           **
+;**                            INTEL CONFIDENTIAL                             **
+;**                                                                           **
+;**        Copyright 2007-2012 Intel Corporation All Rights Reserved.         **
+;**                                                                           **
+;**  The material contained or described herein and all documents related     **
+;**  to such material ("Material") are owned by Intel Corporation or its      **
+;**  suppliers or licensors. Title to the Material remains with Intel         **
+;**  Corporation or its suppliers and licensors. The Material contains trade  **
+;**  secrets and proprietary and confidential information of Intel or its     **
+;**  suppliers and licensors. The Material is protected by worldwide          **
+;**  copyright and trade secret laws and treaty provisions. No part of the    **
+;**  Material may be used, copied, reproduced, modified, published,           **
+;**  uploaded, posted, transmitted, distributed, or disclosed in any way      **
+;**  without Intel's prior express written permission.                        **
+;**                                                                           **
+;**  No license under any patent, copyright, trade secret or other            **
+;**  intellectual property right is granted to or conferred upon you by       **
+;**  disclosure or delivery of the Materials, either expressly, by            **
+;**  implication, inducement, estoppel or otherwise. Any license under such   **
+;**  intellectual property rights must be express and approved by Intel in    **
+;**  writing.                                                                 **
+;**                                                                           **
+;*******************************************************************************
+;
+;*******************************************************************************
+; INF for Intel(R) 10 Gigabit PCIe Network Adapters
+;*******************************************************************************
+;
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Intel%
+CatalogFile = ixn5132.cat
+DriverVer   = 09/26/2012,3.2.61.0
+
+[Manufacturer]
+%Intel%     = Intel, NTx86.5.1, NTIA64, NTamd64, NTx86.6.0
+
+[Intel]
+
+[Intel.NTx86.5.1]
+; DisplayName                       Section     DeviceID
+; -----------                       -------     --------
+%O10A6.DeviceDesc%                  = NO_DRV,   PCI\VEN_8086&DEV_10A6
+%N10F7.KX4.Dual.Description%        = N10F7,    PCI\VEN_8086&DEV_10F7&SUBSYS_000D8086
+%N10F7.KX4.FEM.Description%         = N10FC,    PCI\VEN_8086&DEV_10F7&SUBSYS_7B12108E
+%N10F7.Generic.Description%         = N10FC,    PCI\VEN_8086&DEV_10F7
+%N1514.KX4.Dual.Description%        = N1514,    PCI\VEN_8086&DEV_1514&SUBSYS_000B8086
+%N10F8.KX4.KR.Dual.Description%     = N10F8_NoSec, PCI\VEN_8086&DEV_10F8&SUBSYS_000C8086
+%N10F8.KR.NDC.Description%          = N10F8_NDC, PCI\VEN_8086&DEV_10F8&SUBSYS_1F631028
+%N10FB.SFI.Dual.Description%        = N10FB,    PCI\VEN_8086&DEV_10FB&SUBSYS_7B11108E
+%N1507.SFI.Dual.Description%        = N10FB,    PCI\VEN_8086&DEV_1507&SUBSYS_7B10108E
+%N1517.KR.Dual.Description%         = N10FC,    PCI\VEN_8086&DEV_1517&SUBSYS_006A1137
+%HP10F8.KR.BLOM.Description%        = HP10F8,   PCI\VEN_8086&DEV_10F8&SUBSYS_18D0103C
+%HP10F8.KR.Dual.Description%        = HP10F8,   PCI\VEN_8086&DEV_10F8&SUBSYS_17D2103C
+%HP10FB.SFI.ALOM.Description%       = HP10FB_ALOM,   PCI\VEN_8086&DEV_10FB&SUBSYS_17D0103C
+%HP10FB.SFI.Dual.Description%       = HP10FB,   PCI\VEN_8086&DEV_10FB&SUBSYS_17D3103C
+%N10F8.Generic.Description%         = N10F8,    PCI\VEN_8086&DEV_10F8
+%N152A.Generic.Description%         = N10F8,    PCI\VEN_8086&DEV_152A
+%N10F9.Generic.Description%         = N10FC,    PCI\VEN_8086&DEV_10F9
+%N10FB.Generic.Description%         = N10FB_PM, PCI\VEN_8086&DEV_10FB&SUBSYS_11A91734
+%N10FB.SFI.Dual.Description%        = N10FB_NOSEC,  PCI\VEN_8086&DEV_10FB&SUBSYS_7A118086
+%N10FB.CopperDA.Dual.Description%   = N10FC,    PCI\VEN_8086&DEV_10FB&SUBSYS_00028086
+%N10FB.SFI.Single.Description%      = N10FB_SP, PCI\VEN_8086&DEV_10FB&SUBSYS_000A8086
+%N10FB.SFI.Single.Description%      = N10FB_SP, PCI\VEN_8086&DEV_10FB&SUBSYS_00068086
+%N10FB.SFI.Dual.Description%        = N10FB,    PCI\VEN_8086&DEV_10FB&SUBSYS_00038086
+%N10FB.SFI.Dual.Description%        = N10FB,    PCI\VEN_8086&DEV_10FB&SUBSYS_000C8086
+%N10FB.SFI.Dual.Description%        = N10FB,    PCI\VEN_8086&DEV_10FB&SUBSYS_7A128086
+%N10FB.Generic.Description%         = N10FB,    PCI\VEN_8086&DEV_10FB&SUBSYS_152D8975
+%N154D.SFI.Dual.Description%        = N10FB_NOSEC, PCI\VEN_8086&DEV_154D&SUBSYS_7B118086
+%N10FB.Generic.Description%         = N10FB,    PCI\VEN_8086&DEV_10FB
+%N10FC.Generic.Description%         = N10FC,    PCI\VEN_8086&DEV_10FC
+%N1529.Generic.Description%         = N10FB,    PCI\VEN_8086&DEV_1529
+%N1557.Generic.Description%         = N10FB_SP, PCI\VEN_8086&DEV_1557
+%N151C.Copper.Dual.Description%     = N151C,    PCI\VEN_8086&DEV_151C&SUBSYS_A02C8086
+%N151C.Copper.Dual.Description%     = N151C,    PCI\VEN_8086&DEV_151C&SUBSYS_A21C8086
+%N151C.Copper.Dual.Description%     = N151C,    PCI\VEN_8086&DEV_151C&SUBSYS_A03C8086
+%N151C.Copper.Dual.Sun.Description% = N151C,    PCI\VEN_8086&DEV_151C&SUBSYS_7B13108E
+%N151C.Generic.Description%         = N151C,    PCI\VEN_8086&DEV_151C
+
+[Intel.NTIA64]
+
+[Intel.NTamd64]
+
+[Intel.NTx86.6.0]
+
+[NO_DRV]
+Characteristics    = 0x01
+Include            = machine.inf
+Needs              = NO_DRV
+
+[NO_DRV.Services]
+Include            = machine.inf
+Needs              = NO_DRV.Services
+
+; ------------------------------------------------------
+; Intel(R) 10 Gigabit X520 Server Adapters
+; ------------------------------------------------------
+
+[N10FB]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = Dualspeed.reg, Force10G.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10FB.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10FB.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10FB.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) 10 Gigabit X520-1 Server Adapters
+; ------------------------------------------------------
+
+[N10FB_SP]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = Dualspeed.reg, Force10G.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10FB_SP.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10FB_SP.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10FB_SP.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) 10 Gigabit X520 Server Adapters
+; ------------------------------------------------------
+
+[N10FB_NOSEC]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = Dualspeed.reg, Force10G.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10FB_NOSEC.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10FB_NOSEC.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10FB_NOSEC.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) 82599 Dual 10 Gigabit Network Connection
+; ------------------------------------------------------
+
+[N10FB_PM]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = Dualspeed.reg, Force10G.reg, Powermgmt.reg, PMEEnabled.reg, WakeOnSlot.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10FB_PM.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10FB_PM.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10FB_PM.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKPM.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) 82599 10 Gigabit Dual Port Network Connection
+; ------------------------------------------------------
+[N10FC]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10FC.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10FC.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10FC.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; -----------------------------------------------
+; Intel(R) Ethernet Server Adapter X520-T1/T2
+; -----------------------------------------------
+[N151C]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = Dualspeed.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N151C.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N151C.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N151C.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) Ethernet Mezzanine Adapter X520-KX4
+; ------------------------------------------------------
+[N10F7]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = Powermgmt.reg, PMEEnabled.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10F7.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10F7.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10F7.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) Ethernet 10G 2P X520-k bNDC
+; ------------------------------------------------------
+[N10F8_NDC]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = Powermgmt.reg,   SmartSpeed.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10F8_NDC.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10F8_NDC.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10F8_NDC.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz
+; ------------------------------------------------------
+[N1514]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N1514.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N1514.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N1514.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz
+; ------------------------------------------------------
+[N10F8_NoSec]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = SmartSpeed.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10F8_NoSec.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10F8_NoSec.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10F8_NoSec.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) 82599 10 Gigabit Dual Port Backplane Connection
+; ------------------------------------------------------
+[N10F8]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,  Uninstall.reg
+AddReg             = Powermgmt.reg, SmartSpeed.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10F8.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[N10F8.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[N10F8.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; HP Ethernet 10Gb 2-port 560FLB Adapter
+; ------------------------------------------------------
+[HP10F8]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,    Uninstall.reg
+AddReg             = Powermgmt.reg, SmartSpeed.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[HP10F8.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[HP10F8.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[HP10F8.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter
+; ------------------------------------------------------
+[HP10FB_ALOM]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,    Uninstall.reg
+AddReg             = Dualspeed.reg, Force10G.reg, Powermgmt.reg, WakeOnSlot.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[HP10FB_ALOM.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[HP10FB_ALOM.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[HP10FB_ALOM.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKPM.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; HP Ethernet 10Gb 2-port 560SFP+ Adapter
+; ------------------------------------------------------
+[HP10FB]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg,    Uninstall.reg
+AddReg             = Dualspeed.reg, Force10G.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[HP10FB.Services]
+AddService = %ServiceName%, 2, Service, EventLog
+
+[HP10FB.HW]
+Include            = machine.inf
+Needs              = PciIoSpaceNotRequired
+
+[HP10FB.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+;-------------------------------------------------------------------------------
+; Registry Settings
+;-------------------------------------------------------------------------------
+[Default.reg]
+HKR, Ndi\Interfaces,                            UpperRange,             0, "ndis5"
+HKR, Ndi\Interfaces,                            LowerRange,             0, "ethernet"
+HKR, Ndi,                                       Service,                0, %ServiceName%
+
+; *FlowControl
+HKR, Ndi\Params\*FlowControl,                   ParamDesc,              0, %FlowControl%
+HKR, Ndi\Params\*FlowControl,                   default,                0, "3"
+HKR, Ndi\Params\*FlowControl\Enum,              "0",                    0, %Disabled%
+HKR, Ndi\Params\*FlowControl\Enum,              "1",                    0, %FlowControl_TxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,              "2",                    0, %FlowControl_RxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,              "3",                    0, %FlowControl_Full%
+HKR, Ndi\Params\*FlowControl,                   type,                   0, "enum"
+
+; *TransmitBuffers
+HKR, Ndi\params\*TransmitBuffers,               ParamDesc,              0, %TransmitBuffers%
+HKR, Ndi\params\*TransmitBuffers,               default,                0, "512"
+HKR, Ndi\params\*TransmitBuffers,               min,                    0, "128"
+HKR, Ndi\params\*TransmitBuffers,               max,                    0, "16384"
+HKR, Ndi\params\*TransmitBuffers,               step,                   0, "64"
+HKR, Ndi\params\*TransmitBuffers,               Base,                   0, "10"
+HKR, Ndi\params\*TransmitBuffers,               type,                   0, "int"
+
+; *ReceiveBuffers
+HKR, Ndi\params\*ReceiveBuffers,                ParamDesc,              0, %ReceiveBuffers%
+HKR, Ndi\params\*ReceiveBuffers,                default,                0, "512"
+HKR, Ndi\params\*ReceiveBuffers,                min,                    0, "128"
+HKR, Ndi\params\*ReceiveBuffers,                max,                    0, "2048"
+HKR, Ndi\params\*ReceiveBuffers,                step,                   0, "64"
+HKR, Ndi\params\*ReceiveBuffers,                Base,                   0, "10"
+HKR, Ndi\params\*ReceiveBuffers,                type,                   0, "int"
+
+; *TCPChecksumOffloadIPv4
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        ParamDesc,              0, %TCPChksumOffv4%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        default,                0, "3"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        type,                   0, "enum"
+
+; *UDPChecksumOffloadIPv4
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        ParamDesc,              0, %UDPChksumOffv4%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        default,                0, "3"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        type,                   0, "enum"
+
+; *IPChecksumOffloadIPv4
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         ParamDesc,              0, %IPChksumOffv4%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         default,                0, "3"
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "0",                    0, %Disabled%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         type,                   0, "enum"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,                 ParamDesc,              0, %LAA%
+HKR, Ndi\params\NetworkAddress,                 Default,                0, ""
+HKR, Ndi\params\NetworkAddress,                 type,                   0, "edit"
+HKR, NDI\params\NetworkAddress,                 LimitText,              0, "12"
+HKR, NDI\params\NetworkAddress,                 UpperCase,              0, "1"
+HKR, NDI\params\NetworkAddress,                 optional,               0, "1"
+
+;Log Link State Event
+HKR,Ndi\Params\LogLinkStateEvent,               ParamDesc,              0, %LogLinkState%
+HKR,Ndi\Params\LogLinkStateEvent,               Type,                   0, "enum"
+HKR,Ndi\Params\LogLinkStateEvent,               Default,                0, "51"
+HKR,Ndi\Params\LogLinkStateEvent\Enum,          "51",                   0, %Enabled%
+HKR,Ndi\Params\LogLinkStateEvent\Enum,          "16",                   0, %Disabled%
+HKR,,                                           LogLinkStateEvent,      0, "51"
+
+; Interrupt Throttle Rate
+HKR, Ndi\Params\ITR,                            ParamDesc,              0, %InterruptThrottleRate%
+HKR, Ndi\Params\ITR,                            default,                0, "65535"
+HKR, Ndi\Params\ITR\Enum,                       "65535",                0, %Adaptive%
+HKR, Ndi\Params\ITR\Enum,                       "2000",                 0, %Extreme%
+HKR, Ndi\Params\ITR\Enum,                       "950",                  0, %High%
+HKR, Ndi\Params\ITR\Enum,                       "488",                  0, %Medium%
+HKR, Ndi\Params\ITR\Enum,                       "200",                  0, %Low%
+HKR, Ndi\Params\ITR\Enum,                       "0",                    0, %Off%
+HKR, Ndi\Params\ITR,                            type,                   0, "enum"
+
+; *PriorityVLANTag
+HKR, Ndi\Params\*PriorityVLANTag,               ParamDesc,              0, %PriorityVLANTag%
+HKR, Ndi\Params\*PriorityVLANTag,               default,                0, "3"
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "0",                    0, %PriorityVlanDisabled%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "1",                    0, %PriorityEnabled%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "2",                    0, %VlanEnabled%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "3",                    0, %PriorityVlanEnabled%
+HKR, Ndi\Params\*PriorityVLANTag,               type,                   0, "enum"
+
+; *LsoV1IPv4
+HKR, Ndi\Params\*LsoV1IPv4,                     ParamDesc,              0, %LsoV1IPv4%
+HKR, Ndi\Params\*LsoV1IPv4,                     default,                0, "1"
+HKR, Ndi\Params\*LsoV1IPv4\Enum,                "0",                    0, %Off%
+HKR, Ndi\Params\*LsoV1IPv4\Enum,                "1",                    0, %On%
+HKR, Ndi\Params\*LsoV1IPv4,                     type,                   0, "enum"
+
+; EnableDca
+HKR, PROSetNdi\Params\EnableDca,                ParamDesc,              0, %EnableDca%
+HKR, PROSetNdi\Params\EnableDca,                default,                0, "1"
+HKR, PROSetNdi\Params\EnableDca,                type,                   0, "enum"
+HKR, PROSetNdi\Params\EnableDca\Enum,           "1",                    0, %Enabled%
+HKR, PROSetNdi\Params\EnableDca\Enum,           "0",                    0, %Disabled%
+HKR,,                                           EnableDca,              2, "1"
+
+; *JumboPacket
+HKR, Ndi\Params\*JumboPacket,                   ParamDesc,              0, %JumboPacket%
+HKR, Ndi\Params\*JumboPacket,                   default,                0, "1514"
+HKR, Ndi\Params\*JumboPacket\Enum,              "1514",                 0, %Disabled%
+HKR, Ndi\Params\*JumboPacket\Enum,              "4088",                 0, %Bytes4088%
+HKR, Ndi\Params\*JumboPacket\Enum,              "9014",                 0, %Bytes9014%
+HKR, Ndi\Params\*JumboPacket,                   type,                   0, "enum"
+
+; Miscellanous defaults
+HKR,,                                           MulticastFilterType,    0, "0"
+HKR,,                                           VlanFiltering,          0, "0"
+
+[Dualspeed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",                    0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,              "6",                    0, %1000Mb_Full_Duplex%
+
+[Force10G.reg]
+HKR, Ndi\params\*SpeedDuplex\enum,              "7",                    0, %10Gb_Full_Duplex%
+
+[RSS.reg]
+; NumRssQueues
+HKR, Ndi\Params\NumRssQueues,                   ParamDesc,              0, %NumRssQueues%
+HKR, Ndi\Params\NumRssQueues,                   default,                0, "2"
+HKR, Ndi\Params\NumRssQueues,                   type,                   0, "enum"
+HKR, Ndi\Params\NumRssQueues\Enum,              "1",                    0, %1queue%
+HKR, Ndi\Params\NumRssQueues\Enum,              "2",                    0, %2queues%
+HKR, Ndi\Params\NumRssQueues\Enum,              "4",                    0, %4queues%
+
+; *RSS
+HKR, Ndi\Params\*RSS,                           ParamDesc,              0, %RSS%
+HKR, Ndi\Params\*RSS,                           default,                0, "1"
+HKR, Ndi\Params\*RSS,                           type,                   0, "enum"
+HKR, Ndi\Params\*RSS\Enum,                      "0",                    0, %Disabled%
+HKR, Ndi\Params\*RSS\Enum,                      "1",                    0, %Enabled%
+HKR,,                                           ReceiveScalingMode,     0, "1"
+
+[LLI.reg]
+HKR, PROSetNdi\Params\EnableLLI,                ParamDesc,              0, %EnableLLI%
+HKR, PROSetNdi\Params\EnableLLI,                default,                0, "0"
+HKR, PROSetNdi\Params\EnableLLI,                type,                   0, "enum"
+HKR, PROSetNdi\Params\EnableLLI\Enum,           "0",                    0, %Disabled%
+HKR, PROSetNdi\Params\EnableLLI\Enum,           "1",                    0, %LLIPortBased%
+HKR, PROSetNdi\Params\EnableLLI\Enum,           "2",                    0, %LLIPSHBased%
+HKR,,                                           EnableLLI,              2, "0"
+HKR, PROSetNdi\Params\LLIPorts,                 ParamDesc,              0, %LLIPorts%
+HKR, PROSetNdi\Params\LLIPorts,                 default,                0, ""
+HKR, PROSetNdi\Params\LLIPorts,                 type,                   0, "edit"
+HKR, PROSetNdi\Params\LLIPorts,                 UpperCase,              0, "1"
+HKR, PROSetNdi\Params\LLIPorts,                 optional,               0, "1"
+HKR, PROSetNdi\Params\LLIPorts,                 multi_string,           0, "1"
+HKR,,                                           LLIPorts,               0x00010002, ""
+
+[Powermgmt.reg]
+; EnablePME
+HKR,Ndi\Params\EnablePME,                 ParamDesc,                    0, %Enable_PME%
+HKR,Ndi\Params\EnablePME,                 Type,                         0, "enum"
+HKR,Ndi\Params\EnablePME,                 Default,                      0, "0"
+HKR,Ndi\Params\EnablePME\Enum,            "1",                          0, %Enabled%
+HKR,Ndi\Params\EnablePME\Enum,            "0",                          0, %Disabled%
+
+[PMEEnabled.reg]
+HKR,,                                     EnablePME,                    0, "1"
+
+[WakeOnSlot.reg]
+HKR,,                                     WakeOnSlot,                   0, 0
+
+[SmartSpeed.reg]
+HKR,Ndi\Params\SmartSpeed,                ParamDesc,                    0, %SmartSpeed%
+HKR,Ndi\Params\SmartSpeed,                Type,                         0, "enum"
+HKR,Ndi\Params\SmartSpeed,                Default,                      0, "0"
+HKR,Ndi\Params\SmartSpeed\Enum,           "0",                          0, %Enabled%
+HKR,Ndi\Params\SmartSpeed\Enum,           "2",                          0, %Disabled%
+
+[Advanced.DelReg]
+HKR, Ndi\Params
+HKR, PROSetNdi\Params
+HKR, PROSetNdi\NdiExt
+
+[AddEventLog]
+HKR,, EventMessageFile, 0x00020000, %EventLogMessageDllPath%
+HKR,, TypesSupported,   0x00010001, 7
+
+;-----------------------------------------------------------------------------
+; Uninstall parameters
+;-----------------------------------------------------------------------------
+[Uninstall.reg]
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10A6, 0, "10A6"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10F9, 0, "10F9"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 151C, 0, "151C"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10FB, 0, "10FB"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10FC, 0, "10FC"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1529, 0, "1529"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1557, 0, "1557"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10F8, 0, "10F8"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 152A, 0, "152A"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 154D, 0, "154D"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10F7, 0, "10F7"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1507, 0, "1507"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1514, 0, "1514"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1517, 0, "1517"
+HKLM,Software\Intel\Prounstl\Dins, ixn5132.din, 0, "8259x.Uninstall"
+HKLM,Software\Intel\Prounstl\Services, %ServiceName%, 0, ixn5132.sys
+
+;-----------------------------------------------------------------------------
+; Driver "service" installation settings
+;-----------------------------------------------------------------------------
+[Service]
+DisplayName     = %Service.Displayname%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ixn5132.sys
+LoadOrderGroup  = NDIS
+
+;-----------------------------------------------------------------------------
+; Event Log settings
+;-----------------------------------------------------------------------------
+
+[EventLog]
+AddReg             = AddEventLog
+
+;-----------------------------------------------------------------------------
+; Coinstaller installation
+;-----------------------------------------------------------------------------
+
+[CoInstallerCopyFiles]
+NicCo2.dll,,,0x00000010 ;don't overwrite
+NicInIXN.dll
+
+[CoInstaller_AddReg]
+HKR,, CoInstallers32, 0x00010000, "NicCo2.dll,NicCoInstallerEntry"
+HKR,, NicCoPlugins, 0x00010000, "NicInIXN.dll,NicCoInstallerEntry"
+
+[CoInK.reg]
+HKR,, CoInstallFlag, 0x00010001, 0x00001000
+
+[CoInKPM.reg]
+HKR,, CoInstallFlag, 0x00010001, 0x00001400
+
+[CopyFiles]
+ixn5132.sys,,,2
+
+[MessageDll.CopyFiles]
+ixnmsg.dll,,,2
+
+[Uninstall.CopyFiles]
+ixn5132.din,,,2
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;-----------------------------------------------------------------------------
+[DestinationDirs]
+CopyFiles          = 12
+DefaultDestDir          = 11
+Uninstall.CopyFiles          = 11
+CoInstallerCopyFiles          = 11
+MessageDll.CopyFiles          = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+;-----------------------------------------------------------------------------
+; SourceDisksFiles
+;-----------------------------------------------------------------------------
+[SourceDisksFiles]
+ixn5132.sys  = 1
+ixn5132.din  = 1
+ixnmsg.dll   = 1
+NicCo2.dll    = 1
+NicInIXN.dll  = 1
+
+[Strings]
+EnableLLI                       = "Low Latency Interrupts"
+LLIPorts                        = "Low Latency Interrupt Ports"
+LLIPortBased                    = "Port-Based"
+LLIPSHBased                     = "PSH Flag-Based"
+EnableDca                       = "Direct Cache Access"
+InterruptThrottleRate           = "Interrupt Moderation Rate"
+Adaptive                        = "Adaptive"
+Extreme                         = "Extreme"
+High                            = "High"
+Medium                          = "Medium"
+Low                             = "Low"
+IPChksumOffv4                   = "IPv4 Checksum Offload"
+TCPChksumOffv4                  = "TCP Checksum Offload (IPv4)"
+UDPChksumOffv4                  = "UDP Checksum Offload (IPv4)"
+LsoV1IPv4                       = "Offload TCP Segmentation"
+ChksumOffTxRx                   = "Rx & Tx Enabled"
+ChksumOffTx                     = "Tx Enabled"
+ChksumOffRx                     = "Rx Enabled"
+TransmitBuffers                 = "Transmit Buffers"
+ReceiveBuffers                  = "Receive Buffers"
+RSS                             = "Receive Side Scaling"
+NumRssQueues                    = "Receive Side Scaling Queues"
+1queue                          = "1 Queue"
+2queues                         = "2 Queues"
+4queues                         = "4 Queues"
+FlowControl                     = "Flow Control"
+FlowControl_RxOnly              = "Rx Enabled"
+FlowControl_TxOnly              = "Tx Enabled"
+FlowControl_Full                = "Rx & Tx Enabled"
+PriorityVLANTag                 = "Priority & VLAN"
+PriorityVlanDisabled            = "Priority & VLAN Disabled"
+PriorityEnabled                 = "Priority Enabled"
+PriorityVlanEnabled             = "Priority & VLAN Enabled"
+VlanEnabled                     = "VLAN Enabled"
+SpeedDuplex                     = "Speed & Duplex"
+AutoNegotiation                 = "Auto Negotiation"
+1000Mb_Full_Duplex              = "1.0 Gbps Full Duplex"
+10Gb_Full_Duplex                = "10 Gbps Full Duplex"
+On                              = "On"
+Off                             = "Off"
+Enabled                         = "Enabled"
+Disabled                        = "Disabled"
+Bytes4088                       = "4088 Bytes"
+Bytes9014                       = "9014 Bytes"
+LAA                             = "Locally Administered Address"
+JumboPacket                     = "Jumbo Packet"
+LogLinkState                    = "Log Link State Event"
+Enable_PME                      = "Enable PME"
+SmartSpeed                      = "Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\ixn5132.sys"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0804] ; Chinese (Simplified)
+EnableLLI                       ="µÕ—”≥Ÿ÷–∂œ"
+LLIPorts                        ="µÕ—”≥Ÿ÷–∂œ∂Àø⁄"
+LLIPortBased                    ="ª˘”⁄∂Àø⁄µƒ"
+LLIPSHBased                     ="ª˘”⁄ PSH ±Íº«µƒ"
+EnableDca                       ="÷±Ω”ª∫¥Ê∑√Œ "
+InterruptThrottleRate           ="÷–∂œΩ⁄¡˜¬ "
+Adaptive                        ="  ”¶–‘"
+Extreme                         ="º´÷µ"
+High                            ="∏ﬂ"
+Medium                          ="÷–"
+Low                             ="µÕ"
+IPChksumOffv4                   ="IPv4 –£—È∫Õ∑÷‘ÿ¥´ ‰"
+TCPChksumOffv4                  ="TCP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv4)"
+UDPChksumOffv4                  ="UDP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv4)"
+LsoV1IPv4                       ="∑÷‘ÿ TCP ∑÷∂Œ"
+ChksumOffTxRx                   ="“—∆Ù”√ Rx ∫Õ Tx"
+ChksumOffTx                     ="“—∆Ù”√ Tx"
+ChksumOffRx                     ="“—∆Ù”√ Rx"
+TransmitBuffers                 ="¥´ ‰ª∫≥Â«¯"
+ReceiveBuffers                  ="Ω” ’ª∫≥Â«¯"
+RSS                             ="Ω” ’∑Ωµ˜’˚"
+NumRssQueues                    ="Ω” ’∑Ωµ˜’˚∂”¡–"
+1queue                          ="1 ∏ˆ∂”¡–"
+2queues                         ="2 ∏ˆ∂”¡–"
+4queues                         ="4 ∏ˆ∂”¡–"
+FlowControl                     ="¡˜¡øøÿ÷∆"
+FlowControl_RxOnly              ="“—∆Ù”√ Rx"
+FlowControl_TxOnly              ="“—∆Ù”√ Tx"
+FlowControl_Full                ="“—∆Ù”√ Rx ∫Õ Tx"
+PriorityVLANTag                 ="”≈œ»º∂∫Õ VLAN"
+PriorityVlanDisabled            ="“—Ω˚”√”≈œ»º∂∫Õ VLAN"
+PriorityEnabled                 ="“—∆Ù”√”≈œ»º∂"
+PriorityVlanEnabled             ="“—∆Ù”√”≈œ»º∂∫Õ VLAN"
+VlanEnabled                     ="“—∆Ù”√ VLAN"
+SpeedDuplex                     ="ÀŸ∂»∫ÕÀ´π§"
+AutoNegotiation                 ="◊‘∂Ø–≠…Ã"
+1000Mb_Full_Duplex              ="1.0 Gbps »´À´π§"
+10Gb_Full_Duplex                ="10 Gbps »´À´π§"
+On                              ="ø™∆Ù"
+Off                             ="πÿ±’"
+Enabled                         ="∆Ù”√"
+Disabled                        ="Ω˚”√"
+Bytes4088                       ="4088 ◊÷Ω⁄"
+Bytes9014                       ="9014 ◊÷Ω⁄"
+LAA                             ="±æµÿπ‹¿Ìµÿ÷∑"
+JumboPacket                     ="æﬁ÷° ˝æ›∞¸"
+LogLinkState                    ="º«¬º¡¥Ω”◊¥Ã¨ ¬º˛"
+Enable_PME                      ="∆Ù”√ PME"
+SmartSpeed                      ="÷«ƒ‹ÀŸ∂»"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0404] ; Chinese (Traditional)
+EnableLLI                       ="ßC©µøß√¬_"
+LLIPorts                        ="ßC©µøß√¬_≥s±µ∞"
+LLIPortBased                    ="≥s±µ∞¨∞∞Ú¬¶"
+LLIPSHBased                     ="PSH ∫X∏π¨∞∞Ú¬¶"
+EnableDca                       ="™Ω±µß÷®˙¶s®˙"
+InterruptThrottleRate           ="ß√¬_∏`¨yª÷≥t≤v"
+Adaptive                        ="Ω’æ„© "
+Extreme                         ="∑•∞™"
+High                            ="∞™"
+Medium                          ="§§"
+Low                             ="ßC"
+IPChksumOffv4                   ="IPv4 ¿À¨d≠»®¯∏¸"
+TCPChksumOffv4                  ="TCP ¿À¨d≠»®¯∏¸ (IPv4)"
+UDPChksumOffv4                  ="UDP ¿À¨d≠»®¯∏¸ (IPv4)"
+LsoV1IPv4                       ="®¯∏¸ TCP ∞œ¨q"
+ChksumOffTxRx                   ="Rx ªP Tx §w±“•Œ"
+ChksumOffTx                     ="Tx §w±“•Œ"
+ChksumOffRx                     ="Rx §w±“•Œ"
+TransmitBuffers                 ="∂«øÈΩwΩƒ∞œ"
+ReceiveBuffers                  ="±µ¶¨ΩwΩƒ∞œ"
+RSS                             ="±µ¶¨∫›Ω’æ„§Ò≤v"
+NumRssQueues                    ="±µ¶¨∫›Ω’æ„§Ò≤v¶Ó¶C"
+1queue                          ="§@≠”¶Ó¶C"
+2queues                         ="®‚≠”¶Ó¶C"
+4queues                         ="•|≠”¶Ó¶C"
+FlowControl                     ="¨y∂q±±®Ó"
+FlowControl_RxOnly              ="Rx §w±“•Œ"
+FlowControl_TxOnly              ="Tx §w±“•Œ"
+FlowControl_Full                ="Rx ªP Tx §w±“•Œ"
+PriorityVLANTag                 ="¿u•˝∂∂ß«ªP VLAN"
+PriorityVlanDisabled            ="¿u•˝∂∂ß«ªP VLAN §w∞±•Œ"
+PriorityEnabled                 ="¿u•˝∂∂ß«§w±“•Œ"
+PriorityVlanEnabled             ="¿u•˝∂∂ß«ªP VLAN §w±“•Œ"
+VlanEnabled                     ="VLAN §w±“•Œ"
+SpeedDuplex                     ="≥t´◊ªP¬˘§u"
+AutoNegotiation                 ="¶€∞ •ÊØA"
+1000Mb_Full_Duplex              ="1.0 Gbps •˛¬˘§u"
+10Gb_Full_Duplex                ="10 Gbps •˛¬˘§u"
+On                              ="∂}±“"
+Off                             ="√ˆ≥¨"
+Enabled                         ="±“•Œ"
+Disabled                        ="∞±•Œ"
+Bytes4088                       ="4088 ¶Ï§∏≤’"
+Bytes9014                       ="9014 ¶Ï§∏≤’"
+LAA                             ="•ª¶a∫ﬁ≤z¶Ïß}"
+JumboPacket                     ="∂W§j´¨´ •]"
+LogLinkState                    ="µnø˝≥sµ≤™¨∫A®∆•Û"
+Enable_PME                      ="±“•Œ PME"
+SmartSpeed                      ="¶€∞ §¡¥´≥t´◊"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0407] ; German (Germany)
+EnableLLI                       ="Low Latency Interrupts (LLIs)"
+LLIPorts                        ="LLI-Anschl¸sse"
+LLIPortBased                    ="Anschlussbasiert"
+LLIPSHBased                     ="PSH markierungsbasiert"
+EnableDca                       ="Direct Cache Access"
+InterruptThrottleRate           ="Interrupt-Drosselungsrate"
+Adaptive                        ="Adaptiv"
+Extreme                         ="Extrem"
+High                            ="Hoch"
+Medium                          ="Mittel"
+Low                             ="Niedrig"
+IPChksumOffv4                   ="IPv4-Pr¸fsummen abladen"
+TCPChksumOffv4                  ="TCP-Pr¸fsummen abladen (IPv4)"
+UDPChksumOffv4                  ="UDP-Pr¸fsummen abladen (IPv4)"
+LsoV1IPv4                       ="TCP-Segmentierung abladen"
+ChksumOffTxRx                   ="Rx und Tx aktiviert"
+ChksumOffTx                     ="Tx aktiviert"
+ChksumOffRx                     ="Rx aktiviert"
+TransmitBuffers                 ="‹bertragungspuffer"
+ReceiveBuffers                  ="Empfangspuffer"
+RSS                             ="RSS (Empfangsseitige Skalierung)"
+NumRssQueues                    ="RSS-Warteschlangen (Empfangsseitige Skalierung)"
+1queue                          ="1 Warteschlange"
+2queues                         ="2 Warteschlangen"
+4queues                         ="4 Warteschlangen"
+FlowControl                     ="Flusssteuerung"
+FlowControl_RxOnly              ="Rx aktiviert"
+FlowControl_TxOnly              ="Tx aktiviert"
+FlowControl_Full                ="Rx und Tx aktiviert"
+PriorityVLANTag                 ="Priorit‰t und VLAN"
+PriorityVlanDisabled            ="Priorit‰t und VLAN deaktiviert"
+PriorityEnabled                 ="Priorit‰t aktiviert"
+PriorityVlanEnabled             ="Priorit‰t und VLAN aktiviert"
+VlanEnabled                     ="VLAN aktiviert"
+SpeedDuplex                     ="Geschwindigkeit & Duplex"
+AutoNegotiation                 ="Automatische Aushandlung"
+1000Mb_Full_Duplex              ="1,0 Gbit/s Vollduplex"
+10Gb_Full_Duplex                ="10 Gbit/s Vollduplex"
+On                              ="Ein"
+Off                             ="Aus"
+Enabled                         ="Aktiviert"
+Disabled                        ="Deaktiviert"
+Bytes4088                       ="4088 Byte"
+Bytes9014                       ="9014 Byte"
+LAA                             ="Lokal verwaltete Adresse"
+JumboPacket                     ="Jumbo Packet"
+LogLinkState                    ="Verbindungsereignis protokollieren"
+Enable_PME                      ="PME aktivieren"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0C0A] ; Spanish (Spain)
+EnableLLI                       ="Interrupciones de baja latencia"
+LLIPorts                        ="Puertos de interrupciones de baja latencia"
+LLIPortBased                    ="Basado en puerto"
+LLIPSHBased                     ="Basado en indicador PSH"
+EnableDca                       ="Acceso directo a cachÈ"
+InterruptThrottleRate           ="Velocidad de obstrucciÛn de la interrupciÛn"
+Adaptive                        ="AdaptaciÛn"
+Extreme                         ="Extremo"
+High                            ="Alto"
+Medium                          ="Medio"
+Low                             ="Bajo"
+IPChksumOffv4                   ="Descarga de suma de comprobaciÛn de IPv4"
+TCPChksumOffv4                  ="Descarga de suma de comprobaciÛn TCP (IPv4)"
+UDPChksumOffv4                  ="Descarga de suma de comprobaciÛn UDP (IPv4)"
+LsoV1IPv4                       ="Descarga de segmentaciÛn TCP "
+ChksumOffTxRx                   ="RecepciÛn y transmisiÛn habilitadas"
+ChksumOffTx                     ="TransmisiÛn habilitada"
+ChksumOffRx                     ="RecepciÛn habilitada"
+TransmitBuffers                 ="B˙feres de transmisiÛn"
+ReceiveBuffers                  ="B˙feres de recepciÛn"
+RSS                             ="Receive Side Scaling"
+NumRssQueues                    ="Colas de Receive Side Scaling"
+1queue                          ="1 cola"
+2queues                         ="2 colas"
+4queues                         ="4 colas"
+FlowControl                     ="Control de flujo"
+FlowControl_RxOnly              ="RecepciÛn habilitada"
+FlowControl_TxOnly              ="TransmisiÛn habilitada"
+FlowControl_Full                ="RecepciÛn y transmisiÛn habilitadas"
+PriorityVLANTag                 ="Prioridad y VLAN"
+PriorityVlanDisabled            ="Prioridad y VLAN inhabilitadas"
+PriorityEnabled                 ="Prioridad habilitada"
+PriorityVlanEnabled             ="Prioridad y VLAN habilitadas"
+VlanEnabled                     ="VLAN habilitada"
+SpeedDuplex                     ="Velocidad y d˙plex"
+AutoNegotiation                 ="NegociaciÛn autom·tica"
+1000Mb_Full_Duplex              ="D˙plex completo a 1,0 Gbps"
+10Gb_Full_Duplex                ="D˙plex completo a 10 Gbps"
+On                              ="Activado"
+Off                             ="Desactivado"
+Enabled                         ="Habilitado"
+Disabled                        ="Inhabilitado"
+Bytes4088                       ="4088 bytes"
+Bytes9014                       ="9014 bytes"
+LAA                             ="DirecciÛn administrada localmente"
+JumboPacket                     ="Paquete jumbo"
+LogLinkState                    ="Registrar sucesos del estado del enlace"
+Enable_PME                      ="Activar PME"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.040C] ; French (France)
+EnableLLI                       ="Interruptions ‡ faible latence"
+LLIPorts                        ="Ports d'interruption ‡ faible latence"
+LLIPortBased                    ="BasÈ sur le port"
+LLIPSHBased                     ="BasÈ sur le drapeau PSH"
+EnableDca                       ="AccËs direct au cache"
+InterruptThrottleRate           ="Taux de gestion des interruptions"
+Adaptive                        ="Variable"
+Extreme                         ="ExtrÍme"
+High                            ="Haut"
+Medium                          ="Moyen"
+Low                             ="Faible"
+IPChksumOffv4                   ="DÈlester somme de contrÙle IPv4"
+TCPChksumOffv4                  ="DÈlester somme de contrÙle TCP (IPv4)"
+UDPChksumOffv4                  ="DÈlester somme de contrÙle UDP (IPv4)"
+LsoV1IPv4                       ="DÈlester la segmentation TCP"
+ChksumOffTxRx                   ="Rx et Tx activÈes"
+ChksumOffTx                     ="Tx activÈe"
+ChksumOffRx                     ="Rx activÈe"
+TransmitBuffers                 ="Tampons d'Èmission"
+ReceiveBuffers                  ="Tampons de rÈception"
+RSS                             ="Receive Side Scaling"
+NumRssQueues                    ="Files díattente Receive Side Scaling"
+1queue                          ="1 file d'attente"
+2queues                         ="2 files d'attente"
+4queues                         ="4 files d'attente"
+FlowControl                     ="ContrÙle de flux"
+FlowControl_RxOnly              ="Rx activÈe"
+FlowControl_TxOnly              ="Tx activÈe"
+FlowControl_Full                ="Rx et Tx activÈes"
+PriorityVLANTag                 ="PrioritÈ et VLAN"
+PriorityVlanDisabled            ="PrioritÈ et VLAN dÈsactivÈs"
+PriorityEnabled                 ="PrioritÈ activÈe"
+PriorityVlanEnabled             ="PrioritÈ et VLAN activÈs"
+VlanEnabled                     ="VLAN activÈ"
+SpeedDuplex                     ="Vitesse et duplex"
+AutoNegotiation                 ="NÈgociation automatique"
+1000Mb_Full_Duplex              ="1,0 Gbits/s full duplex"
+10Gb_Full_Duplex                ="10 Gbits/s full duplex"
+On                              ="ActivÈ(e)"
+Off                             ="DÈsactivÈ(e)"
+Enabled                         ="ActivÈ(e)"
+Disabled                        ="DÈsactivÈ(e)"
+Bytes4088                       ="4088 octets"
+Bytes9014                       ="9014 octets"
+LAA                             ="Adresse administrÈe localement"
+JumboPacket                     ="Paquet Ètendu"
+LogLinkState                    ="Consigner l'ÈvÈnement de la liaison"
+Enable_PME                      ="Activer PME"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0410] ; Italian (Italy)
+EnableLLI                       ="Interrupt a bassa latenza"
+LLIPorts                        ="Porte di interrupt a bassa latenza"
+LLIPortBased                    ="Basato su porta"
+LLIPSHBased                     ="Basato su flag PSH"
+EnableDca                       ="Accesso diretto alla cache"
+InterruptThrottleRate           ="Velocit‡ di rallentamento dell'interrupt"
+Adaptive                        ="Adattivo"
+Extreme                         ="Estremo"
+High                            ="Alto"
+Medium                          ="Medio"
+Low                             ="Basso"
+IPChksumOffv4                   ="Offload di checksum IPv4"
+TCPChksumOffv4                  ="Offload di checksum TCP (IPv4)"
+UDPChksumOffv4                  ="Offload di checksum UDP (IPv4)"
+LsoV1IPv4                       ="Offload della segmentazione TCP"
+ChksumOffTxRx                   ="Rx e Tx abilitate"
+ChksumOffTx                     ="Tx abilitata"
+ChksumOffRx                     ="Rx abilitata"
+TransmitBuffers                 ="Trasmetti buffer"
+ReceiveBuffers                  ="Ricevi buffer"
+RSS                             ="Receive Side Scaling"
+NumRssQueues                    ="Code Receive-Side Scaling"
+1queue                          ="1 coda"
+2queues                         ="2 code"
+4queues                         ="4 code"
+FlowControl                     ="Controllo del flusso"
+FlowControl_RxOnly              ="Rx abilitata"
+FlowControl_TxOnly              ="Tx abilitata"
+FlowControl_Full                ="Rx e Tx abilitate"
+PriorityVLANTag                 ="Priorit‡ e VLAN"
+PriorityVlanDisabled            ="Priorit‡ e VLAN disabilitate"
+PriorityEnabled                 ="Priorit‡ abilitata"
+PriorityVlanEnabled             ="Priorit‡ e VLAN abilitate"
+VlanEnabled                     ="VLAN abilitata"
+SpeedDuplex                     ="Velocit‡ e duplex"
+AutoNegotiation                 ="Negoziazione automatica"
+1000Mb_Full_Duplex              ="1.0 Gbps Full Duplex"
+10Gb_Full_Duplex                ="10 Gbps Full Duplex"
+On                              ="Attivato"
+Off                             ="Disattivato"
+Enabled                         ="Attivato"
+Disabled                        ="Disattivato"
+Bytes4088                       ="4088 byte"
+Bytes9014                       ="9014 byte"
+LAA                             ="Indirizzo amministrato localmente"
+JumboPacket                     ="Pacchetto Jumbo"
+LogLinkState                    ="Registra evento stato del collegamento"
+Enable_PME                      ="Abilita PME"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0411] ; Japanese (Japan)
+EnableLLI                       ="í·ÉåÉCÉeÉìÉVÅ[äÑÇËçûÇ›"
+LLIPorts                        ="í·ÉåÉCÉeÉìÉVÅ[äÑÇËçûÇ›É|Å[Ég"
+LLIPortBased                    ="É|Å[Ég ÉxÅ[ÉX"
+LLIPSHBased                     ="PSH ÉtÉâÉO ÉxÅ[ÉX"
+EnableDca                       ="É_ÉCÉåÉNÉg ÉLÉÉÉbÉVÉÖ ÉAÉNÉZÉX"
+InterruptThrottleRate           ="äÑÇËçûÇ›â¡å∏ó¶"
+Adaptive                        ="ÉAÉ_ÉvÉeÉBÉu"
+Extreme                         ="ç≈ëÂ"
+High                            ="çÇ"
+Medium                          ="íÜ"
+Low                             ="í·"
+IPChksumOffv4                   ="IPv4 É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh"
+TCPChksumOffv4                  ="TCP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv4)"
+UDPChksumOffv4                  ="UDP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv4)"
+LsoV1IPv4                       ="TCP ÉZÉOÉÅÉìÉeÅ[ÉVÉáÉìÇÃÉIÉtÉçÅ[Éh"
+ChksumOffTxRx                   ="éÛêM/ëóêM óLå¯"
+ChksumOffTx                     ="ëóêM óLå¯"
+ChksumOffRx                     ="éÛêM óLå¯"
+TransmitBuffers                 ="ëóêMÉoÉbÉtÉ@"
+ReceiveBuffers                  ="éÛêMÉoÉbÉtÉ@"
+RSS                             ="éÛêMë§ÉXÉPÅ[ÉäÉìÉO"
+NumRssQueues                    ="éÛêMë§ÉXÉPÅ[ÉäÉìÉO ÉLÉÖÅ["
+1queue                          ="1 ÉLÉÖÅ["
+2queues                         ="2 ÉLÉÖÅ["
+4queues                         ="4 ÉLÉÖÅ["
+FlowControl                     ="ÉtÉçÅ[êßå‰"
+FlowControl_RxOnly              ="éÛêM óLå¯"
+FlowControl_TxOnly              ="ëóêM óLå¯"
+FlowControl_Full                ="éÛêM/ëóêM óLå¯"
+PriorityVLANTag                 ="óDêÊ/VLAN"
+PriorityVlanDisabled            ="óDêÊ/VLAN ñ≥å¯"
+PriorityEnabled                 ="óDêÊ óLå¯"
+PriorityVlanEnabled             ="óDêÊ/VLAN óLå¯"
+VlanEnabled                     ="VLAN óLå¯"
+SpeedDuplex                     ="ë¨ìxÇ∆ÉfÉÖÉvÉåÉbÉNÉX"
+AutoNegotiation                 ="ÉIÅ[ÉgÉlÉSÉVÉGÅ[ÉVÉáÉì"
+1000Mb_Full_Duplex              ="1.0 Gbps ëSìÒèdí êM"
+10Gb_Full_Duplex                ="10 Gbps ëSìÒèdí êM"
+On                              ="ÉIÉì"
+Off                             ="ÉIÉt"
+Enabled                         ="ÉIÉì"
+Disabled                        ="ÉIÉt"
+Bytes4088                       ="4088 ÉoÉCÉg"
+Bytes9014                       ="9014 ÉoÉCÉg"
+LAA                             ="ÉçÅ[ÉJÉãä«óùÇ≥ÇÍÇÈÉAÉhÉåÉX"
+JumboPacket                     ="ÉWÉÉÉìÉ{ ÉpÉPÉbÉg"
+LogLinkState                    ="ÉäÉìÉN ÉXÉeÅ[Ég ÉCÉxÉìÉgÇÃÉçÉO"
+Enable_PME                      ="PME ÇÉIÉìÇ…Ç∑ÇÈ"
+SmartSpeed                      ="ÉXÉ}Å[ÉgÉXÉsÅ[Éh"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0412] ; Korean (Korea)
+EnableLLI                       ="≥∑¿∫ ¥Î±‚ Ω√∞£ ¿Œ≈Õ∑¥∆Æ"
+LLIPorts                        ="≥∑¿∫ ¥Î±‚ Ω√∞£ ¿Œ≈Õ∑¥∆Æ ∆˜∆Æ"
+LLIPortBased                    ="∆˜∆Æ ±‚π›"
+LLIPSHBased                     ="PSH «√∑°±◊ ±‚π›"
+EnableDca                       ="¡˜¡¢ ƒ≥Ω√ æ◊ººΩ∫"
+InterruptThrottleRate           ="¿Œ≈Õ∑¥∆Æ ¡∂¿˝ º”µµ"
+Adaptive                        ="¿˚¿¿"
+Extreme                         ="√÷¥Î"
+High                            ="≥Ù¿Ω"
+Medium                          ="¡ﬂ∞£"
+Low                             ="≥∑¿Ω"
+IPChksumOffv4                   ="IPv4 √º≈©º∂ ø¿«¡∑ŒµÂ"
+TCPChksumOffv4                  ="TCP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv4)"
+UDPChksumOffv4                  ="UDP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv4)"
+LsoV1IPv4                       ="TCP ºº±◊∏’∆Æ»≠ ø¿«¡∑ŒµÂ"
+ChksumOffTxRx                   ="Rx & Tx »∞º∫»≠µ "
+ChksumOffTx                     ="Tx »∞º∫»≠µ "
+ChksumOffRx                     ="Rx »∞º∫»≠µ "
+TransmitBuffers                 ="¿¸º€ πˆ∆€"
+ReceiveBuffers                  ="ºˆΩ≈ πˆ∆€"
+RSS                             ="ºˆΩ≈√¯ πË¿≤"
+NumRssQueues                    ="ºˆΩ≈√¯ πË¿≤ ¥Î±‚ø≠"
+1queue                          ="1∞≥¿« ¥Î±‚ø≠"
+2queues                         ="2∞≥¿« ¥Î±‚ø≠"
+4queues                         ="4∞≥¿« ¥Î±‚ø≠"
+FlowControl                     ="»Â∏ß ¡¶æÓ"
+FlowControl_RxOnly              ="Rx »∞º∫»≠µ "
+FlowControl_TxOnly              ="Tx »∞º∫»≠µ "
+FlowControl_Full                ="Rx & Tx »∞º∫»≠µ "
+PriorityVLANTag                 ="øÏº±º¯¿ß π◊ VLAN"
+PriorityVlanDisabled            ="øÏº±º¯¿ß π◊ VLAN ∫Ò»∞º∫»≠µ "
+PriorityEnabled                 ="øÏº±º¯¿ß »∞º∫»≠µ "
+PriorityVlanEnabled             ="øÏº±º¯¿ß π◊ VLAN »∞º∫»≠µ "
+VlanEnabled                     ="VLAN »∞º∫»≠µ "
+SpeedDuplex                     ="º”µµ π◊ ¿Ã¡ﬂº∫"
+AutoNegotiation                 ="¿⁄µø «˘ªÛ"
+1000Mb_Full_Duplex              ="1.0 Gbps ¿¸¿Ã¡ﬂ"
+10Gb_Full_Duplex                ="10 Gbps ¿¸¿Ã¡ﬂ"
+On                              ="ø¬"
+Off                             ="ø¿«¡"
+Enabled                         ="»∞º∫»≠µ "
+Disabled                        ="∫Ò»∞º∫»≠µ "
+Bytes4088                       ="4088πŸ¿Ã∆Æ"
+Bytes9014                       ="9014πŸ¿Ã∆Æ"
+LAA                             ="∑Œƒ√ ∞¸∏Æ ¡÷º“"
+JumboPacket                     ="¡°∫∏ ∆–≈∂"
+LogLinkState                    ="∏µ≈© ªÛ≈¬ ¿Ã∫•∆Æ ±‚∑œ"
+Enable_PME                      ="PME »∞º∫»≠"
+SmartSpeed                      ="Ω∫∏∂∆Æ Ω∫««µÂ"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0416] ; Portuguese (Brazil)
+EnableLLI                       ="InterrupÁıes de baixa latÍncia"
+LLIPorts                        ="Portas de interrupÁıes de baixa latÍncia"
+LLIPortBased                    ="Baseado em porta"
+LLIPSHBased                     ="Baseado no sinalizador PSH"
+EnableDca                       ="Acesso direto ao cache"
+InterruptThrottleRate           ="Taxa de moderaÁ„o de interrupÁıes"
+Adaptive                        ="Adaptativa"
+Extreme                         ="Extremo"
+High                            ="Alto"
+Medium                          ="MÈdio"
+Low                             ="Baixo"
+IPChksumOffv4                   ="Offload Checksum IPv4"
+TCPChksumOffv4                  ="Offload Checksum de TCP (IPv4)"
+UDPChksumOffv4                  ="Offload Checksum UDP (IPv4)"
+LsoV1IPv4                       ="Offload SegmentaÁ„o de TCP"
+ChksumOffTxRx                   ="Rx e TX habilitadas"
+ChksumOffTx                     ="Tx habilitada"
+ChksumOffRx                     ="Rx habilitada"
+TransmitBuffers                 ="Buffers de transmiss„o"
+ReceiveBuffers                  ="Buffers de recepÁ„o"
+RSS                             ="Escala de recepÁ„o"
+NumRssQueues                    ="Filas de escalas de recepÁ„o"
+1queue                          ="1 fila"
+2queues                         ="2 filas"
+4queues                         ="4 filas"
+FlowControl                     ="Controle de fluxo"
+FlowControl_RxOnly              ="Rx habilitada"
+FlowControl_TxOnly              ="Tx habilitada"
+FlowControl_Full                ="Rx e TX habilitadas"
+PriorityVLANTag                 ="Prioridade e VLAN"
+PriorityVlanDisabled            ="Prioridade e VLAN desabilitadas"
+PriorityEnabled                 ="Prioridade habilitada"
+PriorityVlanEnabled             ="Prioridade e VLAN habilitadas"
+VlanEnabled                     ="VLAN habilitada"
+SpeedDuplex                     ="Velocidade e duplex"
+AutoNegotiation                 ="NegociaÁ„o autom·tica"
+1000Mb_Full_Duplex              ="Full-duplex de 1,0 Gbps"
+10Gb_Full_Duplex                ="Full-duplex de 10 Gbps"
+On                              ="Ligado"
+Off                             ="Desligado"
+Enabled                         ="Habilitada"
+Disabled                        ="Desabilitada"
+Bytes4088                       ="4088 Bytes"
+Bytes9014                       ="9014 Bytes"
+LAA                             ="EndereÁo administrado localmente (LAA)"
+JumboPacket                     ="Pacote grande"
+LogLinkState                    ="Evento de estado de link de registro"
+Enable_PME                      ="Habilitar PME"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0C04] ; Chinese (Traditional)
+EnableLLI                       ="ßC©µøß√¬_"
+LLIPorts                        ="ßC©µøß√¬_≥s±µ∞"
+LLIPortBased                    ="≥s±µ∞¨∞∞Ú¬¶"
+LLIPSHBased                     ="PSH ∫X∏π¨∞∞Ú¬¶"
+EnableDca                       ="™Ω±µß÷®˙¶s®˙"
+InterruptThrottleRate           ="ß√¬_∏`¨yª÷≥t≤v"
+Adaptive                        ="Ω’æ„© "
+Extreme                         ="∑•∞™"
+High                            ="∞™"
+Medium                          ="§§"
+Low                             ="ßC"
+IPChksumOffv4                   ="IPv4 ¿À¨d≠»®¯∏¸"
+TCPChksumOffv4                  ="TCP ¿À¨d≠»®¯∏¸ (IPv4)"
+UDPChksumOffv4                  ="UDP ¿À¨d≠»®¯∏¸ (IPv4)"
+LsoV1IPv4                       ="®¯∏¸ TCP ∞œ¨q"
+ChksumOffTxRx                   ="Rx ªP Tx §w±“•Œ"
+ChksumOffTx                     ="Tx §w±“•Œ"
+ChksumOffRx                     ="Rx §w±“•Œ"
+TransmitBuffers                 ="∂«øÈΩwΩƒ∞œ"
+ReceiveBuffers                  ="±µ¶¨ΩwΩƒ∞œ"
+RSS                             ="±µ¶¨∫›Ω’æ„§Ò≤v"
+NumRssQueues                    ="±µ¶¨∫›Ω’æ„§Ò≤v¶Ó¶C"
+1queue                          ="§@≠”¶Ó¶C"
+2queues                         ="®‚≠”¶Ó¶C"
+4queues                         ="•|≠”¶Ó¶C"
+FlowControl                     ="¨y∂q±±®Ó"
+FlowControl_RxOnly              ="Rx §w±“•Œ"
+FlowControl_TxOnly              ="Tx §w±“•Œ"
+FlowControl_Full                ="Rx ªP Tx §w±“•Œ"
+PriorityVLANTag                 ="¿u•˝∂∂ß«ªP VLAN"
+PriorityVlanDisabled            ="¿u•˝∂∂ß«ªP VLAN §w∞±•Œ"
+PriorityEnabled                 ="¿u•˝∂∂ß«§w±“•Œ"
+PriorityVlanEnabled             ="¿u•˝∂∂ß«ªP VLAN §w±“•Œ"
+VlanEnabled                     ="VLAN §w±“•Œ"
+SpeedDuplex                     ="≥t´◊ªP¬˘§u"
+AutoNegotiation                 ="¶€∞ •ÊØA"
+1000Mb_Full_Duplex              ="1.0 Gbps •˛¬˘§u"
+10Gb_Full_Duplex                ="10 Gbps •˛¬˘§u"
+On                              ="∂}±“"
+Off                             ="√ˆ≥¨"
+Enabled                         ="±“•Œ"
+Disabled                        ="∞±•Œ"
+Bytes4088                       ="4088 ¶Ï§∏≤’"
+Bytes9014                       ="9014 ¶Ï§∏≤’"
+LAA                             ="•ª¶a∫ﬁ≤z¶Ïß}"
+JumboPacket                     ="∂W§j´¨´ •]"
+LogLinkState                    ="µnø˝≥sµ≤™¨∫A®∆•Û"
+Enable_PME                      ="±“•Œ PME"
+SmartSpeed                      ="¶€∞ §¡¥´≥t´◊"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F7.Generic.Description         = "Intel(R) 10 Gigabit BR KX4 Dual Port Network Connection"
+N10F8.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection"
+N152A.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Backplane Connection with FCoE"
+N10F7.KX4.Dual.Description        = "Intel(R) Ethernet Mezzanine Adapter X520-KX4-2"
+N1514.KX4.Dual.Description        = "Intel(R) Ethernet X520 10GbE Dual Port KX4 Mezz"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F8.KR.NDC.Description          = "Intel(R) Ethernet 10G 2P X520-k bNDC"
+N1507.SFI.Dual.Description        = "Intel(R) Ethernet ExpressModule X520-P2"
+N10F7.KX4.FEM.Description         = "Sun Dual 10GbE PCIe 2.0 FEM"
+N1517.KR.Dual.Description         = "Cisco UCS CNA M61KR-I Intel Converged Network Adapter"
+N154D.SFI.Dual.Description        = "Intel(R) Ethernet 10G 2P X520 Adapter"
+HP10F8.KR.BLOM.Description        = "HP Ethernet 10Gb 2-port 560FLB Adapter"
+HP10F8.KR.Dual.Description        = "HP Ethernet 10Gb 2-port 560M Adapter"
+HP10FB.SFI.ALOM.Description       = "HP Ethernet 10Gb 2-port 560FLR-SFP+ Adapter"
+HP10FB.SFI.Dual.Description       = "HP Ethernet 10Gb 2-port 560SFP+ Adapter"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+

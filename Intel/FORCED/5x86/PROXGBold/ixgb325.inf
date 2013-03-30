@@ -1,0 +1,1091 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 2003-2004 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+
+;*******************************************************************************
+;* ixgb325.INF
+;* $Revision: 59 $
+;*
+;* INF for Intel(R) PRO/10GbE Adapters
+;*
+;*   Version 2.1.2 (Major . Minor . Build)
+;*     Major and Minor refer to the project;
+;*     Build is incremented whenever a new feature is added to the INF
+;*
+;*******************************************************************************
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Intel%
+CatalogFile = ixgb325.cat
+DriverVer   = 11/09/2006,2.1.18.0
+
+
+[Manufacturer]
+%Intel%     = Intel, NTx86, NTIA64, NTAmd64, NTx86.6.0 ;   prevent installation Non i32
+
+
+
+[Intel]             ; 2K
+; DisplayName                   Section             DeviceID
+; -----------                   -------             --------
+%D1048.LR.Description% =        D1048.50i32,        PCI\VEN_8086&DEV_1048&SUBSYS_A01F8086
+%D1048.LR.Description% =        D1048.50i32,        PCI\VEN_8086&DEV_1048&SUBSYS_A11F8086
+%D1048.Generic.Description% =   D1048.50i32,        PCI\VEN_8086&DEV_1048
+
+%D1A48.SR.Description% =        D1048.50i32,        PCI\VEN_8086&DEV_1A48&SUBSYS_A01F8086
+%D1A48.SR.Description% =        D1048.50i32,        PCI\VEN_8086&DEV_1A48&SUBSYS_A11F8086
+%D1A48.Generic.Description% =   D1048.50i32,        PCI\VEN_8086&DEV_1A48
+
+%D1B48.LR.Description% =        D1048.50i32,        PCI\VEN_8086&DEV_1B48&SUBSYS_A01F8086
+%D1B48.LR.Description% =        D1048.50i32,        PCI\VEN_8086&DEV_1B48&SUBSYS_A11F8086
+%D1B48.Generic.Description% =   D1048.50i32,        PCI\VEN_8086&DEV_1B48
+
+[Intel.NTx86]       ; XP & WS03
+; DisplayName                   Section             DeviceID
+; -----------                   -------             --------
+%D1048.LR.Description% =        D1048.51i32,        PCI\VEN_8086&DEV_1048&SUBSYS_A01F8086
+%D1048.LR.Description% =        D1048.51i32,        PCI\VEN_8086&DEV_1048&SUBSYS_A11F8086
+%D1048.Generic.Description% =   D1048.51i32,        PCI\VEN_8086&DEV_1048
+
+%D109E.LR.Description% =        D1048.51i32,        PCI\VEN_8086&DEV_109E&SUBSYS_A00C8086
+%D109E.LR.Description% =        D1048.51i32,        PCI\VEN_8086&DEV_109E&SUBSYS_A10C8086
+%D109E.Generic.Description% =   D1048.51i32,        PCI\VEN_8086&DEV_109E
+
+%D1A48.SR.Description% =        D1048.51i32,        PCI\VEN_8086&DEV_1A48&SUBSYS_A01F8086
+%D1A48.SR.Description% =        D1048.51i32,        PCI\VEN_8086&DEV_1A48&SUBSYS_A11F8086
+%D1A48.Generic.Description% =   D1048.51i32,        PCI\VEN_8086&DEV_1A48
+
+%D1B48.LR.Description% =        D1048.51i32,        PCI\VEN_8086&DEV_1B48&SUBSYS_A01F8086
+%D1B48.LR.Description% =        D1048.51i32,        PCI\VEN_8086&DEV_1B48&SUBSYS_A11F8086
+%D1B48.Generic.Description% =   D1048.51i32,        PCI\VEN_8086&DEV_1B48
+
+[Intel.NTIA64]
+
+[Intel.NTAmd64]
+
+[Intel.NTx86.6.0]
+
+
+;-------------------------------------------------------------------------------
+; Intel PRO\10GbE Server Adapter
+;-------------------------------------------------------------------------------
+
+;
+; Win2000 installation
+;
+[D1048.50i32.NTx86]
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5    ; PCI
+DelReg          = Obsolete.DelReg
+AddReg          = Default.reg, Uninstall.50i32.reg
+CopyFiles       = ixgb.50i32.CopyFiles, ixgbmsg.CopyFiles, Uninstall.50i32.CopyFiles
+
+[D1048.50i32.NTx86.Services]
+AddService      = ixgb, 2, ixgb.50i32.Service, ixgb.50i32.EventLog
+
+[D1048.50i32.NTx86.CoInstallers]
+AddReg          = CoInstaller_AddReg, CoInK.reg
+CopyFiles       = CoInstaller_CopyFiles
+
+;
+; XP & WS03 i32 installation
+;
+[D1048.51i32]
+Characteristics = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 5    ; PCI
+DelReg          = Obsolete.DelReg
+AddReg          = Default.reg, Uninstall.51i32.reg
+AddReg          = NDIS51.reg
+CopyFiles       = ixgb.51i32.CopyFiles, ixgbmsg.CopyFiles, Uninstall.51i32.CopyFiles
+
+[D1048.51i32.Services]
+AddService      = ixgb, 2, ixgb.51i32.Service, ixgb.51i32.EventLog
+
+[D1048.51i32.CoInstallers]
+AddReg          = CoInstaller_AddReg, CoInK.reg
+CopyFiles       = CoInstaller_CopyFiles
+
+[D1048.51i32.HW]
+Include=machine.inf
+Needs=PciIoSpaceNotRequired
+
+
+;-----------------------------------------------------------------------------
+; Registry Settings
+;-----------------------------------------------------------------------------
+
+; Obsolete Registry settings.  These are parameters used for old version of the
+; driver, which are no long used, or the names have changed.  They need to be
+; removed on update.
+[Obsolete.DelReg]
+HKR, Ndi\Params\RxDescriptorCount
+HKR,,RxDescriptorCount
+HKR, PROSetNdi\NdiExt\params\RxDescriptorCount
+HKR, Ndi\Params\TxDescriptorCount
+HKR,,TxDescriptorCount
+HKR, PROSetNdi\NdiExt\params\TxDescriptorCount
+
+;
+; Default Registry settings.  These are installed for *all* adapters, and
+; therefore all adapters must support these features/parameters
+;
+[Default.reg]
+
+HKR, Ndi\Interfaces,                           UpperRange,         0, "ndis5"
+HKR, Ndi\Interfaces,                           LowerRange,         0, "ethernet"
+HKR, Ndi,                                      Service,            0, "IXGB"
+
+
+; ChecksumRxIp
+HKR, Ndi\Params\ChecksumRxIp,                  ParamDesc,          0, %ChecksumRxIp%
+HKR, PROSetNdi\NdiExt\Params\ChecksumRxIp,     MiniHelp,           0, %ChecksumRxIpMiniHelp%
+HKR, Ndi\Params\ChecksumRxIp,                  default,            0, "1"
+HKR, Ndi\Params\ChecksumRxIp\Enum,             "0",                0, %Off%
+HKR, Ndi\Params\ChecksumRxIp\Enum,             "1",                0, %On%
+HKR, Ndi\Params\ChecksumRxIp,                  type,               0, "enum"
+
+; ChecksumRxTcp
+HKR, Ndi\Params\ChecksumRxTcp,                 ParamDesc,          0, %ChecksumRxTcp%
+HKR, PROSetNdi\NdiExt\Params\ChecksumRxTcp,    MiniHelp,           0, %ChecksumRxTcpMiniHelp%
+HKR, Ndi\Params\ChecksumRxTcp,                 default,            0, "1"
+HKR, Ndi\Params\ChecksumRxTcp\Enum,            "0",                0, %Off%
+HKR, Ndi\Params\ChecksumRxTcp\Enum,            "1",                0, %On%
+HKR, Ndi\Params\ChecksumRxTcp,                 type,               0, "enum"
+
+; ChecksumTxIp
+HKR, Ndi\Params\ChecksumTxIp,                  ParamDesc,          0, %ChecksumTxIp%
+HKR, PROSetNdi\NdiExt\Params\ChecksumTxIp,     MiniHelp,           0, %ChecksumTxIpMiniHelp%
+HKR, Ndi\Params\ChecksumTxIp,                  default,            0, "1"
+HKR, Ndi\Params\ChecksumTxIp\Enum,             "0",                0, %Off%
+HKR, Ndi\Params\ChecksumTxIp\Enum,             "1",                0, %On%
+HKR, Ndi\Params\ChecksumTxIp,                  type,               0, "enum"
+
+; ChecksumTxTcp
+HKR, Ndi\Params\ChecksumTxTcp,                 ParamDesc,          0, %ChecksumTxTcp%
+HKR, PROSetNdi\NdiExt\Params\ChecksumTxTcp,    MiniHelp,           0, %ChecksumTxTcpMiniHelp%
+HKR, Ndi\Params\ChecksumTxTcp,                 default,            0, "1"
+HKR, Ndi\Params\ChecksumTxTcp\Enum,            "0",                0, %Off%
+HKR, Ndi\Params\ChecksumTxTcp\Enum,            "1",                0, %On%
+HKR, Ndi\Params\ChecksumTxTcp,                 type,               0, "enum"
+
+; MaxFrameSize
+HKR, Ndi\Params\MaxFrameSize,                  ParamDesc,          0, %JumboFrames%
+HKR, PROSetNdi\NdiExt\params\MaxFrameSize,     MiniHelp,           0, %JumboFramesMiniHelp%
+HKR, Ndi\Params\MaxFrameSize,                  default,            0, "1514"
+HKR, Ndi\Params\MaxFrameSize\Enum,             "1514",             0, %Disabled%
+HKR, Ndi\Params\MaxFrameSize\Enum,             "4088",             0, %Bytes4088%
+HKR, Ndi\Params\MaxFrameSize\Enum,             "9014",             0, %Bytes9014%
+HKR, Ndi\Params\MaxFrameSize\Enum,             "16128",            0, %Bytes16128%
+HKR, Ndi\Params\MaxFrameSize,                  type,               0, "enum"
+HKR,,                                          MaxFrameSize,       2, "1514"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,                ParamDesc,          0, %LAA%
+HKR, PROSetNdi\NdiExt\params\NetworkAddress,   MiniHelp,           0, %LAAMiniHelp%
+HKR, Ndi\params\NetworkAddress,                Default,            0, ""
+HKR, Ndi\params\NetworkAddress,                type,               0, "edit"
+HKR, NDI\params\NetworkAddress,                LimitText,          0, "12"
+HKR, NDI\params\NetworkAddress,                UpperCase,          0, "1"
+HKR, NDI\params\NetworkAddress,                optional,           0, "1"
+
+; NumRxDescriptors
+HKR, Ndi\params\NumRxDescriptors,               ParamDesc,         0, %RxDescriptorCount%
+HKR, PROSetNdi\NdiExt\params\NumRxDescriptors,  MiniHelp,          0, %RxDescriptorCountMiniHelp%
+HKR, Ndi\params\NumRxDescriptors,               default,           0, "256"
+HKR, Ndi\params\NumRxDescriptors\Enum,         "64",               0, "   64"
+HKR, Ndi\params\NumRxDescriptors\Enum,         "128",              0, "  128"
+HKR, Ndi\params\NumRxDescriptors\Enum,         "256",              0, "  256"
+HKR, Ndi\params\NumRxDescriptors\Enum,         "512",              0, "  512"
+HKR, Ndi\params\NumRxDescriptors,              type,               0, "enum"
+
+; NumTxDescriptors
+HKR, Ndi\params\NumTxDescriptors,               ParamDesc,         0, %TxDescriptorCount%
+HKR, PROSetNdi\NdiExt\params\NumTxDescriptors,  MiniHelp,          0, %TxDescriptorCountMiniHelp%
+HKR, Ndi\params\NumTxDescriptors,               default,           0, "512"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "64",               0, "   64"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "128",              0, "  128"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "256",              0, "  256"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "512",              0, "  512"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "1024",             0, " 1024"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "2048",             0, " 2048"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "4096",             0, " 4096"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "8192",             0, " 8192"
+HKR, Ndi\params\NumTxDescriptors\Enum,         "16384",            0, "16384"
+HKR, Ndi\params\NumTxDescriptors,              type,               0, "enum"
+
+; 802.1p/802.1Q Tagging
+HKR, Ndi\Params\TaggingMode,                   ParamDesc,          0, %TaggingMode%
+HKR, PROSetNdi\NdiExt\params\TaggingMode,      MiniHelp,           0, %TaggingModeMiniHelp%
+HKR, Ndi\Params\TaggingMode,                   default,            0, "0"
+HKR, Ndi\Params\TaggingMode\Enum,              "0",                0, %Disabled%
+HKR, Ndi\Params\TaggingMode\Enum,              "1",                0, %Enabled%
+HKR, Ndi\Params\TaggingMode,                   type,               0, "enum"
+HKR,,                                          TaggingMode,        2, "0"
+
+; Miscellanous defaults
+HKR,,                                          MulticastFilterType,0, "0"
+HKR,,                                          CustomMessages,     0, "1"
+HKR,,                                          VlanFiltering,      0, "1"
+
+
+;
+; NDIS 5.1 parameters.  These are installed for all NDIS 5.1 drivers
+;
+[NDIS51.reg]
+
+; TcpSegmentation
+HKR, Ndi\Params\TcpSegmentation,               ParamDesc,          0, %TcpSegmentation%
+HKR, PROSetNdi\NdiExt\Params\TcpSegmentation,  MiniHelp,           0, %TcpSegmentationMiniHelp%
+HKR, Ndi\Params\TcpSegmentation,               default,            0, "1"
+HKR, Ndi\Params\TcpSegmentation\Enum,          "0",                0, %Off%
+HKR, Ndi\Params\TcpSegmentation\Enum,          "1",                0, %On%
+HKR, Ndi\Params\TcpSegmentation,               type,               0, "enum"
+
+;
+; Event Log info
+;
+[EventLog.50i32.reg]
+HKR,,                                          EventMessageFile,   0x00020000, \
+    %EventLogMessageDllPath_50i32%
+
+[EventLog.51i32.reg]
+HKR,,                                          EventMessageFile,   0x00020000, \
+    %EventLogMessageDllPath_51i32%
+
+[EventLog.Default.reg]
+HKR,,                                          TypesSupported,     0x00010001, 7
+
+
+;
+; Uninstall parameters
+;
+[Uninstall.50i32.reg]
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1048, 0, "82597 EX"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1A48, 0, "82597 EX"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1B48, 0, "82597 EX"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 109E, 0, "82597 EX"
+HKLM,Software\Intel\Prounstl\Dins, ixgb325.din, 0, "8259x.Uninstall"
+HKLM,Software\Intel\Prounstl\Services, IXGB, 0, "ixgb325.sys"
+
+[Uninstall.51i32.reg]
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1048, 0, "82597 EX"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1A48, 0, "82597 EX"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1B48, 0, "82597 EX"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 109E, 0, "82597 EX"
+HKLM,Software\Intel\Prounstl\Dins, ixgb3251.din, 0, "8259x.Uninstall"
+HKLM,Software\Intel\Prounstl\Services, IXGB, 0, "ixgb3251.sys"
+
+
+
+;-----------------------------------------------------------------------------
+; Driver "service" installation settings
+;-----------------------------------------------------------------------------
+
+
+[ixgb.50i32.Service]
+DisplayName     = %ixgb.Service.DisplayName%
+ServiceType     = 1     ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3     ;%SERVICE_DEMAND_START%
+ErrorControl    = 1     ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ixgb325.sys
+LoadOrderGroup  = NDIS
+
+[ixgb.51i32.Service]
+DisplayName     = %ixgb.Service.DisplayName%
+ServiceType     = 1     ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3     ;%SERVICE_DEMAND_START%
+ErrorControl    = 1     ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ixgb3251.sys
+LoadOrderGroup  = NDIS
+
+
+
+;-----------------------------------------------------------------------------
+; Event Log settings
+;-----------------------------------------------------------------------------
+[ixgb.50i32.EventLog]
+AddReg = EventLog.Default.reg, EventLog.50i32.reg
+
+[ixgb.51i32.EventLog]
+AddReg = EventLog.Default.reg, EventLog.51i32.reg
+
+
+;-------------- Coinstaller installation
+
+[CoInstaller_CopyFiles]
+NicCo2.dll,,,0x00000010 ;don't overwrite
+NicInst.dll
+
+[CoInstaller_AddReg]
+HKR,, CoInstallers32, 0x00010000,"NicCo2.dll,NicCoInstallerEntry"
+HKR,, NicCoPlugins, 0x00010000, "NicInst.dll,NicCoInstallerEntry"
+
+;   Support Inf
+[CoInK.reg]	
+HKR,, CoInstallFlag,      0x00010001, "0x00000000"
+
+
+;-----------------------------------------------------------------------------
+; Assorted files, directories and disk layout
+;-----------------------------------------------------------------------------
+[ixgb.50i32.CopyFiles]
+ixgb325.sys,,,2
+
+[ixgb.51i32.CopyFiles]
+ixgb3251.sys,,,2
+
+[ixgbmsg.CopyFiles]
+ixgbmsg.dll,,,2
+
+[Uninstall.50i32.CopyFiles]
+ixgb325.din,,,2
+
+[Uninstall.51i32.CopyFiles]
+ixgb3251.din,,,2
+
+[DestinationDirs]
+DefaultDestDir            = 11
+ixgb.50i32.CopyFiles      = 12
+ixgb.51i32.CopyFiles      = 12
+Uninstall.50i32.CopyFiles = 11
+Uninstall.51i32.CopyFiles = 11
+CoInstaller_CopyFiles     = 11
+ixgbmsg.CopyFiles         = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+[SourceDisksFiles]
+ixgb325.din     = 1
+ixgb325.sys     = 1
+ixgb3251.din    = 1
+ixgb3251.sys    = 1
+NicCo2.dll       = 1
+NicInst.dll     = 1
+ixgbmsg.dll     = 1
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+
+;-----------------------------------------------------------------------------
+[Strings]
+EventLogMessageDllPath_50i32   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\ixgb325.sys"
+EventLogMessageDllPath_51i32   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\ixgb3251.sys"
+
+ChecksumTxIp            = "Offload Transmit IP Checksum"
+ChecksumTxTcp           = "Offload Transmit TCP Checksum"
+ChecksumRxIp            = "Offload Receive IP Checksum"
+ChecksumRxTcp           = "Offload Receive TCP Checksum"
+TcpSegmentation         = "Offload TCP Segmentation"
+
+TxDescriptorCount       = "Transmit Descriptors"
+RxDescriptorCount       = "Receive Descriptors"
+TaggingMode             = "QoS Packet Tagging"
+
+On                      = "On"
+Off                     = "Off"
+Enabled                 = "Enabled"
+Disabled                = "Disabled"
+Bytes4088               = "4088 Bytes"
+Bytes16128              = "16128 Bytes"
+Bytes9014               = "9014 Bytes"
+
+LAA                     = "Locally Administered Address"
+JumboFrames             = "Jumbo Frames"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        = "Allows the adapter to verify the IP checksum of incoming packets.  This improves IP receive performance."
+ChecksumRxTcpMiniHelp       = "Allows the adapter to verify the TCP checksum of incoming packets.  This improves TCP receive performance."
+ChecksumTxIpMiniHelp        = "Allows the adapter to compute the IP checksum of outgoing packets.  This improves IP transmit performance."
+ChecksumTxTcpMiniHelp       = "Allows the adapter to compute the TCP Checksum of outgoing packets.  This improves TCP transmit performance."
+JumboFramesMiniHelp         = "Enables sending larger packets on Ethernet networks."
+LAAMiniHelp                 = "Allows you to change the adapter's MAC address."
+RxDescriptorCountMiniHelp   = "The number of receive buffers and descriptors that the driver allocates for received packets."
+TaggingModeMiniHelp         = "Send and receive IEEE Tagged frames (802.3ac/802.1p/802.1Q)."
+TcpSegmentationMiniHelp     = "Allows the adapter to offload the task of segmenting TCP messages and improves CPU utilization."
+TxDescriptorCountMiniHelp   = "The number of hardware resources in memory used to send packets."
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0804] ; Chinese (Simplified)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="·ÖÔØ´«Êä IP Ğ£ÑéºÍ"
+ChecksumTxTcp           ="·ÖÔØ´«Êä TCP Ğ£ÑéºÍ"
+ChecksumRxIp            ="·ÖÔØ½ÓÊÕ IP Ğ£ÑéºÍ"
+ChecksumRxTcp           ="·ÖÔØ½ÓÊÕ TCP Ğ£ÑéºÍ"
+TcpSegmentation         ="·ÖÔØ TCP ·Ö¶Î"
+
+TxDescriptorCount       ="´«ÊäÃèÊö·û"
+RxDescriptorCount       ="½ÓÊÕÃèÊö·û"
+TaggingMode             ="QoS Êı¾İ°ü±êÇ©"
+
+On                      ="¿ªÆô"
+Off                     ="¹Ø±Õ"
+Enabled                 ="ÆôÓÃ"
+Disabled                ="½ûÓÃ"
+Bytes4088               ="4088 ×Ö½Ú"
+Bytes16128              ="16128 ×Ö½Ú"
+Bytes9014               ="9014 ×Ö½Ú"
+
+LAA                     ="±¾µØ¹ÜÀíµÄµØÖ·"
+JumboFrames             ="¾ŞÖ¡"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="ÔÊĞíÊÊÅäÆ÷ÑéÖ¤½øÈëÊı¾İ°üµÄ IP Ğ£ÑéºÍ¡£Õâ½«Ìá¸ß IP ½ÓÊÕĞÔÄÜ¡£"
+ChecksumRxTcpMiniHelp       ="ÔÊĞíÊÊÅäÆ÷ÑéÖ¤½øÈëÊı¾İ°üµÄ TCP Ğ£ÑéºÍ¡£Õâ½«Ìá¸ß TCP ½ÓÊÕĞÔÄÜ¡£"
+ChecksumTxIpMiniHelp        ="ÔÊĞíÊÊÅäÆ÷¼ÆËãÍâ·¢Êı¾İ°üµÄ IP Ğ£ÑéºÍ¡£Õâ½«Ìá¸ß IP ´«ÊäĞÔÄÜ¡£"
+ChecksumTxTcpMiniHelp       ="ÔÊĞíÊÊÅäÆ÷¼ÆËãÍâ·¢Êı¾İ°üµÄ TCP Ğ£ÑéºÍ¡£Õâ½«Ìá¸ß TCP ´«ÊäĞÔÄÜ¡£"
+JumboFramesMiniHelp         ="ÆôÓÃÔÚÒÔÌ«ÍøÍøÂçÉÏ·¢ËÍ´óĞÍÊı¾İ°ü¡£"
+LAAMiniHelp                 ="ÔÊĞíÄú¸ü¸ÄÊÊÅäÆ÷µÄ MAC µØÖ·¡£"
+RxDescriptorCountMiniHelp   ="Çı¶¯³ÌĞòÎª½ÓÊÕµÄÊı¾İ°ü·ÖÅäµÄ½ÓÊÕ»º³åÇøºÍÃèÊö·ûÊıÁ¿¡£"
+TaggingModeMiniHelp         ="·¢ËÍºÍ½ÓÊÕ IEEE ±êÇ©Ö¡£¨802.3ac/802.1p/802.1Q£©¡£"
+TcpSegmentationMiniHelp     ="ÔÊĞíÊÊÅäÆ÷·ÖÔØ¶Ô TCP ÏûÏ¢·Ö¶ÎµÄ¹¤×÷Á¿£¬²¢Ìá¸ß CPU ÀûÓÃÂÊ¡£"
+TxDescriptorCountMiniHelp   ="ÄÚ´æÖĞÓÃÓÚ·¢ËÍÊı¾İ°üµÄÓ²¼ş×ÊÔ´ÊıÁ¿¡£"
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0404] ; Chinese (Traditional)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="¨ø¸ü¶Ç¿é IP Á`­È"
+ChecksumTxTcp           ="¨ø¸ü¶Ç¿é TCP Á`­È"
+ChecksumRxIp            ="¨ø¸ü±µ¦¬ IP Á`­È"
+ChecksumRxTcp           ="¨ø¸ü±µ¦¬ TCP Á`­È"
+TcpSegmentation         ="¨ø¸ü TCP °Ï¬q"
+
+TxDescriptorCount       ="¶Ç¿é´y­z¤¸"
+RxDescriptorCount       ="±µ¦¬´y­z¤¸"
+TaggingMode             ="QoS «Ê¥]¼ĞÅÒ"
+
+On                      ="¶}±Ò"
+Off                     ="Ãö³¬"
+Enabled                 ="±Ò¥Î"
+Disabled                ="°±¥Î"
+Bytes4088               ="4088 ¦ì¤¸²Õ"
+Bytes16128              ="16128 ¦ì¤¸²Õ"
+Bytes9014               ="9014 ¦ì¤¸²Õ"
+
+LAA                     ="¥»¦aºŞ²z¦ì§}"
+JumboFrames             ="¶W¤j«¬®Ø¬["
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="¤¹³\¤¶­±¥dÅçÃÒ¶Ç¤J«Ê¥]ªº IP Á`­È¡C¦p¦¹¥i¥H§ïµ½ IP ªº±µ¦¬®Ä¯à¡C"
+ChecksumRxTcpMiniHelp       ="¤¹³\¤¶­±¥dÅçÃÒ¶Ç¤J«Ê¥]ªº TCP Á`­È¡C¦p¦¹¥i¥H§ïµ½ TCP ªº¶Ç¿é®Ä¯à¡C"
+ChecksumTxIpMiniHelp        ="¤¹³\¤¶­±¥d­pºâ¶Ç¥X«Ê¥]ªº IP Á`­È¡C¦p¦¹¥i¥H§ïµ½ IP ªº¶Ç¿é®Ä¯à¡C"
+ChecksumTxTcpMiniHelp       ="¤¹³\¤¶­±¥d­pºâ¶Ç¥X«Ê¥]ªº TCO Á`­È¡C¦p¦¹¥i¥H§ïµ½ TCP ªº¶Ç¿é®Ä¯à¡C"
+JumboFramesMiniHelp         ="¥i¦b Ethernet ºô¸ô¤W¶Ç°e¸û¤j«¬ªº«Ê¥]¡C"
+LAAMiniHelp                 ="¤¹³\±zÅÜ§ó¤¶­±¥dªº MAC ¦ì§}¡C"
+RxDescriptorCountMiniHelp   ="ÅX°Êµ{¦¡¬°±µ¦¬ªº«Ê¥]°t¸mªº±µ¦¬½w½Ä°Ï©M´y­z¤l¼Æ¥Ø¡C"
+TaggingModeMiniHelp         ="¶Ç°e©M±µ¦¬ IEEE ¼Ğ¥Üªº®Ø¬[¡C(802.3ac/802.1p/802.1Q)¡C"
+TcpSegmentationMiniHelp     ="¤¹³\¤¶­±¥d¨ø¸ü°Ï¬q³B²z TCP °T®§ªº¤u§@¨Ã§ïµ½ CPU ªº¨Ï¥Î¶q¡C"
+TxDescriptorCountMiniHelp   ="°O¾ĞÅé¤¤¥Î¨Ó¶Ç°e«Ê¥]ªºµwÅé¸ê·½¼Æ¥Ø¡C"
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0C04] ; Chinese (Traditional)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="¨ø¸ü¶Ç¿é IP Á`­È "
+ChecksumTxTcp           ="¨ø¸ü¶Ç¿é TCP Á`­È"
+ChecksumRxIp            ="¨ø¸ü±µ¦¬ IP Á`­È"
+ChecksumRxTcp           ="¨ø¸ü±µ¦¬ TCP Á`­È"
+TcpSegmentation         ="¨ø¸ü TCP °Ï¬q"
+
+TxDescriptorCount       ="¶Ç¿é´y­z¤¸"
+RxDescriptorCount       ="±µ¦¬´y­z¤¸"
+TaggingMode             ="QoS «Ê¥]¼ĞÅÒ"
+
+On                      ="¶}±Ò"
+Off                     ="Ãö³¬"
+Enabled                 ="±Ò¥Î"
+Disabled                ="°±¥Î"
+Bytes4088               ="4088 ¦ì¤¸²Õ"
+Bytes16128              ="16128 ¦ì¤¸²Õ"
+Bytes9014               ="9014 ¦ì¤¸²Õ"
+
+LAA                     ="¥»¦aºŞ²z¦ì§}"
+JumboFrames             ="¶W¤j«¬®Ø¬["
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="¤¹³\¤¶­±¥dÅçÃÒ¶Ç¤J«Ê¥]ªº IP Á`­È¡C¦p¦¹¥i¥H§ïµ½ IP ªº±µ¦¬®Ä¯à¡C"
+ChecksumRxTcpMiniHelp       ="¤¹³\¤¶­±¥dÅçÃÒ¶Ç¤J«Ê¥]ªº TCP Á`­È¡C¦p¦¹¥i¥H§ïµ½ TCP ªº¶Ç¿é®Ä¯à¡C"
+ChecksumTxIpMiniHelp        ="¤¹³\¤¶­±¥d­pºâ¶Ç¥X«Ê¥]ªº IP Á`­È¡C¦p¦¹¥i¥H§ïµ½ IP ªº¶Ç¿é®Ä¯à¡C"
+ChecksumTxTcpMiniHelp       ="¤¹³\¤¶­±¥d­pºâ¶Ç¥X«Ê¥]ªº TCO Á`­È¡C¦p¦¹¥i¥H§ïµ½ TCP ªº¶Ç¿é®Ä¯à¡C"
+JumboFramesMiniHelp         ="¥i¦b Ethernet ºô¸ô¤W¶Ç°e¸û¤j«¬ªº«Ê¥]¡C"
+LAAMiniHelp                 ="¤¹³\±zÅÜ§ó¤¶­±¥dªº MAC ¦ì§}¡C"
+RxDescriptorCountMiniHelp   ="ÅX°Êµ{¦¡¬°±µ¦¬ªº«Ê¥]°t¸mªº±µ¦¬½w½Ä°Ï©M´y­z¤l¼Æ¥Ø¡C"
+TaggingModeMiniHelp         ="¶Ç°e©M±µ¦¬ IEEE ¼Ğ¥Üªº®Ø¬[¡C(802.3ac/802.1p/802.1Q)¡C"
+TcpSegmentationMiniHelp     ="¤¹³\¤¶­±¥d¨ø¸ü°Ï¬q³B²z TCP °T®§ªº¤u§@¨Ã§ïµ½ CPU ªº¨Ï¥Î¶q¡C"
+TxDescriptorCountMiniHelp   ="°O¾ĞÅé¤¤¥Î¨Ó¶Ç°e«Ê¥]ªºµwÅé¸ê·½¼Æ¥Ø¡C"
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0407] ; German (Germany)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="Übertrag.-IP-Prüfsumme abladen"
+ChecksumTxTcp           ="Übertrag.-TCP-Prüfsumme abladen"
+ChecksumRxIp            ="Empf.-IP-Prüfsumme abladen"
+ChecksumRxTcp           ="Empf.-TCP-Prüfsumme abladen"
+TcpSegmentation         ="TCP-Segmentierung abladen"
+
+TxDescriptorCount       ="Übertragungsdeskriptoren"
+RxDescriptorCount       ="Empfangsdeskriptoren"
+TaggingMode             ="QoS-Paketmarkierung"
+
+On                      ="Ein"
+Off                     ="Aus"
+Enabled                 ="Aktiviert"
+Disabled                ="Deaktiviert"
+Bytes4088               ="4088 Byte"
+Bytes16128              ="16128 Byte"
+Bytes9014               ="9014 Byte"
+
+LAA                     ="Lokal verwaltete Adresse"
+JumboFrames             ="Jumbo Frames"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="Ermöglicht dem Adapter, die IP-Prüfsumme eingehender Pakete zu überprüfen. Dadurch wird die IP-Empfangsleistung gesteigert."
+ChecksumRxTcpMiniHelp       ="Ermöglicht dem Adapter, die TCP-Prüfsumme eingehender Pakete zu überprüfen. Dadurch wird die TCP-Empfangsleistung gesteigert."
+ChecksumTxIpMiniHelp        ="Ermöglicht dem Adapter, die IP-Prüfsumme ausgehender Pakete zu berechnen. Dadurch wird die IP-Übertragungsleistung gesteigert."
+ChecksumTxTcpMiniHelp       ="Ermöglicht dem Adapter, die TCP-Prüfsumme ausgehender Pakete zu berechnen. Dadurch wird die TCP-Übertragungsleistung gesteigert."
+JumboFramesMiniHelp         ="Ermöglicht das Senden größerer Pakete Ethernet-Netzwerken. "
+LAAMiniHelp                 ="Ermöglicht das Ändern der MAC-Adresse des Adapters."
+RxDescriptorCountMiniHelp   ="Die Anzahl der Empfangsbuffer und -deskriptoren, die der Treiber für empfangene Pakete zuordnet."
+TaggingModeMiniHelp         ="IEEE gekennzeichnete Frames (802.3ac/802.1p/802.1Q) senden und empfangen."
+TcpSegmentationMiniHelp     ="Ermöglicht dem Adapter, die Segmentierung von TCP-Meldungen abzuladen und die Prozessorauslastung zu verbessern."
+TxDescriptorCountMiniHelp   ="Die Anzahl von Hardwareressourcen im Speicher, mit denen Pakete versendet werden."
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0C0A] ; Spanish (Spain)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="Descargar suma de verif. de paquetes IP transmitidos"
+ChecksumTxTcp           ="Descargar suma de verif. de paquetes TCP transmitidos"
+ChecksumRxIp            ="Descargar suma de verif. de paquetes IP recibidos"
+ChecksumRxTcp           ="Descargar suma de verif. de paquetes TCP recibidos"
+TcpSegmentation         ="Descarga de segmentación TCP "
+
+TxDescriptorCount       ="Descriptores de transmisión"
+RxDescriptorCount       ="Descriptores de recepción"
+TaggingMode             ="Etiquetado de paquetes QoS"
+
+On                      ="Activado"
+Off                     ="Desactivado"
+Enabled                 ="Activado"
+Disabled                ="Desactivado"
+Bytes4088               ="4088 bytes"
+Bytes16128              ="16128 bytes"
+Bytes9014               ="9014 bytes"
+
+LAA                     ="Dirección administrada localmente"
+JumboFrames             ="Tramas jumbo"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="Permite que el adaptador verifique la suma de verificación IP de los paquetes entrantes. Esto mejora el rendimiento de la recepción IP."
+ChecksumRxTcpMiniHelp       ="Permite que el adaptador verifique la suma de verificación TCP de los paquetes entrantes. Esto mejora el rendimiento de la recepción TCP."
+ChecksumTxIpMiniHelp        ="Permite que el adaptador calcule la suma de verificación IP de los paquetes salientes. Esto mejora el rendimiento de la transmisión IP."
+ChecksumTxTcpMiniHelp       ="Permite que el adaptador calcule la suma de verificación TCP de los paquetes salientes. Esto mejora el rendimiento de la transmisión TCP."
+JumboFramesMiniHelp         ="Habilita el envío de paquetes más grandes en las redes Ethernet."
+LAAMiniHelp                 ="Le permite cambiar la dirección MAC del adaptador."
+RxDescriptorCountMiniHelp   ="El número de descriptores y búferes de recepción que el controlador reserva para los paquetes recibidos."
+TaggingModeMiniHelp         ="Tramas con etiqueta IEEE (802.3ac/802.1p/802.1Q) de envío y recepción."
+TcpSegmentationMiniHelp     ="Permite que el adaptador descargue la tarea de segmentación de mensajes TCP y mejora el uso de la CPU."
+TxDescriptorCountMiniHelp   ="El número de recursos de hardware en la memoria que se usa para enviar paquetes."
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.040C] ; French (France)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="Délester la somme de contrôle de transmission IP"
+ChecksumTxTcp           ="Délester la somme de contrôle de transmission TCP"
+ChecksumRxIp            ="Délester la somme de contrôle de réception IP"
+ChecksumRxTcp           ="Délester la somme de contrôle de réception TCP"
+TcpSegmentation         ="Délester la segmentation TCP"
+
+TxDescriptorCount       ="Descripteurs de transmission"
+RxDescriptorCount       ="Descripteurs de réception"
+TaggingMode             ="Repérage des paquets QS"
+
+On                      ="Activé(e)"
+Off                     ="Désactivé(e)"
+Enabled                 ="Activé(e)"
+Disabled                ="Désactivé(e)"
+Bytes4088               ="4088 octets"
+Bytes16128              ="16128 octets"
+Bytes9014               ="9014 octets"
+
+LAA                     ="Adresse administrée localement"
+JumboFrames             ="Trames étendues"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="Permet à la carte réseau de vérifier le contrôle d'intégrité embarqué des paquets IP entrants. Permet d'améliorer les performances de réception IP."
+ChecksumRxTcpMiniHelp       ="Permet à la carte réseau de vérifier le contrôle d'intégrité embarqué des paquets TCP entrants. Permet d'améliorer les performances de réception TCP."
+ChecksumTxIpMiniHelp        ="Permet à la carte réseau de calculer la somme de contrôle des paquets IP sortants. Permet d'améliorer les performances de transmission IP."
+ChecksumTxTcpMiniHelp       ="Permet à la carte réseau de calculer la somme de contrôle des paquets TCP sortants. Permet d'améliorer les performances de transmission TCP."
+JumboFramesMiniHelp         ="Permet l'envoi de paquets de plus grande taille sur les réseaux Ethernet."
+LAAMiniHelp                 ="Permet de modifier l'adresse MAC de la carte."
+RxDescriptorCountMiniHelp   ="Le nombre de tampons et de descripteurs de réception alloués par le pilote aux paquets de réception."
+TaggingModeMiniHelp         ="Envoi et réception de trames étiquetées IEEE (802.3ac / 802.1p / 802.1Q)."
+TcpSegmentationMiniHelp     ="Permet à la carte réseau de délester la tâche de segmentation des messages TCP et améliore le taux d'utilisation du processeur."
+TxDescriptorCountMiniHelp   ="Le nombre de ressources matérielles en mémoire utilisées pour envoyer des paquets."
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0410] ; Italian (Italy)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="Offload del checksum IP di trasmissione"
+ChecksumTxTcp           ="Offload del checksum TCP di trasmissione"
+ChecksumRxIp            ="Offload del checksum IP di ricezione"
+ChecksumRxTcp           ="Offload del checksum TCP di ricezione"
+TcpSegmentation         ="Offload della segmentazione TCP"
+
+TxDescriptorCount       ="Descrittori di trasmissione"
+RxDescriptorCount       ="Descrittori di ricezione"
+TaggingMode             ="Codifica pacchetti QoS"
+
+On                      ="Attivato"
+Off                     ="Disattivato"
+Enabled                 ="Attivato"
+Disabled                ="Disattivato"
+Bytes4088               ="4088 byte"
+Bytes16128              ="16128 byte"
+Bytes9014               ="9014 byte"
+
+LAA                     ="Indirizzo amministrato localmente"
+JumboFrames             ="Frame jumbo"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="Consente alla scheda di verificare il checksum IP dei pacchetti in ingresso, migliorando le prestazioni di ricezione IP."
+ChecksumRxTcpMiniHelp       ="Consente alla scheda di verificare il checksum TCP dei pacchetti in ingresso, migliorando le prestazioni di ricezione TCP."
+ChecksumTxIpMiniHelp        ="Consente alla scheda di calcolare il checksum IP dei pacchetti in uscita, migliorando le prestazioni di trasmissione IP."
+ChecksumTxTcpMiniHelp       ="Consente alla scheda di calcolare il checksum TCP dei pacchetti in uscita, migliorando le prestazioni di trasmissione TCP."
+JumboFramesMiniHelp         ="Abilita l'invio di pacchetti Ethernet di dimensioni superiori su reti Ethernet."
+LAAMiniHelp                 ="Consente di modificare l'indirizzo MAC della scheda. "
+RxDescriptorCountMiniHelp   ="Il numero dei buffer di ricezione e dei descrittori allocati dal driver per i pacchetti ricevuti."
+TaggingModeMiniHelp         ="Invio e ricezione dei frame con codifica IEEE (802.3ac/802.1p/802.1Q)."
+TcpSegmentationMiniHelp     ="Consente alla scheda di effettuare l'offload dell'operazione di segmentazione dei messaggi TCP e migliora l'utilizzo della CPU."
+TxDescriptorCountMiniHelp   ="Il numero delle risorse hardware in memoria utilizzate per inviare i pacchetti."
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0411] ; Japanese (Japan)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="‘—M IP ƒ`ƒFƒbƒNƒTƒ€‚ÌƒIƒtƒ[ƒh"
+ChecksumTxTcp           ="‘—M TCP ƒ`ƒFƒbƒNƒTƒ€‚ÌƒIƒtƒ[ƒh"
+ChecksumRxIp            ="óM IP ƒ`ƒFƒbƒNƒTƒ€‚ÌƒIƒtƒ[ƒh"
+ChecksumRxTcp           ="óM TCP ƒ`ƒFƒbƒNƒTƒ€‚ÌƒIƒtƒ[ƒh"
+TcpSegmentation         ="TCP ƒZƒOƒƒ“ƒe[ƒVƒ‡ƒ“‚ÌƒIƒtƒ[ƒh"
+
+TxDescriptorCount       ="‘—M‹Lqq"
+RxDescriptorCount       ="óM‹Lqq"
+TaggingMode             ="QoS ƒpƒPƒbƒg ƒ^ƒO"
+
+On                      ="ƒIƒ“"
+Off                     ="ƒIƒt"
+Enabled                 ="ƒIƒ“"
+Disabled                ="ƒIƒt"
+Bytes4088               ="4088 ƒoƒCƒg"
+Bytes16128              ="16128 ƒoƒCƒg"
+Bytes9014               ="9014 ƒoƒCƒg"
+
+LAA                     ="ƒ[ƒJƒ‹ŠÇ—‚³‚ê‚éƒAƒhƒŒƒX"
+JumboFrames             ="ƒWƒƒƒ“ƒ{ ƒtƒŒ[ƒ€"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="ƒAƒ_ƒvƒ^‚É‚æ‚é’…MƒpƒPƒbƒg‚Ì IP ƒ`ƒFƒbƒNƒTƒ€‚ÌŠm”F‚ğ‰Â”\‚Æ‚µ‚Ü‚·B‚±‚ê‚É‚æ‚è IP óMƒpƒtƒH[ƒ}ƒ“ƒX‚ªŒüã‚µ‚Ü‚·B"
+ChecksumRxTcpMiniHelp       ="ƒAƒ_ƒvƒ^‚É‚æ‚é’…MƒpƒPƒbƒg‚Ì TCP ƒ`ƒFƒbƒNƒTƒ€‚ÌŠm”F‚ğ‰Â”\‚Æ‚µ‚Ü‚·B‚±‚ê‚É‚æ‚è TCP óMƒpƒtƒH[ƒ}ƒ“ƒX‚ªŒüã‚µ‚Ü‚·B"
+ChecksumTxIpMiniHelp        ="ƒAƒ_ƒvƒ^‚É‚æ‚é‘—MƒpƒPƒbƒg‚Ì IP ƒ`ƒFƒbƒNƒTƒ€‚ÌŒvZ‚ğ‰Â”\‚Æ‚µ‚Ü‚·B‚±‚ê‚É‚æ‚è IP ‘—MƒpƒtƒH[ƒ}ƒ“ƒX‚ªŒüã‚µ‚Ü‚·B"
+ChecksumTxTcpMiniHelp       ="ƒAƒ_ƒvƒ^‚É‚æ‚é‘—MƒpƒPƒbƒg‚Ì TCP ƒ`ƒFƒbƒNƒTƒ€‚ÌŒvZ‚ğ‰Â”\‚Æ‚µ‚Ü‚·B‚±‚ê‚É‚æ‚è TCP ‘—MƒpƒtƒH[ƒ}ƒ“ƒX‚ªŒüã‚µ‚Ü‚·B"
+JumboFramesMiniHelp         ="ƒC[ƒTƒlƒbƒg ƒlƒbƒgƒ[ƒN‚Å‘åŒ^ƒpƒPƒbƒg‚Ì‘—M‚ğ‰Â”\‚É‚µ‚Ü‚·B"
+LAAMiniHelp                 ="ƒAƒ_ƒvƒ^‚Ì MAC ƒAƒhƒŒƒX‚ğ•ÏX‚Å‚«‚é‚æ‚¤‚É‚È‚è‚Ü‚·B"
+RxDescriptorCountMiniHelp   ="ƒhƒ‰ƒCƒo‚É‚æ‚Á‚ÄóMƒpƒPƒbƒg‚ÉŠ„‚è“–‚Ä‚ç‚ê‚éAóMƒoƒbƒtƒ@‚Æ‹Lqq‚Ì”‚Å‚·B"
+TaggingModeMiniHelp         ="IEEE ƒ^ƒO•t‚«ƒtƒŒ[ƒ€‚Ì‘—óM (802.3ac/802.1p/802.1Q)B"
+TcpSegmentationMiniHelp     ="ƒAƒ_ƒvƒ^‚É‚æ‚é TCP ƒƒbƒZ[ƒW‚Ì•ª’fƒ^ƒXƒN‚ÌƒIƒtƒ[ƒh‚ğ‰Â”\‚Æ‚µACPU g—p—¦‚ğ‰ü‘P‚µ‚Ü‚·B"
+TxDescriptorCountMiniHelp   ="ƒpƒPƒbƒg‚Ì‘—M‚Ég—p‚³‚ê‚éAƒn[ƒhƒEƒFƒA ƒŠƒ\[ƒX‚Ìƒƒ‚ƒŠ”‚Å‚·B"
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0412] ; Korean (Korea)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="Àü¼Û IP Ã¼Å©¼¶ ¿ÀÇÁ·Îµå"
+ChecksumTxTcp           ="Àü¼Û TCP Ã¼Å©¼¶ ¿ÀÇÁ·Îµå"
+ChecksumRxIp            ="¼ö½Å IP Ã¼Å©¼¶ ¿ÀÇÁ·Îµå"
+ChecksumRxTcp           ="¼ö½Å TCP Ã¼Å©¼¶ ¿ÀÇÁ·Îµå"
+TcpSegmentation         ="TCP ¼¼±×¸ÕÆ®È­ ¿ÀÇÁ·Îµå"
+
+TxDescriptorCount       ="Àü¼Û ¼³¸íÀÚ"
+RxDescriptorCount       ="¼ö½Å ¼³¸íÀÚ"
+TaggingMode             ="QoS ÆĞÅ¶ ÅÂ±× ÁöÁ¤"
+
+On                      ="¿Â"
+Off                     ="¿ÀÇÁ"
+Enabled                 ="È°¼ºÈ­µÊ"
+Disabled                ="ºñÈ°¼ºÈ­µÊ"
+Bytes4088               ="4088¹ÙÀÌÆ®"
+Bytes16128              ="16128¹ÙÀÌÆ®"
+Bytes9014               ="9014¹ÙÀÌÆ®"
+
+LAA                     ="·ÎÄÃ °ü¸® ÁÖ¼Ò"
+JumboFrames             ="Á¡º¸ ÇÁ·¹ÀÓ"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="¾î´ğÅÍ°¡ µé¾î¿À´Â ÆĞÅ¶ÀÇ IP Ã¼Å©¼¶À» °Ë»çÇÒ ¼ö ÀÖ½À´Ï´Ù. ÀÌ·Î ÀÎÇØ IP ¼ö½Å ¼º´ÉÀÌ Çâ»óµË´Ï´Ù."
+ChecksumRxTcpMiniHelp       ="¾î´ğÅÍ°¡ µé¾î¿À´Â ÆĞÅ¶ÀÇ TCP Ã¼Å©¼¶À» °Ë»çÇÒ ¼ö ÀÖ½À´Ï´Ù. ÀÌ·Î ÀÎÇØ TCP ¼ö½Å ¼º´ÉÀÌ Çâ»óµË´Ï´Ù."
+ChecksumTxIpMiniHelp        ="¾î´ğÅÍ°¡ ³ª°¡´Â ÆĞÅ¶ÀÇ IP Ã¼Å©¼¶À» °è»êÇÒ ¼ö ÀÖ½À´Ï´Ù. ÀÌ·Î ÀÎÇØ IP Àü¼Û ¼º´ÉÀÌ Çâ»óµË´Ï´Ù."
+ChecksumTxTcpMiniHelp       ="¾î´ğÅÍ°¡ ³ª°¡´Â ÆĞÅ¶ÀÇ TCP Ã¼Å©¼¶À» °è»êÇÒ ¼ö ÀÖ½À´Ï´Ù. ÀÌ·Î ÀÎÇØ TCP Àü¼Û ¼º´ÉÀÌ Çâ»óµË´Ï´Ù."
+JumboFramesMiniHelp         ="ÀÌ´õ³İ ³×Æ®¿öÅ©¿¡¼­ ´ë¿ë·® ÆĞÅ¶À» º¸³¾ ¼ö ÀÖ½À´Ï´Ù."
+LAAMiniHelp                 ="¾î´ğÅÍÀÇ MAC ÁÖ¼Ò¸¦ º¯°æÇÒ ¼ö ÀÖ½À´Ï´Ù."
+RxDescriptorCountMiniHelp   ="¼ö½ÅµÈ ÆĞÅ¶¿¡ ´ëÇØ µå¶óÀÌ¹ö°¡ ÇÒ´çÇÏ´Â ¼ö½Å ¹öÆÛ ¹× ¼³¸íÀÚ ¼öÀÔ´Ï´Ù."
+TaggingModeMiniHelp         ="IEEE ÅÂ±× ÁöÁ¤µÈ ÇÁ·¹ÀÓ(802.3ac/802.1p/802.1Q)À» ¼Û¼ö½ÅÇÕ´Ï´Ù."
+TcpSegmentationMiniHelp     ="¾î´ğÅÍ°¡ TCP ¸Ş½ÃÁö ¼¼±×¸ÕÆ®È­ ÀÛ¾÷À» ¿ÀÇÁ·ÎµåÇÒ ¼ö ÀÖµµ·Ï ÇÏ¸ç CPU »ç¿ë·üÀ» °³¼±ÇÕ´Ï´Ù."
+TxDescriptorCountMiniHelp   ="ÆĞÅ¶À» º¸³»´Â µ¥ »ç¿ëµÈ ¸Ş¸ğ¸® ³» ÇÏµå¿ş¾î ¸®¼Ò½º ¼öÀÔ´Ï´Ù."
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+[Strings.0416] ; Portuguese (Brazil)
+EventLogMessageDllPath_50i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+EventLogMessageDllPath_51i32   ="%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixgbmsg.dll"
+
+ChecksumTxIp            ="Offload Checksum de IP de transmissão"
+ChecksumTxTcp           ="Offload Checksum de TCP de transmissão"
+ChecksumRxIp            ="Offload Checksum de IP de recepção"
+ChecksumRxTcp           ="Offload Checksum de TCP de recepção"
+TcpSegmentation         ="Offload Segmentação de TCP"
+
+TxDescriptorCount       ="Descritores de transmissão"
+RxDescriptorCount       ="Descritores de recepção"
+TaggingMode             ="Rotulação de pacotes de QoS"
+
+On                      ="Ativado"
+Off                     ="Desativado"
+Enabled                 ="Ativado"
+Disabled                ="Desativado"
+Bytes4088               ="4088 Bytes"
+Bytes16128              ="16128 Bytes"
+Bytes9014               ="9014 Bytes"
+
+LAA                     ="Endereço administrado localmente (LAA)"
+JumboFrames             ="Frames grandes"
+
+
+; Minihelp
+ChecksumRxIpMiniHelp        ="Permite ao adaptador verificar a checksum de IP dos pacotes recebidos. Isso melhora o desempenho da recepção de IP."
+ChecksumRxTcpMiniHelp       ="Permite ao adaptador verificar a checksum de TCP dos pacotes recebidos. Isso melhora o desempenho da recepção de TCP."
+ChecksumTxIpMiniHelp        ="Permite ao adaptador calcular a checksum de IP dos pacotes de saída. Isso melhora o desempenho da transmissão de IP."
+ChecksumTxTcpMiniHelp       ="Permite ao adaptador calcular a checksum de TCP dos pacotes de saída. Isso melhora o desempenho da transmissão de TCP."
+JumboFramesMiniHelp         ="Permite enviar pacotes maiores em redes Ethernet."
+LAAMiniHelp                 ="Permite alterar um endereço MAC do adaptador. "
+RxDescriptorCountMiniHelp   ="O número de buffer de recepção e descritores que o driver aloca para pacotes recebidos."
+TaggingModeMiniHelp         ="Enviar e receber frames rotulados IEEE (802.3ac / 802.1p / 802.1Q)."
+TcpSegmentationMiniHelp     ="Permite ao adaptador fazer offload da tarefa de segmentar mensagens de TCP e melhora a utilização da CPU."
+TxDescriptorCountMiniHelp   ="O número de recursos de hardware em memória usados para enviar pacotes."
+
+
+
+;
+Intel                   = "Intel"
+
+DiskName                = "Intel(R) PRO/10GbE Driver Disk"
+
+; Service name
+ixgb.Service.DisplayName = "Intel(R) PRO/10GbE Network Connection Driver"
+
+; Device description strings
+D1048.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1048.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D109E.LR.Description        = "Intel(R) PRO/10GbE CX4 Server Adapter"
+D109E.Generic.Description   = "Intel(R) 82597-based CX4 10 Gigabit Adapter"
+
+D1A48.SR.Description        = "Intel(R) PRO/10GbE SR Server Adapter"
+D1A48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+D1B48.LR.Description        = "Intel(R) PRO/10GbE LR Server Adapter"
+D1B48.Generic.Description   = "Intel(R) 82597-based 10 Gigabit Adapter"
+
+;---------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------

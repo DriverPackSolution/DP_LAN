@@ -1,0 +1,93 @@
+;/*++
+;
+;Copyright (c) 2006 - 2011 Bigfoot Networks Corporation.  All rights reserved.
+;
+;
+;Module Name:
+;
+;    XenoXp.INF
+;
+;Abstract:
+;    INF file for the Bigfoot Killer Xeno PCI-E Gaming device.
+;    Running XP 32.  Xp64 is no longer supported
+;
+;--*/
+
+[Version]
+Signature="$WINDOWS NT$"
+Provider=%BFOOT%
+;4D36E97D-E325-11CE-BFC1-08002BE10318 is the system class GUID
+class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+DriverVer=05/18/2011,6.0.0.23
+CatalogFile.NTx86   = XenoX86.cat
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=XenoClassReg     
+
+[XenoClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+HKR,,DeviceCharacteristics,0x10001,0x100     ;Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)" ;Allow generic all access to system and built-in Admin. 
+
+; ================= Device Install section =====================
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+
+[Manufacturer]
+%BFOOT%=BFOOT
+
+[SourceDisksFiles.x86]
+XenoXx86.sys=1
+
+[SourceDisksNames]
+1=%DISK_NAME%,
+
+[BFOOT]
+; DisplayName        Section        DeviceId
+; -----------        -------        --------
+;%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B4&SUBSYS_11011A56
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B4         ;MPC8315E
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B5         ;MPC8315
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B6         ;MPC8314E
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_00B7         ;MPC8314
+%Xeno831x.DRVDESC%=Xeno831x_Inst, PCI\VEN_1957&DEV_C006         ;MPC8308
+
+[Xeno831x_Inst]
+CopyFiles=Xeno831x.CopyFiles
+
+[Xeno831x_Inst.HW]
+AddReg = xeno_device.nt.hw
+
+[xeno_device.nt.hw]
+HKR, Interrupt Management,0x00000010         ;is this required in XP?
+HKR, Interrupt Management\MessageSignaledInterruptProperties,0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported, 0x00010001, 1
+
+[Xeno831x.CopyFiles]
+XenoXx86.sys
+
+[DestinationDirs]
+Xeno831x.CopyFiles = 12         ; XP 32-bit
+
+[Xeno831x_Inst.Services]
+AddService=BFN831x,0x00000002,Xeno831x_Service 
+
+[Xeno831x_Service]
+DisplayName    = %Xeno831x.SVCDESC%                            
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\XenoXx86.sys
+                           
+[Strings]
+BFOOT = "Bigfoot Networks, Inc."
+ClassName = "Killer Xeno Gaming Adapter"
+Xeno831x.SVCDESC = "Bigfoot Networks Killer Gaming Adapter Service"
+Xeno831x.DRVDESC = "Bigfoot Networks Killer Gaming Adapter"
+DISK_NAME = "Killer WDM Install Disk"

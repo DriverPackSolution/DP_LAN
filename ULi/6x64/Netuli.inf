@@ -1,0 +1,162 @@
+; /****************************************************************************
+; ** Copyright 2006, ULi Electronics Inc., All Rights Reserved.              **
+; ** This file is the installation file for the M5261/M5263 Based Fast       **
+; ** Ethernet Controller                                                     **
+; ** V3.60                                                                   **
+; ****************************************************************************/
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %ULIR%
+Compatible  = 1
+DriverVer   = 02/16/2006, 5.1.2600.0351
+
+[Manufacturer]
+%ULIR% = ULICOM, NTamd64
+
+;One of This will be display
+[ControlFlags]
+ExcludeFromSelect   = *
+
+[ULICOM.NTamd64]
+; DisplayName           Section       DeviceID
+; -----------           -------       --------
+%ULI5261.DeviceDesc%   = ULI526X.ndi,    PCI\VEN_10B9&DEV_5263&SUBSYS_526310B9
+%ULI5261.DeviceDesc%   = ULI526X.ndi,    PCI\VEN_10B9&DEV_5263
+
+;=============================================================================
+;
+; WINXP specific entry
+;
+;=============================================================================
+[ULI526X.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = ULI5261.id.reg, ULI9PCI.reg, 5261.pci.reg, ULI5261.con.reg
+CopyFIles       = ULIPCI.CopyFiles
+*IfType         = 6             ; IF_TYPE_ETHERNET_CSMACD
+*MediaType      = 0             ; NdisMedium802_3
+*PhysicalMediaType = 0          ; NdisPhysicalMediumUnspecified
+
+
+[ULI526X.ndi.NT.Services]
+AddService = ULI526X, 2, ULI526X.Service, common.EventLog
+
+
+[ULIPCI.CopyFiles]
+ULIM526X.SYS
+
+;Common
+[ULI5261.id.reg]
+;Driver Read
+HKR,,AdapterPCIID,0,"526110B9"
+
+[5261.pci.reg]
+;Read in the Driver
+HKR,                            , AdapterType, 0,"5"
+HKR,                            , BusType,     0,"5"            ;; PCI
+
+;StoreAndForward
+HKR, Ndi\params\StoreAndForward,     ParamDesc, 0,"Store And Forward"
+HKR, Ndi\params\StoreAndForward,       default, 0,"1"
+HKR, Ndi\params\StoreAndForward,          type, 0,"enum"
+HKR, Ndi\params\StoreAndForward\enum,        0, 0,"Disabled"
+HKR, Ndi\params\StoreAndForward\enum,        1, 0,"Enabled"
+;Windows 2000 does not support Ndi\Params\param-key-name\flag values.
+;HKR,NDI\params\StoreAndForward,flag,1,20,00,00,00
+
+;Transmit Threshold
+HKR, Ndi\params\TransmitThreshold,   ParamDesc,,"Transmit Threshold"
+HKR, Ndi\params\TransmitThreshold,     default, 0,"80"
+HKR, Ndi\params\TransmitThreshold,        type, 0,"enum"
+HKR, Ndi\params\TransmitThreshold\enum,     0, 0,"Low"
+HKR, Ndi\params\TransmitThreshold\enum,     40, 0,"Medium"
+HKR, Ndi\params\TransmitThreshold\enum,     80, 0,"High"
+
+
+;ACPI Enable/Disable
+HKR,Ndi\params\ACPIEnable,ParamDesc,,"PME"
+HKR,Ndi\params\ACPIEnable,default,,"4"
+HKR,Ndi\params\ACPIEnable,type,,"enum"
+HKR,Ndi\params\ACPIEnable\enum,0,,"Disabled"
+HKR,Ndi\params\ACPIEnable\enum,1,,"Link Change" 
+HKR,Ndi\params\ACPIEnable\enum,2,,"Magic Packet"
+HKR,Ndi\params\ACPIEnable\enum,3,,"Pattern Match"
+HKR,Ndi\params\ACPIEnable\enum,4,,"ALL"
+;HKR,NDI\params\ACPIEnable,flag,1,20,00,00,00
+
+[ULI5261.con.reg]
+;Common
+;ConnectionType
+HKR, Ndi\params\ConnectionType,      ParamDesc,  0,"Connection Type"
+HKR, Ndi\params\ConnectionType,      default,    0,"0"
+HKR, Ndi\params\ConnectionType,      type,       0,"enum"
+HKR, Ndi\params\ConnectionType\enum, 0,          0,"AutoSense"
+HKR, Ndi\params\ConnectionType\enum, 2,          0,"100Mbps"
+HKR, Ndi\params\ConnectionType\enum, 4,          0,"100Mbps Full_Duplex"
+HKR, Ndi\params\ConnectionType\enum, 1,          0,"10Mbps"
+HKR, Ndi\params\ConnectionType\enum, 3,          0,"10Mbps Full_Duplex"
+;HKR, NDI\params\ConnectionType,      flag,      1,20,00,00,00
+
+[ULI9PCI.reg]
+;Point to Serivce Name
+HKR, Ndi,                       Service,    0, "ULI526X"
+HKR, Ndi\Interfaces,            DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,            DefLower,   0, "ethernet"
+;Upper driver and Lower adapter
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+
+
+[ULI526X.Service]
+DisplayName     = %ULIPCI.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ULIM526X.SYS
+LoadOrderGroup  = NDIS
+
+;Service Section Call
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+
+;=============================================================================
+;
+;Ndis driver selection
+;
+;=============================================================================
+HKR,Ndi\params\NdisVersion,ParamDesc,,"NDIS Version"
+HKR,Ndi\params\NdisVersion,default,,0
+HKR,Ndi\params\NdisVersion,type,,enum
+HKR,Ndi\params\NdisVersion\enum,0,,"Auto Selection"
+HKR,NDI\params\NdisVersion,flag,1,20,00,00,00
+
+
+;=============================================================================
+;
+; DestinationDirs
+;
+;=============================================================================
+
+[DestinationDirs]
+DefaultDestDir       =         12
+ULIPCI.CopyFiles   =         12
+
+
+[SourceDisksNames]
+50=windows cd
+
+[SourceDisksFiles]
+ULIM526X.sys = 50
+
+[Strings]
+ULIR                      = "ULi Electronics Inc."
+ULI5261.DeviceDesc	  = "ULi M526X Ethernet Controller"
+ULIPCI.Service.DispName   = "ULi M526X 10/100 Ethernet Controller Driver"

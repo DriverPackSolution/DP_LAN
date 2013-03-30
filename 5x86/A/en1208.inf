@@ -1,0 +1,175 @@
+;; EN1208.INF (NT 5.0 & Win98 &win2000 combined inf for NDIS5 driver)
+;;
+;; Accton EN1208 PCI Ethernet Adapter.
+;;
+;; Copyright 2001, Accton Technology Corporation.
+
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Accton%
+DriverVer   = 07/02/2001, 1.1.702.2001 
+
+[Manufacturer]
+%Accton% =Accton      
+
+[ControlFlags]                                  
+ExcludeFromSelect       = PCI\VEN_10EC&DEV_8029&SUBSYS_12081113
+
+[Accton]
+%EN1208.DeviceDesc%   = EN1208.ndi, PCI\VEN_10EC&DEV_8029&SUBSYS_12081113 
+  
+;;****************************************************************************
+;; Windows 9x
+;;****************************************************************************
+[EN1208.ndi]
+DriverVer       = 07/02/2001, 1.0.702.2001 
+AddReg          = EN1208.id.reg,EN1208.common.reg,EN1208.win.reg
+DeviceID        = "PCI\VEN_10EC&DEV_8029&SUBSYS_12081113"
+
+;;****************************************************************************
+;; NT 5.0
+;;****************************************************************************
+[EN1208.ndi.NT]
+DriverVer       = 07/02/2001, 1.0.702.2001 
+AddReg          = EN1208.reg, EN1208.common.reg		
+Characteristics = 0x84
+BusType         = 5
+CopyFiles       = EN1208.CopyFiles
+
+[EN1208.ndi.NT.Services]
+AddService      = EN1208, 2, pcint.Service, EN1208.EventLog
+
+[EN1208.CopyFiles]
+EN1208.sys,,,2
+
+;;----------------------------------------------------------------------------
+;; EN1208 Parameters
+;;----------------------------------------------------------------------------
+;;***************************************************************************
+;; Windows 9x parameters
+;;***************************************************************************
+[EN1208.id.reg]
+HKR, Ndi,        DeviceID,      0,      "PCI\VEN_10EC&DEV_8029&SUBSYS_12081113"
+
+HKR,Ndi\Install,                        ,       0,      EN1208.install
+HKR,NDI\Params\MediaMode,               flag,   1,      30, 00, 00, 00
+HKR,NDI\Params\NetworkAddress,          flag,   1,      30, 00, 00, 00
+
+[EN1208.win.reg]
+;; key,subkey,valuname,type,value
+HKR, , DriverDesc,      0,      "Accton EN1208 PCI Ethernet Adapter"
+HKR, , DevLoader,       0,      *ndis
+HKR, , DeviceVxDs,      0,      EN1208.sys
+HKR, , EnumPropPages,   0,      netdi.dll,      EnumPropPages
+
+;;params
+HKR, , MediaType,       0,      1
+HKR, , AdapterType,     0,      5
+HKR, , BusType,         0,      5
+
+
+;; NDIS Info
+HKR, NDIS,              MajorNdisVersion,       1,      03
+HKR, NDIS,              MinorNdisVersion,       1,      0a
+HKR, NDIS,              LogDriverName,          0,      "EN1208"
+
+;; Interfaces
+HKR, Ndi\Interfaces,    DefLower,               0,      "ethernet"
+HKR, Ndi\Interfaces,    LowerRange,             0,      "ethernet"
+HKR, Ndi\Interfaces,    DefUpper,               0,      "ndis3"
+HKR, Ndi\Interfaces,    UpperRange,             0,      "ndis3"
+
+;; Install sections
+HKR, Ndi\Install,       ndis3,                  0,      "EN1208.ndis5"
+;;****************************************************************************
+;; Drivers
+;;****************************************************************************
+;; Install NDIS3
+[EN1208.ndis5]
+CopyFiles       = EN1208.ndis5.CopyFiles,EN1208.inf.CopyFiles
+
+[EN1208.ndis5.CopyFiles]
+EN1208.sys,,,2
+
+[EN1208.inf.CopyFiles]
+EN1208.inf,,,2
+
+;;****************************************************************************
+;; EN1208 common parameters
+;;****************************************************************************
+[EN1208.common.reg]
+HKR, Ndi\params\MediaMode,       ParamDesc,  0, %MediaMode%
+HKR, Ndi\params\MediaMode,       type,       0, "enum"
+HKR, Ndi\params\MediaMode,       default,    0, "0"
+HKR, Ndi\params\MediaMode\enum,  0,          0, %TPHD%
+HKR, Ndi\params\MediaMode\enum,  1,          0, %TPFD%
+HKR, Ndi\params\MediaMode\enum,  2,          0, %BNC%
+HKR, Ndi\params\MediaMode\enum,  3,          0, %AUI%
+
+HKR, Ndi\params\NetworkAddress,  ParamDesc,  0, %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,  type,       0, edit
+HKR, Ndi\params\NetworkAddress,  default,    0, "000000000000"
+HKR, Ndi\params\NetworkAddress,  LimitText,  0, 12
+HKR, Ndi\params\NetworkAddress,  UpperCase,  0, 1
+HKR, Ndi\params\NetworkAddress,  Optional,   0, 1
+
+;;****************************************************************************
+;; NT 5.0 parameters
+;;****************************************************************************
+[EN1208.reg]
+HKR, Ndi\Interfaces,             UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,             LowerRange, 0, "ethernet"
+HKR, Ndi,                        Service,    0, "EN1208"
+
+[pcint.Service]
+DisplayName     = %EN1208.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\EN1208.SYS
+LoadOrderGroup  = NDIS
+
+[EN1208.EventLog]
+Addreg = EN1208.AddEventLog.reg
+
+[EN1208.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+;;****************************************************************************
+;; Destination Directory
+;;****************************************************************************
+[DestinationDirs]
+EN1208.CopyFiles           = 12
+DefaultDestDir              = 11        ; LDID_SYS
+EN1208.ndis5.CopyFiles     = 11
+EN1208.inf.CopyFiles       = 17        ; INF
+
+;;****************************************************************************
+;; Source Files
+;;****************************************************************************
+[SourceDisksNames]
+1=%DISKNAME%,,0000-0000
+
+[SourceDisksFiles]
+EN1208.sys     = 1, ,        EN1208.sys, 12345
+EN1208.inf     = 1, ,        EN1208.inf, 1234
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Accton                        ="Accton"  
+;;Source disk name
+DISKNAME = " Accton EN1208 PCI Ethernet Adapter Driver Disk "  
+MediaMode                 = "Line Speed"
+TPHD                      = "TP Half Duplex"
+TPFD                      = "TP Full Duplex"
+BNC                       = "BNC / 10Base2"
+AUI                       = "AUI / 10Base5"
+NetworkAddress            = "Network Address"
+EN1208.DeviceDesc        = "Accton EN1208 PCI Ethernet Adapter"  
+EN1208.Service.DispName  = "Accton EN1208 PCI Ethernet Adapter Windows Driver"   
+

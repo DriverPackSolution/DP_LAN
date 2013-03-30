@@ -1,0 +1,356 @@
+; NETM4CX.INF
+;
+; D-Link DGE-530T Gigabit Ethernet Adapter
+;
+; (C)Copyright 2003, D-Link Corporation.
+;
+; All rights reserved
+;
+; INF File for NDIS5.X Miniport Driver for Windows 98SE, ME, 2000, XP (x86)
+
+[Version]
+Signature   	= "$Chicago$"
+Compatible  	= 1
+Class		= Net
+ClassGUID	= {4D36E972-E325-11CE-BFC1-08002BE10318}
+Provider	= %DLINK%
+CatalogFile 	= m4cx.cat
+DriverVer=08/27/2003, 6.23.0.0
+
+[Manufacturer]
+%DLINK%	= DLINK,NT.5.1
+
+[DLINK.NT.5.1]
+%DGE530T.DeviceDesc%	= dge530tXP, PCI\VEN_1186&DEV_4C00&SUBSYS_4C001186
+
+[DLINK]
+%DGE530T.DeviceDesc%	= dge530t, PCI\VEN_1186&DEV_4C00&SUBSYS_4C001186
+
+ 
+;-------------------------------------------------------------------------------
+; Gigabit Ethernet Adapters
+[dge530t]
+AddReg		= m4cxw9x.reg, m4cxw9x.params, m4cx.V2.Copper.params
+Characteristics	= 0x84
+BusType		= 5
+CopyFiles	= m4cxw9x.copy
+
+[dge530t.Services]
+AddService	= "m4cxw9x", 2, m4cxw9x.Service, w9x.EventLog
+
+
+[dge530t.NTx86]
+AddReg		= m4cxnt5x.reg, m4cxnt5x.params, m4cx.V2.Copper.params 
+Characteristics	= 0x84
+BusType		= 5
+CopyFiles	= m4cxw2k.copy.NTx86
+
+
+CopyFiles	= wmi.CopyFiles
+
+[dge530t.NTx86.Services]
+AddService	= "m4cxw2k", 2, m4cxw2k.Service, w2k.EventLog
+
+
+
+[dge530tXP.NTx86]
+AddReg		= m4cxnt5x.reg, m4cxnt5x.params, m4cx.V2.Copper.params 
+Characteristics	= 0x84
+BusType		= 5
+CopyFiles	= m4cxwxp.copyXP.NTx86
+
+
+CopyFiles	= wmi.CopyFiles
+
+[dge530tXP.NTx86.Services]
+AddService	= "m4cxwxp", 2, m4cxwxp.Service, wxp.EventLog
+
+;-------------------------------------------------------------------------------
+; General Driver Parameters
+;
+[m4cxw9x.params]
+HKR, Ndi\Params\NetworkAddress,	Flag, 1,20,0,0,0
+HKR, Ndi\Params\MaxFrameSize,	Flag, 1,20,0,0,0
+HKR, Ndi\Params\MaxReceives,	Flag, 1,20,0,0,0
+HKR, Ndi\Params\MaxTransmits,	Flag, 1,20,0,0,0
+
+
+HKR, Ndi\Params\NetworkAddress,	ParamDesc,,	%NetAddress%
+HKR, Ndi\Params\NetworkAddress,	Type,,		"edit"
+HKR, Ndi\Params\NetworkAddress,	LimitText,,	"18"
+HKR, Ndi\Params\NetworkAddress,	UpperCase,,	"1"
+HKR, Ndi\Params\NetworkAddress,	Default,,	""
+HKR, Ndi\Params\NetworkAddress,	Optional,,	"1"
+
+HKR, Ndi\Params\MaxFrameSize,	ParamDesc,,	%MaxFrSize%
+HKR, Ndi\Params\MaxFrameSize,	Type,,		"enum"
+HKR, Ndi\Params\MaxFrameSize\enum,1514,,	%Off%
+HKR, Ndi\Params\MaxFrameSize\enum,9014,,	%On%
+HKR, Ndi\Params\MaxFrameSize,	Default,,	"1514"
+
+HKR, Ndi\Params\MaxReceives,	ParamDesc,,	%NumRcv%
+HKR, Ndi\Params\MaxReceives,	Type,,		"int"
+HKR, Ndi\Params\MaxReceives,	Base,,		"10"
+HKR, Ndi\Params\MaxReceives,	Min,,		"3"
+HKR, Ndi\Params\MaxReceives,	Max,,		"500"
+HKR, Ndi\Params\MaxReceives,	Step,,		"1"
+HKR, Ndi\Params\MaxReceives,	Default,,	"50"
+
+HKR, Ndi\Params\MaxTransmits,	ParamDesc,,	%NumTx%
+HKR, Ndi\Params\MaxTransmits,	Type,,		"int"
+HKR, Ndi\Params\MaxTransmits,	Base,,		"10"
+HKR, Ndi\Params\MaxTransmits,	Min,,		"4"
+HKR, Ndi\Params\MaxTransmits,	Max,,		"200"
+HKR, Ndi\Params\MaxTransmits,	Step,,		"1"
+HKR, Ndi\Params\MaxTransmits,	Default,,	"50"
+
+HKR, Ndi\Params\FlowControl_A,	ParamDesc,,	%FlowCtrlA%
+HKR, Ndi\Params\FlowControl_A,	Type,,		"enum"
+HKR, Ndi\Params\FlowControl_A\enum,3,,		%On%
+HKR, Ndi\Params\FlowControl_A\enum,0,,		%Off%
+HKR, Ndi\Params\FlowControl_A,	Default,,	"3"
+
+HKR,, MaxMulticast,,         	"128"
+HKR,, WaitForRxResources,,   	"1"
+HKR,, SGMapRegistersNeeded,, 	"64"
+HKR,, MessageLog,,           	"4"
+HKR,, Moderate,,	       	"1"
+HKR,, FixedIntMod,,	       	"5000"
+
+
+[m4cxnt5x.params]
+HKR, Ndi\Params\NetworkAddress,	ParamDesc,,	%NetAddress%
+HKR, Ndi\Params\NetworkAddress,	Type,,		"edit"
+HKR, Ndi\Params\NetworkAddress,	LimitText,,	"18"
+HKR, Ndi\Params\NetworkAddress,	UpperCase,,	"1"
+HKR, Ndi\Params\NetworkAddress,	Default,,	""
+HKR, Ndi\Params\NetworkAddress,	Optional,,	"1"
+
+HKR, Ndi\Params\MaxFrameSize,	ParamDesc,,	%MaxFrSize%
+HKR, Ndi\Params\MaxFrameSize,	Type,,		"enum"
+HKR, Ndi\Params\MaxFrameSize\enum,1514,,	%Off%
+HKR, Ndi\Params\MaxFrameSize\enum,9014,,	%On%
+HKR, Ndi\Params\MaxFrameSize,	Default,,	"1514"
+
+HKR, Ndi\Params\HwChecksum,	ParamDesc,,	%HwCsum%
+HKR, Ndi\Params\HwChecksum,	Type,,		"enum"
+HKR, Ndi\Params\HwChecksum\enum,1,,		%On%
+HKR, Ndi\Params\HwChecksum\enum,0,,		%Off%
+HKR, Ndi\Params\HwChecksum,	Default,,	"1"
+
+HKR, Ndi\Params\MaxReceives,	ParamDesc,,	%NumRcv%
+HKR, Ndi\Params\MaxReceives,	Type,,		"int"
+HKR, Ndi\Params\MaxReceives,	Base,,		"10"
+HKR, Ndi\Params\MaxReceives,	Min,,		"3"
+HKR, Ndi\Params\MaxReceives,	Max,,		"500"
+HKR, Ndi\Params\MaxReceives,	Step,,		"1"
+HKR, Ndi\Params\MaxReceives,	Default,,	"50"
+
+HKR, Ndi\Params\MaxTransmits,	ParamDesc,,	%NumTx%
+HKR, Ndi\Params\MaxTransmits,	Type,,		"int"
+HKR, Ndi\Params\MaxTransmits,	Base,,		"10"
+HKR, Ndi\Params\MaxTransmits,	Min,,		"4"
+HKR, Ndi\Params\MaxTransmits,	Max,,		"200"
+HKR, Ndi\Params\MaxTransmits,	Step,,		"1"
+HKR, Ndi\Params\MaxTransmits,	Default,,	"50"
+
+HKR, Ndi\Params\FlowControl_A,	ParamDesc,,	%FlowCtrlA%
+HKR, Ndi\Params\FlowControl_A,	Type,,		"enum"
+HKR, Ndi\Params\FlowControl_A\enum,3,,		%On%
+HKR, Ndi\Params\FlowControl_A\enum,0,,		%Off%
+HKR, Ndi\Params\FlowControl_A,	Default,,	"3"
+
+HKR, Ndi\Params\TagHeaderSupport_A,	ParamDesc,,	%QoSSupA%
+HKR, Ndi\Params\TagHeaderSupport_A,	Type,,		"enum"
+HKR, Ndi\Params\TagHeaderSupport_A\enum,1,,		%On%
+HKR, Ndi\Params\TagHeaderSupport_A\enum,0,,		%Off%
+HKR, Ndi\Params\TagHeaderSupport_A,	Default,,	"0"
+
+HKR,, MaxMulticast,,         	"128"
+HKR,, WaitForRxResources,,   	"1"
+HKR,, SGMapRegistersNeeded,, 	"64"
+HKR,, MessageLog,,		"4"
+HKR,, Moderate,,		"1"
+HKR,, FixedIntMod,,		"5000"
+
+;-------------------------------------------------------------------------------
+; Additional Driver Parameters for Version 2.0 Copper Adapters
+;
+[m4cx.V2.Copper.params]
+;
+; Configurable Parameters
+;
+
+HKR, Ndi\Params\WakeUpModeCap_A,       ParamDesc,,	%WakeUpCaps%
+HKR, Ndi\Params\WakeUpModeCap_A,       type,,		"enum"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  0,,		"Off"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  27,,		"On"
+HKR, Ndi\Params\WakeUpModeCap_A,       Default,,        "27"
+
+HKR,Ndi\Params\ConnectionType_A,      ParamDesc,  0, %ConnectionType%
+HKR,Ndi\Params\ConnectionType_A,      Type,       0, "enum"
+HKR,Ndi\Params\ConnectionType_A,      Default,    0, "0"
+HKR,Ndi\Params\ConnectionType_A,      Flag,       1, 20,00,00,00
+HKR,Ndi\Params\ConnectionType_A\enum, "0",        0, %Autosense%
+HKR,Ndi\Params\ConnectionType_A\enum, "1",        0, %10MHD%
+HKR,Ndi\Params\ConnectionType_A\enum, "2",        0, %10MFD%
+HKR,Ndi\Params\ConnectionType_A\enum, "3",        0, %100MHD%
+HKR,Ndi\Params\ConnectionType_A\enum, "4",        0, %100MFD%
+
+
+HKR,, WaitForRxResources,,   "0"
+;-------------------------------------------------------------------------------
+; General Registry Entries
+;
+[m4cxw9x.reg]
+HKR, Ndi, HelpText,, %HelpText%
+HKR, Ndi\Interfaces, DefUpper,, "ndis5,ndis4,ndis3"
+HKR, Ndi\Interfaces, UpperRange,, "ndis5,ndis4,ndis3"
+HKR, Ndi\Interfaces, LowerRange,, "ethernet"
+HKR, Ndi, Service,, "m4cxw9x"
+HKR,Ndi,DeviceID,,"PCI\VEN_1186&DEV_4C00"  
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,m4cxw9x.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+HKR, NDIS,LogDriverName,,"m4cxw9x"
+HKR, NDIS,MajorNdisVersion,1,05
+HKR, NDIS,MinorNdisVersion,1,00
+
+[m4cxnt5x.reg]
+HKR, Ndi, HelpText,, %HelpText%
+HKR, Ndi\Interfaces, UpperRange,, "ndis5"
+HKR, Ndi\Interfaces, LowerRange,, "ethernet"
+HKR, Ndi, Service,, "m4cxnt5x"
+
+
+[m4cxw9x.Service]
+DisplayName	= %m4cxndis5.DriverDesc%
+ServiceType	= 1
+StartType = 3
+ErrorControl = 1
+ServiceBinary  = %12%\m4cxw9x.sys
+LoadOrderGroup = NDIS
+
+[w9x.EventLog]
+AddReg = w9x.AddEventLog.reg
+
+[w9x.AddEventLog.reg]
+HKR,, EventMessageFile,	0x00020000, "%%SystemRoot%%\System32\Drivers\m4cxw9x.sys"
+HKR,, TypesSupported,	0x00010001, 7
+
+
+[m4cxw2k.Service]
+DisplayName	= %m4cxndis5.DriverDesc%
+ServiceType	= 1
+StartType = 3
+ErrorControl = 1
+ServiceBinary  = %12%\m4cxw2k.sys
+LoadOrderGroup = NDIS
+
+[w2k.EventLog]
+AddReg = w2k.AddEventLog.reg
+
+[w2k.AddEventLog.reg]
+HKR,, EventMessageFile,	0x00020000, "%%SystemRoot%%\System32\Drivers\m4cxw2k.sys"
+HKR,, TypesSupported,	0x00010001, 7
+
+
+[m4cxwxp.Service]
+DisplayName	= %m4cxndis51.DriverDesc%
+ServiceType	= 1
+StartType = 3
+ErrorControl = 1
+ServiceBinary  = %12%\m4cxwxp.sys
+LoadOrderGroup = NDIS
+
+[wxp.EventLog]
+AddReg = wxp.AddEventLog.reg
+
+[wxp.AddEventLog.reg]
+HKR,, EventMessageFile,	0x00020000, "%%SystemRoot%%\System32\Drivers\m4cxwxp.sys"
+HKR,, TypesSupported,	0x00010001, 7
+
+
+;-------------------------------------------------------------------------------
+; Source Files
+;
+[SourceDisksFiles]
+m4cxw9x.sys	= 1
+m4cxw2k.sys	= 1
+m4cxwxp.sys	= 1
+gewmi.mof    	= 1
+
+
+
+[SourceDisksNames]
+1 = %DriverDisk%,,,
+
+
+
+[m4cxw9x.copy]
+m4cxw9x.sys,,,2
+
+[m4cxw2k.copy.NTx86]
+m4cxw2k.sys,,2
+
+[m4cxwxp.copyXP.NTx86]
+m4cxwxp.sys,,2
+
+
+[wmi.CopyFiles]
+gewmi.mof,,,2
+
+;-------------------------------------------------------------------------------
+; Destination Directories
+;
+[DestinationDirs]
+DefaultDestDir		= 11
+m4cxw9x.copy		= 11
+m4cxw2k.copy.NTx86	= 12
+m4cxwxp.copyXP.NTx86	= 12
+wmi.CopyFiles		= 11,wbem\mof
+
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+DLINK = "D-Link"
+
+NetAddress              = "Network Address"
+MaxFrSize               = "Jumbo Frame Support"
+HwCsum                  = "TCP/IP Checksum Offload"
+WakeUpCaps              = "Wake Up Capabilities"
+IntMod                  = "Interrupt Moderation"
+MaxIrq                  = "Max IRQ per Sec"
+LogMsg                  = "Log Status Messages"
+NumRcv                  = "Number of Receive Buffers"
+NumTx                   = "Number of Transmit Buffers"
+Sense			= "Auto-Sense"
+On                      = "On"
+Off                     = "Off"
+Non                     = "None"
+Err                     = "Errors"
+Wrn                     = "Warnings"
+Sta                     = "Status Messages"
+All                     = "All Messages"
+A                       = "A"
+B                       = "B"
+Auto			= "Auto"
+FlowCtrlA		= "FlowControl"
+ConnectionType      	= "Connection Type"
+Autosense		= "AutoSense"
+10MHD               	= "10Mbps Half Duplex"
+10MFD               	= "10Mbps Full Duplex"
+100MHD              	= "100Mbps Half Duplex"
+100MFD              	= "100Mbps Full Duplex"
+QoSSupA                 = "802.1p Support"
+
+DGE530T.DeviceDesc	= "D-Link DGE-530T Gigabit Ethernet Adapter"
+
+m4cxndis5.DriverDesc	= "NDIS5.0 Miniport Driver for D-Link DGE-530T Gigabit Ethernet Adapter"
+
+m4cxndis51.DriverDesc	= "NDIS5.1 Miniport Driver for D-Link DGE-530T Gigabit Ethernet Adapter"
+
+DriverDisk		= "D-Link DGE-530T Gigabit Ethernet Adapter Installation Disk"
+
+HelpText		= "D-Link: Building Networks for People."

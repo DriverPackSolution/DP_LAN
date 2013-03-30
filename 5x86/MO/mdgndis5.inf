@@ -1,0 +1,924 @@
+; ***************************************************************************
+;
+; NETMADGE.INF
+;
+; MADGE/OLICOM Token-Ring Network Interface Cards.
+;
+; Copyright (c) 1998-2002 Madge Networks Ltd
+; Copyright (c) 1998-2002 Microsoft Corporation
+;
+; VeRsIoN=Madge Token Ring Adapter installation file for Windows 98/2000@
+; VeRsIoN=VERSION: v6.15 LSS 9.0@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+; VeRsIoN=PRODUCT-ID: MDGNDIS5.SYS  6.15 @
+; VeRsIoN=INFO:       MDGNDIS5.TXT@
+; MaDgE=1A2B@
+;
+; ***************************************************************************
+;
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4D36E972-E325-11CE-BFC1-08002BE10318}
+Provider    = %V_MADGE%
+DriverVer   = 06/13/2002, 6.15.00.000
+CatalogFile = mdgndis5.cat
+;
+[Manufacturer]
+%V_MADGE%   = MADGE
+%V_OLICOM%  = OLICOM
+;
+[ControlFlags]
+ExcludeFromSelect = PCMCIA\MADGE-SMART_16/4_PCMCIA_RINGNODE-0757,  \
+                    PCMCIA\MADGE-SMART_16/4_PCMCIA_RINGNODE-3682,  \
+                    PCI\VEN_10B6&DEV_0006&SUBSYS_000610B6,         \
+                    PCI\VEN_10B6&DEV_000B&SUBSYS_000810B6,         \
+                    PCI\VEN_10B6&DEV_0002&SUBSYS_000210B6,         \
+                    PCI\VEN_10B6&DEV_0007&SUBSYS_000710B6,         \
+                    PCI\VEN_10B6&DEV_0003&SUBSYS_000310B6,         \
+                    PCI\VEN_10B6&DEV_0009&SUBSYS_000910B6,         \
+                    PCI\VEN_10B6&DEV_000A&SUBSYS_000A10B6,         \
+                    PCI\VEN_10B6&DEV_0003&SUBSYS_000710B6&REV_01,  \
+                    PCI\VEN_10B6&DEV_0003&SUBSYS_000710B6&REV_02,  \
+                    PCI\VEN_108D&DEV_0008&SUBSYS_0008108D&REV_01,  \
+                    PCI\VEN_108D&DEV_0004&SUBSYS_0004108D&REV_02,  \
+                    PCI\VEN_108D&DEV_0004&SUBSYS_0004108D&REV_03,  \
+                    PCI\VEN_10B6&DEV_000C&SUBSYS_000C10B6,         \
+                    PCI\VEN_108D&DEV_0007&SUBSYS_0007108D&REV_01,  \
+                    PCI\VEN_108D&DEV_0001&REV_03,                  \
+                    PCI\VEN_108D&DEV_0005&SUBSYS_0005108D&REV_02,  \
+                    PCMCIA\OLICOM-TR_16/4_II-805B
+;
+;------------------------------------------------------------------------------
+;
+; Supported Madge Devices
+;
+;------------------------------------------------------------------------------
+;
+[MADGE]
+%MDG_PCIHS2.DeviceDesc%  = MDG_PCIHS2.ndi,  PCI\VEN_10B6&DEV_000A&SUBSYS_000A10B6        ; Smart MK4 PCI Adapter (was Madge Smart 100/16/4 PCI Ringnode)
+%MDG_PCIHS1.DeviceDesc%  = MDG_PCIHS1.ndi,  PCI\VEN_10B6&DEV_0009&SUBSYS_000910B6        ; Madge Smart 100/16/4 PCI-HS Ringnode
+%MDG_PCI3.DeviceDesc%    = MDG_PCI3.ndi,    PCI\VEN_10B6&DEV_0003&SUBSYS_000310B6        ; Madge Smart 16/4 PCI Ringnode Mk3
+%MDG_PCI7B.DeviceDesc%   = MDG_PCI7B.ndi,   PCI\VEN_10B6&DEV_0003&SUBSYS_000710B6&REV_02 ; Madge Presto PCI 2000
+%MDG_PCI7A.DeviceDesc%   = MDG_PCI7A.ndi,   PCI\VEN_10B6&DEV_0003&SUBSYS_000710B6&REV_01 ; Madge Presto PCI Plus
+%MDG_PCI7.DeviceDesc%    = MDG_PCI7.ndi,    PCI\VEN_10B6&DEV_0007&SUBSYS_000710B6        ; Madge Presto PCI
+%MDG_PCIB.DeviceDesc%    = MDG_PCIB.ndi,    PCI\VEN_10B6&DEV_000B&SUBSYS_000810B6        ; Smart 16/4 CardBus Mk2 (was Madge 16/4 CardBus Adapter Mk2)
+%MDG_PCI6.DeviceDesc%    = MDG_PCI6.ndi,    PCI\VEN_10B6&DEV_0006&SUBSYS_000610B6        ; Madge 16/4 CardBus Adapter
+%MDG_PCMC2.DeviceDesc%   = MDG_PCMC2.ndi,   PCMCIA\MADGE-SMART_16/4_PCMCIA_RINGNODE-3682 ; Smart 16/4 PCMCIA MK2 (was PCMCIA Ringnode Mk2)
+%MDG_PCMC.DeviceDesc%    = MDG_PCMC.ndi,    PCMCIA\MADGE-SMART_16/4_PCMCIA_RINGNODE-0757 ; PCMCIA Ringnode
+%MDG_PCI2.DeviceDesc%    = MDG_PCI2.ndi,    PCI\VEN_10B6&DEV_0002&SUBSYS_000210B6        ; Madge Smart 16/4 PCI Ringnode Mk2
+;
+;------------------------------------------------------------------------------
+;
+; Supported Olicom Devices
+;
+;------------------------------------------------------------------------------
+;
+[OLICOM]
+%OCTX3540.DeviceDesc%    = OCTX3540.ndi,    PCI\VEN_108D&DEV_0008&SUBSYS_0008108D&REV_01 ; Olicom RapidFire 3540 HSTR 100/16/4 PCI Adapter
+%OCTX3139.DeviceDesc%    = OCTX3139.ndi,    PCI\VEN_108D&DEV_0004&SUBSYS_0004108D&REV_02 ; Olicom RapidFire 3139 Token-Ring 16/4 PCI Adapter
+%OCTX3140.DeviceDesc%    = OCTX3140.ndi,    PCI\VEN_108D&DEV_0004&SUBSYS_0004108D&REV_03 ; RapidFire 3140 16/4 TR PCI Adapter (was Olicom RapidFire 3140 Token-Ring 16/4 PCI Adapter)
+%OCTX3140V2.DeviceDesc%  = OCTX3140V2.ndi,  PCI\VEN_10B6&DEV_000C&SUBSYS_000C10B6        ; RapidFire 3140V2 16/4 TR PCI Adapter (was Olicom RapidFire 3140 V2 16/4 PCI Adapter)
+%OCTX3141.DeviceDesc%    = OCTX3141.ndi,    PCI\VEN_108D&DEV_0007&SUBSYS_0007108D&REV_01 ; RapidFire 3141 16/4 TR PCI Fiber Adapter (was Olicom RapidFire 3141 Token-Ring 16/4 PCI Fiber Adapter)
+%OCTX3137.DeviceDesc%    = OCTX3137.ndi,    PCI\VEN_108D&DEV_0001&REV_03                 ; Olicom Token-Ring 16/4 PCI/II Adapter (OC-3137)
+%OCTX3250.DeviceDesc%    = OCTX3250.ndi,    PCI\VEN_108D&DEV_0005&SUBSYS_0005108D&REV_02 ; Olicom GoCard 3250 Token-Ring 16/4 CardBus PC Card
+%OCTX3221.DeviceDesc%    = OCTX3221.ndi,    PCMCIA\OLICOM-TR_16/4_II-805B                ; GoCard Token-Ring C30 PC Card (was Olicom GoCard Token-Ring PC Card (OC-3221))
+;
+;------------------------------------------------------------------------------
+;
+; Windows 98/2000 installation sections
+;
+;------------------------------------------------------------------------------
+;
+;------------------------------------------------------------------------------
+; MDG_PCI2 Madge Smart 16/4 PCI Ringnode Mk2
+;
+[MDG_PCI2.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCI2.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, Transfer.reg, Stats.reg , Mirror.reg
+Bustype          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCI2.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCI2.NT.reg]
+HKR, ,             AdapterType, 0, "10"
+[MDG_PCI2.ndi]
+; Windows 98
+AddReg           = MDG_PCI2.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, Transfer.reg, Stats.reg
+[MDG_PCI2.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_0002&SUBSYS_000210B6"
+HKR, ,             AdapterType, 0, "10"
+;
+;------------------------------------------------------------------------------
+; MDG_PCI7 Madge Presto PCI
+;
+[MDG_PCI7.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCI7.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCI7.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCI7.NT.reg]
+HKR, ,             AdapterType, 0, "11"
+[MDG_PCI7.ndi]
+; Windows 98
+AddReg           = MDG_PCI7.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg
+[MDG_PCI7.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_0007&SUBSYS_000710B6"
+HKR, ,             AdapterType, 0, "11"
+;
+;------------------------------------------------------------------------------
+; MDG_PCI7A Madge Presto PCI Plus
+;
+[MDG_PCI7A.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCI7A.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCI7A.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCI7A.NT.reg]
+HKR, ,             AdapterType, 0, "11"
+[MDG_PCI7A.ndi]
+; Windows 98
+AddReg           = MDG_PCI7A.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg
+[MDG_PCI7A.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_0003&SUBSYS_000710B6&REV_01"
+HKR, ,             AdapterType, 0, "11"
+;
+;------------------------------------------------------------------------------
+; MDG_PCI7B Madge Presto PCI 2000
+;
+[MDG_PCI7B.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCI7B.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCI7B.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCI7B.NT.reg]
+HKR, ,             AdapterType, 0, "11"
+[MDG_PCI7B.ndi]
+; Windows 98
+AddReg           = MDG_PCI7B.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg
+[MDG_PCI7B.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_0003&SUBSYS_000710B6&REV_02"
+HKR, ,             AdapterType, 0, "11"
+;
+;------------------------------------------------------------------------------
+; MDG_PCI3 Madge 16/4 PCI Ringnode Mk3
+;
+[MDG_PCI3.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCI3.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg , Mirror.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCI3.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCI3.NT.reg]
+HKR, ,            AdapterType, 0, "11"
+[MDG_PCI3.ndi]
+; Windows 98
+AddReg           = MDG_PCI3.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg
+[MDG_PCI3.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_0003&SUBSYS_000310B6"
+HKR, ,             AdapterType, 0, "11"
+;
+;------------------------------------------------------------------------------
+; MDG_PCIHS1 Madge 100/16/4 PCI-HS Ringnode
+;
+[MDG_PCIHS1.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCIHS1.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, HighSpeed.reg, WOL.reg, Stats.reg  , Mirror.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCIHS1.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCIHS1.NT.reg]
+HKR, ,             AdapterType, 0, "11"
+[MDG_PCIHS1.ndi]
+; Windows 98
+AddReg           = MDG_PCIHS1.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, HighSpeed.reg, WOL.reg, Stats.reg
+[MDG_PCIHS1.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_0009&SUBSYS_000910B6"
+HKR, ,             AdapterType, 0, "11"
+;
+;------------------------------------------------------------------------------
+; MDG_PCIHS2 Madge 100/16/4 PCI Ringnode
+;
+[MDG_PCIHS2.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCIHS2.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, HighSpeed.reg, WOL.reg, Stats.reg  , Mirror.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCIHS2.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCIHS2.NT.reg]
+HKR, ,             AdapterType, 0, "11"
+[MDG_PCIHS2.ndi]
+; Windows 98
+AddReg           = MDG_PCIHS2.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, HighSpeed.reg, WOL.reg, Stats.reg
+[MDG_PCIHS2.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_000A&SUBSYS_000A10B6"
+HKR, ,             AdapterType, 0, "11"
+;
+;------------------------------------------------------------------------------
+; MDG_PCI6 Madge 16/4 CardBus Adapter
+;
+[MDG_PCI6.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCI6.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, Transfer.reg, Stats.reg
+Bustype          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCI6.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCI6.NT.reg]
+HKR, ,             AdapterType, 0, "12"
+[MDG_PCI6.ndi]
+; Windows 98
+AddReg           = MDG_PCI6.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, Transfer.reg, Stats.reg
+[MDG_PCI6.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_0006&SUBSYS_000610B6"
+HKR, ,             AdapterType, 0, "12"
+;
+;------------------------------------------------------------------------------
+; MDG_PCIB Madge 16/4 CardBus Adapter Mk2
+;
+[MDG_PCIB.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCIB.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, Transfer.reg, Stats.reg
+Bustype          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCIB.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCIB.NT.reg]
+HKR, ,             AdapterType, 0, "17"
+[MDG_PCIB.ndi]
+; Windows 98
+AddReg           = MDG_PCIB.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, Transfer.reg, Stats.reg
+[MDG_PCIB.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_000B&SUBSYS_000810B6"
+HKR, ,             AdapterType, 0, "17"
+;
+;------------------------------------------------------------------------------
+; MDG_PCMC Madge Smart PCMCIA Token Ring Adapter
+;
+[MDG_PCMC.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCMC.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, Stats.reg
+BusType          = 8
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCMC.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCMC.NT.reg]
+HKR, Ndi,          CardType,    0, "PCMCIA"
+HKR, ,             AdapterType, 0, "7"
+[MDG_PCMC.ndi]
+; Windows 98
+AddReg           = MDG_PCMC.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, MadgeTRN.w98.ISA.reg, Speed.reg, Stats.reg
+[MDG_PCMC.w98.reg]
+HKR, Ndi,          DeviceID,,"MADGE-SMART_16/4_PCMCIA_RINGNODE-0757"
+HKR, Ndi,          CardType,    0, "PCMCIA"
+HKR, ,             AdapterType, 0, "7"
+;
+; Hardware settings required by PCMCIA adapters.
+;
+; bytes desc
+;
+; 0-3   CONFIGMG_VERSION
+; 4-7   PRIORITY
+; 8-43  I/O
+; 44-63 IRQ
+; 64-88 REQUEST_CONFIG_PKT
+; 89-92 TERMINATOR
+;
+HKR,Override,0000,1, \
+00,04,00,00, \
+00,00,00,00, \
+24,00,00,00, \
+02,00,00,00, \
+01,00,0C,00, \
+00,00,00,00, \
+00,00,00,00, \
+E0,FF,20,00, \
+00,00,FF,FF, \
+00,00,00,00, \
+40,00,00,00, \
+14,00,00,00, \
+04,00,00,00, \
+00,00,00,00, \
+FF,FF,00,00, \
+20,00,00,00, \
+19,00,00,00, \
+7C,89,00,00, \
+00,00,02,00, \
+32,32,32,02, \
+00,08,00,00, \
+00,00,00,01, \
+03, \
+00,00,00,00
+;
+;------------------------------------------------------------------------------
+; MDG_PCMC2 Madge Smart PCMCIA Token Ring Adapter Mk2
+;
+[MDG_PCMC2.ndi.NT]
+; Windows 2000
+AddReg           = MDG_PCMC2.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, Transfer.reg, Stats.reg
+BusType          = 8
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[MDG_PCMC2.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[MDG_PCMC2.NT.reg]
+HKR, Ndi,          CardType,    0, "PCMCIA"
+HKR, ,             AdapterType, 0, "7"
+[MDG_PCMC2.ndi]
+; Windows 98
+AddReg           = MDG_PCMC2.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, MadgeTRN.w98.ISA.reg, Speed.reg, Transfer.reg, Stats.reg
+[MDG_PCMC2.w98.reg]
+HKR, Ndi,          DeviceID,,"MADGE-SMART_16/4_PCMCIA_RINGNODE-3682"
+HKR, Ndi,          CardType,    0, "PCMCIA"
+HKR, ,             AdapterType, 0, "7"
+;
+; Hardware settings required by PCMCIA adapters.
+;
+; bytes desc
+;
+; 0-3   CONFIGMG_VERSION
+; 4-7   PRIORITY
+; 8-43  I/O
+; 44-63 IRQ
+; 64-88 REQUEST_CONFIG_PKT
+; 89-92 TERMINATOR
+;
+HKR,Override,0000,1, \
+00,04,00,00, \
+00,00,00,00, \
+24,00,00,00, \
+02,00,00,00, \
+01,00,0C,00, \
+00,00,00,00, \
+00,00,00,00, \
+E0,FF,20,00, \
+00,00,FF,FF, \
+00,00,00,00, \
+40,00,00,00, \
+14,00,00,00, \
+04,00,00,00, \
+00,00,00,00, \
+FF,FF,00,00, \
+20,00,00,00, \
+19,00,00,00, \
+7C,89,00,00, \
+00,00,02,00, \
+32,32,32,02, \
+00,08,00,00, \
+00,00,00,01, \
+03, \
+00,00,00,00
+;
+;------------------------------------------------------------------------------
+; OCTX3137 Olicom Token-Ring 16/4 PCI/II Adapter (OC-3137)
+;
+[OCTX3137.ndi.NT]
+; Windows 2000
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3137.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, Transfer.reg , Mirror.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[OCTX3137.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[OCTX3137.NT.reg]
+HKR, ,             AdapterType, 0, "210"
+[OCTX3137.ndi]
+; Windows 98
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3137.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, Transfer.reg
+[OCTX3137.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_108D&DEV_0001&REV_03"
+HKR, ,             AdapterType, 0, "210"
+;
+;------------------------------------------------------------------------------
+; OCTX3139 Olicom RapidFire 3139 Token-Ring 16/4 PCI Adapter
+;
+[OCTX3139.ndi.NT]
+; Windows 2000
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3139.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg , Mirror.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[OCTX3139.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[OCTX3139.NT.reg]
+HKR, ,             AdapterType, 0, "211"
+[OCTX3139.ndi]
+; Windows 98
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3139.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg
+[OCTX3139.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_108D&DEV_0004&SUBSYS_0004108D&REV_02"
+HKR, ,             AdapterType, 0, "211"
+;
+;------------------------------------------------------------------------------
+; OCTX3140 Olicom RapidFire 3140 Token-Ring 16/4 PCI Adapter
+;
+[OCTX3140.ndi.NT]
+; Windows 2000
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3140.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg , Mirror.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[OCTX3140.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[OCTX3140.NT.reg]
+HKR, ,             AdapterType, 0, "211"
+[OCTX3140.ndi]
+; Windows 98
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3140.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg
+[OCTX3140.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_108D&DEV_0004&SUBSYS_0004108D&REV_03"
+HKR, ,             AdapterType, 0, "211"
+;
+;------------------------------------------------------------------------------
+; OCTX3140V2 Olicom RapidFire 3140 V2 16/4 PCI Adapter
+;
+[OCTX3140V2.ndi.NT]
+; Windows 2000
+AddReg           = OCTX3140V2.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[OCTX3140V2.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[OCTX3140V2.NT.reg]
+HKR, ,             AdapterType, 0, "11"
+[OCTX3140V2.ndi]
+; Windows 98
+AddReg           = OCTX3140V2.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg
+[OCTX3140V2.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_10B6&DEV_000C&SUBSYS_000C10B6"
+HKR, ,             AdapterType, 0, "11"
+;
+;------------------------------------------------------------------------------
+; OCTX3141 Olicom RapidFire 3141 Token-Ring 16/4 PCI Fiber Adapter
+;
+[OCTX3141.ndi.NT]
+; Windows 2000
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3141.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg , Mirror.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[OCTX3141.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[OCTX3141.NT.reg]
+HKR, ,             AdapterType, 0, "211"
+[OCTX3141.ndi]
+; Windows 98
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3141.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, WOL.reg, Stats.reg
+[OCTX3141.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_108D&DEV_0007&SUBSYS_0007108D&REV_01"
+HKR, ,             AdapterType, 0, "211"
+;
+;------------------------------------------------------------------------------
+; OCTX3540 Olicom RapidFire 3540 Token-Ring 16/4 PCI Adapter
+;
+[OCTX3540.ndi.NT]
+; Windows 2000
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3540.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, HighSpeed.reg, WOL.reg, Stats.reg , Mirror.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[OCTX3540.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[OCTX3540.NT.reg]
+HKR, ,             AdapterType, 0, "212"
+[OCTX3540.ndi]
+; Windows 98
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3540.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, HighSpeed.reg, WOL.reg, Stats.reg
+[OCTX3540.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_108D&DEV_0008&SUBSYS_0008108D&REV_01"
+HKR, ,             AdapterType, 0, "212"
+;
+;------------------------------------------------------------------------------
+; OCTX3250 Olicom GoCard 3250 Token-Ring 16/4 CardBus PC Card
+;
+[OCTX3250.ndi.NT]
+; Windows 2000
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3250.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, Stats.reg
+BusType          = 5
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[OCTX3250.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[OCTX3250.NT.reg]
+HKR, ,             AdapterType, 0, "218"
+[OCTX3250.ndi]
+; Windows 98
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3250.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, Speed.reg, Stats.reg
+[OCTX3250.w98.reg]
+HKR, Ndi,          DeviceID,,"PCI\VEN_108D&DEV_0005&SUBSYS_0005108D&REV_02"
+HKR, ,             AdapterType, 0, "218"
+;
+;------------------------------------------------------------------------------
+; OCTX3221 Olicom GoCard Token-Ring PC Card (OC-3221)
+;
+[OCTX3221.ndi.NT]
+; Windows 2000
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3221.NT.reg, MadgeTRN.NT.reg, MadgeTRN.reg, Speed.reg, Stats.reg
+BusType          = 8
+Characteristics  = 0x84
+CopyFiles        = MadgeTRN.nt.ins.ldid_drv, MadgeTRN.nt.ins.ldid_sys
+[OCTX3221.ndi.NT.Services]
+AddService       = MadgeTRN, 2, MadgeTRN.AddService, MadgeTRN.EventLog
+[OCTX3221.NT.reg]
+HKR, Ndi,          CardType,    0, "PCMCIA"
+HKR, ,             AdapterType, 0, "217"
+[OCTX3221.ndi]
+; Windows 98
+DelReg           = TidyOlicom.delreg
+AddReg           = OCTX3221.w98.reg, MadgeTRN.w98.reg, MadgeTRN.reg, MadgeTRN.w98.ISA.reg, Speed.reg, Stats.reg
+[OCTX3221.w98.reg]
+HKR, Ndi,          DeviceID,,"PCMCIA\OLICOM-TR_16/4_II-805B"
+HKR, Ndi,          CardType,    0, "PCMCIA"
+HKR, ,             AdapterType, 0, "217"
+;
+; OVERRIDE FOR 4K RAM WINDOW
+HKR,Override,0000,1,\
+;
+00,04,00,00, \
+00,20,00,00, \
+24,00,00,00, \
+02,00,00,00, \
+01,00,0c,00, \
+00,00,00,00, \
+00,00,00,00, \
+e0,ff,20,00, \
+00,00,ff,ff, \
+00,00,00,00, \
+45,00,00,00, \
+14,00,00,00, \
+04,00,00,00, \
+00,00,00,00, \
+ff,ff,00,00, \
+30,00,00,00, \
+34,00,00,00, \
+01,00,00,00, \
+01,00,14,00, \
+00,00,00,00, \
+00,00,00,00, \
+00,00,00,00, \
+00,F0,FF,FF, \
+00,10,00,00, \
+00,00,00,00, \
+FF,FF,FF,FF, \
+00,00,00,00, \
+02,00,00,00, \
+00,00,00,00, \
+19,00,00,00, \
+7c,89,00,00, \
+00,00,02,00, \
+32,32,32,02, \
+f0,03,00,00, \
+00,00,00,3f, \
+03,          \
+00,00,00,00
+;------------------------------------------------------------------------------
+; Madge Networks Token-Ring NDIS Driver General Parameters
+;
+[MadgeTRN.NT.reg]
+; Windows 2000
+HKR, ,                                  Platform,   0, "2"
+HKR, Ndi,                               Service,    0, "MadgeTRN"
+HKR, Ndi\interfaces,                    UpperRange, 0, "ndis5"
+HKR, Ndi\interfaces,                    LowerRange, 0, "tokenring"
+;
+[MadgeTRN.w98.reg]
+; Windows 98
+HKR, ,                                  DevLoader,      , *ndis
+HKR, ,                                  DeviceVxDs,     , mdgndis5.sys
+HKR, ,                                  EnumPropPages,  , "netdi.dll,EnumPropPages"
+HKR, NDIS,                              LogDriverName,  , "MDGNDIS5"
+HKR, NDIS,                              MajorNdisVersion, 1,03
+HKR, NDIS,                              MinorNdisVersion, 1,0A
+HKR, Ndi\Interfaces,                    DefUpper,       , "ndis3"
+HKR, Ndi\Interfaces,                    DefLower,       , "tokenring"
+HKR, Ndi\Interfaces,                    UpperRange,     , "ndis3"
+HKR, Ndi\Interfaces,                    LowerRange,     , "tokenring"
+HKR, Ndi\Install,                       ndis3,          , "MadgeTRN.w98.install"
+HKR, ,                                  Platform,       , "1"
+;
+[MadgeTRN.w98.ISA.reg]
+; Resources
+HKR, ,                                  InterruptNumber,        1,04,00,00,00
+HKR, ,                                  IoBaseAddress,          1,02,00,00,00
+HKR, ,                                  DMAChannel,             1,03,00,00,00
+HKR, ,                                  MemoryMappedBaseAddress,1,01,00,00,00
+HKR, NDI\params\InterruptNumber,        resc,           1,04,00,00,00
+HKR, NDI\params\InterruptNumber,        ParamDesc,,     "Interrupt Level"
+HKR, NDI\params\InterruptNumber,        flag,           1,20,00,00,00
+HKR, NDI\params\IoBaseAddress,          resc,           1,02,00,00,00
+HKR, NDI\params\IoBaseAddress,          ParamDesc,,     "I/O Base Address"
+HKR, NDI\params\IoBaseAddress,          flag,           1,20,00,00,00
+HKR, NDI\params\MemoryMappedBaseAddress,resc,           1,01,00,00,00
+HKR, NDI\params\MemoryMappedBaseAddress,ParamDesc,,     "MMIO Base Address"
+HKR, NDI\params\MemoryMappedBaseAddress,flag,           1,20,00,00,00
+HKR, NDI\params\DMAChannel,             resc,           1,03,00,00,00
+HKR, NDI\params\DMAChannel,             ParamDesc,,     "DMA Channel"
+HKR, NDI\params\DMAChannel,             flag,           1,20,00,00,00
+;
+[MadgeTRN.w98.install]
+CopyFiles = MadgeTRN.w98.ins.ldid_sys, MadgeTRN.w98.ins.ldid_hlp
+DelFiles  = MadgeTRN.w98.del.ldid_sys, MadgeTRN.w98.del.ldid_inf
+;
+[MadgeTRN.reg]
+; NetworkAddress
+HKR, NDI\params\NetworkAddress,         ParamDesc,  0, %LAA%
+HKR, NDI\params\NetworkAddress,         default,    0, ""
+HKR, NDI\params\NetworkAddress,         type,       0, "edit"
+HKR, NDI\params\NetworkAddress,         LimitText,  0, "12"
+HKR, NDI\params\NetworkAddress,         UpperCase,  0, "1"
+HKR, NDI\params\NetworkAddress,         optional,   0, "1"
+; MaxFrameSize
+HKR, NDI\params\MaxFrameSize,           ParamDesc,  0, %MaxFrameSize%
+HKR, Ndi\params\MaxFrameSize,           default,    0, "4216"
+HKR, NDI\params\MaxFrameSize,           type,       0, "int"
+HKR, NDI\params\MaxFrameSize,           min,        0, "1024"
+HKR, NDI\params\MaxFrameSize,           max,        0, "17839"
+; RxSlots
+HKR, NDI\params\RxSlots,                ParamDesc,  0, %RxSlots%
+HKR, NDI\params\RxSlots,                default,    0, "4"
+HKR, NDI\params\RxSlots,                type,       0, "int"
+HKR, NDI\params\RxSlots,                min,        0, "2"
+HKR, NDI\params\RxSlots,                max,        0, "64"
+HKR, NDI\params\RxSlots,                optional,   0, "1"
+; TxSlots
+HKR, NDI\params\TxSlots,                ParamDesc,  0, %TxSlots%
+HKR, NDI\params\TxSlots,                default,    0, "4"
+HKR, NDI\params\TxSlots,                type,       0, "int"
+HKR, NDI\params\TxSlots,                min,        0, "2"
+HKR, NDI\params\TxSlots,                max,        0, "64"
+HKR, NDI\params\TxSlots,                optional,   0, "1"
+; TestAndXIDEnabled
+HKR, NDI\params\TestAndXIDEnabled,      ParamDesc,  0, %TestXID%
+HKR, NDI\params\TestAndXIDEnabled,      default,    0, "1"
+HKR, NDI\params\TestAndXIDEnabled,      type,       0, "enum"
+HKR, NDI\params\TestAndXIDEnabled\enum, 0,          0, %No%
+HKR, NDI\params\TestAndXIDEnabled\enum, 1,          0, %Yes%
+; MacOpen
+HKR, NDI\params\MacOpen,                ParamDesc,  0, %MacOpen%
+HKR, NDI\params\MacOpen,                default,    0, "3"
+HKR, NDI\params\MacOpen,                type,       0, "enum"
+HKR, NDI\params\MacOpen\enum,           1,          0, %Classic%
+HKR, NDI\params\MacOpen\enum,           2,          0, %DTR%
+HKR, NDI\params\MacOpen\enum,           3,          0, %ClassicOrDTR%
+; EventMask
+HKR, NDI\params\EventMask,              ParamDesc,  0, %EventMask%
+HKR, NDI\params\EventMask,              default,    0, "28"
+HKR, NDI\params\EventMask,              type,       0, "long"
+HKR, NDI\params\EventMask,              min,        0, "0"
+HKR, NDI\params\EventMask,              max,        0, "65535"
+; RingStatusMask
+HKR, NDI\params\RingStatusMask,         ParamDesc,  0, %RingStatusMask%
+HKR, NDI\params\RingStatusMask,         default,    0, "7520"
+HKR, NDI\params\RingStatusMask,         type,       0, "long"
+HKR, NDI\params\RingStatusMask,         min,        0, "0"
+HKR, NDI\params\RingStatusMask,         max,        0, "65535"
+; Help text
+HKR, NDI,HelpText,,%HELP_TEXT%
+;
+;------------------------------------------------------------------------------
+; RingSpeed
+;
+[Speed.reg]
+HKR, NDI\params\RingSpeed,              ParamDesc,  0, %RingSpeed%
+HKR, NDI\params\RingSpeed,              default,    0, "1"
+HKR, NDI\params\RingSpeed,              type,       0, "enum"
+HKR, NDI\params\RingSpeed\enum,         1,          0, %AtAdapter%
+HKR, NDI\params\RingSpeed\enum,         2,          0, %4M%
+HKR, NDI\params\RingSpeed\enum,         3,          0, %16M%
+;
+[HighSpeed.reg]
+HKR, NDI\params\RingSpeed,              ParamDesc,  0, %RingSpeed%
+HKR, NDI\params\RingSpeed,              default,    0, "1"
+HKR, NDI\params\RingSpeed,              type,       0, "enum"
+HKR, NDI\params\RingSpeed\enum,         1,          0, %AtAdapter%
+HKR, NDI\params\RingSpeed\enum,         2,          0, %4M%
+HKR, NDI\params\RingSpeed\enum,         3,          0, %16M%
+HKR, NDI\params\RingSpeed\enum,         4,          0, %100M%
+;
+;------------------------------------------------------------------------------
+; TransferType
+;
+[Transfer.reg]
+HKR, NDI\params\TransferType,           ParamDesc,  0, %TransferType%
+HKR, NDI\params\TransferType,           default,    0, "0"
+HKR, NDI\params\TransferType,           type,       0, "enum"
+HKR, NDI\params\TransferType\enum,      0,          0, %Default%
+HKR, NDI\params\TransferType\enum,      1,          0, %PIO%
+;
+;------------------------------------------------------------------------------
+; Wake-On-LAN
+;
+[WOL.reg]
+HKR, NDI\params\WOL,                    ParamDesc,  0, %WOL%
+HKR, NDI\params\WOL,                    default,    0, "0"
+HKR, NDI\params\WOL,                    type,       0, "enum"
+HKR, NDI\params\WOL\enum,               0,          0, %Disabled%
+HKR, NDI\params\WOL\enum,               1,          0, %Enabled%
+HKR, NDI\params\WOL\enum,               2,          0, %EnabledPME%
+;
+;------------------------------------------------------------------------------
+; Promiscuous mode
+;
+; StatsGathering
+[Stats.reg] ;
+HKR, NDI\params\StatsGathering,         ParamDesc,  0, %StatsGathering%
+HKR, NDI\params\StatsGathering,         default,    0, "0"
+HKR, NDI\params\StatsGathering,         type,       0, "enum"
+HKR, NDI\params\StatsGathering\enum,    0,          0, %No%
+HKR, NDI\params\StatsGathering\enum,    1,          0, %Yes%
+;
+;------------------------------------------------------------------------------
+; Mirroring
+;
+[Mirror.reg]
+; BundleId
+HKR, NDI\params\BundleId,               ParamDesc,  0, %BundleId%
+HKR, NDI\params\BundleId,               default,    0, "1"
+HKR, NDI\params\BundleId,               type,       0, "int"
+HKR, NDI\params\BundleId,               min,        0, "1"
+HKR, NDI\params\BundleId,               max,        0, "8"
+HKR, NDI\params\BundleId,               optional,   0, "1"
+; SingleStationTimeout
+HKR, NDI\params\SingleStationTimeout,   ParamDesc,  0, %SingleStationTimeout%
+HKR, NDI\params\SingleStationTimeout,   default,    0, "0"
+HKR, NDI\params\SingleStationTimeout,   type,       0, "int"
+HKR, NDI\params\SingleStationTimeout,   min,        0, "1"
+HKR, NDI\params\SingleStationTimeout,   max,        0, "9999"
+HKR, NDI\params\SingleStationTimeout,   optional,   0, "1"
+; BeaconTimeout
+HKR, NDI\params\BeaconTimeout,          ParamDesc,  0, %BeaconTimeout%
+HKR, NDI\params\BeaconTimeout,          default,    0, "0"
+HKR, NDI\params\BeaconTimeout,          type,       0, "int"
+HKR, NDI\params\BeaconTimeout,          min,        0, "1"
+HKR, NDI\params\BeaconTimeout,          max,        0, "9999"
+HKR, NDI\params\BeaconTimeout,          optional,   0, "1"
+;
+;------------------------------------------------------------------------------
+; NT5 specifics
+;
+[MadgeTRN.AddService]
+DisplayName     = %MadgeTRN.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\mdgndis5.sys
+LoadOrderGroup  = NDIS
+;
+[MadgeTRN.EventLog]
+AddReg = MadgeTRN.AddEventLog.reg
+;
+[MadgeTRN.AddEventLog.reg]
+HKR,,EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll;%%SystemRoot%%\System32\drivers\mdgndis5.sys"
+HKR,,TypesSupported,   0x00010001, 7
+;
+;------------------------------------------------------------------------------
+; List of keys to delete in case installing over an old Olicom driver
+;
+[TidyOlicom.delreg]
+HKR, Ndi\params\EarlyRelease
+HKR, Ndi\params\EarlyReleaseType
+HKR, Ndi\params\FrameStatus
+HKR, Ndi\params\FrameStatusType
+HKR, Ndi\params\RingSpeed
+HKR, Ndi\params\TxBuffers
+HKR, Ndi\params\RxBuffers
+HKR, Ndi\params\RxBufferSize
+HKR, Ndi\params\ForceLoad
+HKR, Ndi\params\LobeWarning
+HKR, Ndi\params\LegacyWakeUp
+;
+;------------------------------------------------------------------------------
+; File copying
+;
+[SourceDisksNames]
+99=%DISK_MADGE%,,,
+;
+[SourceDisksFiles]
+mdgndis5.sys=99,,
+mdgndis.hlp=99,,
+;
+[DestinationDirs]
+DefaultDestDir            = 11
+MadgeTRN.nt.ins.ldid_drv  = 12
+MadgeTRN.nt.ins.ldid_sys  = 11
+MadgeTRN.w98.ins.ldid_sys = 11
+MadgeTRN.w98.ins.ldid_hlp = 18
+MadgeTRN.w98.del.ldid_inf = 17
+MadgeTRN.w98.del.ldid_sys = 11
+;
+[MadgeTRN.nt.ins.ldid_drv]
+mdgndis5.sys,,,2
+;
+[MadgeTRN.nt.ins.ldid_sys]
+mdgndis.hlp,,,2
+;
+[MadgeTRN.w98.ins.ldid_sys]
+mdgndis5.sys,,,2
+;
+[MadgeTRN.w98.ins.ldid_hlp]
+mdgndis.hlp,,,2
+;
+[MadgeTRN.w98.del.ldid_inf]
+netmadge.inf, ,,0x10000
+odicmdg.inf,  ,,0x10000
+odimadge.inf, ,,0x10000
+mtr32odi.inf, ,,0x10000
+netmdgcb.inf, ,,0x10000
+netblue.inf,  ,,0x10000
+cmdgodi.inf,  ,,0x10000
+netoct3.inf,  ,,0x10000
+netoct34.inf, ,,0x10000
+;
+[MadgeTRN.w98.del.ldid_sys]
+mdgmport.bin, ,,0x10000
+;
+;------------------------------------------------------------------------------
+; Localizable Strings
+;
+[strings]
+V_MADGE                   = "Madge"
+V_OLICOM                  = "Olicom"
+HELP_TEXT                 = "A Token-Ring Adapter is a hardware device that physically connects you to a token-ring network. The device driver used is an NDIS 5.0 miniport driver"
+DISK_MADGE                = "Madge Networks Driver Disk"
+BundleId                  = "Mirroring group"
+SingleStationTimeout      = "Mirroring single station timeout"
+BeaconTimeout             = "Mirroring beacon timeout"
+LAA                       = "Network address"
+MaxFrameSize              = "Maximum frame size"
+StatsGathering            = "Promiscuous mode support"
+No                        = "No"
+Yes                       = "Yes"
+RingSpeed                 = "Ring speed"
+AtAdapter                 = "Default (set at adapter)"
+TransferType              = "Transfer type"
+RxSlots                   = "Rx pipeline slots"
+TxSlots                   = "Tx pipeline slots"
+TestXID                   = "Respond to TEST/XID frames"
+MacOpen                   = "MAC open mode"
+Default                   = "Default"
+PIO                       = "16Bit PIO mode"
+4M                        = "4 Mbit/s"
+16M                       = "16 Mbit/s"
+100M                      = "100 Mbit/s"
+Classic                   = "Classic only"
+DTR                       = "DTR only"
+ClassicOrDTR              = "DTR or Classic"
+WOL                       = "Wake-on-LAN"
+EventMask                 = "Token ring event mask"
+RingStatusMask            = "Ring status mask"
+EnabledPME                = "Enable/PME"
+Enabled                   = "Enable"
+Disabled                  = "Disable"
+MDG_PCIHS1.DeviceDesc     = "Madge Smart 100/16/4 PCI-HS Ringnode"
+MDG_PCIHS2.DeviceDesc     = "Smart MK4 PCI Adapter"
+MDG_PCI3.DeviceDesc       = "Madge Smart 16/4 PCI Ringnode Mk3"
+MDG_PCI7B.DeviceDesc      = "Madge Presto PCI 2000"
+MDG_PCI7A.DeviceDesc      = "Madge Presto PCI Plus"
+MDG_PCI7.DeviceDesc       = "Madge Presto PCI"
+MDG_PCIB.DeviceDesc       = "Smart 16/4 CardBus Mk2"
+MDG_PCI6.DeviceDesc       = "Madge 16/4 CardBus Adapter"
+MDG_PCMC2.DeviceDesc      = "Smart 16/4 PCMCIA MK2"
+MDG_PCMC.DeviceDesc       = "Madge Smart 16/4 PCMCIA Ringnode"
+MDG_PCI2.DeviceDesc       = "Madge Smart 16/4 PCI Ringnode Mk2"
+OCTX3540.DeviceDesc       = "Olicom RapidFire 3540 HSTR 100/16/4 PCI Adapter"
+OCTX3139.DeviceDesc       = "Olicom RapidFire 3139 Token-Ring 16/4 PCI Adapter"
+OCTX3140.DeviceDesc       = "RapidFire 3140 16/4 TR PCI Adapter"
+OCTX3140V2.DeviceDesc     = "RapidFire 3140V2 16/4 TR PCI Adapter"
+OCTX3141.DeviceDesc       = "RapidFire 3141 16/4 TR PCI Fiber Adapter"
+OCTX3137.DeviceDesc       = "Olicom Token-Ring PCI/II 16/4 Adapter (OC-3137)"
+OCTX3250.DeviceDesc       = "Olicom GoCard 3250 Token-Ring 16/4 CardBus PC Card"
+OCTX3221.DeviceDesc       = "GoCard Token-Ring C30 PC Card"
+MadgeTRN.Service.DispName = "Madge Token-Ring Adapter NDIS5 Driver"

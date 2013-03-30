@@ -1,0 +1,737 @@
+; Copyright (c) 1999-2005, Silicon Integrated Systems Corp.
+;
+; INF file for Windows XP
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[Version]
+Signature           = "$Windows NT$"
+Class               = Net
+ClassGUID           = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider            = %SiS%
+CatalogFile         = oemnic.cat
+DriverVer           = 02/22/2006,2.0.1039.1190
+
+[Manufacturer]
+%SiS%               = SiS, NT.5.1
+%IBM%               = IBM, NT.5.1
+%SONY%              = SONY, NT.5.1
+
+[ControlFlags]
+ExcludeFromSelect   = PCI\VEN_1039&DEV_0900&SUBSYS_FFFF1039, \
+                      PCI\VEN_1039&DEV_0900&SUBSYS_FFFF1014, \
+                      PCI\VEN_1039&DEV_0900&SUBSYS_FFFF104D, \
+		      PCI\VEN_1039&DEV_0900
+
+;----------------------------------------------------------------------------
+; Device section
+; for win2K
+;
+[SiS]
+%GEN.DeviceDesc%    = sis900.ndi, PCI\VEN_1039&DEV_0900
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09001039
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B15E0E11
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01011019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01021019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01031019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01041019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01051019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01061019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01071019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01081019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01091019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01101019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01111019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01121019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01131019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01141019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01151019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01161019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01171019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01181019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01191019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01201019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01651019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01661019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05221019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05281019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05411019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05421019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05601019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05721019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_07001019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_07021019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_08301019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09701019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09731019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09821019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09921019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09951019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09991019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A011019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A081019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A141019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A371019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A381019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A391019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A401019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A411019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A421019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A431019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A441019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A451019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A461019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0D041019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0F051019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0F121019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0F171019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0F521019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60001019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60011019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60021019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60031019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60041019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60051019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60061019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60071019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60081019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60091019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60101019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60111019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60121019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60131019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60141019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60151019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60161019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60171019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60181019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60191019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60201019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60211019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60221019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60231019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60241019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60251019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60261019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60271019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60281019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60291019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60301019
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_000F1025
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00171025
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_82191033
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_82211033
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_827E1033
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_14551043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_15051043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_800B1043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_800C1043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80321043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80351043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80781043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_807C1043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80E11043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80E21043
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09001054
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_70101071
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_71201071
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_71211071
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_73331071
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_75211071
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_75221071
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_77621071
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_86401071
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_5330107D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_5340107D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_5350107D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0900107D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_630E1098
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_7101109F
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_11091170
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_32091170
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_06301297
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_101613BD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_101B13BD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_102213BD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_102C13BD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_180413BD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_31001458
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_E0001458
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_10031462
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_558C1462
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_208914A4
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_209714A4
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_213414A4
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_213614A4
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_213714A4
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_215314A4
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_219314CD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_219414CD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_21B114CD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_21B714CD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_110014FF
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_020114FF
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_040514FF
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_090014FF
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_90191509
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_901A1509
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_901B1509
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_901C1509
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_90381509
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_8807152D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_11031558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_11041558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_18001558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_20001558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_22001558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_22021558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_22041558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_22051558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_42011558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_51041558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60001558
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00741565
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00811565
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00901565
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00F01565
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00F11565
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B500156D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B725156D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B901156D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B928156D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50011584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50021584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50031584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50041584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50051584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50061584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50071584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50101584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50111584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50121584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50131584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50201584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50211584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50221584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50231584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60011584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60021584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60031584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60041584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60051584
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_100315BD
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_000215C5
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_011215C5
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_316015D5
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_636015D5
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_716015D5
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_816715D5
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_838315D5
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_70001631
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0800165D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_8810165D
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0005168F
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_20021695
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_021817C4
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_200117C4
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A162270F
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A172270F
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A182270F
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A372270F
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A562270F
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_630E3411
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_06453411
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_06503411
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0021A0A0
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0068A0A0
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0298A0A0
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0299A0A0
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_02AEA0A0
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_FFFF1039
+%sis900.DeviceDesc% = sis900.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_3020103C
+
+[IBM]
+%sisibm.DeviceDesc% = sisibm.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01B21014
+%sisibm.DeviceDesc% = sisibm.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01BA1014
+%sisibm.DeviceDesc% = sisibm.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01BB1014
+%sisibm.DeviceDesc% = sisibm.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01FB1014
+%sisibm.DeviceDesc% = sisibm.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_02011014
+%sisibm.DeviceDesc% = sisibm.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_FFFF1014
+
+[SONY]
+%sissony.DeviceDesc%= sissony.ndi,PCI\VEN_1039&DEV_0900&SUBSYS_80D5104D
+%sissony.DeviceDesc%= sissony.ndi,PCI\VEN_1039&DEV_0900&SUBSYS_81B6104D
+%sissony.DeviceDesc%= sissony.ndi,PCI\VEN_1039&DEV_0900&SUBSYS_FFFF104D
+
+
+;----------------------------------------------------------------------------
+; for winXP
+;
+[SiS.NT.5.1]
+%GEN.DeviceDesc%    = sis900xp.ndi, PCI\VEN_1039&DEV_0900
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09001039
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B15E0E11
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01011019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01021019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01031019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01041019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01051019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01061019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01071019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01081019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01091019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01101019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01111019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01121019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01131019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01141019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01151019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01161019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01171019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01181019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01191019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01201019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01651019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01661019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05221019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05281019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05411019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05421019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05601019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_05721019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_07001019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_07021019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_08301019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09701019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09731019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09821019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09921019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09951019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09991019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A011019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A081019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A141019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A371019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A381019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A391019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A401019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A411019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A421019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A431019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A441019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A451019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0A461019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0D041019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0F051019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0F121019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0F171019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0F521019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60001019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60011019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60021019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60031019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60041019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60051019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60061019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60071019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60081019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60091019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60101019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60111019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60121019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60131019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60141019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60151019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60161019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60171019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60181019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60191019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60201019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60211019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60221019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60231019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60241019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60251019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60261019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60271019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60281019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60291019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60301019
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_000F1025
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00171025
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_82191033
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_82211033
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_827E1033
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_14551043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_15051043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_800B1043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_800C1043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80321043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80351043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80781043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_807C1043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80E11043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_80E21043
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_09001054
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_70101071
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_71201071
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_71211071
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_73331071
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_75211071
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_75221071
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_77621071
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_86401071
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_5330107D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_5340107D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_5350107D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0900107D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_630E1098
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_7101109F
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_11091170
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_32091170
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_06301297
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_101613BD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_101B13BD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_102213BD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_102C13BD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_180413BD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_31001458
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_E0001458
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_10031462
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_558C1462
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_208914A4
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_209714A4
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_213414A4
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_213614A4
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_213714A4
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_215314A4
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_219314CD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_219414CD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_21B114CD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_21B714CD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_110014FF
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_020114FF
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_040514FF
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_090014FF
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_90191509
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_901A1509
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_901B1509
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_901C1509
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_90381509
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_8807152D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_11031558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_11041558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_18001558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_20001558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_22001558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_22021558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_22041558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_22051558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_42011558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_51041558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60001558
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00741565
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00811565
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00901565
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00F01565
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_00F11565
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B500156D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B725156D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B901156D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_B928156D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50011584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50021584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50031584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50041584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50051584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50061584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50071584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50101584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50111584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50121584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50131584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50201584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50211584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50221584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_50231584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60011584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60021584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60031584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60041584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_60051584
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_100315BD
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_000215C5
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_011215C5
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_316015D5
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_636015D5
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_716015D5
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_816715D5
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_838315D5
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_70001631
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0800165D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_8810165D
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0005168F
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_20021695
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_021817C4
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_200117C4
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A162270F
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A172270F
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A182270F
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A372270F
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_A562270F
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_630E3411
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_06453411
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_06503411
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0021A0A0
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0068A0A0
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0298A0A0
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_0299A0A0
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_02AEA0A0
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_FFFF1039
+%sis900.DeviceDesc% = sis900xp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_3020103C
+
+[IBM.NT.5.1]
+%sisibm.DeviceDesc% = sisibmxp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01B21014
+%sisibm.DeviceDesc% = sisibmxp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01BA1014
+%sisibm.DeviceDesc% = sisibmxp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01BB1014
+%sisibm.DeviceDesc% = sisibmxp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_01FB1014
+%sisibm.DeviceDesc% = sisibmxp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_02011014
+%sisibm.DeviceDesc% = sisibmxp.ndi, PCI\VEN_1039&DEV_0900&SUBSYS_FFFF1014
+
+[SONY.NT.5.1]
+%sissony.DeviceDesc%= sissonyxp.ndi,PCI\VEN_1039&DEV_0900&SUBSYS_80D5104D
+%sissony.DeviceDesc%= sissonyxp.ndi,PCI\VEN_1039&DEV_0900&SUBSYS_81B6104D
+%sissony.DeviceDesc%= sissonyxp.ndi,PCI\VEN_1039&DEV_0900&SUBSYS_FFFF104D
+
+
+;----------------------------------------------------------------------------
+; Install sections
+;
+; Windows NT specific
+[sis900.ndi]
+Characteristics     = 0x84                        ; NCF_PHYSICAL | NCF_HAS_UI
+CopyFiles           = sisnic.CopyFiles, uninst.CopyFiles
+AddReg              = sis900.reg, nt5.reg
+BusType             = 5
+
+[sis900.ndi.Services]
+AddService          = SISNIC2K, 2, sisnic2k.Service, common.EventLog
+
+[sisibm.ndi]
+Characteristics     = 0x84                        ; NCF_PHYSICAL | NCF_HAS_UI
+CopyFiles           = sisnic.CopyFiles, uninst.CopyFiles
+AddReg              = sisibm.reg, nt5.reg
+BusType             = 5
+
+[sisibm.ndi.Services]
+AddService          = SISNIC2K, 2, sisnic2k.Service, common.EventLog
+
+[sissony.ndi]
+Characteristics     = 0x84                        ; NCF_PHYSICAL | NCF_HAS_UI
+CopyFiles           = sisnic.CopyFiles
+AddReg              = sissony.reg, nt5.reg
+BusType             = 5
+
+[sissony.ndi.Services]
+AddService          = SISNIC2K, 2, sisnic2k.Service, common.EventLog
+
+;----------------------------------------------------------------------------
+;
+; Windows XP specific
+[sis900xp.ndi]
+Characteristics     = 0x84                        ; NCF_PHYSICAL | NCF_HAS_UI
+CopyFiles           = sisnicxp.CopyFiles, uninst.CopyFiles
+AddReg              = sis900.reg, nt51.reg
+BusType             = 5
+
+[sis900xp.ndi.Services]
+AddService          = SISNICXP, 2, sisnicxp.Service, common.EventLog
+
+[sisibmxp.ndi]
+Characteristics     = 0x84                        ; NCF_PHYSICAL | NCF_HAS_UI
+CopyFiles           = sisnicxp.CopyFiles, uninst.CopyFiles
+AddReg              = sisibm.reg, nt51.reg
+BusType             = 5
+
+[sisibmxp.ndi.Services]
+AddService          = SISNICXP, 2, sisnicxp.Service, common.EventLog
+
+[sissonyxp.ndi]
+Characteristics     = 0x84                        ; NCF_PHYSICAL | NCF_HAS_UI
+CopyFiles           = sisnicxp.CopyFiles
+AddReg              = sissony.reg, nt51.reg
+BusType             = 5
+
+[sissonyxp.ndi.Services]
+AddService          = SISNICXP, 2, sisnicxp.Service, common.EventLog
+
+;----------------------------------------------------------------------------
+; Common driver parameters
+;
+[sis900.reg]
+HKR, Ndi\params\NetworkAddress,         ParamDesc,          0, %SiSNetworkAddress%
+HKR, NDI\params\NetworkAddress,         default,            0, ""
+HKR, Ndi\params\NetworkAddress,         optional,           0, "1"
+HKR, NDI\params\NetworkAddress,         type,               0, "edit"
+HKR, NDI\params\NetworkAddress,         LimitText,          0, "12"
+HKR, NDI\params\NetworkAddress,         UpperCase,          0, "1"
+
+HKR, Ndi\params\MediaType,              ParamDesc,          0, %SiSMediaType%
+HKR, Ndi\params\MediaType,              default,            0, "000"
+HKR, Ndi\params\MediaType,              type,               0, "enum"
+HKR, Ndi\params\MediaType\enum,         "000",              0, %SiSMediaAuto%
+HKR, Ndi\params\MediaType\enum,         "008",              0, %SiSMedia10BaseTHalf%
+HKR, Ndi\params\MediaType\enum,         "010",              0, %SiSMedia10BaseTFull%
+HKR, Ndi\params\MediaType\enum,         "020",              0, %SiSMedia100BaseTXHalf%
+HKR, Ndi\params\MediaType\enum,         "040",              0, %SiSMedia100BaseTxFull%
+
+HKR, Ndi\params\PhyPowerdown,           ParamDesc,          0, "Power Saving"
+HKR, Ndi\params\PhyPowerdown,           default,            0, "1"
+HKR, Ndi\params\PhyPowerdown,           type,               0, "enum"
+HKR, Ndi\params\PhyPowerdown\enum,      "1",    	    0, "Enable"
+HKR, Ndi\params\PhyPowerdown\enum,      "0",                0, "Disable"
+
+HKLM,%SiSLanUninst%,                    %SiSUnDisplayName%, 0, %SiSUnDisplayNameStr%
+HKLM,%SiSLanUninst%,                    %SiSUnUninstString%,0, %10%\SiS\900\Uninst.exe
+
+[sisibm.reg]
+HKR, Ndi\params\NetworkAddress,         ParamDesc,          0, %SiSNetworkAddress%
+HKR, NDI\params\NetworkAddress,         default,            0, ""
+HKR, Ndi\params\NetworkAddress,         optional,           0, "1"
+HKR, NDI\params\NetworkAddress,         type,               0, "edit"
+HKR, NDI\params\NetworkAddress,         LimitText,          0, "12"
+HKR, NDI\params\NetworkAddress,         UpperCase,          0, "1"
+
+HKR, Ndi\params\MediaType,              ParamDesc,          0, %SiSMediaType%
+HKR, Ndi\params\MediaType,              default,            0, "000"
+HKR, Ndi\params\MediaType,              type,               0, "enum"
+HKR, Ndi\params\MediaType\enum,         "000",              0, %SiSMediaAuto%
+HKR, Ndi\params\MediaType\enum,         "008",              0, %SiSMedia10BaseTHalf%
+HKR, Ndi\params\MediaType\enum,         "010",              0, %SiSMedia10BaseTFull%
+HKR, Ndi\params\MediaType\enum,         "020",              0, %SiSMedia100BaseTXHalf%
+HKR, Ndi\params\MediaType\enum,         "040",              0, %SiSMedia100BaseTxFull%
+
+HKLM,%SiSLanUninst%,                    %SiSUnDisplayName%, 0, %SiSIBMUnDisplayNameStr%
+HKLM,%SiSLanUninst%,                    %SiSUnUninstString%,0, %10%\SiS\900\Uninst.exe
+
+[sissony.reg]
+HKR, Ndi\params\NetworkAddress,         ParamDesc,          0, %SiSNetworkAddress%
+HKR, NDI\params\NetworkAddress,         default,            0, ""
+HKR, Ndi\params\NetworkAddress,         optional,           0, "1"
+HKR, NDI\params\NetworkAddress,         type,               0, "edit"
+HKR, NDI\params\NetworkAddress,         LimitText,          0, "12"
+HKR, NDI\params\NetworkAddress,         UpperCase,          0, "1"
+
+HKR, Ndi\params\MediaType,              ParamDesc,          0, %SiSMediaType%
+HKR, Ndi\params\MediaType,              default,            0, "000"
+HKR, Ndi\params\MediaType,              type,               0, "enum"
+HKR, Ndi\params\MediaType\enum,         "000",              0, %SiSMediaAuto%
+HKR, Ndi\params\MediaType\enum,         "008",              0, %SiSMedia10BaseTHalf%
+HKR, Ndi\params\MediaType\enum,         "010",              0, %SiSMedia10BaseTFull%
+HKR, Ndi\params\MediaType\enum,         "020",              0, %SiSMedia100BaseTXHalf%
+HKR, Ndi\params\MediaType\enum,         "040",              0, %SiSMedia100BaseTxFull%
+
+;-----------------------------------------------------------------------------
+; Ndi object registration
+;
+;NT specific
+[nt5.reg]
+HKR, Ndi,                               Service,            0, "SISNIC2K"
+HKR, Ndi\Interfaces,                    UpperRange,         0, "ndis5"
+HKR, Ndi\Interfaces,                    LowerRange,         0, "ethernet"
+;
+;XP specific
+[nt51.reg]
+HKR, Ndi,                               Service,            0, "SISNICXP"
+HKR, Ndi\Interfaces,                    UpperRange,         0, "ndis5"
+HKR, Ndi\Interfaces,                    LowerRange,         0, "ethernet"
+
+;----------------------------------------------------------------------------
+; Services Sections for XP/2K
+;
+
+[sisnic2k.Service]
+DisplayName         = %sisnic.Service.DispName2K%
+ServiceType         = 1                           ;%SERVICE_KERNEL_DRIVER%
+StartType           = 3                           ;%SERVICE_DEMAND_START%
+ErrorControl        = 1                           ;%SERVICE_ERROR_NORMAL%
+ServiceBinary       = %12%\sisnic2k.sys
+LoadOrderGroup      = NDIS
+AddReg              = TextModeFlags.reg
+
+[sisnicxp.Service]
+DisplayName         = %sisnic.Service.DispNameXP%
+ServiceType         = 1                           ;%SERVICE_KERNEL_DRIVER%
+StartType           = 3                           ;%SERVICE_DEMAND_START%
+ErrorControl        = 1                           ;%SERVICE_ERROR_NORMAL%
+ServiceBinary       = %12%\sisnicxp.sys
+LoadOrderGroup      = NDIS
+AddReg              = TextModeFlags.reg
+
+[common.EventLog]
+AddReg              = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR,,                                   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,,                                   TypesSupported,     0x00010001, 7
+
+[TextModeFlags.reg]
+HKR,,                                   TextModeFlags,      0x00010001, 0x0001
+
+;----------------------------------------------------------------------------
+; Copy files
+;
+[DestinationDirs]
+DefaultDestDir      = 11
+sisnic.CopyFiles    = 12
+sisnicxp.CopyFiles  = 12
+uninst.CopyFiles    = 10,SiS\900
+
+[SourceDisksNames]
+1                   = %SiSSourceDiskName%,,,""
+
+[SourceDisksFiles]
+sisnic2k.sys        = 1
+sisnicxp.sys        = 1
+uninst.exe          = 1
+040c.lng            = 1
+0404.lng            = 1
+0411.lng            = 1
+
+[sisnic.CopyFiles]
+sisnic2k.sys
+
+[sisnicxp.CopyFiles]
+sisnicxp.sys
+
+[uninst.CopyFiles]
+uninst.exe
+040c.lng
+0404.lng
+0411.lng
+
+;----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+SiS                           = "SiS"
+IBM                           = "IBM"
+SONY                          = "SONY"
+GEN.DeviceDesc                = "SiS 900-Based PCI Fast Ethernet Adapter"
+sis900.DeviceDesc             = "SiS 900 PCI Fast Ethernet Adapter"
+sisibm.DeviceDesc             = "Integrated 10/100 Ethernet Controller"
+sissony.DeviceDesc            = "SiS 900 PCI Fast Ethernet Adapter"
+sisnic.Service.DispName2K     = "SiS PCI Fast Ethernet Adapter Driver for NDIS5"
+sisnic.Service.DispNameXP     = "SiS PCI Fast Ethernet Adapter Driver for NDIS51"
+SiSSourceDiskName             = "SiS PCI Fast Ethernet Adapter Drivers Disk"
+SiSMediaAuto                  = "Auto_Config"
+SiSMedia10BaseTHalf           = "10BaseT"
+SiSMedia10BaseTFull           = "10BaseT Full_Duplex"
+SiSMedia100BaseTXHalf         = "100BaseTX"
+SiSMedia100BaseTxFull         = "100BaseTX Full_Duplex"
+SiSMediaType                  = "MediaType"
+SiSNetworkAddress             = "NetworkAddress"
+SiSLanUninst                  = "Software\Microsoft\Windows\CurrentVersion\Uninstall\SiSLan"
+SiSUnDisplayName              = "DisplayName"
+SiSUnDisplayNameStr           = "SiS 900 PCI Fast Ethernet Adapter Driver"
+SiSIBMUnDisplayNameStr        = "Integrated 10/100 Ethernet Controller Driver"
+SiSUnUninstString             = "UninstallString"

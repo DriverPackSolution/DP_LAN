@@ -1,0 +1,141 @@
+[Version]
+Signature="$Windows NT$"
+Provider=%HPQ%
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Class=SCSIAdapter
+CatalogFile = bxois.cat
+DriverVer=07/28/2009,5.0.9.0
+
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+
+[Manufacturer]
+%HPQ%=HPQ, NTx86, NTamd64, NTia64
+
+
+[HPQ]
+
+
+[HPQ.NTamd64]
+
+
+[HPQ.NTia64]
+
+
+[HPQ.NTx86]
+%NC370T_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_164A14E4&SUBSYS_3101103C
+%NC370F_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_16AA14E4&SUBSYS_3102103C
+%NC370i_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_164A14E4&SUBSYS_3106103C
+%NC373i_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_164C14E4&SUBSYS_7038103C
+%NC373Fi_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_16AC14E4&SUBSYS_703B103C
+%NC380T_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_164A14E4&SUBSYS_3070103C
+%NC370Fi_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_16AA14E4&SUBSYS_310C103C
+%NC371i_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_164A14E4&SUBSYS_1709103C
+%NC373m_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_16AC14E4&SUBSYS_1706103C
+%NC373F_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_16AC14E4&SUBSYS_703D103C
+%NC374m_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_164C14E4&SUBSYS_7045103C
+%NC373T_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_164C14E4&SUBSYS_7037103C
+%NC382i_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_163914E4&SUBSYS_7055103C
+%NC382i_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_163A14E4&SUBSYS_7056103C
+%NC382T_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_163914E4&SUBSYS_7059103C
+%NC382m_desc% = iSCSIOffloadDevice.NTx86, B06BDRV\L4SC&PCI_163A14E4&SUBSYS_171D103C
+%NC532m_desc% = iSCSIOffloadDevice.NTx86, EBDRV\L4SC&PCI_164E14E4&SUBSYS_171C103C
+%NC532i_desc% = iSCSIOffloadDevice.NTx86, EBDRV\L4SC&PCI_164E14E4&SUBSYS_7058103C
+%NC532m_desc% = iSCSIOffloadDevice.NTx86, EBDRV\L4SC&PCI_164F14E4&SUBSYS_171C103C
+%NC532i_desc% = iSCSIOffloadDevice.NTx86, EBDRV\L4SC&PCI_164F14E4&SUBSYS_7058103C
+%NC532m_desc% = iSCSIOffloadDevice.NTx86, EBDRV\L4SC&PCI_165014E4&SUBSYS_171C103C
+%NC532i_desc% = iSCSIOffloadDevice.NTx86, EBDRV\L4SC&PCI_165014E4&SUBSYS_7058103C
+
+
+[iSCSIOffloadDevice.NTx86]
+CopyFiles=iSCSIOffloadDevice.NTx86.Copy
+AddReg=iSCSIOffloadDevice.Parameters
+
+
+[iSCSIOffloadDevice.NTx86.HW]
+DelReg=iSCSIOffloadDevice.HW.DelReg
+
+
+[iSCSIOffloadDevice.NTx86.Copy]
+; crashdump requires the .sys file name to match the servicename on server2003
+bxois.sys
+
+
+[iSCSIOffloadDevice.HW.DelReg]
+HKR,, "LowerFilters", 0x00018002, "ftsk"
+
+
+[iSCSIOffloadDevice.Services.iscsi.AddReg]
+HKR, "Parameters", "BusType", 0x00010001, 0x00000009
+HKR, "Parameters\Device", "DriverParameter", 0x00000000, ""
+HKR, "Parameters\Device", "EventCoalescingFactor", 0x00010001, 32
+HKLM, "SYSTEM\CurrentControlSet\Services\Disk", "TimeOutValue", 0x00010001,0x0000003C
+
+
+[iSCSIOffloadDevice.Parameters]
+HKR, "Parameters", "DisableDelayedAck", 0x00010001, 0x00000000
+HKR, "Parameters", "NOPOutInterval", 0x00010001, 0x00000005
+HKR, "Parameters", "ConnectionTimeout", 0x00010001, 0x0000000F
+HKR, "Parameters", "PortDownTimeout", 0x00010001, 0x0000003c
+
+
+[iSCSIOffloadDevice.NTx86.Services]
+AddService = BXOIS, 0x0000002, iSCSIOffloadDevice.NTx86.Services.iscsi, iscsi_Eventlog.NTx86
+DelService = ftsk
+
+
+[iscsi_Eventlog.NTx86]
+AddReg = iscsi_Eventlog_Addreg.NTx86
+
+
+[iscsi_Eventlog_Addreg.NTx86]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\iscsilog.dll;%%SystemRoot%%\System32\iologmsg.dll;%%SystemRoot%%\System32\drivers\bxois.sys"
+HKR, , TypesSupported  , 0x00010001, 7
+
+
+[iSCSIOffloadDevice.NTx86.Services.iscsi]
+DisplayName	= %BXOIS.SVCDESC%
+ServiceType	= 1	; kernel
+StartType	= 0	; boot
+ErrorControl	= 1	; normal
+ServiceBinary	= %12%\bxois.sys
+LoadOrderGroup	= SCSI Miniport
+AddReg          = iSCSIOffloadDevice.Services.iscsi.AddReg
+
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+
+[SourceDisksFiles.x86]
+bxois.sys = 1,,
+
+
+[Strings]
+HPQ = "Hewlett-Packard Company"
+DiskName = "HP NC370 Installation Media"
+NC370T_desc = "HP NC370T iSCSI Device"
+NC370F_desc = "HP NC370F iSCSI Device"
+NC370i_desc = "HP NC370i iSCSI Device"
+NC373i_desc = "HP NC373i iSCSI Device"
+NC373Fi_desc = "HP NC373i iSCSI Device"
+NC380T_desc = "HP NC380T iSCSI Device"
+NC370Fi_desc = "HP NC370i iSCSI Device"
+NC371i_desc = "HP NC371i iSCSI Device"
+NC373m_desc = "HP NC373m iSCSI Device"
+NC373F_desc = "HP NC373F iSCSI Device"
+NC374m_desc = "HP NC374m iSCSI Device"
+NC373T_desc = "HP NC373T iSCSI Device"
+NC382i_desc = "HP NC382i iSCSI Device"
+NC382T_desc = "HP NC382T iSCSI Device"
+NC382m_desc = "HP NC382m iSCSI Device"
+NC532m_desc = "HP NC532m iSCSI Device"
+NC532i_desc = "HP NC532i iSCSI Device"
+BXOIS.SVCDESC = "HP iSCSI Device"
+

@@ -1,0 +1,88 @@
+; Copyright (c) 2000, Microsoft
+
+[version]
+LayoutFile = layout.inf
+signature  = "$Windows NT$"
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+provider   = %SURECOM%
+DriverVer=07/01/2001,5.1.2535.0
+
+[Manufacturer]
+
+%SURECOM%  = SURECOM
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+
+[SURECOM]
+%Generic.DeviceDesc%   = NE2000ISAPNP.ndi, *RTL8019
+
+
+
+;----------------------------------------------------------------------------
+; *NE2000 Pls PnP
+;
+[NE2000ISAPNP.ndi]
+Characteristics = 0x04
+BusType         = 14
+AddReg          = ne2000.ndi.reg
+CopyFiles       = ne2000.CopyFiles
+
+[NE2000ISAPNP.ndi.Services]
+AddService = ne2000, 2, ne2000.Service, ne2000.AddEventLog
+
+
+
+;----------------------------------------------------------------------------
+; NE2000 Common
+;
+[ne2000.ndi.reg]
+HKR, Ndi,               Service,    0, "ne2000"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+[ne2000.CopyFiles]
+rtl8019.sys,,,2
+
+[ne2000.Service]
+DisplayName     =   %ne2000.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\rtl8019.sys
+LoadOrderGroup  =   NDIS
+
+[ne2000.AddEventLog]
+AddReg = ne2000.AddEventLog.reg
+
+[ne2000.AddEventLog.reg]
+HKR, , EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,     0x00010001, 7
+
+;----------------------------------------------------------------------------
+; Destination Directories
+;
+[DestinationDirs]
+DefaultDestDir   = 12
+ne2000.CopyFiles = 12
+
+;----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+;MSFT                    = "Microsoft"
+
+DisplayClassName        = "Network adapters"
+
+SURECOM                 = "SURECOM"
+
+
+Generic.DeviceDesc      = "SURECOM EP-312 ISA PnP Ethernet Adapter"
+genpcmcia.DeviceDesc    = "SURECOM EP-312 ISA PnP Ethernet Adapter"
+
+
+
+ne2000.Service.DispName = "SURECOM EP-312 ISA PnP Ethernet Adapter"
+

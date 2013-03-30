@@ -1,0 +1,1 @@
+winsetup -s -p -i

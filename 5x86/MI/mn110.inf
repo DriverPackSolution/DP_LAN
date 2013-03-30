@@ -1,0 +1,152 @@
+[Version]
+Signature  = "$CHICAGO$"
+Compatible = 1
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %MSFT%
+CatalogFile = MN110.cat
+DriverVer   = 06/20/2002, 2.07.2002.0620
+
+[Manufacturer]
+%MSFT%   = MSFT
+
+[ControlFlags]
+ExcludeFromSelect = USB\VID_045E&PID_007A
+
+[MSFT]
+%MSHUSB.DeviceDesc% = MSHUSB.Ndi,USB\VID_045E&PID_007A
+
+[MSHUSB.Ndi]
+AddReg   = MSHUSB.Reg, MSHUSB.Params, MSHUSB.Con.Reg
+CopyFiles = MSHUSB.ndis.copyfiles
+
+[MSHUSB.Ndi.NT]
+AddReg          = MSHUSB.NT.Reg, MSHUSB.Params, MSHUSB.Con.Reg
+Characteristics = 0x84
+BusType         = 15
+CopyFiles       = MSHUSB.ndis.copyfiles.NT
+
+[MSHUSB.Ndi.NT.Services]
+AddService = MN110-50, 2, MSHUSB.Service, Common.EventLog
+
+[MSHUSB.ndis.copyfiles]
+MN110-50.SYS,,,2
+
+[MSHUSB.ndis.copyfiles.NT]
+MN110-50.SYS,,,2
+
+[MSHUSB.Reg]
+HKR,Ndi,DeviceID,,USB\VID_045E&PID_007A
+HKR,,AdapterName,,MN110-50
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,MN110-50.SYS
+
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,MN110-50
+
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+HKR,Ndi\Install,,,"MSHUSB.Install"
+
+HKR,Ndi,HelpText,,"Microsoft(R) USB Adapter MN-110"
+
+
+[MSHUSB.Params]
+HKR, ,TxPacketDesc,    0, "40"
+HKR, ,RxPacketDesc,    0, "20"
+
+[MSHUSB.Con.Reg]
+HKR,Ndi\Params\MediaType,ParamDesc,,"Media Type"
+HKR,Ndi\Params\MediaType,default,,"0"
+HKR,Ndi\Params\MediaType,type,,"enum"
+HKR,Ndi\Params\MediaType\enum,0,,"AutoSense"
+HKR,Ndi\Params\MediaType\enum,1,,"10BaseT"
+HKR,Ndi\Params\MediaType\enum,2,,"10BaseT Full_Duplex"
+HKR,Ndi\Params\MediaType\enum,3,,"100BaseTX"
+HKR,Ndi\Params\MediaType\enum,4,,"100BaseTX Full_Duplex"
+HKR,Ndi\Params\MediaType,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl,ParamDesc,,"Flow Control"
+HKR,Ndi\Params\FlowControl,default,,"1"
+HKR,Ndi\Params\FlowControl,type,,"enum"
+HKR,Ndi\Params\FlowControl\enum,0,,"Enable"
+HKR,Ndi\Params\FlowControl\enum,1,,"Disable"
+HKR,Ndi\Params\FlowControl,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl_Tx,ParamDesc,,"Flow Control Base Rx Packets"
+HKR,Ndi\Params\FlowControl_Tx,default,,"0"
+HKR,Ndi\Params\FlowControl_Tx,type,,"enum"
+HKR,Ndi\Params\FlowControl_Tx\enum,0,,"Disable"
+HKR,Ndi\Params\FlowControl_Tx\enum,1,," 1 Packet"
+HKR,Ndi\Params\FlowControl_Tx\enum,2,," 2 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,3,," 4 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,4,," 8 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,5,,"16 Packets"
+HKR,Ndi\Params\FlowControl_Tx\enum,6,,"32 Packets"
+HKR,Ndi\Params\FlowControl_Tx,flag,1,"20","00","00","00"
+
+HKR,Ndi\Params\FlowControl_Rx,ParamDesc,,"Flow Control Base Rx Size"
+HKR,Ndi\Params\FlowControl_Rx,default,,"0"
+HKR,Ndi\Params\FlowControl_Rx,type,,"enum"
+HKR,Ndi\Params\FlowControl_Rx\enum,0,,"Disable"
+HKR,Ndi\Params\FlowControl_Rx\enum,1,," 1K"
+HKR,Ndi\Params\FlowControl_Rx\enum,2,," 2K"
+HKR,Ndi\Params\FlowControl_Rx\enum,3,," 4K"
+HKR,Ndi\Params\FlowControl_Rx\enum,4,," 8K"
+HKR,Ndi\Params\FlowControl_Rx\enum,5,,"16K"
+HKR,Ndi\Params\FlowControl_Rx\enum,6,,"32K"
+HKR,Ndi\Params\FlowControl_Rx,flag,1,"20","00","00","00"
+
+[MSHUSB.NT.Reg]
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "MN110-50"
+HKR,,                Platform,   0, "1"
+
+[MSHUSB.Service]
+DisplayName    = %MSHUSB.Service.DispName%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\MN110-50.SYS
+LoadOrderGroup = NDIS,NTKERN,NDIS
+AddReg         = TextModeFlags.Reg
+
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR, , TypesSupported  , 0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[DestinationDirs]
+MSHUSB.ndis.copyfiles    = 11
+MSHUSB.ndis.copyfiles.NT = 12
+DefaultDestDir           = 11
+
+
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+MN110.INF = 1
+MN110-50.SYS = 1
+
+
+[Strings]
+MSFT = "Microsoft"
+
+DISKNAME = "Microsoft(R) Broadband Network driver disk"
+
+MSHUSB.DeviceDesc       = "Microsoft(R) USB Adapter MN-110"
+MSHUSB.Service.DispName = "Microsoft(R) USB Adapter MN-110"

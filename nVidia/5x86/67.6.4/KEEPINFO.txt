@@ -1,0 +1,40 @@
+
+nforce_winxp_16.08_international_whql.exe
+
+nVIDIA nForce 630i/610i ForceWare Driver 16.08 WHQL Windows 2000/XP International
+
+Version: 16.08 
+Release Date: 10.12.2007 
+Operating System: Windows XP (32-Bit) 
+Language: English (International)  
+File Size: 90.6 MB 
+WHQL driver package for nForce 630i / GeForce 7150 motherboards. 
+WHQL driver package for nForce 630i / GeForce 7100 motherboards. 
+WHQL driver package for nForce 610i / GeForce 7050 motherboards. 
+
+Windows XP Driver Versions: 
+
+Ethernet Driver (v67.64) WHQL
+
+
+
+Version: 15.45 WHQL
+Release Date: 2009.10.01
+Operating System: Windows XP
+Language: English (UK)
+File Size:152 MB
+	
+    * Ethernet Driver (v73.10) WHQL
+    * Network Management Tools (v73.13) "Sedona"
+
+nForce 9 series:
+980a SLI
+
+nForce 7 series:
+720a (GeForce 8100), 740i SLI, 730a (GeForce 8300/8200), 760i SLI, 780a SLI, 750i SLI, 730i (Geforce 9400/9300), 710a, 740a SLI, 720i, 750a SLI
+
+nForce 6 series:
+630i/GeForce 7100, 610i/GeForce 7050, 630a / GeForce 7025, 630a / GeForce 7050, 630i/GeForce 7150, 650i Ultra, 650i SLI
+
+nForce 5 series:
+560, 520, 590 SLI AMD

@@ -1,0 +1,294 @@
+; /****************************************************************************
+; ** COPYRIGHT (C) 2002-2005 Agere Systems                                   **
+; ** HTTP://WWW.AGERE.COM/                                                   **
+; ** AGR1310 Gigabit Ethernet NDIS 5.0/5.1 DRIVER                            **
+; ****************************************************************************/
+[version]
+;Layoutfile parameter is reserved for internal Microsoft use only
+;LayoutFile = layout.inf
+Signature   = "$Chicago$"
+CatalogFile = AGR1310.cat
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Agere%
+Compatible  = 1
+DriverVer   = 07/20/2005,1.2.8.0
+
+[Manufacturer]
+%Agere%     = Agere, NT.5.1
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_11C1&DEV_EDOO
+; /*=========================================================================*/
+
+[Agere]
+; DisplayName           Section          DeviceID for both Mobile and Consumer
+; -----------           -------          --------------------------------------------
+%AGR1310.DeviceDescNIC%  = AGR1310.ndi,     PCI\VEN_11C1&DEV_ED00&SUBSYS_ED0011C1
+%AGR1310.DeviceDescLOM%  = AGR1310.ndi,     PCI\VEN_11C1&DEV_ED00&SUBSYS_81AC1043
+%AGR1310.DeviceDescLOM%  = AGR1310.ndi,     PCI\VEN_11C1&DEV_ED00&SUBSYS_81B61043
+%AGR1310.DeviceDescLOM%  = AGR1310.ndi,     PCI\VEN_11C1&DEV_ED00&SUBSYS_E0001458
+
+[Agere.NT.5.1]
+; DisplayName           Section          DeviceID
+; -----------           -------          --------
+%AGR1310.DeviceDescNIC%  = AGR1310.NT.5.1,  PCI\VEN_11C1&DEV_ED00&SUBSYS_ED0011C1
+%AGR1310.DeviceDescLOM%  = AGR1310.NT.5.1,  PCI\VEN_11C1&DEV_ED00&SUBSYS_81AC1043
+%AGR1310.DeviceDescLOM%  = AGR1310.NT.5.1,  PCI\VEN_11C1&DEV_ED00&SUBSYS_81B61043
+%AGR1310.DeviceDescLOM%  = AGR1310.NT.5.1,  PCI\VEN_11C1&DEV_ED00&SUBSYS_E0001458
+
+; /****************************************************************************
+;    Agere PCI Ethernet Adapter
+; /****************************************************************************
+; Windows NT specific entry
+[AGR1310.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = Access.reg, Cass.reg, AGR1310.NT.reg
+CopyFiles       = AGR1310.CopyFiles50
+
+; Windows XP specific entry
+[AGR1310.NT.5.1]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = Access.reg, Cass.reg, AGR1310.XP.reg
+CopyFiles       = AGR1310.CopyFiles51
+
+[AGR1310.ndi.NT.Services]
+AddService = AGR1310_50, 2, AGR1310.NT.Service, common.EventLog
+
+[AGR1310.NT.5.1.Services]
+AddService = AGR1310_51, 2, AGR1310.XP.Service, common.EventLog
+
+; /****************************************************************************
+;    common base for 10/100Mb Adapters
+; /****************************************************************************
+[Access.reg]
+HKR, Ndi\params\SpeedDuplex,         ParamDesc,  0, %SpeedDuplex%
+HKR, Ndi\params\SpeedDuplex,         default,    0, "0"
+HKR, Ndi\params\SpeedDuplex,         type,       0, "enum"
+HKR, Ndi\params\SpeedDuplex\enum,    "0",        0, %AutoDetect%
+HKR, Ndi\params\SpeedDuplex\enum,    "1",        0, %10Mb-Half-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,    "2",        0, %10Mb-Full-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,    "3",        0, %100Mb-Half-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,    "4",        0, %100Mb-Full-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,    "5",        0, %1000Mb-Full-Duplex%
+
+
+; /****************************************************************************
+;    Cass common
+; /****************************************************************************
+[Cass.reg]
+;/*****************************************************************************
+;   Flow Control
+; ****************************************************************************/
+HKR, Ndi\params\FlowControl,        ParamDesc,  0, "%FlowControl%"
+HKR, Ndi\params\FlowControl,        MiniHelp,   0, "%FlowControlMiniHelp%"
+HKR, Ndi\params\FlowControl,        default,    0, "0"
+HKR, Ndi\params\FlowControl,        type,       0, "enum"
+HKR, Ndi\params\FlowControl\enum,   "0",        0, "%BOTH%"
+HKR, Ndi\params\FlowControl\enum,   "1",        0, "%TXONLY%" 
+HKR, Ndi\params\FlowControl\enum,   "3",        0, "%NONE%" 
+
+;/*****************************************************************************
+;   MAC address
+; ****************************************************************************/
+HKR, Ndi\params\NetworkAddress,      ParamDesc,  0, "%NetworkAddress%"
+HKR, Ndi\params\NetworkAddress,      default,    0, "00053D000200"
+HKR, Ndi\params\NetworkAddress,      LimitText,  0, "12"
+HKR, Ndi\params\NetworkAddress,      type,       0, "edit"
+
+;/*****************************************************************************
+;   add registry entry for WOL matching
+; ****************************************************************************/
+HKR, Ndi\params\WOLMatch,        ParamDesc,  0, "%WOLMatch%"
+HKR, Ndi\params\WOLMatch,        MiniHelp,   0, "%WOLMiniHelp%"
+HKR, Ndi\params\WOLMatch,        default,    0, "7"
+HKR, Ndi\params\WOLMatch,        type,       0, "enum"
+HKR, Ndi\params\WOLMatch\enum,   "0",        0, "%DISABLE%"
+HKR, Ndi\params\WOLMatch\enum,   "1",        0, "%MAGIC%"
+HKR, Ndi\params\WOLMatch\enum,   "2",        0, "%PATTERN%"
+HKR, Ndi\params\WOLMatch\enum,   "3",        0, "%BOTHMATCH%"
+HKR, Ndi\params\WOLMatch\enum,   "7",        0, "%AUTOMATIC%"
+
+;/*****************************************************************************
+;   Which will be AND / ORd with the link state change WOL setting
+; ****************************************************************************/
+HKR, Ndi\params\WOLLink,        ParamDesc,  0, "%WOLLink%"
+HKR, Ndi\params\WOLLink,        MiniHelp,   0, "%WOLMiniHelp%"
+HKR, Ndi\params\WOLLink,        default,    0, "3"
+HKR, Ndi\params\WOLLink,        type,       0, "enum"
+HKR, Ndi\params\WOLLink\enum,   "0",        0, "%DISABLE%"
+HKR, Ndi\params\WOLLink\enum,   "1",        0, "%FORCE%"
+HKR, Ndi\params\WOLLink\enum,   "3",        0, "%AUTOMATIC%"
+
+;/*****************************************************************************
+;   Whether to wake from s5 (shutdown)
+; ****************************************************************************/
+HKR, Ndi\params\WOLFromShutdown,        ParamDesc,  0, "%WOLFromShutdown%"
+HKR, Ndi\params\WOLFromShutdown,        MiniHelp,   0, "%WOLMiniHelp%"
+HKR, Ndi\params\WOLFromShutdown,        default,    0, "1"
+HKR, Ndi\params\WOLFromShutdown,        type,       0, "enum"
+HKR, Ndi\params\WOLFromShutdown\enum,   "0",        0, "%DISABLE%"
+HKR, Ndi\params\WOLFromShutdown\enum,   "1",        0, "%ENABLE%"
+
+;/*****************************************************************************
+;   jumbo packets
+; ****************************************************************************/
+HKR, Ndi\params\JumboPacketSize,      ParamDesc,  0, "%JumboPacketSize%"
+HKR, Ndi\params\JumboPacketSize,      MiniHelp,   0, "%JumboPacketSizeMiniHelp%"
+HKR, Ndi\params\JumboPacketSize,      default,    0, "1514"
+HKR, Ndi\params\JumboPacketSize,      type,       0, "enum"
+HKR, Ndi\params\JumboPacketSize\enum, "1514",     0, "%DISABLE%"
+HKR, Ndi\params\JumboPacketSize\enum, "2514",     0, "%BYTES2500%"
+HKR, Ndi\params\JumboPacketSize\enum, "4014",     0, "%BYTES4000%"
+HKR, Ndi\params\JumboPacketSize\enum, "4088",     0, "%BYTES4074%"
+HKR, Ndi\params\JumboPacketSize\enum, "9014",     0, "%BYTES9000%"
+HKR, Ndi\params\JumboPacketSize\enum, "9212",     0, "%BYTES9198%"
+
+;/*****************************************************************************
+;   LBFO identifier
+; ****************************************************************************/
+HKR, Ndi\params\BundleId,			ParamDesc,  0, "%BundleId%"
+HKR, Ndi\params\BundleId,			default,    0, ""
+HKR, Ndi\params\BundleId,			LimitText,  0, "12"
+HKR, Ndi\params\BundleId,			type,       0, "edit"
+
+; /****************************************************************************
+;    AGR1310 NT specific
+; /****************************************************************************
+[AGR1310.NT.reg]
+HKR, Ndi,                       Service,    0, "AGR1310_50"
+
+; /****************************************************************************
+;    use ndis5 as the upper bound because NT supports it
+; /****************************************************************************
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+
+[AGR1310.NT.Service]
+DisplayName     = %AGR1310.NT.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\AGR1310_50.sys
+LoadOrderGroup  = NDIS
+; /*=========================================================================*/
+
+
+; /****************************************************************************
+;    AGR1310 XP specific
+; /****************************************************************************
+[AGR1310.XP.reg]
+HKR, Ndi,                       Service,    0, "AGR1310_51"
+; /****************************************************************************
+;    use ndis5 as the upper bound because XP supports beyond it
+; /****************************************************************************
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+
+HKR, Ndi\params\VlanID,     ParamDesc,       0, %VlanID%
+HKR, Ndi\params\VlanID,     default,         0, "0"
+HKR, Ndi\params\VlanID,     type,            0, "long"
+HKR, Ndi\params\VlanID,     min,             0, "0"
+HKR, Ndi\params\VlanID,     max,             0, "4095"
+HKR, Ndi\params\VlanID,     step,            0, "1"
+HKR, Ndi\params\VlanID,     base,            0, "10"
+
+[AGR1310.XP.Service]
+DisplayName     = %AGR1310.XP.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\AGR1310_51.sys
+LoadOrderGroup  = NDIS
+; /*=========================================================================*/
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+; /*=========================================================================*/
+
+
+; /****************************************************************************
+;    DestinationDirs
+; /****************************************************************************
+[AGR1310.CopyFiles50]
+AGR1310_50.sys,,,2
+
+[AGR1310.CopyFiles51]
+AGR1310_51.sys,,,2
+
+; /*=========================================================================*/
+
+
+[SourceDisksNames]
+; /****************************************************************************
+;    diskid = description[, [tagfile] [, <unused>, subdir]]
+; /****************************************************************************
+1 = %AGR1310DiskId%,AGR1310_50.sys,,
+2 = %AGR1310DiskId%,AGR1310_51.sys,,
+
+[SourceDisksFiles]
+; /****************************************************************************
+;   filename_on_source = diskID[, [subdir][, size]]
+; /****************************************************************************
+AGR1310_50.sys  = 1,50,   ; on distribution disk 1
+AGR1310_51.sys  = 2,51,   ; on distribution disk 2
+; /*=========================================================================*/
+
+
+[DestinationDirs]
+AGR1310.CopyFiles50  = 12
+AGR1310.CopyFiles51  = 12
+; /*=========================================================================*/
+
+[Strings]
+Agere                       = "Agere Systems"
+
+BundleId					= "LBFO Ganging Identifier"
+NetworkAddress              = "Override Network Address"
+AutoDetect                  = "Auto Detect"
+SpeedDuplex                 = "Link Speed & Duplex"
+10Mb-Half-Duplex            = "10Mbps/Half Duplex"
+10Mb-Full-Duplex            = "10Mbps/Full Duplex"
+100Mb-Half-Duplex           = "100Mbps/Half Duplex"
+100Mb-Full-Duplex           = "100Mbps/Full Duplex"
+1000Mb-Full-Duplex          = "1000Mbps/Full Duplex"
+VlanID						= "802.1q Vlan Tag"
+FlowControl                 = "802.3x Flow Control"
+JumboPacketSize				= "Jumbo Packet Support"
+WOLMatch                    = "Wake On Lan Triggers"
+WOLLink                     = "Wake On Link State Change"
+WOLFromShutdown				= "Wake from system shutdown"
+ENABLE                      = "Enable"
+DISABLE                     = "Disable"
+BOTH                        = "Xmit and Rcv"
+TXONLY                      = "Xmit only"
+NONE                        = "Off"
+MAGIC                       = "Magic Packet"
+PATTERN                     = "Pattern Match"
+BOTHMATCH					= "Magic & Pattern"
+AUTOMATIC                   = "Automatic"
+FORCE	                    = "Force"
+
+FlowControlMiniHelp         = "Enables 802.3x Flow Control"
+JumboPacketSizeMiniHelp     = "Adjust the maximum size of an ethernet frame"
+WOLMiniHelp                 = "Wake On Lan status variable for enabling WOL States"
+
+BYTES2500                   = "2500 Bytes"
+BYTES4000                   = "4000 Bytes"
+BYTES4074                   = "4074 Bytes"
+BYTES9000                   = "9000 Bytes"
+BYTES9198                   = "9kB (on the wire)" 
+
+AGR1310DiskId               = "Agere Driver Disk 1"
+AGR1310.DeviceDescNIC       = "Agere Systems ET-131x PCI-E Gigabit Ethernet Adapter"
+AGR1310.DeviceDescLOM       = "Agere Systems ET-131x PCI-E Gigabit Ethernet Controller"
+
+AGR1310.NT.Service.DispName = "Agere Systems ET-131x PCI-E Gigabit Ethernet Adapter NT Driver"
+AGR1310.XP.Service.DispName = "Agere Systems ET-131x PCI-E Gigabit Ethernet Adapter XP Driver"
+; /*=========================================================================*/

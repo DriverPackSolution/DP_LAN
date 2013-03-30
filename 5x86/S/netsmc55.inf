@@ -1,0 +1,269 @@
+;;*****************************************************************
+;; This INF file is for SMC EZ Card 10/100 (SMC1255TX/SMC1255TX-PF)
+;;
+;; Copyright (C) 2002 SMC Networks, Inc.
+;;*****************************************************************
+
+[version]
+Signature   = "$CHICAGO$"
+Compatible  = 1
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %SMC%
+CatalogFile = NETSMC55.CAT
+DriverVer   = 05/29/2002, 2.18.529.2002
+
+[Manufacturer]
+%SMC%   = DeviceSMC55T,NTx86.5.1
+
+[ControlFlags]
+ExcludeFromSelect =  PCI\VEN_1113&DEV_1216&SUBSYS_125510B8, \
+		             PCI\VEN_1113&DEV_1216&SUBSYS_A25510B8
+		             
+[DeviceSMC55T]
+%SMC55T.DeviceDesc%     = SMC55T,            PCI\VEN_1113&DEV_1216&SUBSYS_125510B8
+%SMC55TP.DeviceDesc%     = SMC55TP,            PCI\VEN_1113&DEV_1216&SUBSYS_A25510B8
+
+[DeviceSMC55T.NTx86.5.1]
+%SMC55T.DeviceDesc%     = SMC55T.NT.5.1,     PCI\VEN_1113&DEV_1216&SUBSYS_125510B8
+%SMC55TP.DeviceDesc%     = SMC55TP.NT.5.1,     PCI\VEN_1113&DEV_1216&SUBSYS_A25510B8
+
+[SMC55T]   
+AddReg          = SMC55T.Reg, SMC55T.com.Reg, SMC55T.pci.reg, SMC55T.con.reg
+CopyFiles       = SMC55T.ndis.copyfiles
+
+[SMC55TP]   
+AddReg          = SMC55TP.Reg, SMC55T.com.Reg, SMC55T.pci.reg, SMC55T.con.reg
+CopyFiles       = SMC55T.ndis.copyfiles
+
+[SMC55T.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SMC55T.NT.reg, SMC55T.NT.com.reg, SMC55T.pci.reg, SMC55T.con.reg
+CopyFiles       = SMC55T.ndis.copyfiles.NT
+
+[SMC55TP.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SMC55T.NT.reg, SMC55T.NT.com.reg, SMC55T.pci.reg, SMC55T.con.reg
+CopyFiles       = SMC55T.ndis.copyfiles.NT
+
+[SMC55T.NT.5.1]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SMC55T.NT.reg, SMC55T.NT.com.reg, SMC55T.pci.reg, SMC55T.con.reg
+CopyFiles       = SMC55T.ndis.copyfiles.XP
+
+[SMC55TP.NT.5.1]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SMC55T.NT.reg, SMC55T.NT.com.reg, SMC55T.pci.reg, SMC55T.con.reg
+CopyFiles       = SMC55T.ndis.copyfiles.XP 
+
+[SMC55T.NT.Services]  
+AddService      = SMC55T, 2, SMC55T.Service.NT, SMC55T.EventLog
+
+[SMC55TP.NT.Services]  
+AddService      = SMC55T, 2, SMC55TP.Service.NT, SMC55T.EventLog
+
+[SMC55T.NT.5.1.Services]
+AddService      = SMC55T, 2, SMC55T.Service.XP, SMC55T.EventLog
+
+[SMC55TP.NT.5.1.Services]
+AddService      = SMC55T, 2, SMC55TP.Service.XP, SMC55T.EventLog
+
+[SMC55T.ndis.copyfiles]
+SMC55T50.sys,,,2
+
+[SMC55T.ndis.copyfiles.NT]
+SMC55T50.sys,,,2
+
+[SMC55T.ndis.copyfiles.XP]
+SMC55T51.sys,,,2
+
+[SMC55T.Reg]  
+HKR, NDI,            DeviceID,          , "PCI\VEN_1113&DEV_1216&SUBSYS_125510B8"
+HKR,               , AdapterCFID,       , 12161113
+
+[SMC55TP.Reg]  
+HKR, NDI,            DeviceID,          , "PCI\VEN_1113&DEV_1216&SUBSYS_A25510B8"
+HKR,               , AdapterCFID,       , 12161113
+
+[SMC55T.com.Reg]  
+HKR,               , DevLoader,         , *ndis
+HKR,               , DeviceVxDs,        , SMC55T50.sys  
+
+HKR,               , AdapterType,       , 5
+HKR,               , BusType,           , 5
+
+HKR, NDIS,           MajorNdisVersion, 1, 04
+HKR, NDIS,           MinorNdisVersion, 1, 00
+HKR, NDIS,           LogDriverName,     , "SMC55T"  
+
+HKR, Ndi\Interfaces, DefUpper,          , "ndis3"
+HKR, Ndi\Interfaces, DefLower,          , "ethernet"
+HKR, Ndi\Interfaces, UpperRange,        , "ndis3"
+HKR, Ndi\Interfaces, LowerRange,        , "ethernet"
+
+HKR, Ndi\Install,    ndis3,            0, "SMC55T.Install"  
+
+[SMC55T.NT.reg]  
+HKR,               , AdapterCFID,      0, "12161113"
+
+[SMC55T.NT.com.reg]  
+HKR, Ndi,            Service,          0, "SMC55T"  
+HKR, Ndi\Interfaces, LowerRange,       0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange,       0, "ndis5"
+HKR,               , MediaType,        0, "0"
+
+[SMC55T.pci.reg]  
+HKR, , AdapterType,    0, "5"
+HKR, , TxPacketDesc,    , "600"
+HKR, , RxPacketDesc,    , "120"      
+HKR, , TxDmaDesc,       , "600"      
+HKR, , RxDmaDesc,       , "40"       
+HKR, , PacketsPerTxInt, , "10"       
+HKR, , PacketsPerRxInd, , "10"       
+HKR, , BurstLength,     , "0"        
+
+[SMC55T.con.reg]  
+HKR, Ndi\Params\MediaType,            ParamDesc,  , "Media Type"
+HKR, Ndi\Params\MediaType,            default,    , "0"
+HKR, Ndi\Params\MediaType,            type,       , "enum"
+HKR, Ndi\Params\MediaType\enum,       0,          , "AutoSense"
+HKR, Ndi\Params\MediaType\enum,       1,          , "10BaseT"
+HKR, Ndi\Params\MediaType\enum,       2,          , "10BaseT FDX"
+HKR, Ndi\Params\MediaType\enum,       3,          , "100BaseTX"
+HKR, Ndi\Params\MediaType\enum,       4,          , "100BaseTX FDX"
+HKR, Ndi\Params\MediaType\enum,       5,          , "10BaseT (Legacy Mode)"
+HKR, Ndi\Params\MediaType\enum,       6,          , "10BaseT FDX (Legacy Mode)"
+HKR, Ndi\Params\MediaType\enum,       7,          , "100BaseTX (Legacy Mode)"
+HKR, Ndi\Params\MediaType\enum,       8,          , "100BaseTX FDX (Legacy Mode)"
+HKR, Ndi\Params\MediaType,            flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\PowerManagement,      ParamDesc,  , "PME Enable"
+HKR, Ndi\Params\PowerManagement,      default,    , "1"
+HKR, Ndi\Params\PowerManagement,      type,       , "enum"
+HKR, Ndi\Params\PowerManagement\enum, 0,          , "Disabled"
+HKR, Ndi\Params\PowerManagement\enum, 1,          , "Enabled"
+HKR, Ndi\Params\PowerManagement,      flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\WakeupFrame,          ParamDesc,  , "Pattern Match Wakeup"
+HKR, Ndi\Params\WakeupFrame,          default,    , "1"
+HKR, Ndi\Params\WakeupFrame,          type,       , "enum"
+HKR, Ndi\Params\WakeupFrame\enum,     0,          , "Disabled"
+HKR, Ndi\Params\WakeupFrame\enum,     1,          , "Enabled"
+HKR, Ndi\Params\WakeupFrame,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\LinkOnChange,         ParamDesc,  , "Link Wakeup(Off->On)"
+HKR, Ndi\Params\LinkOnChange,         default,    , "0"
+HKR, Ndi\Params\LinkOnChange,         type,       , "enum"
+HKR, Ndi\Params\LinkOnChange\enum,    0,          , "Disabled"
+HKR, Ndi\Params\LinkOnChange\enum,    1,          , "Enabled"
+HKR, Ndi\Params\LinkOnChange,         flag,      1, "20","00","00","00"
+ 
+HKR, Ndi\Params\LinkOffChange,        ParamDesc,  , "Link Wakeup(On->Off)"
+HKR, Ndi\Params\LinkOffChange,        default,    , "0"
+HKR, Ndi\Params\LinkOffChange,        type,       , "enum"
+HKR, Ndi\Params\LinkOffChange\enum,   0,          , "Disabled"
+HKR, Ndi\Params\LinkOffChange\enum,   1,          , "Enabled"
+HKR, Ndi\Params\LinkOffChange,        flag,      1, "20","00","00","00" 
+
+HKR, Ndi\Params\MagicPacket,          ParamDesc,  , "Magic Packet Wakeup"
+HKR, Ndi\Params\MagicPacket,          default,    , "1"
+HKR, Ndi\Params\MagicPacket,          type,       , "enum"
+HKR, Ndi\Params\MagicPacket\enum,     0,          , "Disabled"
+HKR, Ndi\Params\MagicPacket\enum,     1,          , "Enabled"
+HKR, Ndi\Params\MagicPacket,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\FlowControl,          ParamDesc,  , "Flow Control"
+HKR, Ndi\Params\FlowControl,          default,    , "1"
+HKR, Ndi\Params\FlowControl,          type,       , "enum"
+HKR, Ndi\Params\FlowControl\enum,     0,          , "Disabled"
+HKR, Ndi\Params\FlowControl\enum,     1,          , "Enabled"
+HKR, Ndi\Params\FlowControl,          flag,      1, "20","00","00","00"
+
+HKR, Ndi\Params\PriorityPacket,       ParamDesc,  , "Priority Packet"
+HKR, Ndi\Params\PriorityPacket,       default,    , "0"
+HKR, Ndi\Params\PriorityPacket,       type,       , "enum"
+HKR, Ndi\Params\PriorityPacket\enum,  0,          , "Disabled"
+HKR, Ndi\Params\PriorityPacket\enum,  1,          , "Enabled"
+HKR, Ndi\Params\PriorityPacket,       flag,      1, "20","00","00","00"
+
+HKR,Ndi\params\VlanId,                ParamDesc, 0, "VLAN ID"
+HKR,Ndi\params\VlanId,                type,      0, "edit"
+HKR,Ndi\params\VlanId,                default,   0, "0"
+HKR,Ndi\params\VlanId,                LimitText, 0, "4"
+HKR,Ndi\params\VlanId,                UpperCase, 0, "1"
+HKR,Ndi\params\VlanId,                Optional,  0, "1"
+
+[SMC55T.Service.NT]  
+DisplayName     = %SMC55T.Service.DispName%   
+ServiceType     = 1                                
+StartType       = 3                                
+ErrorControl    = 1                                
+ServiceBinary   = %12%\SMC55T50.sys   
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[SMC55TP.Service.NT]  
+DisplayName     = %SMC55TP.Service.DispName%   
+ServiceType     = 1                                
+StartType       = 3                                
+ErrorControl    = 1                                
+ServiceBinary   = %12%\SMC55T50.sys   
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[SMC55T.Service.XP]  
+DisplayName     = %SMC55T.Service.DispName%   
+ServiceType     = 1                                
+StartType       = 3                                
+ErrorControl    = 1                                
+ServiceBinary   = %12%\SMC55T51.sys   
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[SMC55TP.Service.XP]  
+DisplayName     = %SMC55TP.Service.DispName%   
+ServiceType     = 1                                
+StartType       = 3                                
+ErrorControl    = 1                                
+ServiceBinary   = %12%\SMC55T51.sys   
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[SMC55T.EventLog]  
+AddReg = SMC55T.AddEventLog.reg  
+
+[SMC55T.AddEventLog.reg]  
+HKR, , EventMessageFile, 0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[DestinationDirs]
+SMC55T.ndis.copyfiles       = 11  
+SMC55T.ndis.copyfiles.NT    = 12
+SMC55T.ndis.copyfiles.XP    = 12  
+DefaultDestDir             = 11                               
+
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+SMC55T50.sys  = 1
+SMC55T51.sys  = 1
+
+[Strings]
+SMC  ="SMC Networks, Inc."
+
+DISKNAME = "SMC EZ Card 10/100 (SMC1255TX/SMC1255TX-PF) Network driver diskette"
+
+SMC55T.DeviceDesc       = "SMC EZ Card 10/100 (SMC1255TX)"
+SMC55TP.DeviceDesc       = "SMC EZ Card 10/100 (SMC1255TX-PF)"
+
+SMC55T.Service.DispName = "SMC EZ Card 10/100 (SMC1255TX)"
+SMC55TP.Service.DispName = "SMC EZ Card 10/100 (SMC1255TX-PF)"
+

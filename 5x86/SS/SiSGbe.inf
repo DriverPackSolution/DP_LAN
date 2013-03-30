@@ -1,0 +1,490 @@
+;+******************************************************************************+
+;|*                                                                            *|
+;|* Copyright (c) 2007, Silicon Integrated Systems Corp.  All rights reserved. *|
+;|*                                                                            *|
+;|* INF file for Windows XP/2K --- SiSGbe.inf                                  *|
+;|*                                                                            *|
+;+******************************************************************************+
+
+[version]
+Signature   = "$Windows NT$"
+CatalogFile = sisgbe.cat
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %SiS%
+Compatible  = 1
+DriverVer   = 03/03/2008,2.0.1039.1110
+
+[Manufacturer]
+%SiS%     = SiS, NT.5.1
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_1039&DEV_0190
+ExcludeFromSelect = PCI\VEN_1039&DEV_0191
+
+; --------------------------------------------
+; For win2K
+; --------------------------------------------
+[SiS]
+; DisplayName           Section           DeviceID
+; -----------           -------           --------
+%SiSGbe.DeviceDesc1%  = SiSGbe2K.ndi,     PCI\VEN_1039&DEV_0191				; SiS191 1000/100/10 Ethernet Device (SiS 191)
+%SiSGbe.DeviceDesc1%  = SiSGbe32K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_01911039&REV_00	; SiS191 1000/100/10 Ethernet Device (SiS 191)
+%SiSGbe.DeviceDesc1%  = SiSGbe32K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_1B821019&REV_00	; SiS191 1000/100/10 Ethernet Device (ECS)
+%SiSGbe.DeviceDesc2%  = SiSGbe22K.ndi,    PCI\VEN_1039&DEV_0190				; SiS190 100/10 Ethernet Device (SiS 190)
+%SiSGbe.DeviceDesc2%  = SiSGbe22K.ndi,    PCI\VEN_1039&DEV_0190&SUBSYS_01901039		; SiS190 100/10 Ethernet Device (SiS 190)
+%SiSGbe.DeviceDesc3%  = SiSGbe22K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_81391043		; SiS191 100/10 Ethernet Device (ASUS)
+%SiSGbe.DeviceDesc3%  = SiSGbe212K.ndi,   PCI\VEN_1039&DEV_0191&SUBSYS_C10B1631&REV_02  ; SiS191 100/10 Ethernet Device (ASUS)
+%SiSGbe.DeviceDesc3%  = SiSGbe22K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_1B181019		; SiS191 100/10 Ethernet Device (ECS)
+%SiSGbe.DeviceDesc3%  = SiSGbe22K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_1B9B1019		; SiS191 100/10 Ethernet Device (ECS)
+%SiSGbe.DeviceDesc4%  = SiSGbe22K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_E0001458		; SiS191 Ethernet Device (Gigabyte)
+%SiSGbe.DeviceDesc4%  = SiSGbe22K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_50041458		; SiS191 Ethernet Device (Gigabyte)
+%SiSGbe.DeviceDesc%   = SiSGbe2K.ndi,     PCI\VEN_1039&DEV_0191&REV_02			; SiS191 Ethernet Controller (SiS 968)
+%SiSGbe.DeviceDesc%   = SiSGbe2K.ndi,     PCI\VEN_1039&DEV_0191&SUBSYS_01911039&REV_02	; SiS191 Ethernet Controller (SiS 968)
+%SiSGbe.DeviceDesc%   = SiSGbe52K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_01911849		; SiS191 Ethernet Controller (ASRock)
+%SiSGbe.DeviceDesc5%  = SiSGbe42K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_11101734		; SiS Ethernet Controller (Inventec)
+%SiSGbe.DeviceDesc5%  = SiSGbe42K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_11251734		; SiS Ethernet Controller (Inventec)
+%SiSGbe.DeviceDesc5%  = SiSGbe42K.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_181C1043&REV_02  ; SiS Ethernet Controller (ASUS)
+
+; Windows 2K specific entry
+[SiSGbe2K.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSGiga.reg, SiSNT5.reg, SiSPhyDis.reg
+CopyFiles       = SiSGbe2K.CopyFiles
+
+[SiSGbe22K.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSNT5.reg, SiSPhyDis.reg
+CopyFiles       = SiSGbe2K.CopyFiles
+
+[SiSGbe212K.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSNT5.reg, SiSPhyEn.reg
+CopyFiles       = SiSGbe2K.CopyFiles
+
+[SiSGbe32K.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSGiga.reg, SiSNT5.reg, SiSClk.reg, SiSPhyDis.reg
+CopyFiles       = SiSGbe2K.CopyFiles
+
+[SiSGbe42K.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSGiga.reg, SiSNT5.reg, SiSClk.reg, SiSPhyEn.reg
+CopyFiles       = SiSGbe2K.CopyFiles
+
+[SiSGbe52K.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSGiga.reg, SiSNT5.reg, SiSClk.reg, SiSPhyDis.reg, SiSAutoForce.reg
+CopyFiles       = SiSGbe2K.CopyFiles
+
+[SiSGbe2K.ndi.Services]
+AddService = SiSGbe2K, 2, SiSGbe2K.Service, common.EventLog
+
+[SiSGbe22K.ndi.Services]
+AddService = SiSGbe2K, 2, SiSGbe2K.Service, common.EventLog
+
+[SiSGbe32K.ndi.Services]
+AddService = SiSGbe2K, 2, SiSGbe2K.Service, common.EventLog
+
+[SiSGbe42K.ndi.Services]
+AddService = SiSGbe2K, 2, SiSGbe2K.Service, common.EventLog
+
+[SiSGbe52K.ndi.Services]
+AddService = SiSGbe2K, 2, SiSGbe2K.Service, common.EventLog
+
+; --------------------------------------------
+; For winXP
+; --------------------------------------------
+[SiS.NT.5.1]
+; DisplayName           Section           DeviceID
+; -----------           -------           --------
+%SiSGbe.DeviceDesc1%  = SiSGbeXP.ndi,     PCI\VEN_1039&DEV_0191				; SiS191 1000/100/10 Ethernet Device (SiS 191)
+%SiSGbe.DeviceDesc1%  = SiSGbe3XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_01911039&REV_00	; SiS191 1000/100/10 Ethernet Device (SiS 191)
+%SiSGbe.DeviceDesc1%  = SiSGbe3XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_1B821019&REV_00	; SiS191 1000/100/10 Ethernet Device (ECS)
+%SiSGbe.DeviceDesc2%  = SiSGbe2XP.ndi,    PCI\VEN_1039&DEV_0190				; SiS190 100/10 Ethernet Adapter (SiS 190)
+%SiSGbe.DeviceDesc2%  = SiSGbe2XP.ndi,    PCI\VEN_1039&DEV_0190&SUBSYS_01901039		; SiS190 100/10 Ethernet Adapter (SiS 190)
+%SiSGbe.DeviceDesc3%  = SiSGbe2XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_81391043		; SiS191 100/10 Ethernet Device (ASUS)
+%SiSGbe.DeviceDesc3%  = SiSGbe21XP.ndi,   PCI\VEN_1039&DEV_0191&SUBSYS_C10B1631&REV_02  ; SiS191 100/10 Ethernet Device (ASUS)
+%SiSGbe.DeviceDesc3%  = SiSGbe2XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_1B181019		; SiS191 100/10 Ethernet Device (ECS)
+%SiSGbe.DeviceDesc3%  = SiSGbe2XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_1B9B1019		; SiS191 100/10 Ethernet Device (ECS)
+%SiSGbe.DeviceDesc4%  = SiSGbe2XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_E0001458		; SiS191 Ethernet Device (Gigabyte)
+%SiSGbe.DeviceDesc4%  = SiSGbe2XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_50041458		; SiS191 Ethernet Device (Gigabyte)
+%SiSGbe.DeviceDesc%   = SiSGbeXP.ndi,     PCI\VEN_1039&DEV_0191&REV_02			; SiS191 Ethernet Controller (SiS 968)
+%SiSGbe.DeviceDesc%   = SiSGbeXP.ndi,     PCI\VEN_1039&DEV_0191&SUBSYS_01911039&REV_02	; SiS191 Ethernet Controller (SiS 968)
+%SiSGbe.DeviceDesc%   = SiSGbe5XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_01911849		; SiS191 Ethernet Controller (ASRock)
+%SiSGbe.DeviceDesc5%  = SiSGbe4XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_11101734		; SiS Ethernet Controller (Inventec)
+%SiSGbe.DeviceDesc5%  = SiSGbe4XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_11251734		; SiS Ethernet Controller (Inventec)
+%SiSGbe.DeviceDesc5%  = SiSGbe4XP.ndi,    PCI\VEN_1039&DEV_0191&SUBSYS_181C1043&REV_02  ; SiS Ethernet Controller (ASUS)
+
+; Windows XP specific entry
+[SiSGbeXP.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSNdis51.reg, SiSGiga.reg, SiSNT51.reg, SiSPhyDis.reg
+CopyFiles       = SiSGbeXP.CopyFiles
+
+[SiSGbe2XP.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSNdis51.reg, SiSNT51.reg, SiSPhyDis.reg
+CopyFiles       = SiSGbeXP.CopyFiles
+
+[SiSGbe21XP.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSNdis51.reg, SiSNT51.reg, SiSPhyEn.reg
+CopyFiles       = SiSGbeXP.CopyFiles
+
+[SiSGbe3XP.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSNdis51.reg, SiSGiga.reg, SiSNT51.reg, SiSClk.reg, SiSPhyDis.reg
+CopyFiles       = SiSGbeXP.CopyFiles
+
+[SiSGbe4XP.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSNdis51.reg, SiSGiga.reg, SiSNT51.reg, SiSPhyEn.reg
+CopyFiles       = SiSGbeXP.CopyFiles
+
+[SiSGbe5XP.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = SiSGbe.reg, SiSNdis51.reg, SiSGiga.reg, SiSNT51.reg, SiSPhyDis.reg, SiSAutoForce.reg
+CopyFiles       = SiSGbeXP.CopyFiles
+
+[SiSGbeXP.ndi.Services]
+AddService = SiSGbeXP, 2, SiSGbeXP.Service, common.EventLog
+
+[SiSGbe2XP.ndi.Services]
+AddService = SiSGbeXP, 2, SiSGbeXP.Service, common.EventLog
+
+[SiSGbe3XP.ndi.Services]
+AddService = SiSGbeXP, 2, SiSGbeXP.Service, common.EventLog
+
+[SiSGbe4XP.ndi.Services]
+AddService = SiSGbeXP, 2, SiSGbeXP.Service, common.EventLog
+
+[SiSGbe5XP.ndi.Services]
+AddService = SiSGbeXP, 2, SiSGbeXP.Service, common.EventLog
+
+;-----------------------------------------------------------------------------
+; common base for 10/100/1000Mb Adapters
+;
+[SiSGbe.reg]
+HKR, Ndi\params\SpeedDuplex,       	ParamDesc,  0, %SpeedDuplex%
+HKR, Ndi\params\SpeedDuplex,       	default,    0, "0"
+HKR, Ndi\params\SpeedDuplex,       	type,       0, "enum"
+HKR, Ndi\params\SpeedDuplex\enum,  	"0",        0, %AutoNegotiation%
+HKR, Ndi\params\SpeedDuplex\enum,  	"1",        0, %10Mb-Half-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,  	"2",        0, %10Mb-Full-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,  	"3",        0, %100Mb-Half-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,  	"4",        0, %100Mb-Full-Duplex%
+
+HKR, Ndi\params\WakeupLink,       	ParamDesc,  0, %WakeupLink%
+HKR, Ndi\params\WakeupLink,       	default,    0, "0"
+HKR, Ndi\params\WakeupLink,       	type,       0, "enum"
+HKR, Ndi\params\WakeupLink\enum,  	"0",        0, %Disable%
+HKR, Ndi\params\WakeupLink\enum,  	"1",        0, %Enable%
+
+HKR, Ndi\params\WakeupMagic,       	ParamDesc,  0, %WakeupMagic%
+HKR, Ndi\params\WakeupMagic,       	default,    0, "1"
+HKR, Ndi\params\WakeupMagic,       	type,       0, "enum"
+HKR, Ndi\params\WakeupMagic\enum,  	"0",        0, %Disable%
+HKR, Ndi\params\WakeupMagic\enum,  	"1",        0, %Enable%
+
+HKR, Ndi\params\WakeupFrame,       	ParamDesc,  0, %WakeupFrame%
+HKR, Ndi\params\WakeupFrame,       	default,    0, "1"
+HKR, Ndi\params\WakeupFrame,       	type,       0, "enum"
+HKR, Ndi\params\WakeupFrame\enum,  	"0",        0, %Disable%
+HKR, Ndi\params\WakeupFrame\enum,  	"1",        0, %Enable%
+
+HKR, Ndi\params\FlowCtrl,             	ParamDesc,  0, %FlowCtrl%
+HKR, Ndi\params\FlowCtrl,             	default,    0, "1"
+HKR, Ndi\params\FlowCtrl,             	type,       0, "enum"
+HKR, Ndi\params\FlowCtrl\enum,        	"0",        0, %Disable%
+HKR, Ndi\params\FlowCtrl\enum,        	"1",        0, %Enable%
+
+HKR, Ndi\params\LargeSend,            	ParamDesc,  0, %LargeSend%
+HKR, Ndi\params\LargeSend,            	default,    0, "1"
+HKR, Ndi\params\LargeSend,            	type,       0, "enum"
+HKR, Ndi\params\LargeSend\enum,       	"0",        0, %Disable%
+HKR, Ndi\params\LargeSend\enum,       	"1",        0, %Enable%
+
+HKR, Ndi\params\TxChksum,             	ParamDesc,  0, %TxChksum%
+HKR, Ndi\params\TxChksum,             	default,    0, "4"
+HKR, Ndi\params\TxChksum,             	type,       0, "enum"
+HKR, Ndi\params\TxChksum\enum,        	"0",        0, %Disable%
+HKR, Ndi\params\TxChksum\enum,        	"1",        0, %IP%
+HKR, Ndi\params\TxChksum\enum,        	"2",        0, %IP-TCP%
+HKR, Ndi\params\TxChksum\enum,        	"3",        0, %IP-UDP%
+HKR, Ndi\params\TxChksum\enum,        	"4",        0, %IP-TCP-UDP%
+
+HKR, Ndi\params\RxChksum,             	ParamDesc,  0, %RxChksum%
+HKR, Ndi\params\RxChksum,             	default,    0, "4"
+HKR, Ndi\params\RxChksum,             	type,       0, "enum"
+HKR, Ndi\params\RxChksum\enum,        	"0",        0, %Disable%
+HKR, Ndi\params\RxChksum\enum,        	"1",        0, %IP%
+HKR, Ndi\params\RxChksum\enum,        	"2",        0, %IP-TCP%
+HKR, Ndi\params\RxChksum\enum,        	"3",        0, %IP-UDP%
+HKR, Ndi\params\RxChksum\enum,        	"4",        0, %IP-TCP-UDP%
+
+HKR,Ndi\params\NetworkAddress,        	ParamDesc,  0, %NetworkAddress%
+HKR,Ndi\params\NetworkAddress,        	type,       0, "edit"
+HKR,Ndi\params\NetworkAddress,        	default,    0, "000000000000"
+HKR,Ndi\params\NetworkAddress,        	LimitText,  0, "12"
+HKR,Ndi\params\NetworkAddress,        	UpperCase,  0, "1"
+HKR,Ndi\params\NetworkAddress,        	Optional,   0, "1"
+
+HKR, Ndi\params\NumRfd,         	ParamDesc,  0, "%NumRfd%"
+HKR, Ndi\params\NumRfd,         	default,    0, "256"
+HKR, Ndi\params\NumRfd,         	min,        0, "8"
+HKR, Ndi\params\NumRfd,         	max,        0, "00001024"
+HKR, Ndi\params\NumRfd,         	step,       0, "1"
+HKR, Ndi\params\NumRfd,         	Base,       0, "10"
+HKR, Ndi\params\NumRfd,         	type,       0, "int"
+
+HKR, Ndi\params\NumHwTcb,       	ParamDesc,  0, "%NumHwTcb%"
+HKR, Ndi\params\NumHwTcb,       	default,    0, "256"
+HKR, Ndi\params\NumHwTcb,       	min,        0, "8"
+HKR, Ndi\params\NumHwTcb,       	max,        0, "00008192"
+HKR, Ndi\params\NumHwTcb,       	step,       0, "1"
+HKR, Ndi\params\NumHwTcb,       	Base,       0, "10"
+HKR, Ndi\params\NumHwTcb,       	type,       0, "int"
+
+HKR, Ndi\params\Thold,             	ParamDesc,  0, %Thold%
+HKR, Ndi\params\Thold,             	default,    0, "3"
+HKR, Ndi\params\Thold,             	type,       0, "enum"
+HKR, Ndi\params\Thold\enum,        	"0",        0, %1_4%
+HKR, Ndi\params\Thold\enum,        	"1",        0, %2_4%
+HKR, Ndi\params\Thold\enum,        	"2",        0, %3_4%
+HKR, Ndi\params\Thold\enum,        	"3",        0, %4_4%
+
+HKR, Ndi\params\IntAutoTune,            ParamDesc,  0, %IntAutoTune%
+HKR, Ndi\params\IntAutoTune,            default,    0, "1"
+HKR, Ndi\params\IntAutoTune,            type,       0, "enum"
+HKR, Ndi\params\IntAutoTune\enum,       "0",        0, %Disable%
+HKR, Ndi\params\IntAutoTune\enum,       "1",        0, %Enable%
+
+;-----------------------------------------------------------------------------
+; For NDIS 5.1
+;
+[SiSNdis51.reg]
+HKR, Ndi\params\VlanID,               	ParamDesc,  0, %VlanID%
+HKR, Ndi\params\VlanID,               	type,       0, "long"
+HKR, Ndi\params\VlanID,               	default,    0, "0"
+HKR, Ndi\params\VlanID,               	min,        0, "0"
+HKR, Ndi\params\VlanID,               	max,        0, "4095"
+HKR, Ndi\params\VlanID,               	step,       0, "1"
+HKR, Ndi\params\VlanID,               	Optional,   0, "1"
+
+HKR, Ndi\params\PriorityPacket,       	ParamDesc,  0, %PriorityPacket%
+HKR, Ndi\params\PriorityPacket,       	default,    0, "0"
+HKR, Ndi\params\PriorityPacket,       	type,       0, "enum"
+HKR, Ndi\params\PriorityPacket\enum,  	"0",        0, %Disable%
+HKR, Ndi\params\PriorityPacket\enum,  	"1",        0, %Enable%
+
+HKR, Ndi\params\NumPriHwTcb,    	ParamDesc,  0, "%NumPriHwTcb%"
+HKR, Ndi\params\NumPriHwTcb,    	default,    0, "128"
+HKR, Ndi\params\NumPriHwTcb,    	min,        0, "8"
+HKR, Ndi\params\NumPriHwTcb,    	max,        0, "00004096"
+HKR, Ndi\params\NumPriHwTcb,    	step,       0, "1"
+HKR, Ndi\params\NumPriHwTcb,    	Base,       0, "10"
+HKR, Ndi\params\NumPriHwTcb,    	type,       0, "int"
+
+;-----------------------------------------------------------------------------
+; For SiS 191
+;
+[SiSGiga.reg]
+HKR, Ndi\params\JumboFrame,         	ParamDesc,  0, "%JumboFrame%"
+HKR, Ndi\params\JumboFrame,         	default,    0, "1500"
+HKR, Ndi\params\JumboFrame,         	min,        0, "1500"
+HKR, Ndi\params\JumboFrame,         	max,        0, "9500"
+HKR, Ndi\params\JumboFrame,         	step,       0, "500"
+HKR, Ndi\params\JumboFrame,         	Base,       0, "10"
+HKR, Ndi\params\JumboFrame,         	type,       0, "DWORD"
+
+HKR, Ndi\params\BurstEn,             	ParamDesc,  0, %BurstEn%
+HKR, Ndi\params\BurstEn,             	default,    0, "1"
+HKR, Ndi\params\BurstEn,             	type,       0, "enum"
+HKR, Ndi\params\BurstEn\enum,        	"0",        0, %Disable%
+HKR, Ndi\params\BurstEn\enum,        	"1",        0, %Enable%
+
+;-----------------------------------------------------------------------------
+; For Phy Power Saving Default Enabled
+;
+[SiSPhyEn.reg]
+HKR, Ndi\params\bPhyLowPower,           ParamDesc,  0, %bPhyLowPower%
+HKR, Ndi\params\bPhyLowPower,           default,    0, "1"
+HKR, Ndi\params\bPhyLowPower,           type,       0, "enum"
+HKR, Ndi\params\bPhyLowPower\enum,      "0",        0, %Disable%
+HKR, Ndi\params\bPhyLowPower\enum,      "1",        0, %Enable%
+
+;-----------------------------------------------------------------------------
+; For Phy Power Saving Default Disabled
+;
+[SiSPhyDis.reg]
+HKR, Ndi\params\bPhyLowPower,           ParamDesc,  0, %bPhyLowPower%
+HKR, Ndi\params\bPhyLowPower,           default,    0, "0"
+HKR, Ndi\params\bPhyLowPower,           type,       0, "enum"
+HKR, Ndi\params\bPhyLowPower\enum,      "0",        0, %Disable%
+HKR, Ndi\params\bPhyLowPower\enum,      "1",        0, %Enable%
+
+;-----------------------------------------------------------------------------
+; For Auto Negotiation to Specific Speed & Duplex Extra Options
+;
+[SiSAutoForce.reg]
+HKR, Ndi\params\SpeedDuplex\enum,  	"5",        0, %10Mb-Half-Duplex-A%
+HKR, Ndi\params\SpeedDuplex\enum,  	"6",        0, %10Mb-Full-Duplex-A%
+HKR, Ndi\params\SpeedDuplex\enum,  	"7",        0, %100Mb-Half-Duplex-A%
+HKR, Ndi\params\SpeedDuplex\enum,  	"8",        0, %100Mb-Full-Duplex-A%
+HKR, Ndi\params\SpeedDuplex\enum,  	"9",        0, %1000Mb-Full-Duplex-A%
+
+;-----------------------------------------------------------------------------
+; For SiS 191 Tx Clock Selection
+;
+[SiSClk.reg]
+HKR, Ndi\params\TxClkSelect,           	ParamDesc,  0, %TxClkSelect%
+HKR, Ndi\params\TxClkSelect,           	default,    0, "1"
+HKR, Ndi\params\TxClkSelect,           	type,       0, "enum"
+HKR, Ndi\params\TxClkSelect\enum,      	"0",        0, %Internal%
+HKR, Ndi\params\TxClkSelect\enum,      	"1",        0, %External%
+
+;-----------------------------------------------------------------------------
+; SiSGbe NT specific
+;
+
+[SiSNT5.reg]
+HKR, Ndi,                       Service,    0, "SiSGbe2K"
+; use ndis5 as the upper bound because NT supports it
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+
+[SiSNT51.reg]
+HKR, Ndi,                       Service,    0, "SiSGbeXP"
+; use ndis5 as the upper bound because NT supports it
+HKR, Ndi\Interfaces,            UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,            LowerRange, 0, "ethernet"
+
+
+[SiSGbe2K.Service]
+DisplayName     = %SiSGbe.Service.DispName1%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\SiSGbe2K.sys
+LoadOrderGroup  = NDIS
+
+[SiSGbeXP.Service]
+DisplayName     = %SiSGbe.Service.DispName2%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\SiSGbeXP.sys
+LoadOrderGroup  = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[SiSGbe2K.CopyFiles]
+SiSGbe2K.sys,,,2
+
+[SiSGbeXP.CopyFiles]
+SiSGbeXP.sys,,,2
+
+[SourceDisksNames]
+;
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+;
+1 = "SiS Driver Disk 1",,,
+
+[SourceDisksFiles]
+;
+; filename_on_source = diskID[, [subdir][, size]]
+;
+SiSGbe2K.sys = 1,, ; on distribution disk 1
+SiSGbeXP.sys = 1,, ; on distribution disk 1
+
+[DestinationDirs]
+SiSGbe2K.CopyFiles     	= 12
+SiSGbeXP.CopyFiles     	= 12
+DefaultDestDirs        	= 11
+
+[Strings]
+SiS                     = "Silicon Integrated Systems Corp."
+
+SpeedDuplex             = "Speed & Duplex"
+AutoNegotiation         = "Auto Negotiation"
+10Mb-Half-Duplex        = "10 Mbps Half Duplex"
+10Mb-Full-Duplex        = "10 Mbps Full Duplex"
+100Mb-Half-Duplex       = "100 Mbps Half Duplex"
+100Mb-Full-Duplex       = "100 Mbps Full Duplex"
+1000Mb-Full-Duplex      = "1.0 Gbps Full Duplex"
+10Mb-Half-Duplex-A      = "Auto Negotiate for 10HD"
+10Mb-Full-Duplex-A      = "Auto Negotiate for 10FD"
+100Mb-Half-Duplex-A     = "Auto Negotiate for 100HD"
+100Mb-Full-Duplex-A     = "Auto Negotiate for 100FD"
+1000Mb-Full-Duplex-A    = "Auto Negotiate for 1000FD"
+
+NumRfd                  = "Number of Rx Descriptors"
+NumHwTcb                = "Number of Tx Descriptors"
+NumPriHwTcb             = "Number of Tx High Priority Descriptors"
+
+SiSGbe.DeviceDesc       = "SiS191 Ethernet Controller"
+SiSGbe.DeviceDesc1      = "SiS191 1000/100/10 Ethernet Device"
+SiSGbe.DeviceDesc2      = "SiS190 100/10 Ethernet Device"
+SiSGbe.DeviceDesc3      = "SiS191 100/10 Ethernet Device"
+SiSGbe.DeviceDesc4      = "SiS191 Ethernet Device"
+SiSGbe.DeviceDesc5      = "SiS Ethernet Controller"
+
+SiSGbe.Service.DispName1 = "SiS191/SiS190 Ethernet Device NDIS 5.0 Driver"
+SiSGbe.Service.DispName2 = "SiS191/SiS190 Ethernet Device NDIS 5.1 Driver"
+
+WakeupLink		= "Wake on Link Changed"
+WakeupMagic		= "Wake on Magic Packet Received"
+WakeupFrame		= "Wake on Wake Pattern Received"
+Enable			= "Enabled"
+Disable			= "Disabled"
+VlanID                  = "VLAN ID"
+PriorityPacket		= "Priority Packet"
+FlowCtrl		= "Flow Control"
+BurstEn			= "Burst Transfer"
+RxBufShift		= "Rx Buffer Shift 0xA"
+LargeSend		= "Offload Large Send"
+TxChksum		= "Offload Tx Checksum"
+RxChksum		= "Offload Rx Checksum"
+IP			= "IP"
+IP-TCP			= "TCP/IP"
+IP-UDP			= "UDP/IP"
+IP-TCP-UDP		= "UDP/TCP/IP"
+NetworkAddress		= "Network Address"
+JumboFrame		= "Jumbo Frame"
+4K			= " 4K"
+8K			= " 8K"
+16K			= "16K"
+32K			= "32K"
+64K			= "64K"
+Thold			= "Tx Threshold"
+1_4			= "1/4"
+2_4			= "2/4"
+3_4			= "3/4"
+4_4			= "4/4"
+bPhyLowPower		= "Power Saving"
+IntAutoTune		= "Interrupt Auto-Tune"
+TxClkSelect		= "Tx Clock Select"
+Internal		= "Internal Clock"
+External		= "External Clock"

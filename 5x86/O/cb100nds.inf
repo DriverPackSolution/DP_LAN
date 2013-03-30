@@ -1,0 +1,252 @@
+; netcb100.inf
+;
+; Version 001
+;
+; Copyright 1999
+
+[Version]
+signature  = "$Windows NT$"
+Class      = Net
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+LayoutFile = layout.inf
+provider   = %PCMCIAs%
+
+[Manufacturer]
+%PCMCIAs%=PCMCIAs
+
+;[ControlFlags]
+;ExcludeFromSelect = PCI\VEN_1011&DEV_0019&SUBSYS_11011186
+;ExcludeFromSelect = PCI\VEN_1011&DEV_0019&SUBSYS_11401186
+;ExcludeFromSelect = PCI\VEN_1011&DEV_0019&SUBSYS_AB0113D1
+
+;******************************************************************************
+; CardBus Fast Ethernet Adapter
+;******************************************************************************
+[PCMCIAs]
+;* CardBus Registration
+
+%PCMCIAsCB100%=PCMCIAsCB100.ndi,PCI\VEN_1011&DEV_0019&SUBSYS_11011186
+%PCMCIAsCB100%=PCMCIAsCB100.ndi,PCI\VEN_1011&DEV_0019&SUBSYS_11401186
+%PCMCIAsCB100%=PCMCIAsCB100.ndi,PCI\VEN_1011&DEV_0019&SUBSYS_AB0113D1
+%PCMCIAsCB100%=PCMCIAsCB100.ndi,PCI\VEN_1011&DEV_0019&SUBSYS_AB1113D1
+
+; Non PNP DeviceID, necessary for SR1 WIN95
+%PCMCIAsCB100FL%=PCMCIAsCB100FL.ndi,CardBus-Fast_Ethernet
+
+[PCMCIAsCB100.ndi.NT]
+Characteristics = 0x4
+BusType         = 5
+AddReg          = CB100X.ndi.reg, ADDREG_CB1001.ndi.reg
+CopyFiles       = CB100.ndis5.CopyFiles
+
+[PCMCIAsCB100.ndi.NT.Services]
+AddService = CB100, 2, CB100.Service, CB100.EventLog
+
+[CB100X.ndi.reg]
+HKR, Ndi,               Service,    0, "CB100"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis3,ndis5"
+
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,,MemoryBaseAddress,1,01,00,00,00
+
+;This tells Miniport driver that we are running under OSR2, not WIN95 or NT
+;This parameter is NOT user configurable.
+HKR,,PlatformType,,1
+
+[CB100.ndis5.CopyFiles]
+cb100nds.sys,,,2
+
+[CB100.Service]
+DisplayName     = %PCMCIAsCB100%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\cb100nds.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.reg
+
+[CB100.EventLog]
+AddReg = CB100.AddEventLog.reg
+
+[CB100.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+
+
+[PCMCIAsCB100.ndi]
+AddReg=ADDREG_CB100.ndi.reg,ADDREG_CB1001.ndi.reg,CB100.ndi.reg, ADDREG_PCMCIAs_CB100.ndi.reg
+
+[PCMCIAsCB100FL.ndi]              ; WIN95 forced load support
+AddReg=ADDREG_CB100.ndi.reg,ADDREG_CB1001.ndi.reg,CB100FL.ndi.reg,ADDREG_PCMCIAs_CB100FL.ndi.reg
+LogConfig=CB100FL.LogConfig
+
+;******************************************************************************
+; Add these keys to the registry for all CB100 adapters
+;******************************************************************************
+[ADDREG_CB100.ndi.reg]
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,cb100nds.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"CB100"
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0A
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+
+;*
+; These are the user-configurable parameters which the driver parses.
+;
+
+;******************************************************************************
+;   This section contains Registry for Device specific parameters
+;******************************************************************************
+
+[ADDREG_CB1001.ndi.reg]
+;ConnectionType
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,0
+HKR,Ndi\params\ConnectionType,type,,enum
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,1,,"100BaseTx Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,2,,"100BaseTx"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,4,,"10BaseT (Twisted_Pair)"
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+;Transmit Threshold 100Mbps
+HKR,Ndi\params\TransmitThreshold100,ParamDesc,,"100Mbps Transmit Threshold"
+HKR,Ndi\params\TransmitThreshold100,default,,80
+HKR,Ndi\params\TransmitThreshold100,type,,enum
+HKR,Ndi\params\TransmitThreshold100\enum,80,," 128 bytes"
+HKR,Ndi\params\TransmitThreshold100\enum,100,," 256 bytes"
+HKR,Ndi\params\TransmitThreshold100\enum,200,," 512 bytes"
+HKR,Ndi\params\TransmitThreshold100\enum,400,,"1024 bytes"
+HKR,NDI\params\TransmitThreshold100,flag,1,20,00,00,00
+
+;Transmit Threshold 10Mbps
+HKR,Ndi\params\TransmitThreshold,ParamDesc,,"10Mbps Transmit Threshold"
+HKR,Ndi\params\TransmitThreshold,default,,60
+HKR,Ndi\params\TransmitThreshold,type,,enum
+HKR,Ndi\params\TransmitThreshold\enum,48,,"  72 bytes"
+HKR,Ndi\params\TransmitThreshold\enum,60,,"  96 bytes"
+HKR,Ndi\params\TransmitThreshold\enum,80,," 128 bytes"
+HKR,Ndi\params\TransmitThreshold\enum,A0,," 160 bytes"
+HKR,NDI\params\TransmitThreshold,flag,1,20,00,00,00
+
+;********************************************
+;   Registry for PCI common parameters
+;********************************************
+;params
+HKR,,AdapterType,,5
+HKR,,BusType,,5
+HKR,,MediaType,,1
+HKR,,AdapterCFID,,00191011
+
+HKR,,ReceiveBuffers,,10
+HKR,,UnderrunRetry,,2
+HKR,,InterrupMitigation,,0
+HKR,,MapRegisters,,8
+
+;Burst Length
+HKR,,BurstLength,,10
+;Underrun Threshold
+HKR,,UnderrunThreshold,,0A
+;StoreAndForward
+HKR,,StoreAndForward,,0
+;MemoryReadMultiple
+HKR,,MemoryReadMultiple,,0
+
+;******************************************************************************
+; This section contains stuff specific to each version of adapter.
+;******************************************************************************
+[CB100.ndi.reg]
+HKR,Ndi\Install,ndis3,,"CB100.ndis3"
+HKR,Ndi,DeviceID,,"PCI\VEN_1011&DEV_0019"
+HKR,Ndi,CardType,,"PCI"                         ; CardType is only used on WIN95 with SR2 support/CardBus support.
+
+;This tells Miniport driver that we are running under OSR2, not WIN95 or NT
+;This parameter is NOT user configurable.
+HKR,,PlatformType,,1
+
+
+[CB100FL.ndi.reg]                               ; WIN95 forced load support
+HKR,Ndi\Install,ndis3,,"CB100.ndis3"
+;HKR,Ndi,DeviceID,,"pnp8323"                    ; Bogus ID
+HKR,Ndi,CardType,,"LEGACY"
+HKR,Ndi,DeviceID,,"CardBus-Fast_Ethernet"       ; Non PNP DeviceID, necessary for SR1 WIN95
+
+
+;****************************************************************************
+; Add these keys to the registry for all CB100 adapters.
+;****************************************************************************
+[ADDREG_PCMCIAs_CB100.ndi.reg]
+;
+; The following 3 keywords are resources maintained by the system.
+; The system allocates values to these according to what is available.
+; The system allocated values are then put into the registry for querying
+; by the miniport driver.
+;
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,,MemoryBaseAddress,1,01,00,00,00
+
+
+[ADDREG_PCMCIAs_CB100FL.ndi.reg]                  ; WIN95 forced load support
+HKR,,InterruptNumber,1,04,00,00,00
+HKR,,IOBaseAddress,1,02,00,00,00
+HKR,,MemoryBaseAddress,1,01,00,00,00
+
+[CB100FL.LogConfig]                               ; WIN95 forced load support
+ConfigPriority=HARDRECONFIG
+;IOConfig=80@f000-f7ff%FF80(3FF::)
+IOConfig=80@200-f7ff%FF80(3FF::)
+IRQConfig=0,3,4,5,6,7,8,9,10,11,12,13,14,15
+MemConfig=4000@C0000-EFFFF%FFFFC000
+
+;****************************************************************************
+; Installation for NDIS 3, copying files
+;****************************************************************************
+[CB100.ndis3]
+CopyFiles=CB100.ndis3.CopyFiles,CB100.inf.CopyFiles
+
+[CB100.ndis3.CopyFiles]
+cb100nds.sys
+
+[CB100.inf.CopyFiles]
+NETCB100.INF
+
+;****************************************************************************
+; Destination Directories
+;****************************************************************************
+[DestinationDirs]
+DefaultDestDir            =11 ; SYSTEM directory
+CB100.ndis3.CopyFiles     =11 ; SYSTEM directory
+CB100.inf.CopyFiles       =17 ; INF directory
+CB100.ndis5.CopyFiles     =12
+
+;****************************************************************************
+; Translatable strings
+;****************************************************************************
+[Strings]
+MS="Microsoft"
+
+; Manufacturer names
+PCMCIAs="CardBus"
+
+; Adapter names
+PCMCIAsCB100    ="CardBus Fast Ethernet 10/100 Adapter"
+PCMCIAsCB100FL  ="CardBus Fast Ethernet PC Card Adapter manual load"    ; WIN95 forced load support
+Service.DispName="CardBus Fast Ethernet 10/100 Adapter Driver"
+
+

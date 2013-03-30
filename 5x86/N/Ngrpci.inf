@@ -1,0 +1,133 @@
+; Copyright 2000, Microsoft
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %MSFT%
+LayoutFile  = layout.inf
+DriverVer=07/01/2001,4.56.16.0
+
+[Manufacturer]
+%NETGEAR%   = NETGEAR
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[NETGEAR]
+%Generic.DeviceDesc% = PNIC.ndi, PCI\VEN_11AD&DEV_0002
+%PNIC.DeviceDesc%    = PNIC.ndi, PCI\VEN_11AD&DEV_0002&SUBSYS_F0041385
+
+;-------------------------------------------------------------------------------
+; NETGEAR FA310TX Fast Ethernet Adapter
+;
+[PNIC.ndi]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = PNIC.reg, ngrpci.pnic.reg, ngrpci.con.reg, ngrpci.reg
+CopyFiles       = NGRPCI.CopyFiles
+
+[PNIC.ndi.Services]
+AddService      = ngrpci, 2, ngrpci.Service, ngrpci.EventLog
+
+[PNIC.reg]
+HKR, ,               AdapterCFID, 0, "000211AD"
+
+[ngrpci.con.reg]
+HKR, Ndi\params\ConnectionType,      ParamDesc, 0, %ConnectionType%
+HKR, Ndi\params\ConnectionType,      default,   0, "0"
+HKR, Ndi\params\ConnectionType,      type,      0, "enum"
+HKR, Ndi\params\ConnectionType\enum, "0",       0, %AutoSense%
+HKR, Ndi\params\ConnectionType\enum, "2",       0, %10%
+HKR, Ndi\params\ConnectionType\enum, "3",       0, %10FD%
+HKR, Ndi\params\ConnectionType\enum, "8",       0, %100%
+HKR, Ndi\params\ConnectionType\enum, "9",       0, %100FD%
+
+HKR, Ndi\params\BurstLength,         ParamDesc, 0, %BurstLength%
+HKR, Ndi\params\BurstLength,         default,   0, "10"
+HKR, Ndi\params\BurstLength,         type,      0, "enum"
+HKR, Ndi\params\BurstLength\enum,    "1",       0, %1DWORD%
+HKR, Ndi\params\BurstLength\enum,    "2",       0, %2DWORDS%
+HKR, Ndi\params\BurstLength\enum,    "4",       0, %4DWORDS%
+HKR, Ndi\params\BurstLength\enum,    "8",       0, %8DWORDS%
+HKR, Ndi\params\BurstLength\enum,    "10",      0, %16DWORDS%
+HKR, Ndi\params\BurstLength\enum,    "20",      0, %32DWORDS%
+
+HKR, Ndi\params\NetworkAddress,      ParamDesc, 0, %NetworkAddress%
+HKR, Ndi\params\NetworkAddress,      type,      0, "edit"
+HKR, Ndi\params\NetworkAddress,      LimitText, 0, "12"
+HKR, Ndi\params\NetworkAddress,      UpperCase, 0, "1"
+HKR, Ndi\params\NetworkAddress,      default,   0, ""
+HKR, Ndi\params\NetworkAddress,      optional,  0, "1"
+          
+[ngrpci.pnic.reg]
+HKR, Ndi\params\TransmitThreshold,      ParamDesc, 0, %TransmitThreshold%
+HKR, Ndi\params\TransmitThreshold,      default,   0, "6"
+HKR, Ndi\params\TransmitThreshold,      type,      0, "enum"
+HKR, Ndi\params\TransmitThreshold\enum, "0",       0, %StoreAndForward%
+HKR, Ndi\params\TransmitThreshold\enum, "1",       0, %36Bytes%
+HKR, Ndi\params\TransmitThreshold\enum, "2",       0, %72Bytes%
+HKR, Ndi\params\TransmitThreshold\enum, "3",       0, %96Bytes%
+HKR, Ndi\params\TransmitThreshold\enum, "4",       0, %128Bytes%
+HKR, Ndi\params\TransmitThreshold\enum, "5",       0, %160Bytes%
+HKR, Ndi\params\TransmitThreshold\enum, "6",       0, %256Bytes%
+
+[ngrpci.reg]
+HKR, Ndi,            Service,     0, "ngrpci"
+HKR, Ndi\Interfaces, UpperRange,  0, "ndis5"
+HKR, Ndi\Interfaces, LowerRange,  0, "ethernet"
+HKR, ,               MediaType,   0, "1"
+HKR, ,               AdapterType, 0, "5"
+
+[NGRPCI.CopyFiles]
+Ngrpci.sys
+
+[NGRPCI.Service]
+DisplayName     = %NGRPCI.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ngrpci.sys
+LoadOrderGroup  = NDIS
+
+[NGRPCI.EventLog]
+AddReg = NGRPCI.AddEventLog.reg
+
+[NGRPCI.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[DestinationDirs]
+DefaultDestDir   = 12
+NGRPCI.CopyFiles = 12
+
+[strings]
+NETGEAR                 = "Netgear"
+MSFT                    = "Microsoft"
+
+ConnectionType          = "Connection Type"
+AutoSense               = "AutoSense"
+BurstLength             = "Burst Length"
+NetworkAddress          = "Network Address"
+TransmitThreshold       = "Transmit Threshold"
+10                      = "10Base-T"
+10FD                    = "10Base-T Full_Duplex"
+100                     = "100Base-Tx"
+100FD                   = "100Base-Tx Full_Duplex"
+1DWORD                  = "1 DWORD"
+2DWORDS                 = "2 DWORDS"
+4DWORDS                 = "4 DWORDS"
+8DWORDS                 = "8 DWORDS"
+16DWORDS                = "16 DWORDS"
+32DWORDS                = "32 DWORDS"
+StoreAndForward         = "Store and Forward" 
+36Bytes                 = "36 Bytes"
+72Bytes                 = "72 Bytes"
+96Bytes                 = "96 Bytes"
+128Bytes                = "128 Bytes"
+160Bytes                = "160 Bytes"
+256Bytes                = "256 Bytes"
+
+Generic.DeviceDesc      = "Lite-On Communications Compatable PCI Fast Ethernet Adapter"
+PNIC.DeviceDesc         = "NETGEAR FA310TX Fast Ethernet Adapter (NGRPCI)"
+NGRPCI.Service.DispName = "NETGEAR FA310TX Fast Ethernet Adapter Driver"

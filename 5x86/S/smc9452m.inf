@@ -1,0 +1,292 @@
+;
+; SMC EZ Card 1000 (SMC9452TX V.2)
+;
+; (C)Copyright 1998-2003 SMC Networks, Inc.
+; 
+; All rights reserved
+;
+; INF File for NDIS5.1 Miniport Driver for Windows XP (x86) smc9452m.sys v6.14
+
+[Version]
+Signature	= "$windows nt$"
+Class		= Net
+ClassGUID	= {4D36E972-E325-11CE-BFC1-08002BE10318}
+Provider	= %SMC%
+CatalogFile	= smc9452m.CAT
+DriverVer=05/15/2003, 6.14.0.0
+
+[Manufacturer]
+%SMC%	= SMC
+
+
+[ControlFlags]
+
+ExcludeFromSelect	= *
+
+[SMC]
+%SMC9452TXV2.DeviceDesc% = GeSingleLinkV2Copper.ndi, PCI\VEN_11AB&DEV_4320&SUBSYS_B45210B8
+
+
+
+
+
+;-------------------------------------------------------------------------------
+; Gigabit Ethernet Adapters <single link Version 2.0 Copper>
+
+[GESingleLinkV2Copper.ndi]
+AddReg		= smc9452m.reg, smc9452m.params, smc9452m.Copper.params, smc9452m.V2.Copper.params 
+Characteristics	= 0x84
+BusType		= 5
+CopyFiles	= smc9452m.CopyFiles
+
+[GESingleLinkV2Copper.ndi.Services]
+AddService	= smc9452m, 2, smc9452m.Service, common.EventLog
+
+
+
+
+
+
+;-------------------------------------------------------------------------------
+; General Driver Parameters
+;
+[smc9452m.params]
+
+HKR, Ndi\Params\NetworkAddress,	ParamDesc,,	%NetAddress%
+HKR, Ndi\Params\NetworkAddress,	Type,,		"edit"
+HKR, Ndi\Params\NetworkAddress,	LimitText,,	"18"
+HKR, Ndi\Params\NetworkAddress,	UpperCase,,	"1"
+HKR, Ndi\Params\NetworkAddress,	Default,,	""
+HKR, Ndi\Params\NetworkAddress,	Optional,,	"1"
+
+HKR, Ndi\Params\MaxFrameSize,	ParamDesc,,	%MaxFrSize%
+HKR, Ndi\Params\MaxFrameSize,	Type,,		"int"
+HKR, Ndi\Params\MaxFrameSize,	Base,,		"10"
+HKR, Ndi\Params\MaxFrameSize,	Min,,		"12"
+HKR, Ndi\Params\MaxFrameSize,	Max,,		"9014"
+HKR, Ndi\Params\MaxFrameSize,	Step,,		"1"
+HKR, Ndi\Params\MaxFrameSize,	Default,,	"1514"
+
+HKR, Ndi\Params\HwChecksum,	ParamDesc,,	%HwCsum%
+HKR, Ndi\Params\HwChecksum,	Type,,		"enum"
+HKR, Ndi\Params\HwChecksum\enum,1,,		%On%
+HKR, Ndi\Params\HwChecksum\enum,0,,		%Off%
+HKR, Ndi\Params\HwChecksum,	Default,,	"1"
+
+HKR, Ndi\Params\Moderate,	ParamDesc,,	%IntMod%
+HKR, Ndi\Params\Moderate,	Type,,		"enum"
+HKR, Ndi\Params\Moderate\enum,1,,		%On%
+HKR, Ndi\Params\Moderate\enum,0,,		%Off%
+HKR, Ndi\Params\Moderate,	Default,,	"1"
+
+HKR, Ndi\Params\FixedIntMod,	ParamDesc,,	%MaxIrq%
+HKR, Ndi\Params\FixedIntMod,	Type,,		"int"
+HKR, Ndi\Params\FixedIntMod,	Base,,		"10"
+HKR, Ndi\Params\FixedIntMod,	Min,,		"1000"
+HKR, Ndi\Params\FixedIntMod,	Max,,		"30000"
+HKR, Ndi\Params\FixedIntMod,	Step,,		"1"
+HKR, Ndi\Params\FixedIntMod,	Default,,	"5000"
+
+HKR, Ndi\Params\MessageLog,	ParamDesc,,	%LogMsg%
+HKR, Ndi\Params\MessageLog,	Type,,		"enum"
+HKR, Ndi\Params\MessageLog\enum,4,,		%Non%
+HKR, Ndi\Params\MessageLog\enum,3,,		%Err%
+HKR, Ndi\Params\MessageLog\enum,2,,		%Wrn%
+HKR, Ndi\Params\MessageLog\enum,1,,		%Sta%
+HKR, Ndi\Params\MessageLog\enum,0,,		%All%
+HKR, Ndi\Params\MessageLog,	Default,,	"1"
+
+HKR, Ndi\Params\MaxReceives,	ParamDesc,,	%NumRcv%
+HKR, Ndi\Params\MaxReceives,	Type,,		"int"
+HKR, Ndi\Params\MaxReceives,	Base,,		"10"
+HKR, Ndi\Params\MaxReceives,	Min,,		"3"
+HKR, Ndi\Params\MaxReceives,	Max,,		"500"
+HKR, Ndi\Params\MaxReceives,	Step,,		"1"
+HKR, Ndi\Params\MaxReceives,	Default,,	"50"
+
+HKR, Ndi\Params\MaxTransmits,	ParamDesc,,	%NumTx%
+HKR, Ndi\Params\MaxTransmits,	Type,,		"int"
+HKR, Ndi\Params\MaxTransmits,	Base,,		"10"
+HKR, Ndi\Params\MaxTransmits,	Min,,		"4"
+HKR, Ndi\Params\MaxTransmits,	Max,,		"200"
+HKR, Ndi\Params\MaxTransmits,	Step,,		"1"
+HKR, Ndi\Params\MaxTransmits,	Default,,	"50"
+
+HKR, Ndi\Params\AutoNegotiation_A,	ParamDesc,,	%AutonegA%
+HKR, Ndi\Params\AutoNegotiation_A,	Type,,		"enum"
+HKR, Ndi\Params\AutoNegotiation_A\enum,2,,		%Sense%
+HKR, Ndi\Params\AutoNegotiation_A\enum,1,,		%On%
+HKR, Ndi\Params\AutoNegotiation_A\enum,0,,		%Off%
+HKR, Ndi\Params\AutoNegotiation_A,	Default,,	"1"
+
+HKR, Ndi\Params\DuplexCapabilities_A,	ParamDesc,,	%DupCapA%
+HKR, Ndi\Params\DuplexCapabilities_A,	Type,,		"enum"
+HKR, Ndi\Params\DuplexCapabilities_A\enum,3,,		%both%
+HKR, Ndi\Params\DuplexCapabilities_A\enum,2,,		%full%
+HKR, Ndi\Params\DuplexCapabilities_A\enum,1,,		%half%
+HKR, Ndi\Params\DuplexCapabilities_A,	Default,,	"3"
+
+HKR, Ndi\Params\FlowControl_A,	ParamDesc,,	%FlowCtrlA%
+HKR, Ndi\Params\FlowControl_A,	Type,,		"enum"
+HKR, Ndi\Params\FlowControl_A\enum,3,,		%bothFC%
+HKR, Ndi\Params\FlowControl_A\enum,2,,		%sym%
+HKR, Ndi\Params\FlowControl_A\enum,1,,		%asym%
+HKR, Ndi\Params\FlowControl_A\enum,0,,		%noFc%
+HKR, Ndi\Params\FlowControl_A,	Default,,	"3"
+
+HKR,, MaxMulticast,,         "128"
+HKR,, WaitForRxResources,,   "1"
+HKR,, SGMapRegistersNeeded,, "64"
+
+
+;-------------------------------------------------------------------------------
+; Additional Driver Parameters for Single Link Copper Adapters
+;
+ [smc9452m.Copper.params]
+;
+; Configurable Parameters
+;
+HKR, Ndi\Params\Role_A,	ParamDesc,,	%RoleA%
+HKR, Ndi\Params\Role_A,	Type,,		"enum"
+HKR, Ndi\Params\Role_A\enum,3,,		%Slave%
+HKR, Ndi\Params\Role_A\enum,2,,		%Master%
+HKR, Ndi\Params\Role_A\enum,0,,		%Auto%
+HKR, Ndi\Params\Role_A,	Default,,	"0"
+
+
+;-------------------------------------------------------------------------------
+; Additional Driver Parameters for Version 2.0 Copper Adapters
+;
+[smc9452m.V2.Copper.params]
+;
+; Configurable Parameters
+;
+
+HKR, Ndi\Params\WakeUpModeCap_A,       ParamDesc,,	%WakeUpCaps%
+HKR, Ndi\Params\WakeUpModeCap_A,       type,,		"enum"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  0,,		"None"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  15,,		"OS Controlled"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  25,,		"Magic Packet"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  26,,		"Pattern Match"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  27,,		"Magic Packet and Pattern Match"
+HKR, Ndi\Params\WakeUpModeCap_A\enum,  28,,		"Link Change"
+HKR, Ndi\Params\WakeUpModeCap_A, Default,,		"15"
+
+HKR, Ndi\Params\Speed_A,       ParamDesc,,	%Speed%
+HKR, Ndi\Params\Speed_A,       type,,		"enum"
+HKR, Ndi\Params\Speed_A\enum,  1,,		"Auto"
+HKR, Ndi\Params\Speed_A\enum,  2,,		"10"
+HKR, Ndi\Params\Speed_A\enum,  3,,		"100"
+HKR, Ndi\Params\Speed_A\enum,  4,,		"1000"
+HKR, Ndi\Params\Speed_A,	Default,,	"1"
+
+HKR,, WaitForRxResources,,   "0"
+
+
+
+
+;-------------------------------------------------------------------------------
+; General Registry Entries
+;
+[smc9452m.reg]
+HKR, Ndi, HelpText,, %HelpText%
+HKR, Ndi\Interfaces, UpperRange,, "ndis5"
+HKR, Ndi\Interfaces, LowerRange,, "ethernet"
+HKR, Ndi, Service,, "smc9452m"
+
+[smc9452m.Service]
+DisplayName	= %smc9452m.DriverDesc%
+ServiceType	= 1
+StartType = 3
+ErrorControl = 1
+ServiceBinary  = %12%\smc9452m.sys
+LoadOrderGroup = NDIS
+
+[common.EventLog]
+AddReg = common.AddEventLog.reg
+
+[common.AddEventLog.reg]
+HKR,, EventMessageFile,	0x00020000, "%%SystemRoot%%\System32\Drivers\smc9452m.sys"
+HKR,, TypesSupported,	0x00010001, 7
+
+;-------------------------------------------------------------------------------
+; Source Files
+;
+[SourceDisksNames]
+1 = %DriverDisk%,,,
+
+[SourceDisksFiles]
+smc9452m.sys	= 1,,
+
+[smc9452m.CopyFiles]
+smc9452m.sys,,,2
+
+
+;-------------------------------------------------------------------------------
+; Destination Directories
+;
+[DestinationDirs]
+
+DefaultDestDir = 11
+smc9452m.CopyFiles	= 12
+
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+SMC = "SMC"
+NetAddress              = "Network Address"
+MaxFrSize               = "Maximum Frame Size"
+HwCsum                  = "Hardware Checksumming"
+WakeUpCaps              = "Wake Up Capabilities"
+Speed	                = "LinkSpeed"
+IntMod                  = "Interrupt Moderation"
+MaxIrq                  = "Max IRQ per Sec"
+LogMsg                  = "Log Status Messages"
+NumRcv                  = "Number of Receive Buffers"
+NumTx                   = "Number of Transmit Buffers"
+RLMT                    = "RLMT Mode"
+Link                    = "CLS"             
+OtherPort               = "CLP"                  
+Segment                 = "CLPSS" 
+Preferred               = "Preferred Port"
+Sense			= "Auto-Sense"
+On                      = "On"
+Off                     = "Off"
+Non                     = "None"
+Err                     = "Errors"
+Wrn                     = "Warnings"
+Sta                     = "Status Messages"
+All                     = "All Messages"
+A                       = "A"
+B                       = "B"
+AutonegA		= "Autonegotiation Port A"
+AutonegB		= "Autonegotiation Port B"
+DupCapA			= "DuplexCapabilities Port A"
+DupCapB			= "DuplexCapabilities Port B"
+RoleA			= "Role on Port A"
+RoleB			= "Role on Port B"
+Slave			= "Slave"
+Master			= "Master"
+Auto			= "Auto"
+both			= "Half and Full Duplex"
+full			= "Full Duplex"
+half			= "Half Duplex"
+FlowCtrlA		= "FlowControl Port A"
+FlowCtrlB		= "FlowControl Port B"
+bothFC			= "Asymmetrical and Symmetrical Flow Control"
+sym			= "Symmetrical Flow Control"
+asym			= "Asymmetrical Flow Control"
+noFc			= "No Flow Control"
+
+SMC9452TXV2.DeviceDesc = "SMC EZ Card 1000 (SMC9452TX V.2)"
+
+
+
+smc9452m.DriverDesc	= "NDIS5.1 Miniport Driver for SMC EZ Card 1000 (SMC9452TX V.2)"
+
+DriverDisk		= "SMC EZ Card 1000 (SMC9452TX V.2) Installation Disk"
+
+HelpText		= "This SMC network adapter connects you to the network."
+
+

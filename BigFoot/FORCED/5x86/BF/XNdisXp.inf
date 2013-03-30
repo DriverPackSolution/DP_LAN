@@ -1,0 +1,110 @@
+;-------------------------------------------------------------------------------
+; XNdisXp.INF
+;
+; Killer Xeno NDIS_EDGE Upper Filter Driver Install for XP 32
+;
+; Copyright (c) 2006 - 2011 Bigfoot Networks, Inc.  All rights reserved.
+;
+;       Module Name:
+;               XNdisXp.inf
+;
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Msft%
+DriverVer   = 05/18/2011,6.0.0.23
+CatalogFile.NTx86   = EdgXpX86.cat
+
+[ControlFlags]
+ExcludeFromSelect={E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\XenoXx86
+
+[Manufacturer]
+%Msft% = Msft
+
+[Msft]
+; DisplayName                   Section    DeviceId
+; -----------                   -------    --------
+%XenoEdge.DeviceDesc%    = XEdgeX86.ndi, root\XenoEdge ; Root enumerated 
+%XenoEdge.DeviceDesc%    = XEdgeX86.ndi, {E1A9BB88-DF88-42f4-BB35-802FCFEA41B3}\Xeno831x ; Xeno Bus enumerated
+
+;-------------------------------------------------------------------------------
+; Microsoft Virtual Ethernet Adapter 32 bit
+;
+[XEdgeX86.ndi]
+Characteristics = 0x4 ; NCF_PHYSICAL
+BusType         = 15 ; if you specify NCF_PHYSICAL, you must specify bustype, 15 = PNPBus see wdm.h
+AddReg          = XEdgeX86.Reg, ParamsPromiscuous
+CopyFiles       = XEdgeX86.CopyFiles
+
+[XEdgeX86.ndi.Services]
+AddService      = BfEdgeXp86, 2, XEdgeX86.Service, XEdgeX86.EventLog
+
+;-----------------------------------------------------------------------------
+; Microsoft Virtual Miniport Common
+;
+[XEdgeX86.Reg]
+HKR,    ,                         BusNumber,           0, "0" 
+HKR, Ndi,                         Service,             0, "BfEdgeXp86"
+HKR, Ndi\Interfaces,              UpperRange,          0, "ndis5"
+HKR, Ndi\Interfaces,              LowerRange,          0, "ethernet"
+
+[ParamsPromiscuous]
+;
+;    Should the physical NIC be set to Promiscuous mode 
+;
+HKR, Ndi\Params\Promiscuous,     ParamDesc, , %Promiscuous%
+HKR, Ndi\Params\Promiscuous,     Default,  ,"0"
+HKR, Ndi\Params\Promiscuous,     type, ,      enum
+HKR, Ndi\Params\Promiscuous\enum,"1",  ,     %Promiscuous_Enable%
+HKR, Ndi\Params\Promiscuous\enum,"0",  ,     %Promiscuous_Disable%
+
+;-----------------------------------------------------------------------------
+; Driver and Service Section
+;
+[XEdgeX86.CopyFiles]
+XEdgeX86.sys,,,2
+
+[XEdgeX86.Service]
+DisplayName     = %XenoEdge.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\XEdgeX86.sys
+LoadOrderGroup  = NDIS
+AddReg          = TextModeFlags.Reg
+
+[XEdgeX86.EventLog]
+AddReg = XEdgeX86.AddEventLog.Reg
+
+[XEdgeX86.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+XEdgeX86.sys  = 1,,
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+XEdgeX86.CopyFiles = 12
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Msft                       = "Bigfoot Networks, Inc."                      
+XenoEdge.DeviceDesc        = "Bigfoot Networks Killer Ethernet Controller"
+XenoEdge.Service.DispName  = "Bigfoot Networks Killer Ethernet Service"
+DiskId1 = "Bigfoot Networks Killer Gaming installation"
+Promiscuous        = "Set the physical NIC to promiscuous mode"
+Promiscuous_Disable = "Disable"
+Promiscuous_Enable  = "Enable"

@@ -1,0 +1,103 @@
+13.03.4
+-------
++ Добавлены драйверы Atheros L1 Gigabit Ethernet 10/100/1000Base-T Adapter 2.4.7.15
+* Даунгрейд драйверов Intel(R) PRO/1000 PCI Express Network 12.6.45.0 (18.1) для XP
+
+
+13.03.3
+-------
+* Обновлены драйверы Intel(R) PRO/1000 PCI Express Network 12.6.45.0 (18.1)
+
+
+13.03.2
+-------
++ Добавлены драйверы ASIX USB-Ethernet Adapter разных версий
+* Обновлены драйверы ASIX AX88772 USB2.0 to Fast Ethernet Adapter 3.4.3.38 XP и 3.16.2.0 W8
+* Обновлены драйверы Qualcomm Atheros AR813X/AR815X/AR816X Series PCI-E Ethernet Controller 2.1.0.15
+
+
+13.03.1
+-------
+* Обновлены драйверы Qualcomm Atheros llama Ke2200 Series PCI-E Ethernet Controller 8.0.2.40
+
+
+13.02.3
+-------
++ Добавлены драйверы IC Plus IP1000 Family Gigabit Ethernet Adapter
+
+
+13.02.2
+-------
+* Обновлены драйверы Intel 18.0.1
+* Обновлены драйверы VIA Velocity 1.9.2.0a
+* Обновлены драйверы Broadcom NetXtreme 15.4.12.1
+
+
+13.02.1
+-------
++ Добавлены драйверы JMicron PCI Express Fast Ethernet Adapter 6.2.34.14 W8
+* Обновлены драйверы Realtek PCI-E Ethernet 5.810.1218.2012 XP
+
+
+13.01.5
+-------
++ Добавлены драйверы для сетевых адаптеров D-Link
++ Добавлены твиканные драйверы для устройств nVidia
+* Обновлены драйверы Realtek PCI-E Ethernet 8.010.1226.2012
+
+
+13.01.4
+-------
+* Обновлены драйверы Broadcom NetLink 15.6.0.2 и NetXtreme 15.6.0.3
+
+
+13.01.3
+-------
++ Добавлены драйверы Apple USB Ethernet Adapter 3.8.3.10
++ Добавлены драйверы Realtek RTL8139 Family Fast Ethernet Network Interface Cards
++ Добавлены и обновлены драйверы для многих контроллеров ASIX Fast Ethernet Adapter
+* Обновлены драйверы Intel 18.0
+
+
+13.01.2
+-------
++ Добавлен маркер FORCED для драйверов Intel дабы отсечь установку на неподдериваемую систему
+
+
+13.01.1
+-------
++ Добавлен маркер FORCED для драйверов Atheros дабы отсечь установку драйвера от Vista на Win7 и т.д.
+
+
+13.00.2
+-------
+* Обновлены все драйверы NVIDIA nForce Networking Controller
+
+
+13.00.1
+-------
+* Обновлены драйверы Broadcom NetLink Controllers 15.6.0.2 NTx64
+* Обновлены драйверы Qualcomm Atheros AR813X/AR815X/AR816X Series PCI-E Ethernet Controller 2.1.0.13	
+
+
+13.00.0
+-------
+* Каталогизация драйверов по вендорам и удаление дубликатов
+
+
+12.12.4
+-------
+* Добавлен маркер FORCED для драйверов Realtek дабы отсечь установку драйвера x86 на систему x64 и наоборот
+* Обновлены драйверы Atheros AR813x/AR815x/AR816x Series Family PCI-E Gigabit (L1) 2.1.0.12
+* Обновлены драйверы BigFoot NetWork Killer E2200, Killer Wireless-N 1102, 1103 & 1202 Network Controller 6.1.0.437
+
+
+12.12.3
+-------
+* Обновлены драйверы VIA Velocity 1.9.2.0
+* Обновлены драйверы VIA Rhine 1.8.0.0
+
+
+12.12.2
+-------
+* Обновлены драйверы Realtek PCI-E Ethernet 8.007.1123

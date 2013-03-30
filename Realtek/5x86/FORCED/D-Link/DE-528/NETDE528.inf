@@ -1,0 +1,221 @@
+;; NETDE528.INF
+;;
+;; D-Link DE-528CT PCI Adapter
+;;
+;;
+
+
+[Version]
+;;Signature="$CHICAGO$"
+Signature="$Windows NT$"
+Class=Net
+ClassGUID={4d36e972-e325-11ce-bfc1-08002be10318}
+Provider=%V_MS%
+
+[Manufacturer]
+%V_D-Link%=D-Link
+
+[D-Link]
+%PCIETH.DeviceDesc%=PCIETH.ndi,PCI\VEN_10EC&DEV_8029
+%PCIETH.DeviceDesc%=PCIETH.ndi,PCI\VEN_10EC&DEV_8029&SUBSYS_03001186&REV_00
+
+[SourceDisksNames]
+52="D-Link DE-528CT PCI Adapter Driver Disk",,0
+
+[SourceDisksFiles]
+DE528CT.sys     =52,,DE528CT.sys,12345
+NETDE528.inf     =52,,NETDE528.inf,1234
+DE528CT.dos     =52,ndis2dos,DE528CT.dos,12345
+DE528CT.com     =52,nwclient,DE528CT.com,12345
+
+;;****************************************************************************
+;;    D-Link DE-528CT PCI Adapter
+;;****************************************************************************
+
+; NT5.0 section
+[PCIETH.ndi.NT]
+Characteristics = 0x84 ;
+BusType         = 5
+AddReg          = pci029.ndi.reg, PCIETH.NT.reg
+CopyFiles       = PCIETH.NT.CopyFiles, PCIETH.inf.CopyFiles
+
+[PCIETH.ndi.NT.services]
+AddService      = DE528CT, 2, DE528CT.Service, DE528CT.AddEventLog
+
+
+; Win9x Section
+[PCIETH.ndi]
+AddReg=PCIETH.ndi.reg,DE528CT.ndi.reg,pci029.ndi.reg
+
+;;****************************************************************************
+;;    *DE528CT
+;;****************************************************************************
+
+[PCIETH.ndi.reg]
+HKR,Ndi,DeviceID,0,"PCI\VEN_10EC&DEV_8029&SUBSYS_03001186&REV_00"
+
+;;HKR,Ndi\Install,,0,PCIETH.install
+
+
+;;****************************************************************************
+;; NT5.0 Only Section
+;;****************************************************************************
+[PCIETH.NT.reg]
+HKR, Ndi,               Service,    0, "DE528CT"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+
+[DE528CT.Service]
+DisplayName     =   %DE528CT.Service.DispName%
+ServiceType     =   1 ;%SERVICE_KERNEL_DRIVER%
+StartType       =   3 ;%SERVICE_DEMAND_START%
+ErrorControl    =   1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   =   %12%\DE528CT.sys
+LoadOrderGroup  =   NDIS
+
+[DE528CT.AddEventLog]
+AddReg = DE528CT.AddEventLog.reg
+
+[DE528CT.AddEventLog.reg]
+HKR,    ,   EventMessageFile,   0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,    ,   TypesSupported,     0x00010001, 7
+
+[PCIETH.NT.CopyFiles]
+DE528CT.sys,,,2
+
+;;****************************************************************************
+;; Win9x Section
+;;****************************************************************************
+
+[DE528CT.ndi.reg]
+; key,subkey,valuname,type,value
+HKR,,DriverDesc,0,"D-Link DE-528CT PCI Adapter"
+HKR,,DevLoader,0,*ndis
+HKR,,DeviceVxDs,0,DE528CT.sys
+HKR,,EnumPropPages,0,netdi.dll,EnumPropPages
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,03
+HKR,NDIS,MinorNdisVersion,1,0a
+HKR,NDIS,LogDriverName,0,"PCIETH"
+;;HKR,NDIS\NDIS2,DriverName,0,"DE528$"
+;;HKR,NDIS\NDIS2,FileName,0,"DE528CT.dos"
+;;HKR,NDIS\ODI,DriverName,0,"DE528CT"
+;;HKR,NDIS\ODI,FileName,0,"DE528CT.com"
+
+; Interfaces
+HKR,Ndi\Interfaces,DefLower,0,"ethernet"
+HKR,Ndi\Interfaces,LowerRange,0,"ethernet"
+HKR,Ndi\Interfaces,DefUpper,0,"ndis3"
+HKR,Ndi\Interfaces,UpperRange,0,"ndis3"
+
+; Install sections
+HKR,Ndi\Install,ndis3,0,"DE528CT.ndis3"
+;;HKR,Ndi\Install,ndis2,0,DE528CT.ndis2
+;;HKR,Ndi\Install,odi,0,DE528CT.odi
+
+;;****************************************************************************
+;; PCI common parameters
+;;****************************************************************************
+
+[pci029.ndi.reg]
+;;params
+HKR,,MediaType,0,1
+HKR,,AdapterType,0,5
+HKR,,BusType,0,5
+
+
+HKR,NDI\Params\DuplexMode,flag,1,30,00,00,00
+;;HKR,NDI\Params\EtherID,flag,1,30,00,00,00
+
+HKR,Ndi\params\DuplexMode,ParamDesc,0,"Duplex Mode"
+HKR,Ndi\params\DuplexMode,type,0,enum
+HKR,Ndi\params\DuplexMode,default,0,0
+HKR,Ndi\params\DuplexMode\enum,0,0,"Half Duplex (Default)"
+HKR,Ndi\params\DuplexMode\enum,1,0,"Full Duplex"
+
+;HKR,Ndi\params\EtherID,ParamDesc,0,"Ethernet ID"
+;HKR,Ndi\params\EtherID,type,0,edit
+;HKR,Ndi\params\EtherID,default,0,"000000000000"
+;HKR,Ndi\params\EtherID,LimitText,0,12
+;HKR,Ndi\params\EtherID,UpperCase,0,1
+;HKR,Ndi\params\EtherID,Optional,0,1
+
+
+;; Resources
+;;HKR,,InterruptNumber,1,04,00,00,00
+;;HKR,,IOBaseAddress,1,02,00,00,00
+;;HKR,NDI\params\InterruptNumber,resc,1,04,00,00,00
+;;HKR,Ndi\params\interruptNumber,ParamDesc,0,"Interrupt Level"
+;;HKR,NDI\params\InterruptNumber,flag,1,20,00,00,00
+;;HKR,NDI\params\IOBaseAddress,resc,1,02,00,00,00
+;;HKR,NDI\params\IOBaseAddress,ParamDesc,0,"I/O Base Address"
+;;HKR,NDI\params\IOBaseAddress,flag,1,20,00,00,00
+
+;;ndis2
+;;HKR,NDI\params\Interrupt,resc,1,04,00,00,00
+;;HKR,Ndi\params\interrupt,ParamDesc,0,"Interrupt Level"
+;;HKR,NDI\params\Interrupt,flag,1,10,00,00,00
+;;HKR,NDI\params\IOBase,resc,1,02,00,00,00
+;;HKR,NDI\params\IOBase,ParamDesc,0,"I/O Base Address"
+;;HKR,NDI\params\IOBase,flag,1,10,00,00,00
+
+;;****************************************************************************
+;; Drivers
+;;****************************************************************************
+
+;; Install NDIS3
+[DE528CT.ndis3]
+CopyFiles=DE528CT.ndis3.CopyFiles,PCIETH.inf.CopyFiles
+DelFiles=PCIETH.DelFiles
+
+[DE528CT.ndis3.CopyFiles]
+DE528CT.sys,,,2
+
+[PCIETH.inf.CopyFiles]
+NETDE528.inf,,,2
+
+[PCIETH.DelFiles]
+NETDE528.inf,,,1
+drvidx.bin,,,1
+drvdata.bin,,,1
+
+;;Install NDIS2
+[DE528CT.ndis2]
+CopyFiles=DE528CT.ndis2.CopyFiles
+
+[DE528CT.ndis2.CopyFiles]
+DE528CT.dos,,,2
+
+;;Install ODI
+[DE528CT.odi]
+CopyFiles=DE528CT.odi.CopyFiles
+
+[DE528CT.odi.CopyFiles]
+DE528CT.com,,,2
+
+;;****************************************************************************
+;; Destination Directories
+;;****************************************************************************
+[DestinationDirs]
+PCIETH.NT.CopyFiles 	    = 12
+DefaultDestDir              =11 ; LDID_SYS
+DE528CT.ndis3.CopyFiles      =11
+DE528CT.ndis2.CopyFiles      =26 ; LDID_WINBOOT
+DE528CT.odi.CopyFiles        =26
+PCIETH.inf.CopyFiles       =17 ; INF
+PCIETH.DelFiles            =17
+
+;;****************************************************************************
+;; Localizable Strings
+;;****************************************************************************
+[strings]
+;;Provider
+V_MS="D-Link"
+
+;;Manufacturers
+V_D-Link="D-Link"
+
+;;PCI Devices
+PCIETH.DeviceDesc="D-Link DE-528CT PCI Adapter"

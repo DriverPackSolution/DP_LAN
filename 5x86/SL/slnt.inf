@@ -1,0 +1,191 @@
+; netSLNT.INF
+;
+; Dual .INF file for slnt Network Adapter
+;
+; Copyright (c) 2000
+
+[version]
+signature="$CHICAGO$"
+Class=Net
+ClassGUID = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider=%Mfg%
+Compatible  = 1
+DriverVer   = 04/05/2002, 1.0.0.2
+; Millenium exclusive suffix
+;CatalogFile = ... add for WHQL ...
+
+[Manufacturer]
+%Mfg%=Models
+
+[ControlFlags]
+ExcludeFromSelect = PCI\VEN_1904&DEV_2031 	
+
+[Models]
+; DisplayName        Section           hw-id
+; -----------        -------           ------
+%*SLNT.devicedesc%=*slnt.ndi, PCI\VEN_1904&DEV_2031  
+
+;-------------------------------------------------------------
+; Win2K
+[*slnt.ndi.NT]
+AddReg = slnt.w2k.reg, SLNT.params.reg
+CopyFiles = slnt.w2k.CopyFiles
+Characteristics = 0x84 ; NCF_ flags
+BusType = 5 ; PCI
+
+
+;-------------------------------------------------------------
+; Win2K
+[*slnt.ndi.NT.Services]
+AddService = slnt, 2, slnt.Service, slnt.EventLog
+
+;-------------------------------------------------------------
+; Win2K
+[slnt.w2k.reg]
+HKR, Ndi, Service, 0,"SLNT"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+
+
+;-------------------------------------------------------------------------------
+; W9X Install Section
+;
+[*SLNT.ndi]
+AddReg=*SLNT.ndi.reg, SLNT.ndi.reg, SLNT.params.reg
+;
+
+;-------------------------------------------------------------------------------
+; PnP ID section for W9X
+[*SLNT.ndi.reg]
+HKR,Ndi,DeviceID,,"PCI\VEN_1904&DEV_2031"	
+
+[SLNT.ndi.reg]
+; Forced W9X install section
+HKR,,DevLoader,,*ndis
+HKR,,DeviceVxDs,,slnt.sys
+HKR,,EnumPropPages,,"netdi.dll,EnumPropPages"
+; NDIS Info
+HKR,NDIS,LogDriverName,,"slnt"
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3,ndis4,ndis5"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3,ndis4,ndis5"
+HKR, Ndi\Interfaces, LowerRange,,"ethernet"
+HKR, Ndi\Interfaces, DefLower,,"ethernet"
+
+
+; Install sectioins
+HKR,Ndi\Install,ndis5,,"slnt.ndis5"
+HKR,Ndi\Install,ndis4,,"slnt.ndis4"
+
+
+; Install NDIS
+[slnt.ndis4]
+CopyFiles=slnt.w9x.CopyFiles
+
+; Install NDIS
+[slnt.ndis5]
+CopyFiles=slnt.w9x.CopyFiles
+
+[slnt.w9x.CopyFiles]
+slnt.sys
+
+[slnt.w2k.CopyFiles]
+slnt.sys
+
+;-----------------------------------------------------------
+; Sources
+[SourceDisksNames]
+99=%slnt_disk%,"",0
+
+[SourceDisksFiles]
+slnt.sys = 99
+
+;-----------------------------------------------------------
+; Destination Dir
+[DestinationDirs]
+DefaultDestDir            =11 ; system dir
+slnt.w9x.CopyFiles    =11 ; 9X:  windows\system
+slnt.w2k.CopyFiles    =12 ; W2K: system32\drivers
+
+;-------------------------------------------------------------------------------
+; Optional Custom Parameters in the Registry ("Advanced" menu).
+[SLNT.params.reg]
+HKR, Ndi\params\SpdDupxMode,				ParamDesc,		 0, %SpdDupxMode%
+HKR, Ndi\params\SpdDupxMode,				default,		 0, "0"
+HKR, Ndi\params\SpdDupxMode,				type,			 0, "enum"
+HKR, Ndi\params\SpdDupxMode\enum,			"0",			 0, "Auto Mode"
+HKR, Ndi\params\SpdDupxMode\enum,			"1",			 0, "10M Half Mode"
+HKR, Ndi\params\SpdDupxMode\enum,			"2",			 0, "10M Full Mode"
+HKR, Ndi\params\SpdDupxMode\enum,			"3",			 0, "100M Half Mode"
+HKR, Ndi\params\SpdDupxMode\enum,			"4",			 0, "100M Full Mode"
+
+HKR, Ndi\params\RxBufferSize,				ParamDesc,		 0, %RxBufferSize%
+HKR, Ndi\params\RxBufferSize,				default,		 0, "0"
+HKR, Ndi\params\RxBufferSize,				type,			 0, "enum"
+HKR, Ndi\params\RxBufferSize\enum,			"0",			 0, "128K"
+HKR, Ndi\params\RxBufferSize\enum,			"1",			 0, "64K"
+HKR, Ndi\params\RxBufferSize\enum,			"2",			 0, "32K"
+HKR, Ndi\params\RxBufferSize\enum,			"3",			 0, "16K"
+HKR, Ndi\params\RxBufferSize\enum,			"4",			 0, "8K"
+
+HKR, Ndi\params\FlowCtrl,				ParamDesc,		 0, %FlowCtrl%
+HKR, Ndi\params\FlowCtrl,				type,			 0, "enum"
+HKR, Ndi\params\FlowCtrl,				default,		 0, "1"
+HKR, Ndi\params\FlowCtrl\enum,				"0",			 0, "Disable"
+HKR, Ndi\params\FlowCtrl\enum,				"1",			 0, "Enable"
+
+
+HKR, Ndi\params\TxEarlyCtrl,				ParamDesc,		 0, %TxEarlyCtrl%
+HKR, Ndi\params\TxEarlyCtrl,				type,			 0, "enum"
+HKR, Ndi\params\TxEarlyCtrl,				default,		 0, "0"
+HKR, Ndi\params\TxEarlyCtrl\enum,			"0",			 0, "Disable"
+HKR, Ndi\params\TxEarlyCtrl\enum,			"1",			 0, "Enable"
+
+HKR, Ndi\params\RxEarlyCtrl,				ParamDesc,		 0, %RxEarlyCtrl%
+HKR, Ndi\params\RxEarlyCtrl,				type,			 0, "enum"
+HKR, Ndi\params\RxEarlyCtrl,				default,		 0, "0"
+HKR, Ndi\params\RxEarlyCtrl\enum,			"0",			 0, "Disable"
+HKR, Ndi\params\RxEarlyCtrl\enum,			"1",			 0, "Enable"
+
+HKR, Ndi\params\ShortFramPadding,			ParamDesc,		 0, %ShortFramPadding%
+HKR, Ndi\params\ShortFramPadding,			type,			 0, "enum"
+HKR, Ndi\params\ShortFramPadding,			default,		 0, "0"
+HKR, Ndi\params\ShortFramPadding\enum,			"0",			 0, "Disable"
+HKR, Ndi\params\ShortFramPadding\enum,			"1",			 0, "Enable"
+
+;------------------------------------------------------------
+; W2K Service entry, log, etc.
+[slnt.Service]
+DisplayName     = %slnt.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\slnt.sys
+LoadOrderGroup  = NDIS
+
+[slnt.EventLog]
+AddReg = slnt.AddEventLog.reg
+
+[slnt.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+;-------------------------------------------------------------------------------
+; Localizable Strings
+;
+[strings]
+Mfg="Silan Inc."
+*SLNT.DeviceDesc="Silan SC92031 PCI Fast Ethernet Adapter"
+slnt.Service.DispName = "Silan SC92031 PCI Fast Ethernet Adapter"
+
+RxEarlyCtrl="Rx early control"
+TxEarlyCtrl="Tx early control"
+FlowCtrl = "Flow Control"
+SpdDupxMode = "Link Speed & Duplex Mode"
+RxBufferSize = "Receive Buffer Size"
+ShortFramPadding="Short Frame Padding"
+
+slnt_disk = "Silan SC92031 PCI Fast Ethernet Adapter Driver Install Disk"

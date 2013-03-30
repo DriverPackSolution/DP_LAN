@@ -1,0 +1,286 @@
+; netan983.inf
+;
+; Copyright (c) 2001, Microsoft
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %ADMtek%
+;LayoutFile  = layout.inf
+CatalogFile = netan983.cat
+;Modified by JakeLD
+DriverVer   = 10/25/2001,2.17.1025.2001
+
+[Manufacturer]
+%ADMtek%    = ADMtek
+%Accton%    = Accton
+%SMC%       = SMC
+%Netgear%   = Netgear
+%AmbiCom%   = AmbiCom
+
+[ControlFlags]
+ExcludeFromSelect     = *
+
+[ADMtek]
+%GEN.DeviceDesc%      = AN983.ndi,   PCI\VEN_1317&DEV_0985
+%AN983.DeviceDesc%    = AN983.ndi,   PCI\VEN_1317&DEV_0985&SUBSYS_12161113
+%AN983.DeviceDesc%    = AN983.ndi,   PCI\VEN_1317&DEV_0985&SUBSYS_3181109F
+%AN983.DeviceDesc%    = AN983.ndi,   PCI\VEN_1317&DEV_0985&SUBSYS_81CC1033
+%AN983.DeviceDesc%    = AN983.ndi,   PCI\VEN_1317&DEV_0985&SUBSYS_82071033
+%AN983.DeviceDesc%    = AN983.ndi,   PCI\VEN_1317&DEV_0985&SUBSYS_100C1734
+%ADM9510.DeviceDesc%  = AN983.ndi,   PCI\VEN_1317&DEV_0985&SUBSYS_95101317
+%AN985.DeviceDesc%    = AN985.ndi,   PCI\VEN_1317&DEV_1985
+%AN985.DeviceDesc%    = AN985.ndi,   PCI\VEN_1317&DEV_1985&SUBSYS_12161113
+%ADM9511.DeviceDesc%  = ADM9511.ndi, PCI\VEN_1317&DEV_9511
+%ADM9511.DeviceDesc%  = ADM9511.ndi, PCI\VEN_1317&DEV_9511&SUBSYS_01131054
+%ADM9511.DeviceDesc%  = ADM9511.ndi, PCI\VEN_1317&DEV_9511&SUBSYS_2002155D
+%ADM9511.DeviceDesc%  = ADM9511.ndi, PCI\VEN_1317&DEV_9511&SUBSYS_400D144F
+%ADM9511.DeviceDesc%  = ADM9511.ndi, PCI\VEN_1317&DEV_9511&SUBSYS_400E144F
+%ADM9511.DeviceDesc%  = ADM9511.ndi, PCI\VEN_1317&DEV_9511&SUBSYS_95111317
+%ADM9513.DeviceDesc%  = ADM9513.ndi, PCI\VEN_1317&DEV_9513
+%ADM9513.DeviceDesc%  = ADM9513.ndi, PCI\VEN_1317&DEV_9513&SUBSYS_95131317
+
+[Accton]
+%EN1207F.DeviceDesc%  = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_12161113
+%LM1247.DeviceDesc%   = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_12471113
+%LM2247.DeviceDesc%   = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_22471113
+%LM2247A.DeviceDesc%  = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_B2471113
+%EN2220A.DeviceDesc%  = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_22201113
+%EN2242.DeviceDesc%   = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_22421113
+%EN2320.DeviceDesc%   = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_23201113
+
+[SMC]
+%SMC1255.DeviceDesc%  = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_125510B8
+%SMC8034.DeviceDesc%  = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_803410B8
+%SMC8036.DeviceDesc%  = EN1207F.ndi, PCI\VEN_1113&DEV_1216&SUBSYS_803610B8
+
+[Netgear]
+%Netgear.DeviceDesc%  = AN985.ndi,   PCI\VEN_1317&DEV_1985&SUBSYS_511A1385
+
+[AmbiCom]
+%AmbiCom.DeviceDesc%  = AN985.ndi,   PCI\VEN_1317&DEV_1985&SUBSYS_21031395
+                
+
+[AN983.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = AN983.ndi.reg, ADM9X.ndi.com.reg, ADM9X.pci.reg, ADM9X.con.reg
+CopyFiles       = ADM9X.ndis.copyfiles.NT
+
+[AN983.ndi.NT.Services]
+AddService      = AN983, 2, ADM9X.Service, ADM9X.EventLog
+
+[AN985.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = AN985.ndi.reg, ADM9X.ndi.com.reg, ADM9X.pci.reg, ADM9X.con.reg
+CopyFiles       = ADM9X.ndis.copyfiles.NT
+
+[AN985.ndi.NT.Services]
+AddService      = AN983, 2, ADM9X.Service, ADM9X.EventLog
+
+[ADM9511.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = ADM9511.ndi.reg, ADM9X.ndi.com.reg, ADM9X.pci.reg, ADM9X.con.reg
+CopyFiles       = ADM9X.ndis.copyfiles.NT
+
+[ADM9511.ndi.NT.Services]
+AddService      = AN983, 2, ADM9X.Service, ADM9X.EventLog
+
+[ADM9513.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = ADM9513.ndi.reg, ADM9X.ndi.com.reg, ADM9X.pci.reg, ADM9X.con.reg
+CopyFiles       = ADM9X.ndis.copyfiles.NT
+
+[ADM9513.ndi.NT.Services]
+AddService      = AN983, 2, ADM9X.Service, ADM9X.EventLog
+
+[EN1207F.ndi.NT]
+Characteristics = 0x84
+BusType         = 5
+AddReg          = EN1207F.ndi.reg, ADM9X.ndi.com.reg, ADM9X.pci.reg, ADM9X.con.reg
+CopyFiles       = ADM9X.ndis.copyfiles.NT
+
+[EN1207F.ndi.NT.Services]
+AddService      = AN983, 2, ADM9X.Service, ADM9X.EventLog
+
+
+[ADM9X.ndis.copyfiles.NT]
+an983.sys,,,2
+
+
+[AN983.ndi.reg]
+HKR,               , AdapterCFID,      0, "09851317"
+
+[AN985.ndi.reg]
+HKR,               , AdapterCFID,      0, "19851317"
+
+[ADM9511.ndi.reg]
+HKR,               , AdapterCFID,      0, "95111317"
+
+[ADM9513.ndi.reg]
+HKR,               , AdapterCFID,      0, "95131317"
+
+[EN1207F.ndi.reg]
+HKR,               , AdapterCFID,      0, "12161113"
+
+
+[ADM9X.ndi.com.reg]
+HKR, Ndi,            Service,          0, "AN983"
+HKR, Ndi\Interfaces, LowerRange,       0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange,       0, "ndis5"
+HKR,               , MediaType,        0, "0"
+
+[ADM9X.pci.reg]
+HKR, , AdapterType,    0, "5"
+HKR, , TxPacketDesc,    , "600"
+HKR, , RxPacketDesc,    , "80"       
+HKR, , TxDmaDesc,       , "600"
+HKR, , RxDmaDesc,       , "40"       ; 
+HKR, , PacketsPerTxInt, , "10"       ; 0x0a
+HKR, , PacketsPerRxInd, , "10"       ; 0x0a
+HKR, , BurstLength,     , "0"        ; 0(Unlimited), 1 DW, 2 DW, 3 DW,...
+
+[ADM9X.con.reg]
+HKR, Ndi\Params\MediaType,            ParamDesc, , %MediaType%
+HKR, Ndi\Params\MediaType,            default,   , "0"
+HKR, Ndi\Params\MediaType,            type,      , "enum"
+HKR, Ndi\Params\MediaType\enum,       0,         , %AutoSense%
+HKR, Ndi\Params\MediaType\enum,       1,         , %10HD%
+HKR, Ndi\Params\MediaType\enum,       2,         , %10FD%
+HKR, Ndi\Params\MediaType\enum,       3,         , %100HD%
+HKR, Ndi\Params\MediaType\enum,       4,         , %100FD%
+
+HKR, Ndi\Params\PowerManagement,      ParamDesc, , %PowerManagement%
+HKR, Ndi\Params\PowerManagement,      default,   , "1"
+HKR, Ndi\Params\PowerManagement,      type,      , "enum"
+HKR, Ndi\Params\PowerManagement\enum, 0,         , %Disabled%
+HKR, Ndi\Params\PowerManagement\enum, 1,         , %Enabled%
+
+HKR, Ndi\Params\WakeupFrame,          ParamDesc, , %PatternMatchWakeup%
+HKR, Ndi\Params\WakeupFrame,          default,   , "1"
+HKR, Ndi\Params\WakeupFrame,          type,      , "enum"
+HKR, Ndi\Params\WakeupFrame\enum,     0,         , %Disabled%
+HKR, Ndi\Params\WakeupFrame\enum,     1,         , %Enabled%
+
+HKR, Ndi\Params\LinkOnChange,         ParamDesc, , %LinkWakeupOffOn%
+HKR, Ndi\Params\LinkOnChange,         default,   , "1"
+HKR, Ndi\Params\LinkOnChange,         type,      , "enum"
+HKR, Ndi\Params\LinkOnChange\enum,    0,         , %Disabled%
+HKR, Ndi\Params\LinkOnChange\enum,    1,         , %Enabled%
+
+HKR, Ndi\Params\LinkOffChange,        ParamDesc, , %LinkWakeupOnOff%
+HKR, Ndi\Params\LinkOffChange,        default,   , "0"
+HKR, Ndi\Params\LinkOffChange,        type,      , "enum"
+HKR, Ndi\Params\LinkOffChange\enum,   0,         , %Disabled%
+HKR, Ndi\Params\LinkOffChange\enum,   1,         , %Enabled%
+
+HKR, Ndi\Params\MagicPacket,          ParamDesc, , %MagicPacketWakeup%
+HKR, Ndi\Params\MagicPacket,          default,   , "1"
+HKR, Ndi\Params\MagicPacket,          type,      , "enum"
+HKR, Ndi\Params\MagicPacket\enum,     0,         , %Disabled%
+HKR, Ndi\Params\MagicPacket\enum,     1,         , %Enabled%
+
+HKR, Ndi\Params\FlowControl,          ParamDesc, , %FlowControl%
+HKR, Ndi\Params\FlowControl,          default,   , "1"
+HKR, Ndi\Params\FlowControl,          type,      , "enum"
+HKR, Ndi\Params\FlowControl\enum,     0,         , %Disabled%
+HKR, Ndi\Params\FlowControl\enum,     1,         , %Enabled%
+
+HKR, Ndi\Params\PriorityPacket,       ParamDesc, , %PriorityPacket%
+HKR, Ndi\Params\PriorityPacket,       default,   , "0"
+HKR, Ndi\Params\PriorityPacket,       type,      , "enum"
+HKR, Ndi\Params\PriorityPacket\enum,  0,         , %Disabled%
+HKR, Ndi\Params\PriorityPacket\enum,  1,         , %Enabled%
+
+HKR,Ndi\params\VlanId,   ParamDesc,   0, %VLAN_ID%
+HKR,Ndi\params\VlanId,   type,        0, "edit"
+HKR,Ndi\params\VlanId,   default,     0, "0"
+HKR,Ndi\params\VlanId,   LimitText,   0, "4"
+HKR,Ndi\params\VlanId,   UpperCase,   0, "1"
+HKR,Ndi\params\VlanId,   Optional,    0, "1"
+
+
+[ADM9X.Service]
+DisplayName     = %ADM9X.Service.DispName%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\AN983.sys
+LoadOrderGroup  = NDIS
+
+[ADM9X.EventLog]
+AddReg = ADM9X.AddEventLog.reg
+
+[ADM9X.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, %%SystemRoot%%\System32\netevent.dll
+HKR, , TypesSupported,   0x00010001, 7
+
+[DestinationDirs]
+ADM9X.ndis.copyfiles.NT  = 12
+DefaultDestDir           = 12
+
+[SourceDisksNames]
+1=%DISKNAME%,,,
+
+[SourceDisksFiles]
+an983.sys    = 1
+
+[Strings]
+;Msft   = "Microsoft"
+ADMtek  = "ADMtek Incorporated"
+Accton  = "Accton"
+SMC     = "SMC"
+Netgear = "Netgear"
+AmbiCom = "AmbiCom"
+
+MediaType              = "Media Type"
+AutoSense              = "AutoSense"
+10HD                   = "10BaseT"
+10FD                   = "10BaseT Full_Duplex"
+100HD                  = "100BaseTX"
+100FD                  = "100BaseTX Full_Duplex"
+
+Disabled               = "Disabled"
+Enabled                = "Enabled"
+
+PowerManagement        = "PME Enable"
+PatternMatchWakeup     = "Pattern Match Wakeup"
+LinkWakeupOffOn        = "Link Wakeup(Off->On)"
+LinkWakeupOnOff        = "Link Wakeup(On->Off)"
+MagicPacketWakeup      = "Magic Packet Wakeup"
+FlowControl            = "Flow Control"
+PriorityPacket         = "Priority Packet"
+VLAN_ID                = "VLAN ID"
+
+
+DISKNAME               = "ADMtek AN983/AN985/ADM951X 10/100Mbps Fast Ethernet Adapter Drivers Diskette"
+
+AN983.DeviceDesc       = "ADMtek AN983 10/100Mbps PCI Adapter"
+Gen.deviceDesc         = "ADMtek AN983 based ethernet adapter"
+AN985.DeviceDesc       = "ADMtek AN985 10/100Mbps Fast Ethernet Adapter"
+ADM9510.DeviceDesc     = "ADMtek ADM9510 10/100Mbps Fast Ethernet Adapter"
+ADM9511.DeviceDesc     = "ADMtek ADM9511 10/100Mbps Fast Ethernet Adapter"
+ADM9513.DeviceDesc     = "ADMtek ADM9513 10/100Mbps Fast Ethernet Adapter"
+
+EN1207F.DeviceDesc     = "Accton EN1207F Series PCI Fast Ethernet Adapter"
+EN2220A.DeviceDesc     = "Accton EN2220A Fast Ethernet Cardbus PC Card"
+EN2320.DeviceDesc      = "Accton EN2320 Fast Ethernet Cardbus PC Card"
+EN2242.DeviceDesc      = "Accton EN2242 Series MiniPCI Fast Ethernet Adapter"
+LM1247.DeviceDesc      = "Accton LM1247 Series PCI Fast Ethernet Adapter"
+LM2247.DeviceDesc      = "Accton LM2247 Series Mini-PCI Fast Ethernet Adapter"
+LM2247A.DeviceDesc     = "Accton LM2247(A) Series Mini-PCI Fast Ethernet Adapter"
+
+SMC1255.DeviceDesc     = "SMC EZ Card 10/100 (SMC1255TX)"
+SMC8034.DeviceDesc     = "SMC EZ CardBus-II 10/100 PC Card (SMC8034)"
+SMC8036.DeviceDesc     = "SMC EZ CardBus-II 10/100 PC Card (SMC8036)"
+
+Netgear.DeviceDesc     = "Netgear 10/100Mbps CardBus Mobile Adapter"
+
+AmbiCom.DeviceDesc     = "AmbiCom EZPort Fast Ethernet CardBus PC Card(CB100-EZ)"
+
+ADM9X.Service.DispName = "ADMtek AN983/AN985/ADM951X 10/100Mbps Fast Ethernet Adapter"
+

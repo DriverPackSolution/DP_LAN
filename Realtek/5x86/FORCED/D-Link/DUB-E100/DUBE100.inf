@@ -1,0 +1,141 @@
+;****************************************************************
+; DUBE100.INF for Windows XP			         	*
+;								*
+; USB2 to Fast Ethernet Adapter					*
+; 								*
+;****************************************************************
+[Version]
+Signature  = "$Windows NT$"
+Class      = Net
+CatalogFile= DUBE100XP.cat
+ClassGUID  = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider   = %USB%
+DriverVer = 07/02/2003, 2.3.0.2
+
+[Manufacturer]
+%USB%  = USB
+
+[ControlFlags]
+ExcludeFromSelect = USB\VID_2001&PID_1A00
+
+[USB]
+%DUBE100.DeviceDesc% = DUBE100.Ndi,USB\VID_2001&PID_1A00
+
+;****************************************************************
+; Win98 main sections						*
+;****************************************************************
+[DUBE100.Ndi]
+AddReg		= DUBE100.Reg, DUBE100.Con.Reg , DUBE100.Params
+;DeviceID	= USB\VID_2001&PID_1A00
+CopyFiles	= CopyFile.Sys98
+
+;****************************************************************
+; NT main sections						*
+;****************************************************************
+[DUBE100.Ndi.NT]
+AddReg          = DUBE100.NT.Reg, DUBE100.Con.Reg
+Characteristics = 0x84	; NCF_HAS_UI | NCF_PHYSICAL
+BusType         = 15		; USB
+CopyFiles       = CopyFile.Sys
+
+[DUBE100.Ndi.NT.Services]
+AddService = DUBE100, 2, DUBE100.Service, Common.EventLog
+
+;****************************************************************
+; Windows 98 section						*
+;****************************************************************
+[DUBE100.Reg]
+HKR,Ndi,DeviceID,,USB\VID_2001&PID_1A00
+HKR,Ndi,CardType,,"PNP"
+
+HKR,,AdapterName,,DUBE100
+
+HKR,,DevLoader,,*ndis,*ntkern,*ndis
+HKR,,DeviceVxDs,,DUBE100.sys
+
+; NDIS Info
+HKR,NDIS,MajorNdisVersion,1,05
+HKR,NDIS,MinorNdisVersion,1,00
+HKR,NDIS,LogDriverName,,DUBE100
+
+; Interfaces
+HKR,Ndi\Interfaces,DefUpper,,"ndis3"
+HKR,Ndi\Interfaces,DefLower,,"ethernet"
+HKR,Ndi\Interfaces,UpperRange,,"ndis3"
+HKR,Ndi\Interfaces,LowerRange,,"ethernet"
+
+; Install sections
+HKR,Ndi\Install,ndis3,,"DUBE100.Install"
+HKR,Ndi,HelpText,,"DUBE100 USB2 to Fast Ethernet Adpater"
+
+[CopyFile.Sys98]
+DUBE100.sys,,,2
+
+;****************************************************************
+; Driver parameters						*
+;****************************************************************
+[DUBE100.Params]
+HKR,NDI\params\ConnectionType,flag,1,20,00,00,00
+
+[DUBE100.Con.Reg]
+HKR,Ndi\params\ConnectionType,ParamDesc,,"Connection Type"
+HKR,Ndi\params\ConnectionType,default,,"0"
+HKR,Ndi\params\ConnectionType,type,,"enum"
+HKR,Ndi\params\ConnectionType\enum,0,,"AutoSense"
+HKR,Ndi\params\ConnectionType\enum,2,,"10BaseT Half_Duplex"
+HKR,Ndi\params\ConnectionType\enum,3,,"10BaseT Full_Duplex"
+HKR,Ndi\params\ConnectionType\enum,8,,"100BaseTx Half_Duplex"
+HKR,Ndi\params\ConnectionType\enum,9,,"100BaseTx Full_Duplex"
+
+;****************************************************************
+; Install section for Windows NT 5				*
+;****************************************************************
+[DUBE100.NT.Reg]
+; Interfaces
+HKR, Ndi\Interfaces, LowerRange, 0, "ethernet"
+HKR, Ndi\Interfaces, UpperRange, 0, "ndis5"
+HKR, Ndi,            Service,    0, "DUBE100"
+
+[DUBE100.Service]
+DisplayName    = %DUBE100.DeviceDesc%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\DUBE100.sys
+LoadOrderGroup = NDIS
+AddReg         = TextModeFlags.Reg
+
+[Common.EventLog]
+AddReg = Common.AddEventLog.Reg
+
+[Common.AddEventLog.Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported  , 0x00010001, 7
+
+[TextModeFlags.Reg]
+HKR, , TextModeFlags, 0x00010001, 0x0001
+
+[CopyFile.Sys]
+DUBE100.sys,,,2
+
+;**********************************************************************
+; Destination directories                                             *
+;**********************************************************************
+[DestinationDirs]
+CopyFile.Sys98	= 11
+CopyFile.Sys	= 12
+DefaultDestDir	= 11
+
+[SourceDisksNames]
+50=%DUBE100.DiskName%,,
+
+[SourceDisksFiles]
+DUBE100.sys=50,.,DUBE100.sys,10000
+
+;**********************************************************************
+; Localizable strings                                                 *
+;**********************************************************************
+[Strings]
+USB = "D-Link Corporation"
+DUBE100.DiskName = "D-Link DUB-E100 Driver Diskette"
+DUBE100.DeviceDesc = "D-Link DUB-E100 USB 2.0 to Fast Ethernet Adapter"

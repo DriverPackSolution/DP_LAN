@@ -1,0 +1,155 @@
+; AX88796B.INF
+;
+; INF file for Windows NT 5.0
+;
+; ASIX AX88796B Based ISA Fast Ethernet Adapter
+;
+; Copyright 1996-1997, ASIX Corporation
+;
+; Driver Version 1.0.4.3, Date 2006/03/31
+;
+
+[version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %V_ASIX%
+DriverVer   = 03/31/2006, 1.0.4.3
+;LayoutFile  = layout.inf
+
+[Manufacturer]
+%V_ASIX%=ASIX
+
+[ASIX]
+%AX88796.DeviceDesc%=AX88796.ndi,ISA\ASIX-AX88796-09E3
+
+[AX88796.ndi.NTX86]
+Characteristics = 0x04
+BusType         = 1
+AddReg          = AX88796.reg
+LogConfig       = AX88796.LogConfig
+CopyFiles       = AX88796.CopyFiles.Sys
+
+[AX88796.ndi.NTX86.Services]
+AddService = AX88796, 2, AX88796.Service, AX88796.EventLog
+
+;[AX88796.ndi.LogConfigOverride]
+;LogConfig = AX88796.LogConfigOverride
+
+[AX88796.LogConfig]
+IRQConfig      = 3,5,7,11,12
+IOConfig       = 200-21F, 300-31F
+ConfigPriority = HARDRECONFIG
+
+;-------------------------------------------------------------------------------
+; AX88796 Drivers and Service
+;
+[AX88796.reg]
+HKR, Ndi,               Service,    0, "AX88796"
+HKR, Ndi\Interfaces,    DefUpper,   0, "ndis5"
+HKR, Ndi\Interfaces,    DefLower,   0, "ethernet"
+HKR, Ndi\Interfaces,    UpperRange, 0, "ndis5"
+HKR, Ndi\Interfaces,    LowerRange, 0, "ethernet"
+
+HKR,               ,    CardType,   0, "0"
+
+HKR, Ndi\params\SpeedDuplex,       ParamDesc,  0, %DuplexMode%
+HKR, Ndi\params\SpeedDuplex,       default,    0, "0"
+HKR, Ndi\params\SpeedDuplex,       type,       0, "enum"
+HKR, Ndi\params\SpeedDuplex\enum,   0,  0, %AutoDetect%
+HKR, Ndi\params\SpeedDuplex\enum,   1,  0, %100Mb-Full-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,   2,  0, %100Mb-Half-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,   3,  0, %10Mb-Full-Duplex%
+HKR, Ndi\params\SpeedDuplex\enum,   4,  0, %10Mb-Half-Duplex%
+
+HKR,Ndi\Params\NetworkAddress,      flag,  1,   28,00,00,00
+HKR,Ndi\params\NetworkAddress,   ParamDesc, 0, %NetworkAddress%
+HKR,Ndi\params\NetworkAddress,   type,      0, "edit"
+HKR,Ndi\params\NetworkAddress,   default,   0, "000000000000"
+HKR,Ndi\params\NetworkAddress,   LimitText, 0, "12"
+HKR,Ndi\params\NetworkAddress,   UpperCase, 0, "1"
+
+HKR, Ndi\params\TxQueue,      ParamDesc, 0, "TX Queue"
+HKR, Ndi\params\TxQueue,      type,      0, "enum"
+HKR, Ndi\params\TxQueue,      default,   0, "1"
+HKR, Ndi\params\TxQueue\enum, 0,         0, "OFF"
+HKR, Ndi\params\TxQueue\enum, 1,         0, "ON"
+
+HKR, Ndi\Params\VLAN_ID,  ParamDesc,  0, "VLAN ID"
+HKR, Ndi\Params\VLAN_ID,  Type,       0, "int"
+HKR, Ndi\Params\VLAN_ID,  Default,    0, "0"
+HKR, Ndi\params\VLAN_ID,  min,        0, "0"
+HKR, Ndi\params\VLAN_ID,  max,        0, "4095"
+HKR, Ndi\params\VLAN_ID,  step,       0, "1"
+HKR, NDI\params\VLAN_ID,  UpperCase,  0, "1"
+HKR, NDI\params\VLAN_ID,  optional,   0, "1"
+
+HKR, Ndi\params\WakeUpFromLinkUp,      ParamDesc, 0, "Wake-Up When Link Up"
+HKR, Ndi\params\WakeUpFromLinkUp,      type,      0, "enum"
+HKR, Ndi\params\WakeUpFromLinkUp,      default,   0, "0"
+HKR, Ndi\params\WakeUpFromLinkUp\enum, 0,         0, "OFF"
+HKR, Ndi\params\WakeUpFromLinkUp\enum, 1,         0, "ON"
+
+HKR, Ndi\params\WakeUpFromPacket,      ParamDesc, 0, "Wake-Up Frame"
+HKR, Ndi\params\WakeUpFromPacket,      type,      0, "enum"
+HKR, Ndi\params\WakeUpFromPacket,      default,   0, "0"
+HKR, Ndi\params\WakeUpFromPacket\enum, 0,         0, "OFF"
+HKR, Ndi\params\WakeUpFromPacket\enum, 1,         0, "Magic Packet"
+HKR, Ndi\params\WakeUpFromPacket\enum, 2,         0, "PING/ARP"
+HKR, Ndi\params\WakeUpFromPacket\enum, 3,         0, "Magic Packet/PING/ARP"
+
+HKR, Ndi\params\BackPressure,      ParamDesc, 0, "Back Pressure Function"
+HKR, Ndi\params\BackPressure,      type,      0, "enum"
+HKR, Ndi\params\BackPressure,      default,   0, "0"
+HKR, Ndi\params\BackPressure\enum, 0,         0, "OFF"
+HKR, Ndi\params\BackPressure\enum, 1,         0, "ON"
+
+HKR, Ndi\params\FlowControl,      ParamDesc, 0, "Flow Control Function"
+HKR, Ndi\params\FlowControl,      type,      0, "enum"
+HKR, Ndi\params\FlowControl,      default,   0, "1"
+HKR, Ndi\params\FlowControl\enum, 0,         0, "OFF"
+HKR, Ndi\params\FlowControl\enum, 1,         0, "ON"
+
+HKR,Ndi\Params\Threshold,             ParamDesc,  0, "Low Water Page Count"
+HKR,Ndi\Params\Threshold,             Type,       0, "int"
+HKR,Ndi\Params\Threshold,             Default,    0, "7"
+HKR,Ndi\Params\Threshold,             Min,        0, "7"
+HKR,Ndi\Params\Threshold,             Max,        0, "52"
+HKR,Ndi\Params\Threshold,             Step,       0, "1"
+
+[AX88796.Service]
+DisplayName     = %AX88796.DeviceDesc%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_AUTO_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\AX88796B.sys
+LoadOrderGroup  = NDIS
+
+[AX88796.CopyFiles.Sys]
+AX88796B.sys
+
+[DestinationDirs]
+AX88796.CopyFiles.Sys = 12
+AX88796.CopyFiles.Inf = 17
+
+[AX88796.EventLog]
+AddReg = AX88796.AddEventLog.reg
+
+[AX88796.AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR, , TypesSupported,   0x00010001, 7
+
+[strings]
+; Provider
+; Manufacturers
+V_ASIX="ASIX Electronics"
+; PNP Devices
+AX88796.DeviceDesc="ASIX AX88796B Based ISA Ethernet Adapter"
+NetworkAddress    = "Network Address"
+DuplexMode        = "Link Speed/Duplex Mode"
+AutoDetect        = "Auto Detect"
+10Mb-Half-Duplex  = "10Mbps/Half Duplex"
+10Mb-Full-Duplex  = "10Mbps/Full Duplex"
+100Mb-Half-Duplex = "100Mbps/Half Duplex"
+100Mb-Full-Duplex = "100Mbps/Full Duplex"
+

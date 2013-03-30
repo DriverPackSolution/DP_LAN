@@ -1,0 +1,833 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 2003-2005 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+;*******************************************************************************
+; IAMTe.INF (Windows XP x64 & Windows 2003 x64 & Windows Vista x64)
+;*******************************************************************************
+;
+;--------- Version Section ---------------------------------------------------
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGUID={4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider=%Provider%
+DriverVer=10/08/2008,1.1.30.2
+CatalogFile=IAMTe.cat
+
+[ControlFlags]
+; Pnp drivers should not be installable via non-PnP hardware dialogs
+ExcludeFromSelect = *
+
+;--------- DestinationDirs Section -------------------------------------------
+
+[DestinationDirs]
+DefaultDestDir = 10
+IAMTXPE_Files_Driver = 12
+IAMTVE_Files_Driver = 12
+IAMT_Files_Uninstall = 11
+
+
+;--------- SourceDiskNames and SourceDiskFiles Section -----------------------
+; These sections identify source disks and files for installation.
+
+[SourceDisksNames]
+1 = %Location%,,,""
+
+[SourceDisksFiles]
+IAMTXPE.sys  = 1,,
+IAMTVE.sys  = 1,,
+IAMTe.din    = 1,,
+prounstl.exe = 1
+
+;--------- Manufacturer and Models Sections ----------------------------------
+
+[Manufacturer]
+%MfgName% = Intel, NTamd64.6.0, NTamd64.6.0.1, NTamd64.5.2
+
+[Intel.NTamd64.6.0]
+; Windows 2008 and above not supported by this INF
+%IAMT_DeviceDesc%=NO_DRV, PCI\VEN_8086&DEV_108E
+
+[Intel.NTamd64.6.0.1]
+; DisplayName               Section           DeviceId
+%IAMT_DeviceDesc%=IAMT_DDI_VE, PCI\VEN_8086&DEV_108E
+
+[Intel.NTamd64.5.2]
+; DisplayName               Section           DeviceId
+%IAMT_DeviceDesc%=IAMT_DDI_XPE, PCI\VEN_8086&DEV_108E
+
+[Intel]
+; Empty section, so this INF does not support Windows 2000 and Win9x.
+
+;---- DDInstall Section Vista 64 bit extension ----
+
+[IAMT_DDI_VE]
+CopyFiles=IAMTVE_Files_Driver, IAMT_Files_Uninstall
+AddReg=IAMT_NT_AddReg, IAMT_UNINSTALL_AddReg
+
+[IAMT_DDI_VE.Services]
+Addservice = IAMTVE, %FLG_ADDREG_NOCLOBBER%, IAMTVE_Service, IAMTVE_EventLog
+
+;---- DDInstall Section Windows XP 64 bit extension ----
+
+[IAMT_DDI_XPE]
+CopyFiles=IAMTXPE_Files_Driver, IAMT_Files_Uninstall
+AddReg=IAMT_NT_AddReg, IAMT_UNINSTALL_AddReg
+
+[IAMT_DDI_XPE.Services]
+Addservice = IAMTXPE, %FLG_ADDREG_NOCLOBBER%, IAMTXPE_Service, IAMTXPE_EventLog
+
+;-------------- NO_DRV installation --------------
+
+[NO_DRV]
+AddReg=NoDrv.reg
+Include=machine.inf
+Needs=NO_DRV
+
+[NO_DRV.Services]
+Include=machine.inf
+Needs=NO_DRV.Services
+
+[NoDrv.reg]
+HKR,,Version,,"%DriverVer%"
+
+; --------- Registry ----------------------
+
+[IAMT_NT_AddReg]
+;reg-root,[subkey],[value-entry-name],[flags],[value]
+HKR,,   WatchdogTimerTic,   %REG_DWORD%, 120
+
+[IAMT_NT_AddReg.Security]
+"D:P(A;CI;GA;;;BA)(A;CI;GA;;;SY)"
+
+; --------- EventLog ----------------------
+
+[IAMTVE_EventLog]
+AddReg = IAMTVE_EventLog_Reg
+
+[IAMTVE_EventLog_Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\IAMTVE.sys"
+HKR, , TypesSupported,   0x00010001, 7
+
+[IAMTXPE_EventLog]
+AddReg = IAMTXPE_EventLog_Reg
+
+[IAMTXPE_EventLog_Reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\IAMTXPE.sys"
+HKR, , TypesSupported,   0x00010001, 7
+
+; --------- Service ----------------------
+
+[IAMTVE_Service]
+DisplayName    = %IAMT_SvcDesc%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\IAMTVE.sys
+LoadOrderGroup = Extended Base
+
+[IAMTXPE_Service]
+DisplayName    = %IAMT_SvcDesc%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\IAMTXPE.sys
+LoadOrderGroup = Extended Base
+
+; --------- Files ----------------------
+
+[IAMTVE_Files_Driver]
+IAMTVE.sys,,,2
+
+[IAMTXPE_Files_Driver]
+IAMTXPE.sys,,,2
+
+; --------- Uninstall ------------------
+
+[IAMT_Files_Uninstall]
+IAMTe.din,,,2
+
+
+[IAMT_UNINSTALL_AddReg]
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 108E, 0, "82573E KCS"
+HKLM,Software\Intel\Prounstl\Dins, IAMTe.din, 0, "IAMTe.Uninstall"
+HKLM,Software\Intel\Prounstl\Services, IAMTXPE, 0, "IAMTXPE.sys"
+HKLM,Software\Intel\Prounstl\Services, IAMTVE, 0, "IAMTVE.sys"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings]
+REG_SZ                      = 0x00000000
+REG_MULTI_SZ                = 0x00010000
+REG_EXPAND_SZ               = 0x00020000
+REG_BINARY                  = 0x00000001
+REG_DWORD                   = 0x00010001
+REG_NONE                    = 0x00020001
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+
+SERVICE_BOOT_START          = 0x0
+SERVICE_SYSTEM_START        = 0x1
+SERVICE_AUTO_START          = 0x2
+SERVICE_DEMAND_START        = 0x3
+SERVICE_DISABLED            = 0x4
+
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+FLG_ADDREG_NOCLOBBER        = 0x00000002
+FLG_ADDREG_DELVAL           = 0x00000004
+FLG_ADDREG_APPEND           = 0x00000008
+FLG_ADDREG_KEYONLY          = 0x00000010
+FLG_ADDREG_OVERWRITEONLY    = 0x00000020
+FLG_ADDREG_64BITKEY         = 0x00001000
+FLG_ADDREG_KEYONLY_COMMON   = 0x00002000
+FLG_ADDREG_32BITKEY         = 0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider = "Intel"
+MfgName = "Intel"
+IAMT_DeviceDesc = "Intel(R) Active Management Technology - KCS"
+IAMT_SvcDesc = "Driver for Intel(R) Active Management Technology - KCS"
+Location = "Intel(R) Active Management Technology Installation Source"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0804] ; Chinese (Simplified)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="英特尔(R)主动管理技术 - KCS"
+IAMT_SvcDesc ="英特尔(R)主动管理技术 - KCS 驱动程序"
+Location ="英特尔(R)主动管理技术安装源"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0404] ; Chinese (Traditional)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Intel(R) 笆恨瞶м砃 - KCS"
+IAMT_SvcDesc ="Intel(R) 笆恨瞶м砃 - KCS 臱笆祘Α"
+Location ="Intel(R) 笆恨瞶м砃杆ㄓ方"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0406] ; Danish (Denmark)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Intel(R) Active Management Technology - KCS"
+IAMT_SvcDesc ="Driver til Intel(R) Active Management Technology - KCS"
+Location ="Intel(R) Active Management Technology - Installationskilde"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0407] ; German (Germany)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Intel(R) Active-Management-Technologie - KCS"
+IAMT_SvcDesc ="Treiber f黵 Intel(R) Active-Management-Technologie - KCS"
+Location ="Installationsquelle der Intel(R) Active-Management-Technologie"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0C0A] ; Spanish (Spain)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Tecnolog韆 de gesti髇 activa Intel(R) - KCS"
+IAMT_SvcDesc ="Controlador para la Tecnolog韆 de gesti髇 activa Intel(R) - KCS"
+Location ="Origen de la instalaci髇 de la Tecnolog韆 de gesti髇 activa Intel(R)"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.040B] ; Finnish (Finland)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Intel(R) Active Management Technology - KCS"
+IAMT_SvcDesc ="Intel(R) Active Management Technology - KCS -ohjain"
+Location ="Intel(R) Active Management Technology -asennuksen l鋒de"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.040C] ; French (France)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Technologie d抋dministration active Intel(R) - KCS"
+IAMT_SvcDesc ="Pilote de la technologie d抋dministration active Intel(R) - KCS"
+Location ="Source d'installation de la technologie d抋dministration active Intel(R)"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0410] ; Italian (Italy)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Tecnologia Intel(R) Active Management - KCS"
+IAMT_SvcDesc ="Driver per la tecnologia Intel(R) Active Management - KCS"
+Location ="Origine dell'installazione della tecnologia Intel(R) Active Management"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0411] ; Japanese (Japan)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="僀儞僥儖(R) 傾僋僥傿僽丒儅僱乕僕儊儞僩丒僥僋僲儘僕 - KCS"
+IAMT_SvcDesc ="僀儞僥儖(R) 傾僋僥傿僽丒儅僱乕僕儊儞僩丒僥僋僲儘僕 - KCS 偺僪儔僀僶"
+Location ="僀儞僥儖(R) 傾僋僥傿僽丒儅僱乕僕儊儞僩丒僥僋僲儘僕僀儞僗僩乕儖 僜乕僗"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0412] ; Korean (Korea)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="牢炮(R) 咀萍宏 包府 扁贱 - KCS"
+IAMT_SvcDesc ="牢炮(R) 咀萍宏 包府 扁贱 - KCS侩 靛扼捞滚"
+Location ="牢炮(R) 咀萍宏 包府 扁贱 汲摹 家胶"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0413] ; Dutch (Netherlands)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Intel(R) Active Management Technology - KCS"
+IAMT_SvcDesc ="Stuurprogramma voor Intel(R) Active Management Technology - KCS"
+Location ="Installatiebron voor Intel(R) Active Management Technology"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0414] ; Norwegian (Bokm錶) (Norway)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Intel(R) Active Management Technology - KCS"
+IAMT_SvcDesc ="Driver for Intel(R) Active Management Technology - KCS"
+Location ="Installasjonskilde for Intel(R) Active Management Technology "
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.0416] ; Portuguese (Brazil)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Intel(R) Active Management Technology - KCS"
+IAMT_SvcDesc ="Driver da Intel(R) Active Management Technology - KCS"
+Location ="Fonte de instala玢o da Intel(R) Active Management Technology"
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings.041D] ; Swedish (Sweden)
+REG_SZ                      =0x00000000
+REG_MULTI_SZ                =0x00010000
+REG_EXPAND_SZ               =0x00020000
+REG_BINARY                  =0x00000001
+REG_DWORD                   =0x00010001
+REG_NONE                    =0x00020001
+
+SERVICE_KERNEL_DRIVER       =0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  =0x00000002
+SERVICE_ADAPTER             =0x00000004
+SERVICE_RECOGNIZER_DRIVER   =0x00000008
+
+SERVICE_BOOT_START          =0x0
+SERVICE_SYSTEM_START        =0x1
+SERVICE_AUTO_START          =0x2
+SERVICE_DEMAND_START        =0x3
+SERVICE_DISABLED            =0x4
+
+SERVICE_ERROR_IGNORE        =0x00000000
+SERVICE_ERROR_NORMAL        =0x00000001
+SERVICE_ERROR_SEVERE        =0x00000002
+SERVICE_ERROR_CRITICAL      =0x00000003
+
+FLG_ADDREG_NOCLOBBER        =0x00000002
+FLG_ADDREG_DELVAL           =0x00000004
+FLG_ADDREG_APPEND           =0x00000008
+FLG_ADDREG_KEYONLY          =0x00000010
+FLG_ADDREG_OVERWRITEONLY    =0x00000020
+FLG_ADDREG_64BITKEY         =0x00001000
+FLG_ADDREG_KEYONLY_COMMON   =0x00002000
+FLG_ADDREG_32BITKEY         =0x00004000
+
+;---------------------------------------------------------------------------------------------------
+; Translation from this point ON.
+;---------------------------------------------------------------------------------------------------
+Provider ="Intel"
+MfgName ="Intel"
+IAMT_DeviceDesc ="Intel(R) Active Management Technology - KCS"
+IAMT_SvcDesc ="Drivrutin f鰎 Intel(R) Active Management Technology - KCS"
+Location ="Installationsk鋖la f鰎 Intel(R) Active Management Technology"
+
